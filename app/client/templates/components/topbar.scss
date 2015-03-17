@@ -1,0 +1,90 @@
+@import "../../stylesheets/main";
+
+.topbar-container {
+  background-color: $topbar-bg;
+  height: $topbar-height;
+  position: relative;
+
+  .logo-box {
+
+    position: absolute;
+    left: $topbar-logo-margin-left;
+    bottom: $topbar-padding-bottom;
+    color: $topbar-logo-text;
+
+    .logo {
+
+      display: inline;
+
+    }
+
+    .logo-text {
+
+      display: inline;
+      font-size: $topbar-logo-font-size;
+      font-weight: bold;
+
+    }
+
+  }
+
+  .genres {
+
+    position: absolute;
+    left: $topbar-item-margin-left;
+    bottom: $topbar-padding-bottom;
+
+    .genre-box {
+
+      display: inline;
+      background-color: $topbar-item-bg;
+      color: $topbar-item-text;
+      margin-right: $topbar-item-margin-right;
+      padding-left: $topbar-item-padding-lr;
+      padding-right: $topbar-item-padding-lr;
+      padding-top: $topbar-item-padding-tb;
+      padding-bottom: $topbar-item-padding-tb;
+      font-size: $topbar-item-font-size;
+      text-transform: uppercase;
+
+      &.active, &:active, &:hover {
+        background-color: $topbar-item-active-bg;
+      }
+
+    }
+
+    .search-box {
+      display: inline;
+      color: $topbar-item-text;
+      background: none;
+      font-size: $topbar-item-font-size;
+      border: 1px solid $topbar-item-bg;
+      padding-left: $topbar-item-padding-lr;
+      padding-right: $topbar-item-padding-lr;
+      padding-top: $topbar-item-padding-tb;
+      padding-bottom: $topbar-item-padding-tb;
+      &:focus {
+        outline: none;
+        border: 1px solid $topbar-item-active-bg;
+      }
+    }
+
+    .search-button {
+      display: inline;
+      background-color: $topbar-item-bg;
+      color: $topbar-item-text;
+      font-size: $topbar-item-font-size;
+      padding-left: $topbar-item-padding-lr;
+      padding-right: $topbar-item-padding-lr;
+      padding-top: $topbar-item-padding-tb;
+      padding-bottom: $topbar-item-padding-tb;
+      border: none;
+
+      &:active, &:hover {
+        background-color: $topbar-item-active-bg;
+      }
+    }
+
+  }
+
+}

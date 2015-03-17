@@ -1,0 +1,26 @@
+<template name="appItem">
+
+  <div class="app-item-container">
+
+    <div class="image-surround">
+
+      <div class="image" style="background-image: {{image}};"></div>
+
+    </div>
+
+    <div class="app-name">{{name}}</div>
+
+    <div class="app-author">{{author}}</div>
+
+    <div class="app-rating">{{> appRating stars}}</div>
+
+    <div class="app-install {{#if installed}}installed{{/if}}">
+      INSTALL
+      <i class="play icon"></i>
+    </div>
+
+    <div class="app-price">{{priceFormat price}}</div>
+
+  </div>
+
+</template>

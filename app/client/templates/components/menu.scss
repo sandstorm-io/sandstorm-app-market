@@ -1,0 +1,61 @@
+@import "../../stylesheets/main";
+
+.menu-container {
+
+  position: relative;
+  background-color: $menu-bg;
+  color: $menu-text;
+  width: $menu-width;
+  box-shadow: $menu-box-shadow;
+
+  .menu-link {
+
+    position: relative;
+    padding-left: $menu-item-padding-left;
+    padding-top: $menu-item-padding-tb;
+    padding-bottom: $menu-item-padding-tb;
+
+    .icon {
+      color: $menu-icon-col;
+      font-size: $menu-icon-size;
+      display: inline;
+      vertical-align: middle;
+    }
+
+    .menu-text {
+      font-size: $menu-font-size;
+      display: inline;
+      vertical-align: middle;
+    }
+
+    &.active, &:hover, &:active {
+
+      color: $menu-active-text;
+      background-color: $menu-active-bg;
+
+      .icon {
+        color: $menu-active-icon-col;
+      }
+
+      &:after {
+        visibility: hidden;
+      }
+
+    }
+
+    &:not(:last-child):after {
+
+      content:'';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width:98%;
+      height:1px;
+      margin-left: -49%;
+      background-color: $menu-divider-col;
+
+    }
+
+  }
+
+}

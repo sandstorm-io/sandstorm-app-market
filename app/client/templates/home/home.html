@@ -1,0 +1,25 @@
+<template name="Home">
+
+  <div class="welcome-message"></div>
+
+  <div class="main-section">
+
+    <div class="menu-spacer"></div>
+
+    {{#each genres}}
+
+      <div class="genre-name">{{name}}</div>
+
+      <div class="app-table">
+
+        {{#each app}}
+          {{> appItem this}}
+        {{/each}}
+
+      </div>
+
+    {{/each}}
+
+  </div>
+
+</template>

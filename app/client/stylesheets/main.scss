@@ -1,0 +1,81 @@
+// JUST A PLACEHOLDER UNTIL I GET A PROPER FONT
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic);
+
+// COLORS
+$menu-active-text: #ffffff;
+$menu-active-bg: #a460ba;
+$menu-active-icon-col: #bb8acc;
+$menu-text: #783189;
+$menu-bg: #ffffff;
+$menu-icon-col: #ddc9e8;
+$menu-divider-col: #e7daea;
+
+$topbar-bg: #612c7d; // THIS IS TEMPORARY
+$topbar-logo-text: #ffffff;
+$topbar-item-text: #ffffff;
+$topbar-item-bg: #78429d;
+$topbar-item-active-bg: #8c47b1;
+
+$genre-title-text: #783189;
+$genre-title-chevron: #aa79c6;
+
+$app-box-bg: #ffffff;
+$app-box-drp-shdw: #a694b2;
+$app-name-text: #222222;
+$author-text: #783189;
+$install-button-text: #783189;
+$install-button-bg: #eee4f4;
+$install-icon-col: #c9add0;
+$star-col: #783189;
+$star-faded-col: #783189; // THIS IS CLEARLY WRONG
+$free-text: #344c96; // THIS IS ALSO WRONG (GIVEN AS #344c963)
+$light-page-bg: #e7e4ea;
+
+// SPACING
+$topbar-height: 102px;
+$topbar-logo-font-size: 20px;
+$topbar-logo-margin-left: 30px;
+$topbar-padding-bottom: 20px;
+$topbar-item-margin-left: 385px;
+$topbar-item-font-size: 10px;
+$topbar-item-padding-lr: 22px;
+$topbar-item-padding-tb: 10px;
+$topbar-item-margin-right: 5px;
+
+$menu-width: 320px;
+$menu-item-padding-left: 30px;
+$menu-font-size: 20px;
+$menu-icon-size: 40px;
+$menu-item-padding-tb: 28px;
+$menu-box-shadow: 3px 3px $app-box-drp-shdw;
+
+$app-section-width: 1250px;
+$app-container-width: 20%;
+$app-container-margin-lr: 14px;
+$app-container-padding-lr: 20px;
+$app-container-padding-tb: 15px;
+$app-container-box-shadow: 1px 2px $app-box-drp-shdw;
+$app-container-bottom-margin: 58px;
+$app-genre-font-size: 17px;
+$app-name-font-size: 16px;
+$app-author-font-size: 10px;
+$app-install-font-size: 9px;
+$app-install-padding-tb: 5px;
+$app-indtall-padding-lr: 14px;
+
+html {
+  font-family: "Lato", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 300;
+  font-size: 2vmax;
+
+  body {
+    margin: 0;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.main {
+}

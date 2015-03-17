@@ -1,0 +1,29 @@
+<template name="Topbar">
+
+  <div class="topbar-container">
+
+    <div class="logo-box">
+
+      <i class="fa fa-share-alt-square sandstorm logo"></i>
+      <div class="logo-text">Sandstorm.io</div>
+
+    </div>
+
+    <div class="genres">
+
+      {{#each genres}}
+
+        <a class="genre-box {{#if active}}active{{/if}}" href="{{pathFor route=route}}">{{name}}</a>
+
+      {{/each}}
+
+      <a class="genre-box {{#if more}}active{{/if}}" data-action="more">More</a>
+
+      <input class="search-box" type="text" />
+      <button class="search-button"><i class="fa fa-search magnifying-glass icon"></i></button>
+
+    </div>
+
+  </div>
+
+</template>
