@@ -1,9 +1,16 @@
 Template.appItem.helpers({
 
-  priceFormat: function(price) {
+  free: function(price) {
 
-    // TODO: update function to pretty print price
-    return 'FREE';
+    return price === 0;
+
+  },
+
+  appRating: function(stars) {
+
+    return _.reduce(_.range(5), function(html, ind) {
+      return html + '<i class="icon star fa fa-star"></i>';
+    }, '');
 
   }
 

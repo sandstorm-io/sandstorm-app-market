@@ -1,1 +1,36 @@
 @import "../../stylesheets/main";
+
+body {
+
+  background-color: $main-page-bg;
+
+}
+
+.welcome-message {
+
+  width: 100%;
+  height: $welcome-message-height;
+  background-color: $welcome-message-bg;
+
+}
+
+.main-section {
+
+  width: $app-section-width;
+  padding-left: $app-section-padding-left;
+  overflow: hidden;
+
+}
+
+.genre-name {
+
+  font-size: $app-genre-font-size;
+  color: $genre-title-text;
+  margin-top: $app-genre-margin-top;
+  margin-bottom: $app-genre-margin-bottom;
+
+  & i.chevron-right {
+    color: $genre-title-chevron;
+  }
+
+}

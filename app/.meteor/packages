@@ -5,10 +5,10 @@
 # but you can also edit it by hand.
 
 meteor-platform
-autopublish
-insecure
 iron:router
 fourseven:scss
 wolves:bourbon
 zimme:iron-router-active
 fortawesome:fontawesome
+msavin:mongol
+aldeed:collection2

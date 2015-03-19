@@ -22,46 +22,62 @@ $genre-title-chevron: #aa79c6;
 $app-box-bg: #ffffff;
 $app-box-drp-shdw: #a694b2;
 $app-name-text: #222222;
-$author-text: #783189;
-$install-button-text: #783189;
-$install-button-bg: #eee4f4;
-$install-icon-col: #c9add0;
+$app-author-text: #783189;
+$app-install-text: #783189;
+$app-install-bg: #eee4f4;
+$app-install-icon-col: #c9add0;
 $star-col: #783189;
 $star-faded-col: #783189; // THIS IS CLEARLY WRONG
+$app-price-col: #783189;
+$app-price-free-col: #44c963;
 $free-text: #344c96; // THIS IS ALSO WRONG (GIVEN AS #344c963)
-$light-page-bg: #e7e4ea;
+
+$main-page-bg: #e7e4ea;
+
+$welcome-message-bg: #a58faa;
 
 // SPACING
 $topbar-height: 102px;
-$topbar-logo-font-size: 20px;
+$topbar-logo-font-size: 26px;
+$topbar-logo-icon-size: 55px;
 $topbar-logo-margin-left: 30px;
 $topbar-padding-bottom: 20px;
 $topbar-item-margin-left: 385px;
-$topbar-item-font-size: 10px;
+$topbar-item-font-size: 14px;
 $topbar-item-padding-lr: 22px;
 $topbar-item-padding-tb: 10px;
 $topbar-item-margin-right: 5px;
 
 $menu-width: 320px;
 $menu-item-padding-left: 30px;
-$menu-font-size: 20px;
+$menu-font-size: 26px;
 $menu-icon-size: 40px;
 $menu-item-padding-tb: 28px;
 $menu-box-shadow: 3px 3px $app-box-drp-shdw;
 
 $app-section-width: 1250px;
+$app-section-padding-left: 96px;
+$app-genre-margin-top: 65px;
+$app-genre-margin-bottom: 16px;
 $app-container-width: 20%;
 $app-container-margin-lr: 14px;
 $app-container-padding-lr: 20px;
 $app-container-padding-tb: 15px;
 $app-container-box-shadow: 1px 2px $app-box-drp-shdw;
-$app-container-bottom-margin: 58px;
-$app-genre-font-size: 17px;
-$app-name-font-size: 16px;
-$app-author-font-size: 10px;
-$app-install-font-size: 9px;
-$app-install-padding-tb: 5px;
-$app-indtall-padding-lr: 14px;
+$app-container-margin-bottom: 58px;
+$app-genre-font-size: 24px;
+$app-name-font-size: 20px;
+$app-name-line-height: 32px;
+$app-author-font-size: 14px;
+$app-author-line-height: 24px;
+$star-font-size: 14px;
+$star-line-height: 24px;
+$app-install-font-size: 13px;
+$app-install-padding-tb: 3px;
+$app-install-padding-lr: 14px;
+$app-price-font-size: 13px;
+
+$welcome-message-height: 196px;
 
 html {
   font-family: "Lato", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -78,4 +94,16 @@ html {
 }
 
 .main {
+}
+
+// UTILITY
+
+.clearfix {
+
+  &:after {
+    content:  "";
+    display:  table;
+    clear:  both;
+  }
+
 }

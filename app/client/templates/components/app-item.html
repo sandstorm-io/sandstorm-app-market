@@ -12,14 +12,15 @@
 
     <div class="app-author">{{author}}</div>
 
-    <div class="app-rating">{{> appRating stars}}</div>
+    <div class="app-rating">{{{appRating stars}}}</div>
 
     <div class="app-install {{#if installed}}installed{{/if}}">
-      INSTALL
-      <i class="play icon"></i>
+      INSTALL <i class="play icon fa fa-play"></i>
     </div>
 
-    <div class="app-price">{{priceFormat price}}</div>
+    <div class="app-price {{#if free price}}free{{/if}}">
+      {{#if free price}}FREE{{else}}{{price}}{{/if}}
+    </div>
 
   </div>
 

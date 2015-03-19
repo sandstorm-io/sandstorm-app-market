@@ -8,16 +8,22 @@
 
     {{#each genres}}
 
-      <div class="genre-name">{{name}}</div>
+      {{> genreTable this}}
 
-      <div class="app-table">
+    {{/each}}
 
-        {{#each app}}
-          {{> appItem this}}
-        {{/each}}
+  </div>
 
-      </div>
+</template>
 
+<template name="genreTable">
+
+  <div class="genre-name">{{name}} <i class="right-chevron icon fa fa-chevron-right"></i></div>
+
+  <div class="app-table">
+
+    {{#each apps}}
+      {{> appItem this}}
     {{/each}}
 
   </div>

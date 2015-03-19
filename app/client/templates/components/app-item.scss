@@ -1,1 +1,101 @@
 @import "../../stylesheets/main";
+
+.app-table {
+
+  margin-left: -$app-container-margin-lr;
+  margin-right: -$app-container-margin-lr;
+
+}
+
+.app-item-container {
+
+  display: inline-block;
+  width: $app-container-width;
+  margin-left: $app-container-margin-lr;
+  margin-right: $app-container-margin-lr;
+  margin-bottom: $app-container-margin-bottom;
+  padding-top: $app-container-padding-tb;
+  padding-bottom: $app-container-padding-tb;
+  padding-left: $app-container-padding-lr;
+  padding-right: $app-container-padding-lr;
+  box-shadow: $app-container-box-shadow;
+  background-color: $app-box-bg;
+
+  .image-surround {
+
+    position: relative;
+
+    .image {
+
+      content: "";
+      background-size: cover;
+      display: block;
+      padding-top: 100%;
+
+    }
+
+  }
+
+  .app-name {
+
+    font-size: $app-name-font-size;
+    color: $app-name-text;
+    line-height: $app-name-line-height;
+
+  }
+
+  .app-author {
+
+    font-size: $app-author-font-size;
+    color: $app-author-text;
+    text-transform: uppercase;
+    line-height: $app-author-line-height;
+
+  }
+
+  .app-rating {
+
+    color: $star-col;
+    font-size: $star-font-size;
+    line-height: $star-line-height;
+
+  }
+
+  .app-install {
+
+    font-size: $app-install-font-size;
+    color: $app-install-text;
+    background-color: $app-install-bg;
+    padding-top: $app-install-padding-tb;
+    padding-bottom: $app-install-padding-tb;
+    padding-left: $app-install-padding-lr;
+    padding-right: $app-install-padding-lr;
+    float: left;
+
+    .icon {
+
+      color: $app-install-icon-col;
+
+    }
+
+    &.installed {
+
+
+
+    }
+
+  }
+
+  .app-price {
+
+    float: right;
+    font-size: $app-price-font-size;
+    color: $app-price-col;
+
+    &.free {
+      color: $app-price-free-col;
+    }
+
+  }
+
+}
