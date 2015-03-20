@@ -5,10 +5,12 @@
 # but you can also edit it by hand.
 
 meteor-platform
-iron:router
 fourseven:scss
 wolves:bourbon
-zimme:iron-router-active
 fortawesome:fontawesome
 msavin:mongol
 aldeed:collection2
+meteorhacks:flow-router
+meteorhacks:flow-layout
+meteorhacks:fast-render
+meteorhacks:subs-manager

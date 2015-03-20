@@ -41,5 +41,8 @@ var genres = [
 Template.Topbar.helpers({
   genres: function() {
     return genres;
+  },
+  pathFor: function() {
+    return this.route;
   }
 });

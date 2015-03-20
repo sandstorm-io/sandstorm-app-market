@@ -1,12 +1,5 @@
-Router.configure({
-  layoutTemplate: 'MasterLayout',
-  loadingTemplate: 'Loading',
-  notFoundTemplate: 'NotFound'
-});
-
-Router.route('/', {
-  name: 'home',
-  controller: 'HomeController',
-  action: 'action',
-  where: 'client'
+FlowRouter.route('/', {
+    action: function() {
+        FlowLayout.render("MasterLayout", {mainSection: "Home"});
+    }
 });
