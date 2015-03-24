@@ -15,9 +15,11 @@ FlowRouter.route('/', {
 FlowRouter.route('/genres/:genre', {
   subscriptions: function(params) {
     this.register('currentGenre',
-      Meteor.subscribe('apps by genre', params.genre));
+      Meteor.subscribe('apps by genre', s.capitalize(params.genre)));
   },
   action: function(params) {
+    if (params.genre !== s.capitalize(params.genre))
+      FlowRouter.setParams({genre: s.capitalize(params.genre)});
     FlowLayout.render("MasterLayout", {mainSection: "Genre"});
   }
 });

@@ -133,6 +133,8 @@
       "SimpleSchema": false,
       "Roles": false,
       "FlowRouter": false,
+      "FlowLayout": false,
+      "s": false,
 
       // Collections
       "Apps": true,

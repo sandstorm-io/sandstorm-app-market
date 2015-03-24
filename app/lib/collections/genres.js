@@ -63,6 +63,8 @@ Genres = {
       _.extend(selector, extraGenre.selector);
       _.extend(options, extraGenre.options);
       return Apps.find(selector, options);
+    } else {
+      return Apps.find(null);
     }
 
   },
