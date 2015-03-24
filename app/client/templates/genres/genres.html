@@ -24,15 +24,19 @@
 
       <div class="title">POPULAR</div>
 
-      {{#with apps 0 1}}
-        {{> appItem app=this size="large"}}
-      {{/with}}
-      {{#with apps 1 1}}
-        {{> appItem app=this}}
-      {{/with}}
-      {{#with apps 2 1}}
-        {{> appItem app=this}}
-      {{/with}}
+      <div class="app-table">
+
+        {{#with apps 0 1}}
+          {{> appItem app=this size="large"}}
+        {{/with}}
+        {{#with apps 1 1}}
+          {{> appItem app=this}}
+        {{/with}}
+        {{#with apps 2 1}}
+          {{> appItem app=this}}
+        {{/with}}
+
+      </div>
 
     </div>
 

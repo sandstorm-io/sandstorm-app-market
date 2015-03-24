@@ -6,7 +6,7 @@ FlowRouter.subscriptions = function() {
 
 // ROUTES
 
-FlowRouter.route('/:', {
+FlowRouter.route('/', {
   action: function() {
     FlowLayout.render("MasterLayout", {mainSection: "Home"});
   }

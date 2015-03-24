@@ -20,12 +20,20 @@
 
         <div class="app-rating">{{{appRating stars}}}</div>
 
-        <div class="app-install {{#if installed}}installed{{/if}}">
-          INSTALL <i class="play icon fa fa-play"></i>
+        <div class="install-price">
+
+          <div class="app-install {{#if installed}}installed{{/if}}">
+            INSTALL <i class="play icon fa fa-play"></i>
+          </div>
+
+          <div class="app-price {{#if free price}}free{{/if}}">
+            {{#if free price}}FREE{{else}}{{price}}{{/if}}
+          </div>
+
         </div>
 
-        <div class="app-price {{#if free price}}free{{/if}}">
-          {{#if free price}}FREE{{else}}{{price}}{{/if}}
+        <div class="app-description">
+          {{prune description 100}}
         </div>
 
       </div>
@@ -42,13 +50,13 @@
 
       </div>
 
-      <div class="text-section">
+      <div class="app-name">{{name}}</div>
 
-        <div class="app-name">{{name}}</div>
+      <div class="app-author">{{getUsername author}}</div>
 
-        <div class="app-author">{{getUsername author}}</div>
+      <div class="app-rating">{{{appRating stars}}}</div>
 
-        <div class="app-rating">{{{appRating stars}}}</div>
+      <div class="install-price">
 
         <div class="app-install {{#if installed}}installed{{/if}}">
           INSTALL <i class="play icon fa fa-play"></i>

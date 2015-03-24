@@ -5,13 +5,21 @@
   margin-left: -$app-container-margin-lr;
   margin-right: -$app-container-margin-lr;
 
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: stretch;
+
 }
 
 .app-item-container {
 
-  display: inline-block;
-  vertical-align: middle;
-  width: $app-container-width;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  flex-basis: $app-container-width;
   min-width: $app-container-min-width;
   margin-left: $app-container-margin-lr;
   margin-right: $app-container-margin-lr;
@@ -22,23 +30,58 @@
   padding-right: $app-container-padding-lr;
   box-shadow: $app-container-box-shadow;
   background-color: $app-box-bg;
+  box-sizing: border-box;
+
+  .text-section {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    flex-basis: 100% - $app-image-large-width;
+
+  }
 
   &.large {
 
-    width: $app-container-width-large;
+    flex-basis: $app-container-width-large;
+    flex-direction: row;
+    align-items: stretch;
+
 
     .image-surround {
 
-      display: inline-block;
-      width: 40.5%;
-      vertical-align: middle;
+      display: flex;
+      flex-basis: $app-image-large-width;
+      max-height: $app-image-large-max-height;
+      align-items: stretch;
+      overflow: hidden;
+      margin-right: $app-image-large-margin-right;
+
+      .image {
+
+        flex-basis: 100%;
+
+      }
+
 
     }
 
-    .text-section {
+    .app-name {
 
-      display: inline-block;
-      vertical-align: middle;
+      font-size: $app-name-large-font-size;
+
+    }
+
+    .app-author {
+
+      font-size: $app-author-large-font-size;
+
+    }
+
+    .app-description {
+
+      font-size: $app-description-large-font-size;
+      color: $app-description-text;
 
     }
 
@@ -60,34 +103,36 @@
 
   }
 
-  .text-section {
+  .app-name {
 
-    height: 7.6rem;
+    font-size: $app-name-font-size;
+    color: $app-name-text;
+    line-height: $app-name-line-height;
 
-    .app-name {
+  }
 
-      font-size: $app-name-font-size;
-      color: $app-name-text;
-      line-height: $app-name-line-height;
+  .app-author {
 
-    }
+    font-size: $app-author-font-size;
+    color: $app-author-text;
+    text-transform: uppercase;
+    line-height: $app-author-line-height;
 
-    .app-author {
+  }
 
-      font-size: $app-author-font-size;
-      color: $app-author-text;
-      text-transform: uppercase;
-      line-height: $app-author-line-height;
+  .app-rating {
 
-    }
+    color: $star-col;
+    font-size: $star-font-size;
+    line-height: $star-line-height;
 
-    .app-rating {
+  }
 
-      color: $star-col;
-      font-size: $star-font-size;
-      line-height: $star-line-height;
+  .install-price {
 
-    }
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 
     .app-install {
 
@@ -98,7 +143,6 @@
       padding-bottom: $app-install-padding-tb;
       padding-left: $app-install-padding-lr;
       padding-right: $app-install-padding-lr;
-      float: left;
 
       .icon {
 
@@ -116,7 +160,6 @@
 
     .app-price {
 
-      float: right;
       font-size: $app-price-font-size;
       color: $app-price-col;
 

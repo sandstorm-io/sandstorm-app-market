@@ -10,7 +10,13 @@ Meteor.publish('categories', function () {
 });
 
 Meteor.publish('apps by genre', function (name) {
-  return Genres.findIn(name);
+  var apps = Genres.findIn(name);
+  return [
+    apps,
+    Meteor.users.find({_id: {$in: _.uniq(apps.map(function(app) {
+      return app.author;
+    }))}})
+  ];
 });
 
 Meteor.publish('apps by id', function (ids) {
