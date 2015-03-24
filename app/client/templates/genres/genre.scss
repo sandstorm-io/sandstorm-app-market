@@ -1,0 +1,30 @@
+@import "../../stylesheets/main";
+
+.genre-popular {
+
+  .content {
+
+    .title {
+
+      color: $genre-title-text;
+      text-transform: uppercase;
+      font-size: $genre-page-popular-height;
+      font-weight: lighter;
+      margin-top: $genre-page-popular-margin-top;
+      margin-bottom: $genre-page-popular-margin-bottom;
+
+    }
+
+  }
+
+  .background {
+
+    background-color: $genre-popular-bg;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: -1;
+
+  }
+
+}

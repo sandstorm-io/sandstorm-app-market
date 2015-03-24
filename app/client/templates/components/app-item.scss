@@ -10,7 +10,9 @@
 .app-item-container {
 
   display: inline-block;
+  vertical-align: middle;
   width: $app-container-width;
+  min-width: $app-container-min-width;
   margin-left: $app-container-margin-lr;
   margin-right: $app-container-margin-lr;
   margin-bottom: $app-container-margin-bottom;
@@ -21,6 +23,27 @@
   box-shadow: $app-container-box-shadow;
   background-color: $app-box-bg;
 
+  &.large {
+
+    width: $app-container-width-large;
+
+    .image-surround {
+
+      display: inline-block;
+      width: 40.5%;
+      vertical-align: middle;
+
+    }
+
+    .text-section {
+
+      display: inline-block;
+      vertical-align: middle;
+
+    }
+
+  }
+
   .image-surround {
 
     position: relative;
@@ -29,6 +52,7 @@
 
       content: "";
       background-size: cover;
+      background-position: center;
       display: block;
       padding-top: 100%;
 
@@ -36,64 +60,70 @@
 
   }
 
-  .app-name {
+  .text-section {
 
-    font-size: $app-name-font-size;
-    color: $app-name-text;
-    line-height: $app-name-line-height;
+    height: 7.6rem;
 
-  }
+    .app-name {
 
-  .app-author {
-
-    font-size: $app-author-font-size;
-    color: $app-author-text;
-    text-transform: uppercase;
-    line-height: $app-author-line-height;
-
-  }
-
-  .app-rating {
-
-    color: $star-col;
-    font-size: $star-font-size;
-    line-height: $star-line-height;
-
-  }
-
-  .app-install {
-
-    font-size: $app-install-font-size;
-    color: $app-install-text;
-    background-color: $app-install-bg;
-    padding-top: $app-install-padding-tb;
-    padding-bottom: $app-install-padding-tb;
-    padding-left: $app-install-padding-lr;
-    padding-right: $app-install-padding-lr;
-    float: left;
-
-    .icon {
-
-      color: $app-install-icon-col;
+      font-size: $app-name-font-size;
+      color: $app-name-text;
+      line-height: $app-name-line-height;
 
     }
 
-    &.installed {
+    .app-author {
 
-
+      font-size: $app-author-font-size;
+      color: $app-author-text;
+      text-transform: uppercase;
+      line-height: $app-author-line-height;
 
     }
 
-  }
+    .app-rating {
 
-  .app-price {
+      color: $star-col;
+      font-size: $star-font-size;
+      line-height: $star-line-height;
 
-    float: right;
-    font-size: $app-price-font-size;
-    color: $app-price-col;
+    }
 
-    &.free {
-      color: $app-price-free-col;
+    .app-install {
+
+      font-size: $app-install-font-size;
+      color: $app-install-text;
+      background-color: $app-install-bg;
+      padding-top: $app-install-padding-tb;
+      padding-bottom: $app-install-padding-tb;
+      padding-left: $app-install-padding-lr;
+      padding-right: $app-install-padding-lr;
+      float: left;
+
+      .icon {
+
+        color: $app-install-icon-col;
+
+      }
+
+      &.installed {
+
+
+
+      }
+
+    }
+
+    .app-price {
+
+      float: right;
+      font-size: $app-price-font-size;
+      color: $app-price-col;
+
+      &.free {
+        color: $app-price-free-col;
+      }
+
     }
 
   }

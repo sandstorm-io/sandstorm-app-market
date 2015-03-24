@@ -1,0 +1,49 @@
+<template name="Genre">
+
+  <div class="main-section">
+
+    {{#with genre}}
+
+    <div class="genre-name large">{{this.name}}</div>
+
+      {{> genreTablePopular this}}
+
+    {{/with}}
+
+  </div>
+
+</template>
+
+<template name="genreTablePopular">
+
+  <div class="genre-popular">
+
+    <div class="background"></div>
+
+    <div class="content">
+
+      <div class="title">POPULAR</div>
+
+      {{#with apps 0 1}}
+        {{> appItem app=this size="large"}}
+      {{/with}}
+      {{#with apps 1 1}}
+        {{> appItem app=this}}
+      {{/with}}
+      {{#with apps 2 1}}
+        {{> appItem app=this}}
+      {{/with}}
+
+    </div>
+
+    <div class="app-table">
+
+      {{#each apps 3 0}}
+        {{> appItem app=this}}
+      {{/each}}
+
+    </div>
+
+  </div>
+
+</template>

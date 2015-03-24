@@ -5,18 +5,18 @@
  */
 
 
-Meteor.publish('genres', function (/* args */) {
-  return Genres.find();
+Meteor.publish('categories', function () {
+  return Categories.find();
 });
 
-Meteor.publish('apps by genre', function (id) {
-  return Apps.find({genres: id});
+Meteor.publish('apps by genre', function (name) {
+  return Genres.findIn(name);
 });
 
 Meteor.publish('apps by id', function (ids) {
   return Array.isArray(ids) ?
     Apps.find({_id: {$in: ids}}) :
-    Apps.find(id);
+    Apps.find(ids);
 });
 
 Meteor.publish('apps all', function() {

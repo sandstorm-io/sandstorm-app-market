@@ -29,7 +29,11 @@ body {
   margin-top: $app-genre-margin-top;
   margin-bottom: $app-genre-margin-bottom;
 
-  & i.chevron-right {
+  &.large {
+    font-size: $genre-page-title-height;
+  }
+
+  i.chevron-right {
     color: $genre-title-chevron;
   }
 

@@ -11,7 +11,7 @@ Template.Home.helpers({
 
   genres: function() {
 
-    return Genres.find();
+    return _.pluck(Genres.getAll(), 'name');
 
   }
 
@@ -21,7 +21,7 @@ Template.Home.helpers({
 /* Home: Lifecycle Hooks */
 /*****************************************************************************/
 Template.Home.onCreated(function () {
-  this.subscribe('genres');
+  this.subscribe('categories');
 });
 
 Template.Home.rendered = function () {
@@ -31,14 +31,14 @@ Template.Home.destroyed = function () {
 };
 
 Template.genreTable.onCreated(function() {
-  this.subscribe('apps by genre', this.data._id);
+  this.subscribe('apps by genre', this.data);
 });
 
 Template.genreTable.helpers({
 
   apps: function() {
 
-    return Apps.find({genres: this._id});
+    return Genres.findIn(this.toString());
 
   }
 

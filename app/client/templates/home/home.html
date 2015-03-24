@@ -18,12 +18,12 @@
 
 <template name="genreTable">
 
-  <div class="genre-name">{{name}} <i class="right-chevron icon fa fa-chevron-right"></i></div>
+  <div class="genre-name">{{this}} <i class="right-chevron icon fa fa-chevron-right"></i></div>
 
   <div class="app-table">
 
     {{#each apps}}
-      {{> appItem this}}
+      {{> appItem app=this}}
     {{/each}}
 
   </div>

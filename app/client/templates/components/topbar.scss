@@ -4,6 +4,7 @@
   background-color: $topbar-bg;
   height: $topbar-height;
   position: relative;
+  z-index: 1;
 
   .logo-box {
 

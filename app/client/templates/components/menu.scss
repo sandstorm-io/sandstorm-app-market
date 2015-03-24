@@ -8,6 +8,7 @@
   color: $menu-text;
   width: $menu-width;
   box-shadow: $menu-box-shadow;
+  z-index: 1;
 
   .menu-link {
 
