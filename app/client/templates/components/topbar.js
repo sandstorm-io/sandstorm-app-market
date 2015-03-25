@@ -1,43 +1,3 @@
-var genres = [
-  {
-    name: 'all',
-    route: '/',
-    active: true
-  },
-  {
-    name: 'popular',
-    route: '/'
-  },
-  {
-    name: 'productivity',
-    route: '/'
-  },
-  {
-    name: 'publishing',
-    route: '/'
-  },
-  {
-    name: 'games',
-    route: '/'
-  },
-  {
-    name: 'email',
-    route: '/'
-  },
-  {
-    name: 'science',
-    route: '/'
-  },
-  {
-    name: 'media',
-    route: '/'
-  },
-  {
-    name: 'social',
-    route: '/'
-  }
-];
-
 function resizeTopbar(template) {
 
   template.$('.genres').css('visibility', 'hidden');
@@ -93,6 +53,13 @@ Template.Topbar.helpers({
   moreOpen: function() {
 
     return Template.instance().moreOpen.get();
+
+  },
+
+  active: function() {
+
+    var path = /\/genres\/(.*)/.exec(FlowRouter.reactiveCurrent().path);
+    return path && path.length && path[1] === this.name;
 
   }
 });
