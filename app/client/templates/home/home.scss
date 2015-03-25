@@ -1,4 +1,4 @@
-@import "../../stylesheets/main";
+@import "../../stylesheets/variables";
 
 body {
 
@@ -12,13 +12,19 @@ body {
   height: $welcome-message-height;
   background-color: $welcome-message-bg;
 
-}
+  .message {
 
-.main-section {
+    justify-content: flex-start;
+    align-items: center;
 
-  width: $app-section-width;
-  padding-left: $app-section-padding-left;
-  overflow: hidden;
+    .text {
+
+      color: $welcome-message-text;
+      font-size: $welcome-message-font-size;
+
+    }
+
+  }
 
 }
 
@@ -33,7 +39,7 @@ body {
     font-size: $genre-page-title-height;
   }
 
-  i.chevron-right {
+  i.right-chevron {
     color: $genre-title-chevron;
   }
 

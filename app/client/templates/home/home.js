@@ -13,6 +13,12 @@ Template.Home.helpers({
 
     return _.pluck(Genres.getAll(), 'name');
 
+  },
+
+  message: function() {
+
+    return "This is a sample welcome message";
+
   }
 
 });
@@ -38,7 +44,7 @@ Template.genreTable.helpers({
 
   apps: function() {
 
-    return Genres.findIn(this.toString());
+    return Genres.findIn(this.toString(), {}, {limit: 5});
 
   }
 

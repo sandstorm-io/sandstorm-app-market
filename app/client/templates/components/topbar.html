@@ -2,25 +2,36 @@
 
   <div class="topbar-container">
 
-    <div class="logo-box">
+    <a class="logo-box" href="/">
 
       <i class="fa fa-share-alt-square sandstorm logo"></i>
       <div class="logo-text">Sandstorm.io</div>
 
-    </div>
+    </a>
 
-    <div class="genres">
+    <div class="genre-holder">
 
-      {{#each genres}}
+      <div class="genres">
 
-        <a class="genre-box {{#if active}}active{{/if}}" href="/genres/{{name}}">{{name}}</a>
+        {{#each genres}}
 
-      {{/each}}
+          <div class="genre-box {{#if active}}active{{/if}}"><a href="/genres/{{name}}" data-action="close-more-menu">{{name}}</a></div>
 
-      <a class="genre-box {{#if more}}active{{/if}}" data-action="more">More</a>
+        {{/each}}
 
-      <input class="search-box" type="text" />
-      <button class="search-button"><i class="fa fa-search magnifying-glass icon"></i></button>
+        <div class="genre-box extra-genres">
+          <a class="more" data-action="{{#if moreOpen}}close-more-menu{{else}}open-more-menu{{/if}}">More</a>
+          <ul class="extra-genres-list {{#if moreOpen}}open{{/if}}">
+            {{#each extraGenres}}
+              <li class="genre-box"><a class="{{#if active}}active{{/if}}" href="/genres/{{name}}" data-action="close-more-menu">{{name}}</a></li>
+            {{/each}}
+          </ul>
+        </div>
+
+        <input class="search-box" type="text" />
+        <button class="search-button"><i class="fa fa-search magnifying-glass icon"></i></button>
+
+      </div>
 
     </div>
 

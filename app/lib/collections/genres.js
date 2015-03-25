@@ -29,8 +29,7 @@ var extraGenres = [
     name: 'Popular',
     selector: {},
     options: {
-      sort: {installCount: -1},
-      limit: 20
+      sort: {installCount: -1}
     }
   },
 
@@ -38,8 +37,7 @@ var extraGenres = [
     name: 'New',
     selector: {},
     options: {
-      sort: {createdAt: -1},
-      limit: 20
+      sort: {createdAt: -1}
     }
   }
 
@@ -91,8 +89,7 @@ Genres = {
 
   getAll: function(iteratee) {
 
-    var genres  = Categories.find().fetch()
-                    .concat(extraGenres);
+    var genres  = extraGenres.concat(Categories.find().fetch());
 
     if (iteratee) return _.sortBy(genres, iteratee);
     else return genres;

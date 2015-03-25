@@ -1,16 +1,32 @@
 <template name="Home">
 
-  <div class="welcome-message"></div>
-
-  <div class="main-section">
+  {{#if message}}
+  <div class="welcome-message flex">
 
     <div class="menu-spacer"></div>
 
-    {{#each genres}}
+    <div class="message flex">
 
-      {{> genreTable this}}
+      <div class="text">{{message}}</div>
 
-    {{/each}}
+    </div>
+
+  </div>
+  {{/if}}
+
+  <div class="main-section flex">
+
+    <div class="menu-spacer"></div>
+
+    <div class="contents">
+
+      {{#each genres}}
+
+        {{> genreTable this}}
+
+      {{/each}}
+
+    </div>
 
   </div>
 
@@ -18,7 +34,10 @@
 
 <template name="genreTable">
 
-  <div class="genre-name">{{this}} <i class="right-chevron icon fa fa-chevron-right"></i></div>
+  {{#if routerSubsReady}}
+  {{#if count apps}}
+
+  <div class="genre-name"><a href="/genres/{{this}}">{{this}} <i class="right-chevron icon fa fa-chevron-right"></i></a></div>
 
   <div class="app-table">
 
@@ -27,5 +46,8 @@
     {{/each}}
 
   </div>
+
+  {{/if}}
+  {{/if}}
 
 </template>

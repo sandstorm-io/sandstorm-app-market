@@ -1,6 +1,8 @@
-@import "../../stylesheets/main";
+@import "../../stylesheets/variables";
 
-.genre-popular {
+.genre-popular-section {
+
+  background-color: $genre-popular-bg;
 
   .content {
 

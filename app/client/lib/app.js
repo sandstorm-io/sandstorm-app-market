@@ -18,6 +18,18 @@ var helpers = {
 
     return s.prune(string, length);
 
+  },
+
+  routerSubsReady: function(name) {
+
+    return name ? FlowRouter.subsReady(name) : FlowRouter.subsReady();
+
+  },
+
+  count: function(cursor) {
+
+    return cursor.count();
+
   }
 
 };

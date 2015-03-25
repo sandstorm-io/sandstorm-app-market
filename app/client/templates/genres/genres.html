@@ -1,14 +1,38 @@
 <template name="Genre">
 
-  <div class="main-section">
+  <div class="genre-title-section flex">
 
-    {{#with genre}}
+    <div class="menu-spacer"></div>
 
-    <div class="genre-name large">{{this.name}}</div>
+    <div class="contents">
 
-      {{> genreTablePopular this}}
+      <div class="genre-name large">{{genre.name}}</div>
 
-    {{/with}}
+    </div>
+
+  </div>
+
+  <div class="genre-popular-section flex">
+
+    <div class="menu-spacer"></div>
+
+    <div class="contents">
+
+        {{> genreTablePopular genre}}
+
+    </div>
+
+  </div>
+
+  <div class="genre-other-section flex">
+
+    <div class="menu-spacer"></div>
+
+    <div class="contents">
+
+        {{> genreTableOther genre}}
+
+    </div>
 
   </div>
 
@@ -17,8 +41,6 @@
 <template name="genreTablePopular">
 
   <div class="genre-popular">
-
-    <div class="background"></div>
 
     <div class="content">
 
@@ -39,6 +61,14 @@
       </div>
 
     </div>
+
+  </div>
+
+</template>
+
+<template name="genreTableOther">
+
+  <div class="genre-other">
 
     <div class="app-table">
 

@@ -1,9 +1,8 @@
-@import "../../stylesheets/main";
+@import "../../stylesheets/variables";
 
 .menu-container {
 
-  position: relative;
-  float: left;
+  position: absolute;
   background-color: $menu-bg;
   color: $menu-text;
   width: $menu-width;
@@ -20,7 +19,8 @@
     .icon {
       color: $menu-icon-col;
       font-size: $menu-icon-size;
-      display: inline;
+      display: inline-block;
+      width: 1.5em;
       vertical-align: middle;
     }
 
@@ -58,6 +58,17 @@
 
     }
 
+  }
+
+}
+
+.menu-spacer {
+
+  flex-basis: $menu-width + $app-section-padding-left;
+  flex-shrink: 0;
+
+  &+* {
+    flex-grow: 1;
   }
 
 }

@@ -1,4 +1,4 @@
-@import "../../stylesheets/main";
+@import "../../stylesheets/variables";
 
 .topbar-container {
   background-color: $topbar-bg;
@@ -30,27 +30,71 @@
 
   }
 
+  .genre-holder {
+
+    margin-left: $menu-width + $app-section-padding-left;
+
+  }
+
   .genres {
 
+    // THIS SECTION IS HIDDEN UNTIL WE'VE RESIZED IT TO FIT THE PAGE
+    visibility: hidden;
+
     position: absolute;
-    left: $topbar-item-margin-left;
+    left: $menu-width + $app-section-padding-left;
     bottom: $topbar-padding-bottom;
+    white-space: nowrap;
 
     .genre-box {
 
-      display: inline;
+      display: inline-block;
       background-color: $topbar-item-bg;
-      color: $topbar-item-text;
       margin-right: $topbar-item-margin-right;
       padding-left: $topbar-item-padding-lr;
       padding-right: $topbar-item-padding-lr;
       padding-top: $topbar-item-padding-tb;
       padding-bottom: $topbar-item-padding-tb;
       font-size: $topbar-item-font-size;
+      cursor: pointer;
       text-transform: uppercase;
 
       &.active, &:active, &:hover {
         background-color: $topbar-item-active-bg;
+      }
+
+      a {
+        color: $topbar-item-text;
+
+      }
+
+      &.extra-genres {
+
+        position: relative;
+
+        .extra-genres-list {
+
+          height: 0;
+          overflow: hidden;
+          position:absolute;
+          background-color: $topbar-item-bg;
+          list-style-type: none;
+          left: 0;
+          padding-left: 0;
+          top: 100%;
+          margin-top: 0;
+
+          &.open {
+            height: auto;
+          }
+
+          .genre-box {
+            display: block;
+            margin-right: 0;
+          }
+
+        }
+
       }
 
     }
