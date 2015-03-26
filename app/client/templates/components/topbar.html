@@ -19,11 +19,11 @@
 
         {{/each}}
 
-        <div class="genre-box extra-genres">
-          <a class="more" data-action="{{#if moreOpen}}close-more-menu{{else}}open-more-menu{{/if}}">More</a>
+        <div class="genre-box extra-genres" data-action="{{#if moreOpen}}close-more-menu{{else}}open-more-menu{{/if}}">
+          <a class="more">More</a>
           <ul class="extra-genres-list {{#if moreOpen}}open{{/if}}">
             {{#each extraGenres}}
-              <li class="genre-box"><a class="{{#if active}}active{{/if}}" href="/genres/{{name}}" data-action="close-more-menu">{{name}}</a></li>
+              <a href="/genres/{{name}}" data-action="close-more-menu"><li class="genre-box {{#if active}}active{{/if}}">{{name}}</li></a>
             {{/each}}
           </ul>
         </div>
