@@ -15,7 +15,7 @@
 
         {{#each genres}}
 
-          <div class="genre-box {{#if active}}active{{/if}}"><a href="/genres/{{name}}" data-action="close-more-menu">{{name}}</a></div>
+          <a href="/genres/{{name}}" data-action="close-more-menu"><div class="genre-box {{#if active}}active{{/if}}">{{name}}</div></a>
 
         {{/each}}
 

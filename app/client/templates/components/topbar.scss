@@ -58,14 +58,10 @@
       font-size: $topbar-item-font-size;
       cursor: pointer;
       text-transform: uppercase;
+      color: $topbar-item-text;
 
       &.active, &:active, &:hover {
         background-color: $topbar-item-active-bg;
-      }
-
-      a {
-        color: $topbar-item-text;
-
       }
 
       &.extra-genres {
