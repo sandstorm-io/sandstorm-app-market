@@ -20,6 +20,7 @@
   justify-content: space-between;
   flex-basis: $app-container-width;
   min-width: $app-container-min-width;
+  max-width: $app-container-max-width;
   padding-left: $app-container-margin-lr;
   padding-right: $app-container-margin-lr;
   padding-top: $app-container-margin-tb;
@@ -140,6 +141,7 @@
 
     flex-basis: $app-container-width-large;
     min-width: $app-container-min-width * 3;
+    max-width: $app-container-max-width * 3;
 
     .app-item-inner {
 
