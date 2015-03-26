@@ -25,7 +25,7 @@ ejson@1.0.6
 email@1.0.6
 fastclick@1.0.3
 fortawesome:fontawesome@4.2.0_2
-fourseven:scss@2.0.1_4
+fourseven:scss@2.0.1_5
 geojson-utils@1.0.3
 gwendall:session-json@0.1.7
 html-tools@1.0.4
@@ -42,7 +42,7 @@ logging@1.0.7
 meteor@1.1.5
 meteor-platform@1.2.2
 meteorhacks:fast-render@2.3.1
-meteorhacks:flow-layout@1.0.1
+meteorhacks:flow-layout@1.0.2
 meteorhacks:flow-router@1.1.1
 meteorhacks:inject-data@1.2.2
 meteorhacks:picker@1.0.1
@@ -52,7 +52,7 @@ minifiers@1.1.4
 minimongo@1.0.7
 mobile-status-bar@1.0.3
 mongo@1.1.0
-msavin:mongol@1.0.6
+msavin:mongol@1.0.8
 npm-bcrypt@0.7.8_1
 observe-sequence@1.0.5
 ordered-dict@1.0.3
