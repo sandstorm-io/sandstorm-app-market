@@ -1,5 +1,6 @@
 // JUST A PLACEHOLDER UNTIL I GET A PROPER FONT
 @import url(http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic);
+@import "variables";
 
 html {
   font-family: "Lato", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -7,13 +8,13 @@ html {
   font-size: 12px;
   font-size: 0.65vw;
 
-  @media (max-width: 1200px) {
+  @media (max-width: $small-screen) {
 
-    font-size: 7.8px;
+    font-size: 8.32px;
 
   }
 
-  @media (min-width: 1600px) {
+  @media (min-width: $xlarge-screen) {
 
     font-size: 10.4px;
 
