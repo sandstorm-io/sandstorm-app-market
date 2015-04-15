@@ -9,9 +9,8 @@ Template.appItem.helpers({
   appRating: function(stars) {
 
     return _.reduce(_.range(5), function(html, ind) {
-      if (stars >= ind + 1) html += '<i class="icon star fa fa-star"></i>';
-      else if (stars >= ind + 0.5) html += '<i class="icon star fa fa-star-half-o"></i>';
-      else html += '<i class="icon star fa fa-star-o"></i>';
+      if (stars >= ind + 0.5) html += '<i class="icon-star dark"></i>';
+      else html += '<i class="icon-star light"></i>';
       return html;
     }, '');
 

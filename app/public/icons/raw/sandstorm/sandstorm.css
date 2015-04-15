@@ -1,14 +1,14 @@
-// JUST A PLACEHOLDER UNTIL I GET A PROPER FONT
-@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic);
-@import "variables";
+/*
+  Icon Font: sandstorm
+*/
 
 @font-face {
   font-family: "sandstorm";
-  src: url("icons/sandstorm/sandstorm_0ef63938a840a28a9d5d43ef7110dbfc.eot");
-  src: url("icons/sandstorm/sandstorm_0ef63938a840a28a9d5d43ef7110dbfc.eot?#iefix") format("embedded-opentype"),
-       url("icons/sandstorm/sandstorm_0ef63938a840a28a9d5d43ef7110dbfc.woff") format("woff"),
-       url("icons/sandstorm/sandstorm_0ef63938a840a28a9d5d43ef7110dbfc.ttf") format("truetype"),
-       url("icons/sandstorm/sandstorm_0ef63938a840a28a9d5d43ef7110dbfc.svg#sandstorm") format("svg");
+  src: url("./sandstorm_0ef63938a840a28a9d5d43ef7110dbfc.eot");
+  src: url("./sandstorm_0ef63938a840a28a9d5d43ef7110dbfc.eot?#iefix") format("embedded-opentype"),
+       url("./sandstorm_0ef63938a840a28a9d5d43ef7110dbfc.woff") format("woff"),
+       url("./sandstorm_0ef63938a840a28a9d5d43ef7110dbfc.ttf") format("truetype"),
+       url("./sandstorm_0ef63938a840a28a9d5d43ef7110dbfc.svg#sandstorm") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -16,7 +16,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: "sandstorm";
-    src: url("icons/sandstorm/sandstorm_0ef63938a840a28a9d5d43ef7110dbfc.svg#sandstorm") format("svg");
+    src: url("./sandstorm_0ef63938a840a28a9d5d43ef7110dbfc.svg#sandstorm") format("svg");
   }
 }
 
@@ -52,8 +52,7 @@
 .icon-star:before,
 .icon-tw:before,
 .icon-updated:before,
-.icon-upload:before,
-.icon-chevron-right:before {
+.icon-upload:before {
   display: inline-block;
   font-family: "sandstorm";
   font-style: normal;
@@ -73,8 +72,7 @@
 .icon-approved_dark:before { content: "\f102"; }
 .icon-approved_light:before { content: "\f103"; }
 .icon-apps:before { content: "\f104"; }
-.icon-arrow-install:before { content: "\f105";   position: relative; top: -0.3em; }
-.icon-chevron-right:before { content: "\003e"; font-family: "Lato", Helvetica, Arial, "Lucida Grande", sans-serif; }
+.icon-arrow-install:before { content: "\f105"; }
 .icon-edit:before { content: "\f106"; }
 .icon-fb:before { content: "\f107"; }
 .icon-flagged_dark:before { content: "\f108"; }
@@ -99,51 +97,3 @@
 .icon-tw:before { content: "\f11b"; }
 .icon-updated:before { content: "\f11c"; }
 .icon-upload:before { content: "\f11d"; }
-
-html {
-  font-family: "Lato", Helvetica, Arial, "Lucida Grande", sans-serif;
-  font-weight: 300;
-  font-size: 12px;
-  font-size: 0.65vw;
-
-  @media (max-width: $small-screen) {
-
-    font-size: 8.32px;
-
-  }
-
-  @media (min-width: $xlarge-screen) {
-
-    font-size: 10.4px;
-
-  }
-
-  body {
-    margin: 0;
-  }
-
-  a {
-    text-decoration: none;
-  }
-}
-
-.main {
-}
-
-// UTILITY
-
-.flex {
-
-  display: flex;
-
-}
-
-.clearfix {
-
-  &:after {
-    content:  "";
-    display:  table;
-    clear:  both;
-  }
-
-}
