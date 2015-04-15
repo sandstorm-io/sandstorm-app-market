@@ -4,7 +4,7 @@
   background-color: $topbar-bg;
   height: $topbar-height;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 
   .logo-box {
 
@@ -24,6 +24,12 @@
   .genre-holder {
 
     margin-left: $menu-width + $app-section-padding-left;
+
+    @media (max-width: $small-tablet) {
+
+      margin-left: $app-section-padding-left;
+
+    }
 
   }
 
@@ -104,6 +110,13 @@
         outline: none;
         border: 1px solid $topbar-item-active-bg;
       }
+
+      @media (max-width: $medium-phone) {
+        width: 28%;
+      }
+      @media (max-width: $small-phone) {
+        display: none;
+      }
     }
 
     .search-button {
@@ -120,7 +133,19 @@
       &:active, &:hover {
         background-color: $topbar-item-active-bg;
       }
+
+      @media (max-width: $small-phone) {
+        display: none;
+      }
     }
+
+  @media (max-width: $small-tablet) {
+
+    left: initial;
+    right: $topbar-logo-margin-left;
+    text-align: right;
+
+  }
 
   }
 

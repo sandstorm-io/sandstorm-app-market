@@ -4,7 +4,8 @@
 
     <a class="logo-box" href="/">
 
-      <i class="icon-logo"></i>
+      <i class="icon-logo show-above-phone"></i>
+      <i class="icon-logo-image hide-above-phone"></i>
 
     </a>
 
@@ -19,7 +20,8 @@
         {{/each}}
 
         <div class="genre-box extra-genres" data-action="{{#if moreOpen}}close-more-menu{{else}}open-more-menu{{/if}}">
-          <a class="more">More</a>
+          <a class="more show-above-small-phone">More</a>
+          <a class="more hide-above-small-phone">Genres</a>
           <ul class="extra-genres-list {{#if moreOpen}}open{{/if}}">
             {{#each extraGenres}}
               <a href="/genres/{{name}}" data-action="close-more-menu"><li class="genre-box {{#if active}}active{{/if}}">{{name}}</li></a>
