@@ -27,6 +27,19 @@
   padding-bottom: $app-container-margin-tb;
   box-sizing: border-box;
 
+  @media (max-width: $small-screen) {
+    flex-basis: $app-container-width-small-screen;
+  }
+  @media (max-width: $large-tablet) {
+    flex-basis: $app-container-width-large-tablet;
+  }
+  @media (max-width: $medium-tablet) {
+    flex-basis: $app-container-width-medium-tablet;
+  }
+  @media (max-width: $large-phone) {
+    flex-basis: $app-container-width-large-phone;
+  }
+
   .app-item-inner {
 
     display: flex;
@@ -92,7 +105,7 @@
         color: $star-col-dark;
       }
       .light {
-        color: $star-col-light;        
+        color: $star-col-light;
       }
 
     }
