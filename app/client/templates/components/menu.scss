@@ -61,7 +61,7 @@
 
   }
 
-  @media screen and (max-width: $large-phone) {
+  @media screen and (max-width: $small-tablet) {
 
     position: relative;
     width: 100%;
@@ -90,7 +90,7 @@
     flex-grow: 1;
   }
 
-  @media screen and (max-width: $large-phone) {
+  @media screen and (max-width: $small-tablet) {
 
     display: none;
 

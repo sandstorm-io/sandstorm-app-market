@@ -1,0 +1,56 @@
+@import "variables";
+
+.show-above-phone {
+
+  @media (max-width: $small-tablet) {
+    display: none;
+  }
+  @media (min-width: ($small-tablet + 1px)) {
+    display: inherit;
+  }
+
+}
+
+.hide-above-phone {
+
+  @media (max-width: $small-tablet + 1px) {
+    display: inherit;
+  }
+  @media (min-width: ($small-tablet + 1px)) {
+    display: none;
+  }
+
+}
+
+.show-above-small-phone {
+
+  @media (max-width: $medium-phone) {
+    display: none;
+  }
+  @media (min-width: ($medium-phone + 1px)) {
+    display: inherit;
+  }
+
+}
+
+.hide-above-small-phone {
+
+  @media (max-width: $medium-phone) {
+    display: inherit;
+  }
+  @media (min-width: ($medium-phone + 1px)) {
+    display: none;
+  }
+
+}
+
+.show-above-tiny {
+
+  @media (min-width: ($small-phone + 1px)) {
+    display: inherit;
+  }
+  @media (max-width: $small-phone) {
+    display: none;
+  }
+
+}

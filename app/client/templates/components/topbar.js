@@ -3,14 +3,15 @@ function resizeTopbar(template) {
   template.$('.genres').css('visibility', 'hidden');
   template.genreCount.set(Genres.getAll().length);
 
-  var availableWidth = template.$('.genre-holder').width() - 1;
+  var availableWidth = template.$('.genre-holder').width() - 1,
+      minCount = $(window).width() > 720 ? 1 : 0;
 
   Tracker.afterFlush(function() {
     template.autorun(function(comp) {
 
       var currentCount = template.genreCount.get();
 
-      if (template.$('.genres').width() > availableWidth && currentCount > 1)
+      if (template.$('.genres').width() > availableWidth && currentCount > minCount)
         Tracker.afterFlush(function() {
           template.genreCount.set(currentCount - 1);
         });

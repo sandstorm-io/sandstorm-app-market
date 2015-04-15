@@ -38,6 +38,7 @@
   }
   @media (max-width: $large-phone) {
     flex-basis: $app-container-width-large-phone;
+    min-width: auto;
   }
 
   .app-item-inner {
@@ -158,9 +159,23 @@
 
   &.large {
 
-    flex-basis: $app-container-width-large;
+    flex-basis: max($app-container-width * 3, 100%);
     min-width: $app-container-min-width * 3;
     max-width: $app-container-max-width * 3;
+
+    @media (max-width: $small-screen) {
+      flex-basis: max($app-container-width-small-screen * 3, 100%);
+    }
+    @media (max-width: $large-tablet) {
+      flex-basis: max($app-container-width-large-tablet * 3, 100%);
+    }
+    @media (max-width: $medium-tablet) {
+      flex-basis: max($app-container-width-medium-tablet * 3, 100%);
+    }
+    @media (max-width: $large-phone) {
+      flex-basis: max($app-container-width-large-phone * 3, 100%);
+      min-width: 0;
+    }
 
     .app-item-inner {
 
