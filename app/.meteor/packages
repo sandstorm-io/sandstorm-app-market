@@ -7,7 +7,6 @@
 meteor-platform
 fourseven:scss
 wolves:bourbon
-fortawesome:fontawesome
 msavin:mongol
 aldeed:collection2
 meteorhacks:flow-router

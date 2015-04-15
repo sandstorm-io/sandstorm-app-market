@@ -85,9 +85,15 @@
 
     .app-rating {
 
-      color: $star-col;
       font-size: $star-font-size;
       line-height: $star-line-height;
+
+      .dark {
+        color: $star-col-dark;
+      }
+      .light {
+        color: $star-col-light;        
+      }
 
     }
 
@@ -108,7 +114,7 @@
         padding-left: $app-install-padding-lr;
         padding-right: $app-install-padding-lr;
 
-        .icon {
+        i {
 
           color: $app-install-icon-col;
 
