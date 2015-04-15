@@ -13,18 +13,9 @@
     bottom: $topbar-padding-bottom;
     color: $topbar-logo-text;
 
-    .logo {
+    i {
 
-      display: inline;
       font-size: $topbar-logo-icon-size;
-
-    }
-
-    .logo-text {
-
-      display: inline;
-      font-size: $topbar-logo-font-size;
-      font-weight: bold;
 
     }
 
