@@ -85,9 +85,15 @@
 
     .app-rating {
 
-      color: $star-col;
       font-size: $star-font-size;
       line-height: $star-line-height;
+
+      .dark {
+        color: $star-col-dark;
+      }
+      .light {
+        color: $star-col-light;        
+      }
 
     }
 
