@@ -1,10 +1,14 @@
 @import "../../stylesheets/variables";
+@import "../../templates/components/menu";
 
 .genre-popular-section {
 
   background-color: $genre-popular-bg;
 
-  .content {
+  > .contents {
+
+    @extend .menu-spacer;
+    @extend .pad-right;
 
     .title {
 
@@ -12,8 +16,8 @@
       text-transform: uppercase;
       font-size: $genre-page-popular-height;
       font-weight: lighter;
-      margin-top: $genre-page-popular-margin-top;
-      margin-bottom: $genre-page-popular-margin-bottom;
+      padding-top: $genre-page-popular-margin-top;
+      padding-bottom: $genre-page-popular-margin-bottom;
 
     }
 
@@ -26,6 +30,17 @@
     left: 0;
     right: 0;
     z-index: -1;
+
+  }
+
+}
+
+.genre-other-section {
+
+  .contents {
+
+    @extend .menu-spacer;
+    @extend .pad-right;
 
   }
 
