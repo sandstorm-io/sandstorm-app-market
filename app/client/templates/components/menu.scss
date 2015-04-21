@@ -83,16 +83,23 @@
 
 .menu-spacer {
 
-  flex-basis: $menu-width + $app-section-padding-left;
-  flex-shrink: 0;
-
-  &+* {
-    flex-grow: 1;
-  }
+  margin-left: $menu-width + $app-section-padding-left;
 
   @media screen and (max-width: $small-tablet) {
 
-    display: none;
+    margin-left: 0;
+
+  }
+
+}
+
+.padding-right {
+
+  padding-right: $app-section-padding-right;
+
+  @media screen and (max-width: $small-tablet) {
+
+    padding-right: 0;
 
   }
 

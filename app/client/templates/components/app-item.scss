@@ -3,50 +3,31 @@
 .app-table {
 
   margin-left: -$app-container-margin-lr;
+  font-size: 0;
+  display: block;
 
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: stretch;
+  @media screen and (max-width: $small-tablet) {
+
+    text-align: center;
+
+  }
 
 }
 
 .app-item-container {
 
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: space-between;
-  flex-basis: $app-container-width;
-  min-width: $app-container-min-width;
-  max-width: $app-container-max-width;
+  display: inline-block;
+  vertical-align: top;
+  width: $app-container-width;
   padding-left: $app-container-margin-lr;
   padding-right: $app-container-margin-lr;
   padding-top: $app-container-margin-tb;
   padding-bottom: $app-container-margin-tb;
   box-sizing: border-box;
 
-  @media (max-width: $small-screen) {
-    flex-basis: $app-container-width-small-screen;
-  }
-  @media (max-width: $large-tablet) {
-    flex-basis: $app-container-width-large-tablet;
-  }
-  @media (max-width: $medium-tablet) {
-    flex-basis: $app-container-width-medium-tablet;
-  }
-  @media (max-width: $large-phone) {
-    flex-basis: $app-container-width-large-phone;
-    min-width: auto;
-  }
-
   .app-item-inner {
 
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: space-between;
+    height: $app-container-height;
     padding-top: $app-container-padding-tb;
     padding-bottom: $app-container-padding-tb;
     padding-left: $app-container-padding-lr;
@@ -54,19 +35,17 @@
     box-shadow: $app-container-box-shadow;
     background-color: $app-box-bg;
     box-sizing: border-box;
+    position: relative;
 
     .text-section {
-
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      flex-basis: 100% - $app-image-large-width;
 
     }
 
     .image-surround {
 
       position: relative;
+      height: 51.6%;
+
 
       .image {
 
@@ -74,7 +53,7 @@
         background-size: cover;
         background-position: center;
         display: block;
-        padding-top: 100%;
+        height: 100%;
 
       }
 
@@ -101,6 +80,7 @@
 
       font-size: $star-font-size;
       line-height: $star-line-height;
+      padding-bottom: 0.5rem;
 
       .dark {
         color: $star-col-dark;
@@ -113,13 +93,12 @@
 
     .install-price {
 
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      margin-top: $app-installprice-margin-top;
+      line-height: $app-install-price-line-height;
 
       .app-install {
 
+        display: inline-block;
+        float: left;
         font-size: $app-install-font-size;
         color: $app-install-text;
         background-color: $app-install-bg;
@@ -144,6 +123,8 @@
 
       .app-price {
 
+        display: inline-block;
+        float: right;
         font-size: $app-price-font-size;
         color: $app-price-col;
 
@@ -159,64 +140,45 @@
 
   &.large {
 
-    flex-basis: max($app-container-width * 3, 100%);
-    min-width: $app-container-min-width * 3;
-    max-width: $app-container-max-width * 3;
-
-    @media (max-width: $small-screen) {
-      flex-basis: max($app-container-width-small-screen * 3, 100%);
-    }
-    @media (max-width: $large-tablet) {
-      flex-basis: max($app-container-width-large-tablet * 3, 100%);
-    }
-    @media (max-width: $medium-tablet) {
-      flex-basis: max($app-container-width-medium-tablet * 3, 100%);
-    }
-    @media (max-width: $large-phone) {
-      flex-basis: max($app-container-width-large-phone * 3, 100%);
-      min-width: 0;
-    }
+    width: $app-container-width-large;
 
     .app-item-inner {
 
-      flex-direction: row;
-      align-items: stretch;
-      flex-grow: 1;
-      flex-shrink: 1;
-
       .image-surround {
 
-        display: flex;
-        flex-basis: $app-image-large-width;
-        align-items: stretch;
-        overflow: hidden;
         margin-right: $app-image-large-margin-right;
+        float: left;
+        height: 100%;
+        width: $app-image-large-width;
 
-        .image {
+      }
 
-          flex-basis: 100%;
+      .text-section {
+
+        height: 100%;
+        overflow: hidden;
+
+        .app-name {
+
+          font-size: $app-name-large-font-size;
 
         }
 
+        .app-author {
 
-      }
+          font-size: $app-author-large-font-size;
 
-      .app-name {
+        }
 
-        font-size: $app-name-large-font-size;
+        .app-description {
 
-      }
+          padding-top: 1.5rem;
+          font-size: $app-description-large-font-size;
+          color: $app-description-text;
+          clear: both;
+          overflow: ellipsis;
 
-      .app-author {
-
-        font-size: $app-author-large-font-size;
-
-      }
-
-      .app-description {
-
-        font-size: $app-description-large-font-size;
-        color: $app-description-text;
+        }
 
       }
 
