@@ -135,6 +135,7 @@
       "FlowRouter": false,
       "FlowLayout": false,
       "s": false,
+      "AntiModals": false,
 
       // Collections
       "Apps": true,

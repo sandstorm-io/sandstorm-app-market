@@ -12,10 +12,14 @@
   .menu-link {
 
     position: relative;
+    display: block;
     padding-left: $menu-item-padding-left;
     padding-top: $menu-item-padding-tb;
     padding-bottom: $menu-item-padding-tb;
     overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
 
     i {
       color: $menu-icon-col;
@@ -29,15 +33,19 @@
       font-size: $menu-font-size;
       display: inline;
       vertical-align: middle;
+      color: $menu-text;
     }
 
     &.active, &:hover, &:active {
 
-      color: $menu-active-text;
       background-color: $menu-active-bg;
 
-      .icon {
+      i {
         color: $menu-active-icon-col;
+      }
+
+      .menu-text {
+        color: $menu-active-text;
       }
 
       &:after {
@@ -93,7 +101,7 @@
 
 }
 
-.padding-right {
+.pad-right {
 
   padding-right: $app-section-padding-right;
 

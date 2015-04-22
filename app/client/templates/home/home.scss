@@ -88,6 +88,10 @@ body {
   margin-top: $app-genre-margin-top;
   margin-bottom: $app-genre-margin-bottom;
 
+  a {
+    color: $genre-title-text;
+  }
+
   &.large {
     font-size: $genre-page-title-height;
   }

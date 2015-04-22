@@ -12,6 +12,12 @@ Template.Menu.events({
 
     // TODO: redirect to appropriate page
 
+  },
+
+  'click [data-action="login-modal"]': function() {
+
+    AntiModals.overlay('loginModal');
+
   }
 
 });
