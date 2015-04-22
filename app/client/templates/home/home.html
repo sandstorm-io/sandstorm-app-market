@@ -22,7 +22,7 @@
 
       {{#each genres}}
 
-        {{> genreTable this}}
+        {{> genreTable genre=this.name}}
 
       {{/each}}
 
@@ -35,19 +35,32 @@
 <template name="genreTable">
 
   {{#if routerSubsReady}}
-  {{#if count apps}}
 
-  <div class="genre-name"><a href="/genres/{{this}}">{{this}} <i class="icon-chevron-right"></i></a></div>
+    <div class="genre-name"><a href="/genres/{{genre}}">{{genre}} <i class="icon-chevron-right"></i></a></div>
 
+    {{> appTable}}
+
+  {{/if}}
+
+</template>
+
+<template name="appTable">
+
+  {{logThis}}
   <div class="app-table">
-
-    {{#each apps}}
-      {{> appItem app=this}}
-    {{/each}}
+    {{#if bigLeader}}
+      {{#each apps genre 0 1}}
+        {{> appItem app=this size="large"}}
+      {{/each}}
+      {{#each apps genre 1 2}}
+        {{> appItem app=this}}
+      {{/each}}
+    {{else}}
+      {{#each apps genre 0 5}}
+        {{> appItem app=this}}
+      {{/each}}
+    {{/if}}
 
   </div>
-
-  {{/if}}
-  {{/if}}
 
 </template>

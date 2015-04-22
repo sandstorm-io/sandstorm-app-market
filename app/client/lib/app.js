@@ -30,6 +30,24 @@ var helpers = {
 
     return cursor.count();
 
+  },
+
+  skipLimit: function(iterable, skip, limit) {
+
+    if (typeof iterable.fetch === 'function') iterable = iterable.fetch();
+    if (!Array.isArray(iterable)) return [];
+
+    if (limit) return iterable.slice(skip, skip + limit);
+    else return iterable.slice(skip);
+
+  },
+
+  // DEBUGGING
+
+  logThis: function() {
+
+    console.log(this);
+
   }
 
 };

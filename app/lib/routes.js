@@ -20,6 +20,8 @@ FlowRouter.route('/genres/:genre', {
   action: function(params) {
     if (params.genre !== s.capitalize(params.genre))
       FlowRouter.setParams({genre: s.capitalize(params.genre)});
-    FlowLayout.render("MasterLayout", {mainSection: "Genre"});
+
+    if (params.genre === 'Popular') FlowLayout.render("MasterLayout", {mainSection: "Popular"});
+    else FlowLayout.render("MasterLayout", {mainSection: "Genre"});
   }
 });

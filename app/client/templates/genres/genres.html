@@ -14,7 +14,7 @@
 
     <div class="contents">
 
-        {{> genreTablePopular genre}}
+        {{> genreTablePopular genre=genre.name}}
 
     </div>
 
@@ -24,7 +24,7 @@
 
     <div class="contents">
 
-        {{> genreTableOther genre}}
+        {{> genreTableOther genre=genre.name}}
 
     </div>
 
@@ -40,19 +40,7 @@
 
       <div class="title">POPULAR</div>
 
-      <div class="app-table">
-
-        {{#with apps 0 1}}
-          {{> appItem app=this size="large"}}
-        {{/with}}
-        {{#with apps 1 1}}
-          {{> appItem app=this}}
-        {{/with}}
-        {{#with apps 2 1}}
-          {{> appItem app=this}}
-        {{/with}}
-
-      </div>
+      {{> appTable bigLeader=true genre=genre}}
 
     </div>
 
@@ -64,13 +52,7 @@
 
   <div class="genre-other">
 
-    <div class="app-table">
-
-      {{#each apps 3 0}}
-        {{> appItem app=this}}
-      {{/each}}
-
-    </div>
+    {{> appTable}}
 
   </div>
 
