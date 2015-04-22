@@ -2,25 +2,30 @@
 
   <nav class="menu-container">
 
-    <div class="menu-link active">
+    <a class="menu-link active" href="/appMarket">
       <i class="icon-market"></i>
       <div class="menu-text">App Market</div>
-    </div>
+    </a>
 
-    <div class="menu-link">
+    <a class="menu-link" href="/installedApps">
       <i class="icon-apps"></i>
       <div class="menu-text">Installed Apps</div>
-    </div>
+    </a>
 
-    <div class="menu-link">
+    <a class="menu-link">
       <i class="icon-my"></i>
       <div class="menu-text">Apps by Me</div>
-    </div>
+    </a>
 
-    <div class="menu-link">
+    <a class="menu-link">
       <i class="icon-upload"></i>
       <div class="menu-text">Upload an App</div>
-    </div>
+    </a>
+
+    <a class="menu-link" data-action="login-modal">
+      <i class="icon-my"></i>
+      <div class="menu-text">{{#if currentUser}}{{currentUser.emails.[0].address}}{{else}}Log In{{/if}}</div>
+    </a>
 
   </nav>
 

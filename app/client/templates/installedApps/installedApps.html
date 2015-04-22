@@ -1,0 +1,55 @@
+<template name="InstalledApps">
+
+  <div class="genre-title-section">
+
+    <div class="contents">
+
+      <div class="installed-apps-title large">INSTALLED APPS</div>
+
+    </div>
+
+  </div>
+
+  <div class="genre-other-section">
+
+    <div class="contents">
+
+      <div class="update-selector clearfix">
+
+        <div class="float-right">
+
+          {{> updateSelector}}
+
+        </div>
+
+      </div>
+
+      <div class="genre-other">
+
+        {{> appTable genre='Installed'}}
+
+      </div>
+
+    </div>
+
+  </div>
+
+</template>
+
+<template name="updateSelector">
+
+  <div class="update-selector-text">Auto-update apps?</div>
+
+  <div class="update-selector-buttons">
+
+    <div class="button left {{#if automatic}}active{{/if}}">
+      <i class="icon-edit"></i>
+      AUTOMATIC
+    </div>
+    <div class="button right {{#unless automatic}}active{{/unless}}">
+      MANUAL
+    </div>
+
+  </div>
+
+</template>

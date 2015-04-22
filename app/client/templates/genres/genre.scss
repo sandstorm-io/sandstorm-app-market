@@ -1,6 +1,12 @@
 @import "../../stylesheets/variables";
 @import "../../templates/components/menu";
 
+.genre-title-section {
+
+  @extend .menu-spacer;
+
+}
+
 .genre-popular-section {
 
   background-color: $genre-popular-bg;
