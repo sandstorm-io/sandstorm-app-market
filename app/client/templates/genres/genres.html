@@ -4,7 +4,7 @@
 
     <div class="contents">
 
-      <div class="genre-name large">{{genre.name}}</div>
+      <div class="genre-name large">{{genre}}</div>
 
     </div>
 
@@ -14,7 +14,7 @@
 
     <div class="contents">
 
-        {{> genreTablePopular genre=genre.name}}
+        {{> genreTablePopular genre=genre}}
 
     </div>
 
@@ -24,13 +24,29 @@
 
     <div class="contents">
 
-        {{> genreTableOther genre=genre.name}}
+        {{> genreTableOther genre=genre}}
 
     </div>
 
   </div>
 
 </template>
+
+
+<template name="genreTable">
+
+  {{#if routerSubsReady}}
+  {{#if countApps genre}}
+
+    <div class="genre-name"><a href="/genres/{{uriEncode genre}}">{{genre}} <i class="icon-chevron-right"></i></a></div>
+
+    {{> appTable}}
+
+  {{/if}}
+  {{/if}}
+
+</template>
+
 
 <template name="genreTablePopular">
 
@@ -40,7 +56,7 @@
 
       <div class="title">POPULAR</div>
 
-      {{> appTable bigLeader=true genre=genre}}
+      {{> appTable bigLeader=true singleLine=true genre=genre}}
 
     </div>
 
@@ -48,11 +64,12 @@
 
 </template>
 
+
 <template name="genreTableOther">
 
   <div class="genre-other">
 
-    {{> appTable}}
+    {{> appTable skipLines=1 afterBigLeader=true genre=genre}}
 
   </div>
 

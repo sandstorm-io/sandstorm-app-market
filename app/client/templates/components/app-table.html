@@ -1,0 +1,15 @@
+<template name="appTable">
+
+  <div class="app-table">
+
+    {{#if bigLeader}}
+      {{>appItem app=leader size="large"}}
+    {{/if}}
+
+    {{#each appList}}
+      {{> appItem app=this}}
+    {{/each}}
+
+  </div>
+
+</template>

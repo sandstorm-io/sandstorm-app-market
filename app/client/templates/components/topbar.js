@@ -67,8 +67,9 @@ Template.Topbar.helpers({
 
 Template.Topbar.onRendered(function() {
 
-  resizeTopbar(this);
-  $(window).on('resize', _.debounce(resizeTopbar.bind(window, this), 250));
+  var template = this;
+  Meteor.defer(resizeTopbar.bind(null, template));
+  $(window).on('resize.topbar', _.debounce(resizeTopbar.bind(window, this), 250));
 
 });
 
@@ -86,4 +87,8 @@ Template.Topbar.events({
 
   },
 
+});
+
+Template.Topbar.onDestroyed(function() {
+  $(window).off('resize.topbar');
 });

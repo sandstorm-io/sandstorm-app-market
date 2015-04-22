@@ -1,5 +1,7 @@
 Apps = new Mongo.Collection('apps');
 
+// TODO Update InstallCountThisWeek daily
+
 Schemas.Apps = new SimpleSchema({
   name: {
     type: String,
@@ -82,6 +84,11 @@ Schemas.Apps = new SimpleSchema({
     optional: true
   },
   installCount: {
+    type: Number,
+    min: 0,
+    defaultValue: 0
+  },
+  installCountThisWeek: {
     type: Number,
     min: 0,
     defaultValue: 0
