@@ -15,8 +15,9 @@
     padding-left: $menu-item-padding-left;
     padding-top: $menu-item-padding-tb;
     padding-bottom: $menu-item-padding-tb;
+    overflow: hidden;
 
-    .icon {
+    i {
       color: $menu-icon-col;
       font-size: $menu-icon-size;
       display: inline-block;
@@ -60,6 +61,24 @@
 
   }
 
+  @media screen and (max-width: $small-tablet) {
+
+    position: relative;
+    width: 100%;
+
+    &:not(.open) {
+
+      .menu-link:not(.active) {
+
+        height: 0;
+        padding: 0;
+
+      }
+
+    }
+
+  }
+
 }
 
 .menu-spacer {
@@ -69,6 +88,12 @@
 
   &+* {
     flex-grow: 1;
+  }
+
+  @media screen and (max-width: $small-tablet) {
+
+    display: none;
+
   }
 
 }

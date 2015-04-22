@@ -4,8 +4,8 @@
 
     <a class="logo-box" href="/">
 
-      <i class="fa fa-share-alt-square sandstorm logo"></i>
-      <div class="logo-text">Sandstorm.io</div>
+      <i class="icon-logo show-above-phone"></i>
+      <i class="icon-logo-image hide-above-phone"></i>
 
     </a>
 
@@ -20,7 +20,8 @@
         {{/each}}
 
         <div class="genre-box extra-genres" data-action="{{#if moreOpen}}close-more-menu{{else}}open-more-menu{{/if}}">
-          <a class="more">More</a>
+          <a class="more show-above-small-phone">More</a>
+          <a class="more hide-above-small-phone">Genres</a>
           <ul class="extra-genres-list {{#if moreOpen}}open{{/if}}">
             {{#each extraGenres}}
               <a href="/genres/{{name}}" data-action="close-more-menu"><li class="genre-box {{#if active}}active{{/if}}">{{name}}</li></a>
@@ -29,7 +30,7 @@
         </div>
 
         <input class="search-box" type="text" />
-        <button class="search-button"><i class="fa fa-search magnifying-glass icon"></i></button>
+        <button class="search-button"><i class="icon-search"></i></button>
 
       </div>
 

@@ -27,6 +27,20 @@
   padding-bottom: $app-container-margin-tb;
   box-sizing: border-box;
 
+  @media (max-width: $small-screen) {
+    flex-basis: $app-container-width-small-screen;
+  }
+  @media (max-width: $large-tablet) {
+    flex-basis: $app-container-width-large-tablet;
+  }
+  @media (max-width: $medium-tablet) {
+    flex-basis: $app-container-width-medium-tablet;
+  }
+  @media (max-width: $large-phone) {
+    flex-basis: $app-container-width-large-phone;
+    min-width: auto;
+  }
+
   .app-item-inner {
 
     display: flex;
@@ -85,9 +99,15 @@
 
     .app-rating {
 
-      color: $star-col;
       font-size: $star-font-size;
       line-height: $star-line-height;
+
+      .dark {
+        color: $star-col-dark;
+      }
+      .light {
+        color: $star-col-light;
+      }
 
     }
 
@@ -108,7 +128,7 @@
         padding-left: $app-install-padding-lr;
         padding-right: $app-install-padding-lr;
 
-        .icon {
+        i {
 
           color: $app-install-icon-col;
 
@@ -139,9 +159,23 @@
 
   &.large {
 
-    flex-basis: $app-container-width-large;
+    flex-basis: max($app-container-width * 3, 100%);
     min-width: $app-container-min-width * 3;
     max-width: $app-container-max-width * 3;
+
+    @media (max-width: $small-screen) {
+      flex-basis: max($app-container-width-small-screen * 3, 100%);
+    }
+    @media (max-width: $large-tablet) {
+      flex-basis: max($app-container-width-large-tablet * 3, 100%);
+    }
+    @media (max-width: $medium-tablet) {
+      flex-basis: max($app-container-width-medium-tablet * 3, 100%);
+    }
+    @media (max-width: $large-phone) {
+      flex-basis: max($app-container-width-large-phone * 3, 100%);
+      min-width: 0;
+    }
 
     .app-item-inner {
 

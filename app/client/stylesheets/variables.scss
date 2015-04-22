@@ -1,3 +1,17 @@
+// BREAKPOINTS
+
+$small-phone: 320px;
+$medium-phone: 360px;
+$large-phone: 480px;
+$small-tablet: 720px;
+$medium-tablet: 768px;
+$large-tablet: 1024px;
+$small-screen: 1280px;
+$medium-screen: 1366px;
+$large-screen: 1440px;
+$xlarge-screen: 1600px;
+$xxlarge-screen: 1920px;
+
 // COLORS
 $menu-active-text: #ffffff;
 $menu-active-bg: #a460ba;
@@ -24,8 +38,8 @@ $app-install-text: #783189;
 $app-description-text: #222222;
 $app-install-bg: #eee4f4;
 $app-install-icon-col: #c9add0;
-$star-col: #783189;
-$star-faded-col: #783189; // THIS IS CLEARLY WRONG
+$star-col-dark: #783189;
+$star-col-light: #c9add0; // THIS IS CLEARLY WRONG (GIVEN AS #783189)
 $app-price-col: #783189;
 $app-price-free-col: #44c963;
 $free-text: #344c96; // THIS IS ALSO WRONG (GIVEN AS #344c963)
@@ -39,8 +53,7 @@ $genre-popular-bg: #dad3dd; // this is not the supplied color of a58faa, but it 
 
 // SPACING
 $topbar-height: 8.5rem;
-$topbar-logo-font-size: 2.167rem;
-$topbar-logo-icon-size: 4.583rem;
+$topbar-logo-icon-size: 6.044rem;
 $topbar-logo-margin-left: 2.5rem;
 $topbar-padding-bottom: 1.667rem;
 $topbar-item-font-size: 1.167rem;
@@ -60,6 +73,10 @@ $app-section-padding-left: 8rem;
 $app-genre-margin-top: 5.417rem;
 $app-genre-margin-bottom: 1.333rem;
 $app-container-width: 20%;
+$app-container-width-small-screen: 25%;
+$app-container-width-large-tablet: 33%;
+$app-container-width-medium-tablet: 50%;
+$app-container-width-large-phone: 100%;
 $app-container-width-large: 60%;
 $app-container-min-width: 120px;
 $app-container-max-width: 200px;

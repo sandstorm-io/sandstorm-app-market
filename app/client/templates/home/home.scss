@@ -11,6 +11,7 @@ body {
   width: 100%;
   height: $welcome-message-height;
   background-color: $welcome-message-bg;
+  overflow: hidden;
 
   .message {
 
@@ -26,6 +27,37 @@ body {
 
   }
 
+  &.collapsed {
+
+    height: 0;
+
+  }
+
+  .close-button {
+
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: none;
+
+    i {
+      font-size: 2.5rem;
+      color: $welcome-message-text;
+    }
+
+  }
+
+  @media screen and (max-width: $small-tablet) {
+
+    position: relative;
+
+    .close-button {
+
+      display: block;
+
+    }
+  }
+
 }
 
 .genre-name {
@@ -39,7 +71,7 @@ body {
     font-size: $genre-page-title-height;
   }
 
-  i.right-chevron {
+  i.icon-chevron-right {
     color: $genre-title-chevron;
   }
 

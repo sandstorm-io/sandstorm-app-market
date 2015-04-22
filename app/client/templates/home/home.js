@@ -2,6 +2,13 @@
 /* Home: Event Handlers */
 /*****************************************************************************/
 Template.Home.events({
+
+  'click .close-button': function(evt, tmp) {
+
+    tmp.$('.welcome-message').addClass('collapsed');
+
+  }
+
 });
 
 /*****************************************************************************/
