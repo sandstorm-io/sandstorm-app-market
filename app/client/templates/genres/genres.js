@@ -9,14 +9,12 @@ Template.Genre.helpers({
 });
 
 
-Template.registerHelper('apps', function(skip, limit) {
+Template.registerHelper('apps', function(genre, skip, limit) {
 
   var options = {sort: {installCount: -1}};
   if (skip) options.skip = skip;
   if (limit) options.limit = limit;
 
-  return (limit === 1) ?
-      Genres.findOneIn(this.name, {}, options) :
-      Genres.findIn(this.name, {}, options);
+  return Genres.findIn(genre, {}, options);
 
 });

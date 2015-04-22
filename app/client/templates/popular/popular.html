@@ -1,0 +1,37 @@
+<template name="Popular">
+
+  <div class="genre-title-section">
+
+    <div class="contents">
+
+      <div class="genre-name large">Popular</div>
+
+    </div>
+
+  </div>
+
+  <div class="genre-popular-section">
+
+    <div class="contents">
+
+        {{> genreTablePopular genre='all'}}
+
+    </div>
+
+  </div>
+
+  {{#each genres}}
+
+    <div class="genre-other-section">
+
+      <div class="contents">
+
+          {{> genreTable genre=this bigLeader=true}}
+
+      </div>
+
+    </div>
+
+  {{/each}}
+
+</template>
