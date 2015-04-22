@@ -14,7 +14,7 @@
 
     <div class="contents">
 
-        {{> genreTablePopular genre='all'}}
+        {{> popularThisWeekTable}}
 
     </div>
 
@@ -26,12 +26,28 @@
 
       <div class="contents">
 
-          {{> genreTable genre=this bigLeader=true}}
+          {{> genreTable genre=this.name bigLeader=true singleLine=true}}
 
       </div>
 
     </div>
 
   {{/each}}
+
+</template>
+
+<template name="popularThisWeekTable">
+
+  <div class="genre-popular">
+
+    <div class="contents">
+
+      <div class="title">THIS WEEK</div>
+
+      {{> appTable bigLeader=true singleLine=true genre='This Week'}}
+
+    </div>
+
+  </div>
 
 </template>

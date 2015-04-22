@@ -1,19 +1,5 @@
 @import "../../stylesheets/variables";
 
-.app-table {
-
-  margin-left: -$app-container-margin-lr;
-  font-size: 0;
-  display: block;
-
-  @media screen and (max-width: $small-tablet) {
-
-    text-align: center;
-
-  }
-
-}
-
 .app-item-container {
 
   display: inline-block;

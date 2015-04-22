@@ -18,7 +18,7 @@ Template.Home.helpers({
 
   genres: function() {
 
-    return Genres.getAll();
+    return Genres.getAll({where: {showSummary: true}});
 
   },
 
@@ -35,8 +35,4 @@ Template.Home.helpers({
 /*****************************************************************************/
 Template.Home.onCreated(function () {
   this.subscribe('categories');
-});
-
-Template.genreTable.onCreated(function() {
-  this.subscribe('apps by genre', this.data.genre);
 });

@@ -6,6 +6,18 @@ Schemas.Categories = new SimpleSchema({
     label: "Category Name",
     max: 200,
     index: true
+  },
+  priority: {
+    type: Number,
+    label: "Category Priority in Aggregated Views",
+    index: true,
+    defaultValue: 1
+  },
+  showSummary: {
+    type: Boolean,
+    label: "Show Category in Aggregted Views",
+    index: true,
+    defaultValue: true
   }
 });
 
