@@ -11,3 +11,13 @@ Template.updateSelector.helpers({
   }
 
 });
+
+Template.updateSelector.events({
+
+  'click .button': function() {
+
+    Session.set('automatic', !Session.get('automatic')); // TODO: change this;
+
+  }
+
+});

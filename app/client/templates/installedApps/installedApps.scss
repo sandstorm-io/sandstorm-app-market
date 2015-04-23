@@ -44,8 +44,10 @@
       padding-right: $update-selector-button-padding-lr;
       color: $update-selector-button-text;
       background-color: $update-selector-button-bg;
-      border: none;
+      border: 1px solid rgba(0, 0, 0, 0);
       border-radius: 0.5rem;
+      cursor: pointer;
+
       i {
         color: $update-selector-button-icon;
       }
