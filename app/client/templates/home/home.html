@@ -1,11 +1,9 @@
 <template name="Home">
 
   {{#if message}}
-  <div class="welcome-message flex">
+  <div class="welcome-message">
 
-    <div class="menu-spacer"></div>
-
-    <div class="message flex">
+    <div class="message">
 
       <div class="text">{{message}}</div>
 
@@ -18,40 +16,18 @@
   </div>
   {{/if}}
 
-  <div class="main-section flex">
-
-    <div class="menu-spacer"></div>
+  <div class="main-section">
 
     <div class="contents">
 
       {{#each genres}}
 
-        {{> genreTable this}}
+        {{> genreTable genre=this.name singleLine=true}}
 
       {{/each}}
 
     </div>
 
   </div>
-
-</template>
-
-<template name="genreTable">
-
-  {{#if routerSubsReady}}
-  {{#if count apps}}
-
-  <div class="genre-name"><a href="/genres/{{this}}">{{this}} <i class="icon-chevron-right"></i></a></div>
-
-  <div class="app-table">
-
-    {{#each apps}}
-      {{> appItem app=this}}
-    {{/each}}
-
-  </div>
-
-  {{/if}}
-  {{/if}}
 
 </template>

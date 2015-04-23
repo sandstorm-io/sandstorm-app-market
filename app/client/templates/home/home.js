@@ -18,7 +18,7 @@ Template.Home.helpers({
 
   genres: function() {
 
-    return _.pluck(Genres.getAll(), 'name');
+    return Genres.getAll({where: {showSummary: true}});
 
   },
 
@@ -35,18 +35,4 @@ Template.Home.helpers({
 /*****************************************************************************/
 Template.Home.onCreated(function () {
   this.subscribe('categories');
-});
-
-Template.genreTable.onCreated(function() {
-  this.subscribe('apps by genre', this.data);
-});
-
-Template.genreTable.helpers({
-
-  apps: function() {
-
-    return Genres.findIn(this.toString(), {}, {limit: 5});
-
-  }
-
 });

@@ -1,64 +1,62 @@
 <template name="Genre">
 
-  <div class="genre-title-section flex">
-
-    <div class="menu-spacer"></div>
+  <div class="genre-title-section">
 
     <div class="contents">
 
-      <div class="genre-name large">{{genre.name}}</div>
+      <div class="genre-name large">{{genre}}</div>
 
     </div>
 
   </div>
 
-  <div class="genre-popular-section flex">
-
-    <div class="menu-spacer"></div>
+  <div class="genre-popular-section">
 
     <div class="contents">
 
-        {{> genreTablePopular genre}}
+        {{> genreTablePopular genre=genre}}
 
     </div>
 
   </div>
 
-  <div class="genre-other-section flex">
-
-    <div class="menu-spacer"></div>
+  <div class="genre-other-section">
 
     <div class="contents">
 
-        {{> genreTableOther genre}}
+        {{> genreTableOther genre=genre}}
 
     </div>
 
   </div>
 
 </template>
+
+
+<template name="genreTable">
+
+  {{#if routerSubsReady}}
+  {{#if countApps genre}}
+
+    <div class="genre-name"><a href="/genres/{{uriEncode genre}}">{{genre}} <i class="icon-chevron-right"></i></a></div>
+
+    {{> appTable}}
+
+  {{/if}}
+  {{/if}}
+
+</template>
+
 
 <template name="genreTablePopular">
 
   <div class="genre-popular">
 
-    <div class="content">
+    <div class="contents">
 
       <div class="title">POPULAR</div>
 
-      <div class="app-table">
-
-        {{#with apps 0 1}}
-          {{> appItem app=this size="large"}}
-        {{/with}}
-        {{#with apps 1 1}}
-          {{> appItem app=this}}
-        {{/with}}
-        {{#with apps 2 1}}
-          {{> appItem app=this}}
-        {{/with}}
-
-      </div>
+      {{> appTable bigLeader=true singleLine=true genre=genre}}
 
     </div>
 
@@ -66,17 +64,12 @@
 
 </template>
 
+
 <template name="genreTableOther">
 
   <div class="genre-other">
 
-    <div class="app-table">
-
-      {{#each apps 3 0}}
-        {{> appItem app=this}}
-      {{/each}}
-
-    </div>
+    {{> appTable skipLines=1 afterBigLeader=true genre=genre}}
 
   </div>
 

@@ -1,0 +1,53 @@
+<template name="Popular">
+
+  <div class="genre-title-section">
+
+    <div class="contents">
+
+      <div class="genre-name large">Popular</div>
+
+    </div>
+
+  </div>
+
+  <div class="genre-popular-section">
+
+    <div class="contents">
+
+        {{> popularThisWeekTable}}
+
+    </div>
+
+  </div>
+
+  {{#each genres}}
+
+    <div class="genre-other-section">
+
+      <div class="contents">
+
+          {{> genreTable genre=this.name bigLeader=true singleLine=true}}
+
+      </div>
+
+    </div>
+
+  {{/each}}
+
+</template>
+
+<template name="popularThisWeekTable">
+
+  <div class="genre-popular">
+
+    <div class="contents">
+
+      <div class="title">THIS WEEK</div>
+
+      {{> appTable bigLeader=true singleLine=true genre='This Week'}}
+
+    </div>
+
+  </div>
+
+</template>

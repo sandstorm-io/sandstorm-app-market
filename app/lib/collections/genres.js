@@ -22,7 +22,9 @@ var extraGenres = [
   {
     name: 'All',
     selector: {},
-    options: {}
+    options: {},
+    priority: 1,
+    showSummary: false
   },
 
   {
@@ -30,7 +32,9 @@ var extraGenres = [
     selector: {},
     options: {
       sort: {installCount: -1}
-    }
+    },
+    priority: 0,
+    showSummary: true
   },
 
   {
@@ -38,8 +42,31 @@ var extraGenres = [
     selector: {},
     options: {
       sort: {createdAt: -1}
-    }
+    },
+    priority: 1,
+    showSummary: false
+  },
+
+  {
+    name: 'New & Updated',
+    selector: {},
+    options: {
+      sort: {lastUpdated: -1}
+    },
+    priority: 0,
+    showSummary: true
+  },
+
+  {
+    name: 'This Week',
+    selector: {},
+    options: {
+      sort: {installCountThisWeek: -1}
+    },
+    priority: 0,
+    showSummary: true
   }
+
 
 ];
 
@@ -87,11 +114,15 @@ Genres = {
 
   },
 
-  getAll: function(iteratee) {
+  getAll: function(options) {
+
+    options = options || {};
 
     var genres  = extraGenres.concat(Categories.find().fetch());
+    if (options.where) genres = _.where(genres, options.where);
+    if (options.filter) genres = _.filter(genres, options.filter);
 
-    if (iteratee) return _.sortBy(genres, iteratee);
+    if (options.iteratee) return _.sortBy(genres, options.iteratee);
     else return genres;
 
   },
