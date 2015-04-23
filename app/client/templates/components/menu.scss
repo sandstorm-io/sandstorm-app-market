@@ -21,6 +21,18 @@
     text-overflow: ellipsis;
     cursor: pointer;
 
+    &.disabled {
+
+      cursor: auto;
+
+      .menu-text {
+
+        color: $menu-icon-col;
+
+      }
+
+    }
+
     i {
       color: $menu-icon-col;
       font-size: $menu-icon-size;
@@ -36,7 +48,7 @@
       color: $menu-text;
     }
 
-    &.active, &:hover, &:active {
+    &.active:not(.disabled), &:hover:not(.disabled), &:active:not(.disabled) {
 
       background-color: $menu-active-bg;
 

@@ -191,6 +191,7 @@
   &.large {
 
     width: $app-container-width-large;
+    max-width: 100%;
 
     .app-item-inner {
 
@@ -200,13 +201,14 @@
         float: left;
         height: 100%;
         width: $app-image-large-width;
+        max-width: 50%;
 
       }
 
       .text-section {
 
         height: 100%;
-        overflow: hidden;
+        overflow-y: auto;
 
         .app-name {
 

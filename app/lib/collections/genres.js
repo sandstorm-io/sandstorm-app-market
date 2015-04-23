@@ -159,6 +159,14 @@ Genres = {
     return Categories.findOne({name: name}) ||
            _.findWhere(extraGenres, {name: name});
 
+  },
+
+  getPopulated: function(selector, options, context) {
+
+    return _.filter(this.getAll(options), function(genre) {
+      return !!Genres.findOneIn(genre.name, selector, options, context);
+    });
+
   }
 
 };
