@@ -76,7 +76,7 @@ var extraGenres = [
         this.userId ||
         (Meteor.userId && Meteor.userId())
       );
-      return user && {_id: {$in: user.installedApps}};
+      return user && {_id: {$in: _.keys(user.installedApps)}};
     },
     options: {},
     priority: 2,

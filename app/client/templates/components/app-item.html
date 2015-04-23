@@ -1,6 +1,6 @@
 <template name="appItem">
 
-  <div class="app-item-container {{size}}">
+  <div class="app-item-container {{size}} {{#if installed app}}installed{{/if}}">
 
     <div class="app-item-inner">
 
@@ -56,19 +56,59 @@
 
         <div class="app-author">{{getUsername author}}</div>
 
-        <div class="app-rating">{{{appRating stars}}}</div>
-
-        <div class="install-price">
-
-          <div class="app-install {{#if installed}}installed{{/if}}">
-            INSTALL <i class="icon-arrow-install"></i>
+        {{#if installed}}
+        <div class="app-rating">
+          {{{appRating myRating}}}
+            <div class="rate-it">
+              {{#if myRating}}
+                YOUR RATING
+              {{else}}
+                RATE IT
+              {{/if}}
           </div>
-
-          <div class="app-price {{#if free price}}free{{/if}}">
-            {{#if free price}}FREE{{else}}{{price}}{{/if}}
-          </div>
-
         </div>
+        {{else}}
+        <div class="app-rating">
+          {{{appRating stars}}}
+        </div>
+        {{/if}}
+
+        {{#if installed}}
+
+          <div class="installed-bar">
+
+            <div class="install-date">
+              <div class="installed-text">
+                INSTALLED
+              </div>
+              <div class="install-date-inner">
+                {{briefDate installDetails.dateTime}}
+              </div>
+            </div>
+
+            <div class="installed-version">
+              {{installDetails.version}}
+            </div>
+
+            <div class="uninstall-app">
+              <i class="icon-garbage" data-action="uninstall-app-modal"></i>
+            </div>
+
+          </div>
+
+        {{else}}
+          <div class="install-price">
+
+            <div class="app-install {{#if installed}}installed{{/if}}">
+              INSTALL <i class="icon-arrow-install"></i>
+            </div>
+
+            <div class="app-price {{#if free price}}free{{/if}}">
+              {{#if free price}}FREE{{else}}{{price}}{{/if}}
+            </div>
+
+          </div>
+        {{/if}}
 
         {{/with}}
 

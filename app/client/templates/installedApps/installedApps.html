@@ -36,6 +36,7 @@
 
 </template>
 
+
 <template name="updateSelector">
 
   <div class="update-selector-text">Auto-update apps?</div>
@@ -48,6 +49,42 @@
     </div>
     <div class="button right {{#unless automatic}}active{{/unless}}">
       MANUAL
+    </div>
+
+  </div>
+
+</template>
+
+
+<template name="uninstallApp">
+
+  <div class="anti-modal-box uninstall-box">
+
+    <div class="header">
+      UNINSTALL THIS APP?
+    </div>
+
+    <div class="divider">
+    </div>
+
+    <div class="blurb">
+      <p>
+        The grains (instances or documents) associated with this app may or may not be able to be opened with other apps.
+      </p>
+      <p>
+        You can always re-install the newest available version of this app, but you won't be able to re-install older versions.
+      </p>
+    </div>
+
+    <div class="buttons">
+
+      <div class="button" data-action="close-modal">
+        CANCEL
+      </div>
+      <div class="button" data-action="uninstall-app">
+        YES, UNINSTALL
+      </div>
+
     </div>
 
   </div>

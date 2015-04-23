@@ -23,3 +23,5 @@ accounts-github
 accounts-ui-unstyled
 service-configuration
 anti:modals
+accounts-google
+momentjs:moment

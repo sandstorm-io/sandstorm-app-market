@@ -8,8 +8,8 @@ Schemas.UserProfile = new SimpleSchema({
 Schemas.Users = new SimpleSchema({
   username: {
       type: String,
-      regEx: /^[a-z0-9A-Z_]{3,15}$/,
-      optional: true
+      min: 1,
+      max: 50
   },
   emails: {
       type: [Object],
@@ -47,9 +47,18 @@ Schemas.Users = new SimpleSchema({
       blackbox: true
   },
   installedApps: {
-    type: [String],
-    regEx: SimpleSchema.RegEx.Id,
-    defaultValue: []
+    type: Object,
+    blackbox: true,
+    defaultValue: {}
+  },
+  autoupdateApps: {
+    type: Boolean,
+    defaultValue: true
+  },
+  appRatings: {
+    type: Object,
+    blackbox: true,
+    defaultValue: {}
   },
   // Add `roles` to your schema if you use the meteor-roles package.
   // Option 1: Object type

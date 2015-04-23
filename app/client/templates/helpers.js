@@ -1,5 +1,6 @@
 var helpers = {
 
+  //USER HELPERS
   getUsername: function(_id) {
 
     var user = Meteor.users.findOne(_id);
@@ -8,6 +9,22 @@ var helpers = {
 
   },
 
+  //ROUTER/SUB HELPERS
+
+  routerSubsReady: function(name) {
+
+    return name ? FlowRouter.subsReady(name) : FlowRouter.subsReady();
+
+  },
+
+  routeRoot: function(string) {
+
+    return FlowRouter.reactiveCurrent().path.substr(0, string && string.length) === string ?
+          'active' : '';
+
+  },
+
+  // UTILITY HELPERS
   equal: function(a, b) {
 
     return a === b;
@@ -17,12 +34,6 @@ var helpers = {
   prune: function(string, length) {
 
     return s.prune(string, length);
-
-  },
-
-  routerSubsReady: function(name) {
-
-    return name ? FlowRouter.subsReady(name) : FlowRouter.subsReady();
 
   },
 
@@ -54,7 +65,14 @@ var helpers = {
 
   },
 
-  // DEBUGGING
+  briefDate: function(date) {
+
+    if (!(date instanceof Date)) return '#NAD';
+    else return moment(date).format('MMM DD');
+
+  },
+
+  // DEBUGGING HELPERS
 
   logThis: function() {
 
