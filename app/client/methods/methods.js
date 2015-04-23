@@ -1,14 +1,12 @@
 /*****************************************************************************/
-/* Server Only Methods */
+/* STUB Methods - these don't actually do anything permanent! */
 /*****************************************************************************/
 Meteor.methods({
   'user/toggleAutoupdate': function() {
 
-    this.unblock();
-    if (!this.userId) return false;
-
-    var user = Meteor.users.findOne(this.userId);
-    return Meteor.users.update(this.userId, {
+    var user = Meteor.user();
+    if (!user) return false;
+    return Meteor.users.update(user._id, {
       $set: {
         autoupdateApps: !(user && user.autoupdateApps)
       }
@@ -18,13 +16,12 @@ Meteor.methods({
 
   'user/uninstallApp': function(appId) {
 
-    this.unblock();
-    if (!this.userId) return false;
+    if (!Meteor.userId()) return false;
 
     var unset = {};
 
     unset['installedApps.' + appId] = true;
-    return Meteor.users.update(this.userId, {
+    return Meteor.users.update(Meteor.userId(), {
       $unset: unset
     });
 

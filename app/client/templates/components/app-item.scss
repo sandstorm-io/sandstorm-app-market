@@ -60,6 +60,8 @@
       color: $app-author-text;
       text-transform: uppercase;
       line-height: $app-author-line-height;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
 
     }
 
@@ -74,6 +76,17 @@
       }
       .light {
         color: $star-col-light;
+      }
+
+      .rate-it {
+        display: inline-block;
+        margin-left: 1rem;
+        color: $rate-it-text;
+        cursor: pointer;
+
+        &:hover {
+          color: $rate-it-hover-text;
+        }
       }
 
     }
@@ -118,6 +131,49 @@
         &.free {
           color: $app-price-free-col;
         }
+
+      }
+
+    }
+
+    .installed-bar {
+
+      color: $installed-bar-text;
+      background-color: $installed-bar-bg;
+      position: absolute;
+      bottom: 0;
+      height: $installed-bar-height;
+      line-height: $installed-bar-height;
+      left: 0;
+      right: 0;
+      font-size: $installed-bar-font-size;
+      padding-left: $installed-bar-padding-left;
+      padding-right: $installed-bar-padding-right;
+
+      > * {
+
+        display: inline-block;
+
+      }
+
+      .install-date-inner {
+
+        display: inline-block;
+
+      }
+      
+      .installed-text {
+
+        display: none;
+
+      }
+
+      .uninstall-app {
+
+        float: right;
+        font-size: $installed-bar-icon-size;
+        color: $installed-bar-icon;
+        cursor: pointer;
 
       }
 
@@ -168,6 +224,16 @@
         }
 
       }
+
+    }
+
+  }
+
+  &.installed:first-child {
+
+    .installed-bar .installed-text {
+
+      display: inline-block;
 
     }
 

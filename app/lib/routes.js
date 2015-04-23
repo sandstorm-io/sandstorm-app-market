@@ -43,8 +43,8 @@ FlowRouter.route('/installedApps', {
   }
 });
 
-FlowRouter.route('/loginConfig', {
+FlowRouter.route('/serviceConfigure', {
   action: function() {
-    FlowLayout.render('loginConfig');
+    FlowLayout.render('loginButtons');
   }
 });

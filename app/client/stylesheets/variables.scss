@@ -43,6 +43,9 @@ $star-col-light: #c9add0; // THIS IS CLEARLY WRONG (GIVEN AS #783189)
 $app-price-col: #783189;
 $app-price-free-col: #44c963;
 $free-text: #344c96; // THIS IS ALSO WRONG (GIVEN AS #344c963)
+$installed-bar-text: #935aa1;
+$installed-bar-icon: #c9add0;
+$installed-bar-bg: #f1eaf3;
 
 $main-page-bg: #e7e4ea;
 
@@ -67,6 +70,15 @@ $update-selector-button-active-bg: #f3e6ff;
 $update-selector-button-active-border: #783189;
 $update-selector-button-active-icon: #c9add0;
 
+$rate-it-text: #ad83b7;
+$rate-it-hover-text: #783189;
+
+$uninstall-app-modal-bg: #f1eaf3;
+$uninstall-app-modal-text: #a965ba;
+$uninstall-app-modal-divider: #d4c3d8;
+$uninstall-app-modal-button-bg: #a965ba;
+$uninstall-app-modal-button-hover-bg: #b971cb;
+$uninstall-app-modal-button-text: #f1eaf3;
 
 // SIZING
 $topbar-height: 8.5rem;
@@ -119,6 +131,11 @@ $app-install-padding-lr: 1.167rem;
 $app-price-font-size: 1.083rem;
 $app-install-price-line-height: 2.5rem;
 $app-description-large-height: 4.5rem;
+$installed-bar-height: 3.75rem;
+$installed-bar-font-size: 1.15rem;
+$installed-bar-icon-size: 1.55rem;
+$installed-bar-padding-left: 1.9rem;
+$installed-bar-padding-right: 1.3rem;
 
 $welcome-message-height: 16.333rem;
 $welcome-message-font-size: 2rem;
@@ -137,3 +154,16 @@ $update-selector-text-font-size: 2.5rem;
 $update-selector-button-font-size: 1.54rem;
 $update-selector-button-padding-tb: 0.67rem;
 $update-selector-button-padding-lr: 1.73rem;
+
+$uninstall-app-modal-width: 35.2rem;
+$uninstall-app-modal-padding-lr: 2rem;
+$uninstall-app-modal-padding-tb: 2rem;
+$uninstall-app-modal-header-font-size: 2rem;
+$uninstall-app-modal-blurb-font-size: 1.75rem;
+$uninstall-app-modal-button-font-size: 1.75rem;
+$uninstall-app-modal-button-padding-lr: 3rem;
+$uninstall-app-modal-button-padding-tb: 0.5rem;
+$uninstall-app-modal-button-spacing: 0.7rem;
+$uninstall-app-modal-blurb-p-margin-top: 1.5rem;
+$uninstall-app-modal-blurb-p-margin-bottom: 2.1rem;
+$uninstall-app-modal-header-margin-bottom: 1rem;
