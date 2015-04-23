@@ -6,7 +6,11 @@
 
 
 Meteor.publish('categories', function () {
-  return Categories.find();
+  var allCats = _.pluck(Categories.find({}, {fields: {name: 1}}).fetch(), 'name'),
+      popCats = _.filter(allCats, function(catId) {
+        return Apps.findOne({category: catId});
+      });
+  return Categories.find({name: {$in: popCats}});
 });
 
 Meteor.publish('apps by genre', function (name) {

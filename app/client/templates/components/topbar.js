@@ -68,8 +68,14 @@ Template.Topbar.helpers({
 Template.Topbar.onRendered(function() {
 
   var template = this;
-  Meteor.setTimeout(resizeTopbar.bind(null, template), 50);
-  $(window).on('resize.topbar', _.debounce(resizeTopbar.bind(window, this), 250));
+  Meteor.defer(resizeTopbar.bind(null, template));
+  $(window).on('resize.topbar', _.debounce(resizeTopbar.bind(null, template), 250));
+  template.autorun(function(c) {
+    if (FlowRouter.subsReady('categories')) {
+      Tracker.afterFlush(resizeTopbar.bind(null, template));
+      c.stop();
+    }
+  });
 
 });
 
