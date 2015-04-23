@@ -28,5 +28,25 @@ Meteor.methods({
       $unset: unset
     });
 
+  },
+
+  'user/installApp': function(appId) {
+
+    // TODO: actually install the app!
+    this.unblock();
+    if (!this.userId) return false;
+    var app = Apps.findOne(appId);
+    if (!app) return false;
+
+    var set = {};
+
+    set['installedApps.' + appId] = {
+      version: _.last(app.versions),
+      dateTime: new Date()
+    };
+    return Meteor.users.update(this.userId, {
+      $set: set
+    });
+
   }
 });
