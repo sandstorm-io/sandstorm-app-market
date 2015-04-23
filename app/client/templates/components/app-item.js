@@ -43,7 +43,7 @@ Template.appItem.helpers({
     app = app || this;
 
     if (!user) return;
-    else return user.installedApps[this._id];  
+    else return user.installedApps[this._id];
 
   }
 
@@ -54,6 +54,14 @@ Template.appItem.events({
   'click [data-action="uninstall-app-modal"]': function() {
 
     AntiModals.overlay('uninstallApp', {data: this});
+
+  },
+
+  'click [data-action="install-app"]': function() {
+
+    Meteor.call('user/installApp', this._id, function(err) {
+      if (err) console.log(err);
+    });
 
   }
 

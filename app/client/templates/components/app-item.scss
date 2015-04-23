@@ -100,12 +100,11 @@
         display: inline-block;
         float: left;
         font-size: $app-install-font-size;
-        color: $app-install-text;
-        background-color: $app-install-bg;
         padding-top: $app-install-padding-tb;
         padding-bottom: $app-install-padding-tb;
         padding-left: $app-install-padding-lr;
         padding-right: $app-install-padding-lr;
+        color: $app-installed-text;
 
         i {
 
@@ -113,9 +112,11 @@
 
         }
 
-        &.installed {
+        &:not(.installed) {
 
-
+          color: $app-install-text;
+          background-color: $app-install-bg;
+          cursor: pointer;
 
         }
 
@@ -156,12 +157,18 @@
 
       }
 
-      .install-date-inner {
+      .install-date {
 
-        display: inline-block;
+        margin-right: 0.6rem;
 
+        .install-date-inner {
+
+          display: inline-block;
+          text-transform: uppercase;
+
+        }
       }
-      
+
       .installed-text {
 
         display: none;

@@ -21,7 +21,12 @@ $menu-bg: #ffffff;
 $menu-icon-col: #ddc9e8;
 $menu-divider-col: #e7daea;
 
+$topbar-bg-1: #723086;
+$topbar-bg-2: #552976;
+$topbar-bg-3: #603281;
+$topbar-bg-4: #4e2e77;
 $topbar-bg: #612c7d; // THIS IS TEMPORARY
+$topbar-bg: linear-gradient(165deg, $topbar-bg-1 0%,$topbar-bg-2 60%,$topbar-bg-3 60.1%,$topbar-bg-4 100%);
 $topbar-logo-text: #ffffff;
 $topbar-item-text: #ffffff;
 $topbar-item-bg: #78429d;
@@ -35,6 +40,7 @@ $app-box-drp-shdw: #a694b2;
 $app-name-text: #222222;
 $app-author-text: #783189;
 $app-install-text: #783189;
+$app-installed-text: #b491bc;
 $app-description-text: #222222;
 $app-install-bg: #eee4f4;
 $app-install-icon-col: #c9add0;

@@ -24,9 +24,15 @@
 
           <div class="install-price">
 
-            <div class="app-install {{#if installed}}installed{{/if}}">
-              INSTALL <i class="icon-arrow-install"></i>
-            </div>
+            {{#if installed}}
+              <div class="app-install installed">
+                INSTALLED
+              </div>
+            {{else}}
+              <div class="app-install" data-action="install-app">
+                INSTALL <i class="icon-arrow-install"></i>
+              </div>
+            {{/if}}
 
             <div class="app-price {{#if free price}}free{{/if}}">
               {{#if free price}}FREE{{else}}{{price}}{{/if}}
@@ -56,7 +62,7 @@
 
         <div class="app-author">{{getUsername author}}</div>
 
-        {{#if installed}}
+        {{#if ../../../installPage}}
         <div class="app-rating">
           {{{appRating myRating}}}
             <div class="rate-it">
@@ -73,7 +79,7 @@
         </div>
         {{/if}}
 
-        {{#if installed}}
+        {{#if ../../../installPage}}
 
           <div class="installed-bar">
 
@@ -87,7 +93,7 @@
             </div>
 
             <div class="installed-version">
-              {{installDetails.version}}
+              V {{installDetails.version}}
             </div>
 
             <div class="uninstall-app">
@@ -99,9 +105,15 @@
         {{else}}
           <div class="install-price">
 
-            <div class="app-install {{#if installed}}installed{{/if}}">
-              INSTALL <i class="icon-arrow-install"></i>
-            </div>
+            {{#if installed}}
+              <div class="app-install installed">
+                INSTALLED
+              </div>
+            {{else}}
+              <div class="app-install" data-action="install-app">
+                INSTALL <i class="icon-arrow-install"></i>
+              </div>
+            {{/if}}
 
             <div class="app-price {{#if free price}}free{{/if}}">
               {{#if free price}}FREE{{else}}{{price}}{{/if}}

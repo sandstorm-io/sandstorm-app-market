@@ -19,6 +19,12 @@
 
     float: right;
 
+    @media screen and (max-width: $medium-tablet) {
+
+      float: none;
+
+    }
+
   }
 
   .update-selector-text {
@@ -28,12 +34,29 @@
     color: $update-selector-text;
     vertical-align: middle;
 
+    @media screen and (max-width: $medium-tablet) {
+
+      display: block;
+      text-align: left;
+      margin-left: 7%;
+
+    }
+
   }
 
   .update-selector-buttons {
 
     display: inline-block;
     vertical-align: middle;
+
+    @media screen and (max-width: $medium-tablet) {
+
+      display: block;
+      line-height: 2.5;
+      text-align: right;
+      margin-right: 7%;
+
+    }
 
     .button {
 
@@ -82,6 +105,8 @@
   &.anti-modal-box {
 
     width: $uninstall-app-modal-width;
+    box-shadow: none;
+    border: none;
 
   }
 
