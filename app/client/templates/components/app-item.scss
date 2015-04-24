@@ -15,8 +15,8 @@
   .app-item-inner {
 
     height: $app-container-height;
-    padding-top: $app-container-padding-tb;
-    padding-bottom: $app-container-padding-tb;
+    padding-top: $app-container-padding-top;
+    padding-bottom: $app-container-padding-bottom;
     padding-left: $app-container-padding-lr;
     padding-right: $app-container-padding-lr;
     box-shadow: $app-container-box-shadow;
@@ -31,7 +31,7 @@
     .image-surround {
 
       position: relative;
-      height: 51.6%;
+      height: $app-image-height;
 
 
       .image {
@@ -181,6 +181,162 @@
         font-size: $installed-bar-icon-size;
         color: $installed-bar-icon;
         cursor: pointer;
+
+      }
+
+    }
+
+  }
+
+  .update-chrome {
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: $update-app-bg;
+    color: $update-app-text;
+    z-index: 2;
+    font-size: $update-app-font-size;
+    padding-left: $update-app-padding-lr;
+    padding-right: $update-app-padding-lr;
+    user-select: none;
+
+    .header-row {
+
+      height: $update-app-height;
+      line-height: $update-app-height;
+      text-align: center;
+
+      .text {
+        display: inline-block;
+      }
+
+      i {
+        margin-left: 1rem;
+        color: $update-app-caret;
+        font-size: $update-app-caret-size;
+      }
+
+    }
+
+    .divider {
+
+      border-bottom: 1px solid $update-app-divider;
+
+    }
+
+    .expanding-section {
+
+      display: none;
+
+      .description {
+
+        margin-top: $update-app-section-margin-tb;
+        margin-bottom: $update-app-section-margin-tb;
+
+      }
+
+      .read-more {
+
+        margin-top: $update-app-section-margin-tb;
+        margin-bottom: $update-app-section-margin-tb;
+        float: right;
+
+      }
+
+      .update-button {
+
+        display: inline-block;
+        text-align: center;
+        float: right;
+        clear: both;
+        background-color: $update-app-bg;
+        color: $update-app-text;
+        width: $update-app-update-button-width;
+        line-height: $update-app-update-button-height;
+        border-radius: $button-border-radius;
+        cursor: pointer;
+
+      }
+
+    }
+
+    &.open {
+
+      background-color: $update-app-open-bg;
+      color: $update-app-open-text;
+      left: $app-container-padding-lr;
+      right: $app-container-padding-lr;
+      height: $app-image-height + $update-app-height;
+
+      .header-row {
+
+        i {
+          color: $update-app-open-caret;
+        }
+
+      }
+
+      .expanding-section {
+
+        display: block;
+
+        .description {
+
+          max-height: $app-image-height - (1.8 *$update-app-height);
+          overflow-y: hidden;
+
+        }
+
+      }
+
+      &.with-update-button {
+
+        .expanding-section {
+
+          display: block;
+
+          .description {
+
+            max-height: $app-image-height - (2.8 *$update-app-height);
+
+          }
+
+        }
+
+      }
+
+    }
+
+    .app-updated-overlay {
+
+      display: none;
+      position: absolute;
+      background-color: $update-app-open-bg;
+      top: 0;
+      bottom: 0;
+      left: $update-app-padding-lr;
+      right: $update-app-padding-lr;
+
+      .app-updated-tick-surround {
+
+        .tick-svg {
+
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: $update-app-height;
+          bottom: 0;
+          background-image: url('icons/raw/approved_purple.svg');
+
+        }
+
+      }
+
+      &.visible {
+
+        display: block;
 
       }
 

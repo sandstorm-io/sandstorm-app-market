@@ -15,9 +15,23 @@
 
 .update-selector {
 
+  user-select: none;
+
   .float-right {
 
     float: right;
+
+    &.with-header {
+
+      padding-top: $genre-page-popular-margin-top;
+
+      @media screen and (max-width: $medium-tablet) {
+
+        padding-top: 1.5rem;
+
+      }
+
+    }
 
     @media screen and (max-width: $medium-tablet) {
 
@@ -58,42 +72,43 @@
 
     }
 
-    .button {
+  }
 
-      position: relative;
-      display: inline;
-      font-size: $update-selector-button-font-size;
-      padding-top: $update-selector-button-padding-tb;
-      padding-bottom: $update-selector-button-padding-tb;
-      padding-left: $update-selector-button-padding-lr;
-      padding-right: $update-selector-button-padding-lr;
-      color: $update-selector-button-text;
-      background-color: $update-selector-button-bg;
-      border: 1px solid rgba(0, 0, 0, 0);
-      border-radius: 0.5rem;
-      cursor: pointer;
+}
 
-      i {
-        color: $update-selector-button-icon;
-      }
+.autoupdate-button {
 
-      &.left {
-        left: 0.5rem;
-      }
+  position: relative;
+  display: inline;
+  font-size: $update-selector-button-font-size;
+  padding-top: $update-selector-button-padding-tb;
+  padding-bottom: $update-selector-button-padding-tb;
+  padding-left: $update-selector-button-padding-lr;
+  padding-right: $update-selector-button-padding-lr;
+  color: $update-selector-button-text;
+  background-color: $update-selector-button-bg;
+  border: 1px solid rgba(0, 0, 0, 0);
+  border-radius: $button-border-radius;
+  cursor: pointer;
 
-      &.active {
-        color: $update-selector-button-active-text;
-        background-color: $update-selector-button-active-bg;
-        border-color: $update-selector-button-active-border;
-        border-width: 1px;
-        border-style: solid;
-        z-index: 1;
+  i {
+    color: $update-selector-button-icon;
+  }
 
-        i {
-          color: #c9add0;
-        }
-      }
+  &.left {
+    left: 0.5rem;
+  }
 
+  &.active {
+    color: $update-selector-button-active-text;
+    background-color: $update-selector-button-active-bg;
+    border-color: $update-selector-button-active-border;
+    border-width: 1px;
+    border-style: solid;
+    z-index: 1;
+
+    i {
+      color: #c9add0;
     }
 
   }
@@ -158,7 +173,7 @@
       padding-bottom: $uninstall-app-modal-button-padding-tb;
       padding-left: $uninstall-app-modal-button-padding-lr;
       padding-right: $uninstall-app-modal-button-padding-lr;
-      border-radius: 0.5rem;
+      border-radius: $button-border-radius;
       font-size: $uninstall-app-modal-button-font-size;
       cursor: pointer;
 

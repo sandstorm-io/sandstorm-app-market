@@ -4,7 +4,7 @@
 Meteor.methods({
   'user/toggleAutoupdate': function() {
 
-    var user = Meteor.user();
+    var user = Meteor.users.findOne(Meteor.userId());
     if (!user) return false;
     return Meteor.users.update(user._id, {
       $set: {

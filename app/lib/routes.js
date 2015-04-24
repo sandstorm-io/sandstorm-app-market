@@ -6,20 +6,28 @@ FlowRouter.subscriptions = function() {
 
 // ROUTES
 
+// Utility function to redirect (either to App Market home or a given route)
+// if there is no logged in user
+function onlyLoggedIn(route) {
+  if (!Meteor.userId()) FlowRouter.go(route || 'appMarket');
+}
+
 // Reroute root URI to app market
 FlowRouter.route('/', {
   action: function() {
-    FlowRouter.go('/appMarket');
+    FlowRouter.go('appMarket');
   }
 });
 
 FlowRouter.route('/appMarket', {
+  name: 'appMarket',
   action: function() {
     FlowLayout.render('MasterLayout', {mainSection: 'Home'});
   }
 });
 
 FlowRouter.route('/appMarket/genres/:genre', {
+  name: 'appMarketGenre',
   subscriptions: function(params) {
     this.register('currentGenre',
       Meteor.subscribe('apps by genre', s.capitalize(params.genre)));
@@ -34,16 +42,21 @@ FlowRouter.route('/appMarket/genres/:genre', {
 });
 
 FlowRouter.route('/installedApps', {
+  name: 'installedApps',
   subscriptions: function() {
     this.register('installedApps',
       Meteor.subscribe('installed apps'));
   },
   action: function() {
+    onlyLoggedIn();
+    var user = Meteor.users.findOne(Meteor.userId());
+    FlowRouter.current().firstVisit = (typeof(user && user.autoupdateApps) === 'undefined');
     FlowLayout.render('MasterLayout', {mainSection: 'InstalledApps'});
   }
 });
 
 FlowRouter.route('/serviceConfigure', {
+  name: 'serviceConfiguration',
   action: function() {
     FlowLayout.render('loginButtons');
   }
