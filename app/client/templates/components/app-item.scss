@@ -51,7 +51,10 @@
       font-size: $app-name-font-size;
       color: $app-name-text;
       line-height: $app-name-line-height;
-
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow-x: hidden;
+      
     }
 
     .app-author {

@@ -98,7 +98,32 @@ var extraGenres = [
         _id: {
           $in: _.reduce(user.installedApps, function(idList, appDetails, appId) {
             var latest = Apps.findOne(appId);
-            if (latest && App.versionOlder(app.version, _.last(latest.versions)))
+            if (latest && App.versionOlder(appDetails.version, _.last(latest.versions)))
+              idList.push(appId);
+            return idList;
+          }, [])
+        }
+      };
+
+    }
+  },
+
+  {
+    name: 'Installed No Updates',
+    selector: function(userId) {
+      var user = Meteor.users.findOne(
+            userId ||
+            this.userId ||
+            (Meteor.userId && Meteor.userId())
+          );
+
+      if (!user) return null;
+
+      return {
+        _id: {
+          $nin: _.reduce(user.installedApps, function(idList, appDetails, appId) {
+            var latest = Apps.findOne(appId);
+            if (latest && App.versionOlder(appDetails.version, _.last(latest.versions)))
               idList.push(appId);
             return idList;
           }, [])

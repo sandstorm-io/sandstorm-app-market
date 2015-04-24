@@ -76,7 +76,7 @@ Meteor.methods({
     this.unblock();
     if (!this.userId) return false;
 
-    Genres.findAll('Updates Available', {}, {}, this).forEach(function(app) {
+    Genres.findIn('Updates Available', {}, {}, this).forEach(function(app) {
 
       Meteor.call('user/updateApp', app._id);
 
