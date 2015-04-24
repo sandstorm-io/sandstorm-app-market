@@ -72,6 +72,12 @@ var helpers = {
 
   },
 
+  last: function(array) {
+
+    return _.last(array);
+
+  },
+
   // DEBUGGING HELPERS
 
   logThis: function() {

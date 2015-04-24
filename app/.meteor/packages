@@ -27,3 +27,5 @@ accounts-google
 momentjs:moment
 fortawesome:fontawesome
 london:body-class
+digilord:faker
+percolate:synced-cron
