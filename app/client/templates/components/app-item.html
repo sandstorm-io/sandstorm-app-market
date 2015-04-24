@@ -4,6 +4,12 @@
 
     <div class="app-item-inner">
 
+      {{#if ../../updateChrome}}
+
+        {{> updateChrome}}
+
+      {{/if}}
+
       {{#if equal size "large"}}
 
         {{#with app}}
@@ -127,6 +133,65 @@
       {{/if}}
 
     </div>
+
+  </div>
+
+</template>
+
+<template name="updateChrome">
+
+  <div class="update-chrome {{#if isOpen}}open{{/if}} {{#unless autoupdateApps}}with-update-button{{/unless}}" data-action="toggle-open">
+
+    <div class="contents">
+
+      <div class="header-row">
+
+        <div class="text">NEW VERSION {{newVersionNumber}}</div>
+
+        <i class="fa {{#if isOpen}}fa-caret-up{{else}}fa-caret-down{{/if}}"></i>
+
+      </div>
+
+      <div class="expanding-section">
+
+        <div class="divider"></div>
+
+        <div class="description">
+          {{updateDescription}}
+        </div>
+
+        <a class="read-more">
+          Read More >
+        </a>
+
+        {{#unless autoupdateApps}}
+          <a class="update-button" data-action="update-app">
+            UPDATE
+          </a>
+        {{/unless}}
+
+      </div>
+
+      <div class="app-updated-overlay">
+
+        <div class="app-updated-tick-surround">
+
+          <div class="header-row">
+
+            <div class="text">THE APP IS NOW UPDATED</div>
+
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="tick-svg"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
 
   </div>
 

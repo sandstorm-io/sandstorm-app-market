@@ -25,3 +25,5 @@ service-configuration
 anti:modals
 accounts-google
 momentjs:moment
+fortawesome:fontawesome
+london:body-class

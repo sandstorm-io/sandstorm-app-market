@@ -18,12 +18,15 @@
 
     .title {
 
+      display: inline-block;
       color: $genre-title-text;
       text-transform: uppercase;
       font-size: $genre-page-popular-height;
       font-weight: lighter;
       padding-top: $genre-page-popular-margin-top;
       padding-bottom: $genre-page-popular-margin-bottom;
+      white-space: nowrap;
+      vertical-align: middle;
 
     }
 
@@ -36,6 +39,14 @@
     left: 0;
     right: 0;
     z-index: -1;
+
+  }
+
+  .button-container {
+
+    margin-left: 7%;
+    vertical-align: middle;
+    display: inline-block;
 
   }
 

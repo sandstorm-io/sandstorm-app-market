@@ -1,3 +1,25 @@
+function firstVisit() {
+  return FlowRouter.current().firstVisit;
+}
+
+Template.InstalledApps.helpers({
+
+  firstVisit: firstVisit
+
+});
+
+Template.InstalledApps.events({
+
+  'click [data-action="update-all-apps"]': function() {
+
+    Meteor.call('user/updateAllApps', function(err) {
+      if (err) console.log(err);
+    });
+
+  }
+
+});
+
 Template.InstalledApps.onCreated(function() {
   this.subscribe('apps by genre', 'Installed');
 });
@@ -6,22 +28,33 @@ Template.updateSelector.helpers({
 
   automatic: function() {
 
-    var user = Meteor.user();
+    var user = Meteor.users.findOne(Meteor.userId());
     return user && user.autoupdateApps;
 
-  }
+  },
+
+  firstVisit: firstVisit
 
 });
 
 Template.updateSelector.events({
 
-  'click .button': function() {
+  'click [data-action="toggle-autoupdate"]': function() {
 
     Meteor.call('user/toggleAutoupdate', function(err) {
       if (err) console.log(err);
     });
 
   }
+
+});
+
+Template.updateSelector.onCreated(function() {
+
+  if (FlowRouter.current().firstVisit)
+    Meteor.call('user/toggleAutoupdate', function(err) {
+      if (err) console.log(err);
+    });
 
 });
 

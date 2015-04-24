@@ -8,7 +8,7 @@ Template.appItem.helpers({
 
   installed: function(app) {
 
-    var user = Meteor.user();
+    var user = Meteor.users.findOne(Meteor.userId(), {fields: {installedApps: 1}});
     app = app || this;
 
     if (!user) return;
@@ -29,7 +29,7 @@ Template.appItem.helpers({
 
   myRating: function(app) {
 
-    var user = Meteor.user();
+    var user = Meteor.users.findOne(Meteor.userId(), {fields: {appRatings: 1}});
     app = app || this;
 
     if (!user) return;
@@ -39,7 +39,7 @@ Template.appItem.helpers({
 
   installDetails: function(app) {
 
-    var user = Meteor.user();
+    var user = Meteor.users.findOne(Meteor.userId(), {fields: {installedApps: 1}});
     app = app || this;
 
     if (!user) return;
@@ -61,6 +61,68 @@ Template.appItem.events({
 
     Meteor.call('user/installApp', this._id, function(err) {
       if (err) console.log(err);
+    });
+
+  }
+
+});
+
+
+Template.updateChrome.onCreated(function() {
+
+  this.open = new ReactiveVar(false);
+
+});
+
+Template.updateChrome.helpers({
+
+  isOpen: function() {
+
+    return Template.instance().open.get();
+
+  },
+
+  autoupdateApps: function() {
+
+    var user = Meteor.users.findOne(Meteor.userId(), {fields: {autoupdateApps: 1}});
+
+    if (!user) return;
+    else return user.autoupdateApps;
+
+  },
+
+  updateDescription: function() {
+
+    // TODO: link to the actual update description
+    return "This is a description of the new version and the features it incorporates.";
+
+  }
+
+});
+
+Template.updateChrome.events({
+
+  'click [data-action="toggle-open"]': function() {
+
+    var template = Template.instance();
+    template.open.set(!template.open.get());
+
+  },
+
+  'click [data-action="update-app"]': function(evt, tp) {
+
+    evt.stopPropagation();
+    Meteor.call('user/updateApp', this.app._id, function(err, res) {
+
+      if (err) console.log(err);
+      if (res) {
+        tp.$('.app-updated-overlay').addClass('visible');
+        Meteor.setTimeout(function() {
+          tp.open.set(false);
+          tp.$('.app-updated-overlay').removeClass('visible');
+        }, 3000);
+      }
+
     });
 
   }

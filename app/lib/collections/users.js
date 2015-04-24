@@ -53,7 +53,7 @@ Schemas.Users = new SimpleSchema({
   },
   autoupdateApps: {
     type: Boolean,
-    defaultValue: true
+    optional: true
   },
   appRatings: {
     type: Object,

@@ -81,6 +81,31 @@ var extraGenres = [
     options: {},
     priority: 2,
     showSummary: false
+  },
+
+  {
+    name: 'Updates Available',
+    selector: function(userId) {
+      var user = Meteor.users.findOne(
+            userId ||
+            this.userId ||
+            (Meteor.userId && Meteor.userId())
+          );
+
+      if (!user) return null;
+
+      return {
+        _id: {
+          $in: _.reduce(user.installedApps, function(idList, appDetails, appId) {
+            var latest = Apps.findOne(appId);
+            if (latest && App.versionOlder(app.version, _.last(latest.versions)))
+              idList.push(appId);
+            return idList;
+          }, [])
+        }
+      };
+
+    }
   }
 
 ];
