@@ -2,17 +2,17 @@
 
   <nav class="menu-container">
 
-    <a class="menu-link {{routeRoot '/appMarket'}}" href="/appMarket">
+    <a class="menu-link {{routeRoot '/appMarket'}}" href="{{getPath 'appMarket'}}">
       <i class="icon-market"></i>
       <div class="menu-text">App Market</div>
     </a>
 
-    <a class="menu-link {{routeRoot '/installedApps'}} {{#unless currentUser}}disabled{{/unless}}" href="{{#if currentUser}}/installedApps{{/if}}">
+    <a class="menu-link {{routeRoot '/installedApps'}} {{#unless currentUser}}disabled{{/unless}}" href="{{#if currentUser}}{{getPath 'installedApps'}}{{/if}}">
       <i class="icon-apps"></i>
       <div class="menu-text">Installed Apps</div>
     </a>
 
-    <a class="menu-link {{routeRoot '/appsByMe'}} {{#unless currentUser}}disabled{{/unless}}">
+    <a class="menu-link {{routeRoot '/appsByMe'}} {{#unless currentUser}}disabled{{/unless}}" href="{{#if currentUser}}{{getPath 'appsByMe'}}{{/if}}">
       <i class="icon-my"></i>
       <div class="menu-text">Apps by Me</div>
     </a>

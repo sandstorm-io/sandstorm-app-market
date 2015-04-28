@@ -24,6 +24,12 @@ var helpers = {
 
   },
 
+  getPath: function(routeName, params, queryParams) {
+
+    return FlowRouter.path(routeName, params, queryParams);
+
+  },
+
   // UTILITY HELPERS
   equal: function(a, b) {
 

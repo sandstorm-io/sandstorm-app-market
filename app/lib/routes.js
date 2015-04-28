@@ -55,6 +55,13 @@ FlowRouter.route('/installedApps', {
   }
 });
 
+FlowRouter.route('/appsByMe', {
+  name: 'appsByMe',
+  action: function() {
+    FlowLayout.render('MasterLayout', {mainSection: 'AppsByMe'});
+  }
+});
+
 FlowRouter.route('/serviceConfigure', {
   name: 'serviceConfiguration',
   action: function() {

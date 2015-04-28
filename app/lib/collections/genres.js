@@ -71,11 +71,7 @@ var extraGenres = [
   {
     name: 'Installed',
     selector: function(userId) {
-      var user = Meteor.users.findOne(
-        userId ||
-        this.userId ||
-        (Meteor.userId && Meteor.userId())
-      );
+      var user = getUser.call(this, userId);
       return user && {_id: {$in: _.keys(user.installedApps)}};
     },
     options: {},
@@ -86,12 +82,7 @@ var extraGenres = [
   {
     name: 'Updates Available',
     selector: function(userId) {
-      var user = Meteor.users.findOne(
-            userId ||
-            this.userId ||
-            (Meteor.userId && Meteor.userId())
-          );
-
+      var user = getUser.call(this, userId);
       if (!user) return null;
 
       return {
@@ -109,14 +100,9 @@ var extraGenres = [
   },
 
   {
-    name: 'Installed No Updates',
+    name: 'No Updates',
     selector: function(userId) {
-      var user = Meteor.users.findOne(
-            userId ||
-            this.userId ||
-            (Meteor.userId && Meteor.userId())
-          );
-
+      var user = getUser.call(this, userId);
       if (!user) return null;
 
       return {
@@ -131,23 +117,23 @@ var extraGenres = [
       };
 
     }
+  },
+
+  {
+    name: 'Apps By Me',
+    selector: function(userId) {
+      var user = getUser.call(this, userId);
+      if (!user) return null;
+
+      return {
+        _id: {
+          $in: user.appsByMe
+        }
+      };
+    }
   }
 
 ];
-
-function invokeGenreFunctions(extraGenre, origSelector, origOptions, context) {
-
-  var eGenSelector = extraGenre.selector,
-      eGenOptions = extraGenre.options;
-  if (_.isFunction(eGenSelector)) eGenSelector = eGenSelector.apply(context);
-  if (_.isFunction(eGenOptions)) eGenOptions = eGenOptions.apply(context);
-
-  return {
-    selector: _.extend(origSelector, eGenSelector),
-    options: _.extend(origOptions, eGenOptions)
-  };
-
-}
 
 Genres = {
 
@@ -220,3 +206,30 @@ Genres = {
   }
 
 };
+
+// UTILITY FUNCTIONS
+
+
+function invokeGenreFunctions(extraGenre, origSelector, origOptions, context) {
+
+  var eGenSelector = extraGenre.selector,
+      eGenOptions = extraGenre.options;
+  if (_.isFunction(eGenSelector)) eGenSelector = eGenSelector.apply(context);
+  if (_.isFunction(eGenOptions)) eGenOptions = eGenOptions.apply(context);
+
+  return {
+    selector: _.extend(origSelector, eGenSelector),
+    options: _.extend(origOptions, eGenOptions)
+  };
+
+}
+
+function getUser(userId) {
+
+  return Meteor.users.findOne(
+        userId ||
+        this.userId ||
+        (Meteor.userId && Meteor.userId())
+      );
+
+}
