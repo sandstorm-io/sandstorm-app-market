@@ -10,44 +10,105 @@
 
   </div>
 
-  <div class="genre-other-section">
+  {{#if firstVisit}}
 
-    <div class="contents">
+    <div class="genre-other-section">
 
-      <div class="update-selector clearfix">
+      <div class="contents">
 
-        <div class="float-right">
+        <div class="update-selector clearfix">
 
-          {{> updateSelector}}
+          <div class="float-right">
+
+            {{> updateSelector}}
+
+          </div>
+
+        </div>
+
+        <div class="genre-other">
+
+          {{> appTable genre='Installed' installPage=true}}
 
         </div>
 
       </div>
 
-      <div class="genre-other">
+    </div>
 
-        {{> appTable genre='Installed'}}
+  {{else}}
+
+    <div class="genre-popular-section">
+
+      <div class="contents">
+
+        <div class="update-selector">
+
+          <div class="float-right with-header">
+
+            {{> updateSelector}}
+
+          </div>
+
+        </div>
+
+        <div class="genre-popular">
+
+          <div class="contents">
+
+            {{#if autoupdateApps}}
+              <div class="title">RECENTLY UPDATED</div>
+            {{else}}
+              <div class="title">PENDING UPDATES</div>
+              <div class="button-container">
+                <div class="autoupdate-button active" data-action="update-all-apps">
+                  <i class="fa fa-magic"></i>
+                  UPDATE ALL
+                </div>
+              </div>
+            {{/if}}
+
+            {{> appTable genre='Updates Available' singleLine=true updateChrome=true installPage=true reactive=true}}
+
+          </div>
+
+        </div>
 
       </div>
 
     </div>
 
-  </div>
+    <div class="genre-other-section">
+
+      <div class="contents">
+
+        <div class="genre-other">
+
+          {{> appTable genre='Installed No Updates' installPage=true reactive=true}}
+
+        </div>
+
+      </div>
+
+    </div>
+
+  {{/if}}
 
 </template>
 
 
 <template name="updateSelector">
 
-  <div class="update-selector-text">Auto-update apps?</div>
+  <div class="update-selector-text">{{#if firstVisit}}Auto-update apps?{{else}}Updates:{{/if}}</div>
 
   <div class="update-selector-buttons">
 
-    <div class="button left {{#if automatic}}active{{/if}}">
-      <i class="icon-edit"></i>
+    <div class="autoupdate-button left {{#if automatic}}active{{/if}}" data-action="toggle-autoupdate">
+      <i class="fa fa-magic"></i>
       AUTOMATIC
     </div>
-    <div class="button right {{#unless automatic}}active{{/unless}}">
+    <div class="autoupdate-button right {{#unless automatic}}active{{/unless}}" data-action="toggle-autoupdate">
+      <i class="fa fa-hand-o-up"></i>
       MANUAL
     </div>
 

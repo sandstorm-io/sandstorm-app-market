@@ -81,6 +81,56 @@ var extraGenres = [
     options: {},
     priority: 2,
     showSummary: false
+  },
+
+  {
+    name: 'Updates Available',
+    selector: function(userId) {
+      var user = Meteor.users.findOne(
+            userId ||
+            this.userId ||
+            (Meteor.userId && Meteor.userId())
+          );
+
+      if (!user) return null;
+
+      return {
+        _id: {
+          $in: _.reduce(user.installedApps, function(idList, appDetails, appId) {
+            var current = Apps.findOne(appId);
+            if (current && App.versionOlder(appDetails.version, current.latestVersion()))
+              idList.push(appId);
+            return idList;
+          }, [])
+        }
+      };
+
+    }
+  },
+
+  {
+    name: 'Installed No Updates',
+    selector: function(userId) {
+      var user = Meteor.users.findOne(
+            userId ||
+            this.userId ||
+            (Meteor.userId && Meteor.userId())
+          );
+
+      if (!user) return null;
+
+      return {
+        _id: {
+          $nin: _.reduce(user.installedApps, function(idList, appDetails, appId) {
+            var latest = Apps.findOne(appId);
+            if (latest && App.versionOlder(appDetails.version, _.last(latest.versions)))
+              idList.push(appId);
+            return idList;
+          }, [])
+        }
+      };
+
+    }
   }
 
 ];
@@ -158,6 +208,14 @@ Genres = {
 
     return Categories.findOne({name: name}) ||
            _.findWhere(extraGenres, {name: name});
+
+  },
+
+  getPopulated: function(selector, options, context) {
+
+    return _.filter(this.getAll(options), function(genre) {
+      return !!Genres.findOneIn(genre.name, selector, options, context);
+    });
 
   }
 

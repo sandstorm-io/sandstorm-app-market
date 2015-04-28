@@ -1,6 +1,12 @@
-Apps = new Mongo.Collection('apps');
+Apps = new Mongo.Collection('apps', {transform: function(app) {
+  app.latestVersion = function() {return _.last(this.versions);};
+  return app;
+}});
 
 // TODO Update InstallCountThisWeek daily
+// TODO Investigate RegEx for version number
+
+var versionRegEx = /.*/; // THIS IS NOT DOING ANYTHING AT THE MOMENT
 
 Schemas.Apps = new SimpleSchema({
   name: {
@@ -82,6 +88,11 @@ Schemas.Apps = new SimpleSchema({
     },
     // denyInsert: true,
     optional: true
+  },
+  versions: {
+    type: [String],
+    regEx: versionRegEx,
+    defaultValue: ['0.0.1']
   },
   installCount: {
     type: Number,

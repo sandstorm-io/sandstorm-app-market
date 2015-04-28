@@ -7,17 +7,17 @@
       <div class="menu-text">App Market</div>
     </a>
 
-    <a class="menu-link {{routeRoot '/installedApps'}}" href="/installedApps">
+    <a class="menu-link {{routeRoot '/installedApps'}} {{#unless currentUser}}disabled{{/unless}}" href="{{#if currentUser}}/installedApps{{/if}}">
       <i class="icon-apps"></i>
       <div class="menu-text">Installed Apps</div>
     </a>
 
-    <a class="menu-link {{routeRoot '/appsByMe'}}">
+    <a class="menu-link {{routeRoot '/appsByMe'}} {{#unless currentUser}}disabled{{/unless}}">
       <i class="icon-my"></i>
       <div class="menu-text">Apps by Me</div>
     </a>
 
-    <a class="menu-link {{routeRoot '/upload'}}">
+    <a class="menu-link {{routeRoot '/upload'}} {{#unless currentUser}}disabled{{/unless}}">
       <i class="icon-upload"></i>
       <div class="menu-text">Upload an App</div>
     </a>

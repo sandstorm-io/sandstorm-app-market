@@ -21,7 +21,12 @@ $menu-bg: #ffffff;
 $menu-icon-col: #ddc9e8;
 $menu-divider-col: #e7daea;
 
+$topbar-bg-1: #723086;
+$topbar-bg-2: #552976;
+$topbar-bg-3: #603281;
+$topbar-bg-4: #4e2e77;
 $topbar-bg: #612c7d; // THIS IS TEMPORARY
+$topbar-bg: linear-gradient(165deg, $topbar-bg-1 0%,$topbar-bg-2 60%,$topbar-bg-3 60.1%,$topbar-bg-4 100%);
 $topbar-logo-text: #ffffff;
 $topbar-item-text: #ffffff;
 $topbar-item-bg: #78429d;
@@ -35,6 +40,7 @@ $app-box-drp-shdw: #a694b2;
 $app-name-text: #222222;
 $app-author-text: #783189;
 $app-install-text: #783189;
+$app-installed-text: #b491bc;
 $app-description-text: #222222;
 $app-install-bg: #eee4f4;
 $app-install-icon-col: #c9add0;
@@ -80,7 +86,17 @@ $uninstall-app-modal-button-bg: #a965ba;
 $uninstall-app-modal-button-hover-bg: #b971cb;
 $uninstall-app-modal-button-text: #f1eaf3;
 
+$update-app-bg: #a965ad;
+$update-app-text: #ffffff;
+$update-app-caret: #c9add0;
+$update-app-open-bg: #e4dfe5;
+$update-app-open-text: #783189;
+$update-app-open-caret: #a965ba;
+$update-app-divider: #ccb8d1;
+
 // SIZING
+$button-border-radius: 0.5rem;
+
 $topbar-height: 8.5rem;
 $topbar-logo-icon-size: 6.044rem;
 $topbar-logo-margin-left: 2.5rem;
@@ -109,10 +125,12 @@ $app-container-min-width: 120px;
 $app-container-max-width: 200px;
 $app-container-margin-lr: 1.167rem;
 $app-container-padding-lr: 1.667rem;
-$app-container-padding-tb: 1.25rem;
+$app-container-padding-top: 2.48rem;
+$app-container-padding-bottom: 1.25rem;
 $app-container-box-shadow: 0.083rem 0.166rem $app-box-drp-shdw;
 $app-container-margin-tb: 2.416rem;
 $app-genre-font-size: 2rem;
+$app-image-height: 13.25rem;
 $app-image-large-width: 29.15rem;
 $app-image-large-max-height: 25rem;
 $app-image-large-margin-right: 2.5rem;
@@ -167,3 +185,11 @@ $uninstall-app-modal-button-spacing: 0.7rem;
 $uninstall-app-modal-blurb-p-margin-top: 1.5rem;
 $uninstall-app-modal-blurb-p-margin-bottom: 2.1rem;
 $uninstall-app-modal-header-margin-bottom: 1rem;
+
+$update-app-height: $app-container-padding-top;
+$update-app-font-size: 0.95rem;
+$update-app-caret-size: 1.65rem;
+$update-app-section-margin-tb: 0.77rem;
+$update-app-padding-lr: 1.4rem;
+$update-app-update-button-width: 7.1rem;
+$update-app-update-button-height: 1.32rem;

@@ -4,6 +4,12 @@
 
     <div class="app-item-inner">
 
+      {{#if ../../updateChrome}}
+
+        {{> updateChrome}}
+
+      {{/if}}
+
       {{#if equal size "large"}}
 
         {{#with app}}
@@ -24,9 +30,15 @@
 
           <div class="install-price">
 
-            <div class="app-install {{#if installed}}installed{{/if}}">
-              INSTALL <i class="icon-arrow-install"></i>
-            </div>
+            {{#if installed}}
+              <div class="app-install installed">
+                INSTALLED
+              </div>
+            {{else}}
+              <div class="app-install" data-action="install-app">
+                INSTALL <i class="icon-arrow-install"></i>
+              </div>
+            {{/if}}
 
             <div class="app-price {{#if free price}}free{{/if}}">
               {{#if free price}}FREE{{else}}{{price}}{{/if}}
@@ -56,7 +68,7 @@
 
         <div class="app-author">{{getUsername author}}</div>
 
-        {{#if installed}}
+        {{#if ../../../installPage}}
         <div class="app-rating">
           {{{appRating myRating}}}
             <div class="rate-it">
@@ -73,7 +85,7 @@
         </div>
         {{/if}}
 
-        {{#if installed}}
+        {{#if ../../../installPage}}
 
           <div class="installed-bar">
 
@@ -87,7 +99,7 @@
             </div>
 
             <div class="installed-version">
-              {{installDetails.version}}
+              V {{installDetails.version}}
             </div>
 
             <div class="uninstall-app">
@@ -99,9 +111,15 @@
         {{else}}
           <div class="install-price">
 
-            <div class="app-install {{#if installed}}installed{{/if}}">
-              INSTALL <i class="icon-arrow-install"></i>
-            </div>
+            {{#if installed}}
+              <div class="app-install installed">
+                INSTALLED
+              </div>
+            {{else}}
+              <div class="app-install" data-action="install-app">
+                INSTALL <i class="icon-arrow-install"></i>
+              </div>
+            {{/if}}
 
             <div class="app-price {{#if free price}}free{{/if}}">
               {{#if free price}}FREE{{else}}{{price}}{{/if}}
@@ -115,6 +133,65 @@
       {{/if}}
 
     </div>
+
+  </div>
+
+</template>
+
+<template name="updateChrome">
+
+  <div class="update-chrome {{#if isOpen}}open{{/if}} {{#unless autoupdateApps}}with-update-button{{/unless}}" data-action="toggle-open">
+
+    <div class="contents">
+
+      <div class="header-row">
+
+        <div class="text">NEW VERSION {{latestVersion}}</div>
+
+        <i class="fa {{#if isOpen}}fa-caret-up{{else}}fa-caret-down{{/if}}"></i>
+
+      </div>
+
+      <div class="expanding-section">
+
+        <div class="divider"></div>
+
+        <div class="description">
+          {{updateDescription}}
+        </div>
+
+        <a class="read-more">
+          Read More >
+        </a>
+
+        {{#unless autoupdateApps}}
+          <a class="update-button" data-action="update-app">
+            UPDATE
+          </a>
+        {{/unless}}
+
+      </div>
+
+      <div class="app-updated-overlay">
+
+        <div class="app-updated-tick-surround">
+
+          <div class="header-row">
+
+            <div class="text">THE APP IS NOW UPDATED</div>
+
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="tick-svg"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
 
   </div>
 

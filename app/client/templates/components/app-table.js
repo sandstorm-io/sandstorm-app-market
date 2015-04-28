@@ -12,7 +12,7 @@ Template.appTable.helpers({
 
   leader: function() {
 
-    return Genres.findOneIn(this.genre, {}, {sort: {installCount: -1}});
+    return Genres.findOneIn(this.genre, {}, {sort: {installCount: -1}}, {reactive: !!this.reactive});
 
   },
 
@@ -20,19 +20,22 @@ Template.appTable.helpers({
 
     var options = {
       sort: {installCount: -1},
-      skip: 0
+      skip: 0,
+      reactive: !!this.reactive
     };
     if (this.bigLeader) options.skip += 1;
     if (this.skipLines) {
       options.skip += (App.lineCapacity.get() * this.skipLines);
       if (this.afterBigLeader) options.skip -= 2;
+      options.skip = Math.max(options.skip, 1);
     }
     if (this.singleLine) {
       options.limit = App.lineCapacity.get();
       if (this.bigLeader) options.limit -= 3;
+      options.limit = Math.max(options.limit, 0);
     }
 
-    return Genres.findIn(this.genre, {}, options);
+    return (options.limit === 0) ? [] : Genres.findIn(this.genre, {}, options);
 
   }
 
@@ -47,7 +50,12 @@ Template.appTable.onRendered(function() {
 
 function recalcLineCapacity() {
 
-  App.lineCapacity.set(5);
+  var rem = parseFloat(getComputedStyle(document.documentElement).fontSize),
+      tableWidth = $('.app-table').width(),
+      appItemWidth = 21.3; // THIS IS DEPENDENT ON THE SCSS VARIABLES $app-container-width
+
+  if (!rem || !tableWidth) return;
+  App.lineCapacity.set(Math.floor(tableWidth / (rem * appItemWidth)));
 
 }
 

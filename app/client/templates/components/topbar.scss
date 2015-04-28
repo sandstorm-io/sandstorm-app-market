@@ -1,7 +1,7 @@
 @import "../../stylesheets/variables";
 
 .topbar-container {
-  background-color: $topbar-bg;
+  background: $topbar-bg;
   height: $topbar-height;
   position: relative;
   z-index: 2;
@@ -90,6 +90,12 @@
             margin-right: 0;
           }
 
+        }
+
+        &.hidden {
+
+          display: none;
+          
         }
 
       }
