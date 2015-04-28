@@ -14,7 +14,7 @@ Meteor.publish('categories', function () {
 });
 
 Meteor.publish('apps by genre', function (name) {
-  var apps = Genres.findIn(name, {}, {}, {userId: this.userId});
+  var apps = Genres.findIn(name, {}, {}, this);
   return [
     apps,
     Meteor.users.find({_id: {$in: _.uniq(apps.map(function(app) {
@@ -28,6 +28,11 @@ Meteor.publish('apps by id', function (ids) {
     Apps.find({_id: {$in: ids}}) :
     Apps.find(ids);
 });
+
+Meteor.publish('apps by me', function () {
+  return Genres.findIn('Apps By Me', {}, {}, this);
+});
+
 
 Meteor.publish('apps all', function() {
   return Apps.find();

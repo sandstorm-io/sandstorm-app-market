@@ -1,3 +1,75 @@
 <template name="AppsByMe">
 
+  <div class="genre-title-section">
+
+    <div class="contents">
+
+      <div class="apps-title large">APPS BY ME</div>
+
+    </div>
+
+  </div>
+
+  {{#if appsCount 'Apps By Me' 0 0}}
+
+    {{> appsByMe_standard}}
+
+  {{else}}
+
+    {{> appsByMe_noApps}}
+
+  {{/if}}
+
+</template>
+
+<template name="appsByMe_noApps">
+
+  <div class="apps-by-me-no-apps">
+
+    <div class="top-section">
+
+      <img class="block sandstorm-cat" src="/images/sand-cat.png" />
+
+      <div class="block">
+
+        <div class="speech-bubble">
+          Hmm,<br>
+          it looks like you haven't uploaded any apps yet.
+        </div>
+
+        <div class="purpose">
+          Give this page a purpose:
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="action-buttons">
+
+      <a class="primary large-button" href=""> <!-- TODO: add link to edit app -->
+        <i class="icon-myapps"></i>
+        UPLOAD YOUR FIRST APP
+      </a>
+      <div class="or">
+        OR
+      </div>
+      <a class="large-button" href="https://github.com/sandstorm-io/sandstorm/wiki/Porting-Guide" target="_blank">
+        <i class="icon-porting-guide"></i>
+        READ THE PORTING GUIDE
+      </a>
+
+    </div>
+  </div>
+
+</template>
+
+<template name="appsByMe_standard">
+
+  <div class="apps-by-me-standard">
+
+    <h1>THIS IS APPS BY ME STANDARD</h1>
+
+  </div>
+
 </template>

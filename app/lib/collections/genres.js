@@ -127,7 +127,7 @@ var extraGenres = [
 
       return {
         _id: {
-          $in: user.appsByMe
+          $in: _.keys(user.appsByMe)
         }
       };
     }

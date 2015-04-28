@@ -1,0 +1,114 @@
+@import "../../stylesheets/variables";
+@import "../../templates/components/menu";
+
+.apps-by-me-no-apps {
+
+  @extend .menu-spacer;
+  @extend .pad-right;
+
+  .top-section {
+
+    position: relative;
+
+    .block {
+
+      display: inline-block;
+      vertical-align: top;
+
+    }
+
+    .sandstorm-cat {
+
+      width: 30%;
+
+    }
+
+    .speech-bubble {
+
+      background-image: url('/icons/raw/speechbox.svg');
+      background-size: 100% 100%;
+      padding-top: $speechbox-padding-tb;
+      padding-bottom: $speechbox-padding-tb;
+      padding-left: $speechbox-padding-left;
+      padding-right: $speechbox-padding-right;
+      line-height: 2;
+      font-size: $speechbox-font-size;
+      color: $speechbox-text;
+      font-weight: light;
+      margin-top: $speechbox-margin-top;
+
+    }
+
+    .purpose {
+
+      width: 100%;
+      text-align: center;
+      font-size: $purpose-font-size;
+      font-weight: light;
+      color: $purpose-text;
+      position: absolute;
+      bottom: $purpose-margin-bottom;
+      left: 0;
+
+
+    }
+
+  }
+
+  .action-buttons {
+
+    .or {
+
+      width: $or-gap;
+      text-align: center;
+      font-size: $large-button-font-size;
+
+    }
+
+    > * {
+
+      display: inline-block;
+
+    }
+
+  }
+
+}
+
+.apps-by-me-standard {
+
+  @extend .menu-spacer;
+  @extend .pad-right;
+
+}
+
+.large-button {
+
+  font-size: $large-button-font-size;
+  padding-top: $large-button-padding-tb;
+  padding-bottom: $large-button-padding-tb;
+  padding-left: $large-button-padding-lr;
+  padding-right: $large-button-padding-lr;
+  background-color: $large-button-bg;
+  color: $large-button-text;
+  border-radius: $button-border-radius;
+  border: 1px solid $large-button-border;
+  cursor: pointer;
+
+  i {
+    color: $large-button-icon;
+  }
+
+  &.primary {
+
+    background-color: $large-button-primary-bg;
+    color: $large-button-primary-text;
+    border: 1px solid $large-button-primary-border;
+
+    i {
+      color: $large-button-primary-icon;
+    }
+
+  }
+
+}

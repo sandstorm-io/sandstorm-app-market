@@ -8,6 +8,16 @@ Template.registerHelper('apps', function(genre, skip, limit) {
 
 });
 
+Template.registerHelper('appsCount', function(genre, skip, limit) {
+
+  var options = {sort: {installCount: -1}};
+  if (skip) options.skip = skip;
+  if (limit) options.limit = limit;
+
+  return Genres.findIn(genre, {}, options).count();
+
+});
+
 Template.appTable.helpers({
 
   leader: function() {
