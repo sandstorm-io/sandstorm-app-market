@@ -134,3 +134,24 @@ Template.updateChrome.events({
   }
 
 });
+
+Template.appItemLarge.helpers({
+
+  appRating: function(stars) {
+
+    stars = stars || 0;
+    return _.reduce(_.range(5), function(html, ind) {
+      if (stars >= ind + 0.5) html += '<i class="icon-star dark"></i>';
+      else html += '<i class="icon-star light"></i>';
+      return html;
+    }, '');
+
+  },
+
+  free: function(price) {
+
+    return price === 0;
+
+  }  
+
+});

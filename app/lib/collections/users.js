@@ -51,11 +51,6 @@ Schemas.Users = new SimpleSchema({
     blackbox: true,
     defaultValue: {}
   },
-  appsByMe: {
-    type: Object,
-    blackbox: true,
-    defaultValue: {}
-  },
   autoupdateApps: {
     type: Boolean,
     optional: true

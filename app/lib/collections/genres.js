@@ -126,9 +126,7 @@ var extraGenres = [
       if (!user) return null;
 
       return {
-        _id: {
-          $in: _.keys(user.appsByMe)
-        }
+        author: user._id
       };
     }
   }
