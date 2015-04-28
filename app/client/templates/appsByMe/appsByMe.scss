@@ -14,7 +14,14 @@
     .sandstorm-cat {
 
       width: 30%;
+      min-width: 24rem;
       float: left;
+
+      @media (max-width: $large-phone) {
+
+        min-width: 14rem;
+
+      }
 
     }
 
@@ -36,6 +43,16 @@
         color: $speechbox-text;
         font-weight: lighter;
         margin-top: $speechbox-margin-top;
+
+        @media (max-width: $large-phone) {
+
+          font-size: $speechbox-font-size * 0.6;
+          padding-top: $speechbox-padding-tb * 0.6;
+          padding-bottom: $speechbox-padding-tb * 0.6;
+          padding-right: $speechbox-padding-right * 0.6;
+          margin-top: 0;
+
+        }
 
       }
 
