@@ -1,0 +1,73 @@
+<template name="Login">
+
+  <div class="genre-popular-section">
+
+    <div class="contents">
+
+      <form class="login-form">
+
+        {{#if currentUser}}
+
+          <div class="user-info">
+            Logged in as <span class="username">{{currentUser.username}}</span>
+          </div>
+          <div class="sandstorm-button active" data-action="logout">
+            Logout
+          </div>
+
+        {{else}}
+
+          <input class="search-box" type="email" placeholder="Email" />
+          <input class="search-box" type="password" placeholder="Password" />
+
+          {{#if createAccount}}
+          <div class="sandstorm-button active" data-action="create-account">
+            Create Account
+          </div>
+          {{else}}
+          <div class="sandstorm-button active" data-action="login-with-email">
+            Login with Email
+          </div>
+          {{/if}}
+
+          {{#if error}}
+            <div class="error">
+              {{error}}
+            </div>
+          {{/if}}
+
+          <div class="or">
+            or
+          </div>
+
+          <div class="button-block oauth-buttons">
+
+            <div class="sandstorm-button active" data-action="login-with-github">
+              <i class="icon-gh"></i>
+              Login with GitHub
+            </div>
+
+            <div class="sandstorm-button active" data-action="login-with-google">
+              <i class="icon-go"></i>
+              Login with Google
+            </div>
+
+          </div>
+
+          <div class="create-account-or-login" data-action="toggle-create-account">
+            {{#if createAccount}}
+              Login with Email
+            {{else}}
+              Create Account
+            {{/if}}
+          </div>
+
+        {{/if}}
+
+      </form>
+
+    </div>
+
+  </div>
+
+</template>

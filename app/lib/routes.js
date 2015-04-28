@@ -19,6 +19,13 @@ FlowRouter.route('/', {
   }
 });
 
+FlowRouter.route('/login', {
+  name: 'login',
+  action: function() {
+    FlowLayout.render('MasterLayout', {mainSection: 'Login'});
+  }
+});
+
 FlowRouter.route('/appMarket', {
   name: 'appMarket',
   action: function() {

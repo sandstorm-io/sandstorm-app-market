@@ -61,7 +61,7 @@
             {{else}}
               <div class="title">PENDING UPDATES</div>
               <div class="button-container">
-                <div class="autoupdate-button active" data-action="update-all-apps">
+                <div class="sandstorm-button active" data-action="update-all-apps">
                   <i class="fa fa-magic"></i>
                   UPDATE ALL
                 </div>
@@ -103,11 +103,11 @@
 
   <div class="update-selector-buttons">
 
-    <div class="autoupdate-button left {{#if automatic}}active{{/if}}" data-action="toggle-autoupdate">
+    <div class="sandstorm-button left {{#if automatic}}active{{/if}}" data-action="toggle-autoupdate">
       <i class="fa fa-magic"></i>
       AUTOMATIC
     </div>
-    <div class="autoupdate-button right {{#unless automatic}}active{{/unless}}" data-action="toggle-autoupdate">
+    <div class="sandstorm-button right {{#unless automatic}}active{{/unless}}" data-action="toggle-autoupdate">
       <i class="fa fa-hand-o-up"></i>
       MANUAL
     </div>
