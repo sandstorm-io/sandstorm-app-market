@@ -58,15 +58,22 @@ Meteor.methods({
     var app = Apps.findOne(appId);
     if (!app) return false;
 
-    var set = {};
+    var set = {},
+        userId = this.userId;
 
     set['installedApps.' + appId] = {
-      version: _.last(app.versions),
+      version: app.latestVersion(),
       dateTime: new Date()
     };
-    return Meteor.users.update(this.userId, {
-      $set: set
-    });
+    // The update is recorded only after an interval as livedata will automatically
+    // inform the client, which will result in the UI updating.  We need to give
+    // the "app updated" animation time to play before this happens.
+    Meteor.setTimeout(function() {
+      Meteor.users.update(userId, {
+        $set: set
+      });
+    }, 3000);
+    return true;
 
   },
 

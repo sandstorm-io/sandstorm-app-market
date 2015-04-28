@@ -12,7 +12,7 @@ Template.appTable.helpers({
 
   leader: function() {
 
-    return Genres.findOneIn(this.genre, {}, {sort: {installCount: -1}});
+    return Genres.findOneIn(this.genre, {}, {sort: {installCount: -1}}, {reactive: !!this.reactive});
 
   },
 
@@ -20,7 +20,8 @@ Template.appTable.helpers({
 
     var options = {
       sort: {installCount: -1},
-      skip: 0
+      skip: 0,
+      reactive: !!this.reactive
     };
     if (this.bigLeader) options.skip += 1;
     if (this.skipLines) {
