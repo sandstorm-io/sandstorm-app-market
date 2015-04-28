@@ -138,6 +138,7 @@
       "s": false,
       "AntiModals": false,
       "moment": false,
+      "SyncedCron": false,
 
       // Collections
       "Apps": true,

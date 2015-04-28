@@ -96,6 +96,12 @@ Template.updateChrome.helpers({
     // TODO: link to the actual update description
     return "This is a description of the new version and the features it incorporates.";
 
+  },
+
+  latestVersion: function() {
+
+    return Template.parentData(1).latestVersion();
+
   }
 
 });
