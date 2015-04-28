@@ -4,52 +4,66 @@
 .apps-by-me-no-apps {
 
   @extend .menu-spacer;
-  @extend .pad-right;
+
+  position: relative;
 
   .top-section {
 
     position: relative;
 
-    .block {
-
-      display: inline-block;
-      vertical-align: top;
-
-    }
-
     .sandstorm-cat {
 
       width: 30%;
+      float: left;
 
     }
 
-    .speech-bubble {
+    .bubble-container {
 
-      background-image: url('/icons/raw/speechbox.svg');
-      background-size: 100% 100%;
-      padding-top: $speechbox-padding-tb;
-      padding-bottom: $speechbox-padding-tb;
-      padding-left: $speechbox-padding-left;
-      padding-right: $speechbox-padding-right;
-      line-height: 2;
-      font-size: $speechbox-font-size;
-      color: $speechbox-text;
-      font-weight: light;
-      margin-top: $speechbox-margin-top;
+      overflow: hidden;
+
+      .speech-bubble {
+
+        display: inline-block;
+        background-image: url('/images/speechbox-fluid.svg');
+        background-size: 100% 100%;
+        padding-top: $speechbox-padding-tb;
+        padding-bottom: $speechbox-padding-tb;
+        padding-left: $speechbox-padding-left;
+        padding-right: $speechbox-padding-right;
+        line-height: 2;
+        font-size: $speechbox-font-size;
+        color: $speechbox-text;
+        font-weight: lighter;
+        margin-top: $speechbox-margin-top;
+
+      }
 
     }
 
-    .purpose {
+  }
 
+  .purpose {
+
+    font-size: $purpose-font-size;
+    font-weight: lighter;
+    color: $purpose-text;
+    position: absolute;
+    bottom: $large-button-font-size + (2 * $large-button-padding-tb) + $purpose-margin-bottom;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-top: $large-button-padding-tb;
+    padding-bottom: $large-button-padding-tb;
+
+    @media (max-width: $large-tablet) {
+
+      position: relative;
       width: 100%;
       text-align: center;
-      font-size: $purpose-font-size;
-      font-weight: light;
-      color: $purpose-text;
-      position: absolute;
-      bottom: $purpose-margin-bottom;
-      left: 0;
-
+      transform: none;
+      left: auto;
+      bottom: auto;
+      clear: both;
 
     }
 
@@ -57,17 +71,37 @@
 
   .action-buttons {
 
+    display: block;
+    clear: both;
+
     .or {
 
       width: $or-gap;
       text-align: center;
       font-size: $large-button-font-size;
+      padding-top: $large-button-padding-tb;
+      padding-bottom: $large-button-padding-tb;
 
     }
 
-    > * {
+    .container {
 
-      display: inline-block;
+      display: inline;
+
+      > * {
+        display: inline-block;
+      }
+
+    }
+
+    @media (max-width: $large-tablet) {
+
+      .container {
+
+        display: block;
+        text-align: center;
+
+      }
 
     }
 
