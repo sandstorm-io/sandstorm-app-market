@@ -68,7 +68,7 @@ Template.Topbar.helpers({
 Template.Topbar.onRendered(function() {
 
   var template = this;
-  Meteor.defer(resizeTopbar.bind(null, template));
+  Meteor.setTimeout(resizeTopbar.bind(null, template), 50);
   $(window).on('resize.topbar', _.debounce(resizeTopbar.bind(window, this), 250));
 
 });

@@ -43,6 +43,9 @@ $star-col-light: #c9add0; // THIS IS CLEARLY WRONG (GIVEN AS #783189)
 $app-price-col: #783189;
 $app-price-free-col: #44c963;
 $free-text: #344c96; // THIS IS ALSO WRONG (GIVEN AS #344c963)
+$installed-bar-text: #935aa1;
+$installed-bar-icon: #c9add0;
+$installed-bar-bg: #f1eaf3;
 
 $main-page-bg: #e7e4ea;
 
@@ -51,7 +54,33 @@ $welcome-message-text: #783189;
 
 $genre-popular-bg: #dad3dd; // this is not the supplied color of a58faa, but it matches the screen grab
 
-// SPACING
+$modal-bg: #e7e4ea;
+$modal-text: #783189;
+$modal-button-bg: #78429d;
+$modal-button-active-bg: #8c47b1;
+$modal-button-text: #ffffff;
+
+$installed-apps-header-text: #222222;
+$update-selector-text: #783189;
+$update-selector-button-text: #222222;
+$update-selector-button-bg: #c3b9c6;
+$update-selector-button-icon: #a4a4a4;
+$update-selector-button-active-text: #783189;
+$update-selector-button-active-bg: #f3e6ff;
+$update-selector-button-active-border: #783189;
+$update-selector-button-active-icon: #c9add0;
+
+$rate-it-text: #ad83b7;
+$rate-it-hover-text: #783189;
+
+$uninstall-app-modal-bg: #f1eaf3;
+$uninstall-app-modal-text: #a965ba;
+$uninstall-app-modal-divider: #d4c3d8;
+$uninstall-app-modal-button-bg: #a965ba;
+$uninstall-app-modal-button-hover-bg: #b971cb;
+$uninstall-app-modal-button-text: #f1eaf3;
+
+// SIZING
 $topbar-height: 8.5rem;
 $topbar-logo-icon-size: 6.044rem;
 $topbar-logo-margin-left: 2.5rem;
@@ -73,11 +102,7 @@ $app-section-padding-left: 8rem;
 $app-section-padding-right: 11.3rem;
 $app-genre-margin-top: 5.417rem;
 $app-genre-margin-bottom: 1.333rem;
-$app-container-width: 21.54rem; //20%;
-// $app-container-width-small-screen: 25%;
-// $app-container-width-large-tablet: 33%;
-// $app-container-width-medium-tablet: 50%;
-// $app-container-width-large-phone: 100%;
+$app-container-width: 21.3rem;
 $app-container-width-large: $app-container-width * 3;
 $app-container-height: 29.4rem;
 $app-container-min-width: 120px;
@@ -88,27 +113,29 @@ $app-container-padding-tb: 1.25rem;
 $app-container-box-shadow: 0.083rem 0.166rem $app-box-drp-shdw;
 $app-container-margin-tb: 2.416rem;
 $app-genre-font-size: 2rem;
-$app-image-large-width: 29.15rem; //40.5%;
+$app-image-large-width: 29.15rem;
 $app-image-large-max-height: 25rem;
 $app-image-large-margin-right: 2.5rem;
 $app-name-font-size: 1.667rem;
 $app-name-large-font-size: 2.9rem;
 $app-name-line-height: 4.15rem;
-// $app-name-margin-top: 0.734rem
-// $app-name-margin-bottom: 0.734rem
 $app-author-font-size: 1.167rem;
 $app-author-large-font-size: 1.667rem;
 $app-author-line-height: 2.5rem;
 $app-description-large-font-size: 1.333rem;
 $star-font-size: 1.167rem;
 $star-line-height: 2.5rem;
-// $app-installprice-margin-top: 0.667rem;
 $app-install-font-size: 1.083rem;
 $app-install-padding-tb: 0.25rem;
 $app-install-padding-lr: 1.167rem;
 $app-price-font-size: 1.083rem;
 $app-install-price-line-height: 2.5rem;
 $app-description-large-height: 4.5rem;
+$installed-bar-height: 3.75rem;
+$installed-bar-font-size: 1.15rem;
+$installed-bar-icon-size: 1.55rem;
+$installed-bar-padding-left: 1.9rem;
+$installed-bar-padding-right: 1.3rem;
 
 $welcome-message-height: 16.333rem;
 $welcome-message-font-size: 2rem;
@@ -117,3 +144,26 @@ $genre-page-title-height: 3.333rem;
 $genre-page-popular-height: 2.5rem;
 $genre-page-popular-margin-top: 2.5rem;
 $genre-page-popular-margin-bottom: 2rem;
+
+$modal-font-size: 1.92rem;
+$modal-button-padding-lr: 1.833rem;
+$modal-button-padding-tb: 0.833rem;
+$modal-line-margin-bottom: 0.42rem;
+
+$update-selector-text-font-size: 2.5rem;
+$update-selector-button-font-size: 1.54rem;
+$update-selector-button-padding-tb: 0.67rem;
+$update-selector-button-padding-lr: 1.73rem;
+
+$uninstall-app-modal-width: 35.2rem;
+$uninstall-app-modal-padding-lr: 2rem;
+$uninstall-app-modal-padding-tb: 2rem;
+$uninstall-app-modal-header-font-size: 2rem;
+$uninstall-app-modal-blurb-font-size: 1.75rem;
+$uninstall-app-modal-button-font-size: 1.75rem;
+$uninstall-app-modal-button-padding-lr: 3rem;
+$uninstall-app-modal-button-padding-tb: 0.5rem;
+$uninstall-app-modal-button-spacing: 0.7rem;
+$uninstall-app-modal-blurb-p-margin-top: 1.5rem;
+$uninstall-app-modal-blurb-p-margin-bottom: 2.1rem;
+$uninstall-app-modal-header-margin-bottom: 1rem;

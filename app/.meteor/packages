@@ -18,3 +18,10 @@ accounts-password
 underscorestring:underscore.string
 reactive-var
 browser-policy
+edgee:slingshot
+accounts-github
+accounts-ui-unstyled
+service-configuration
+anti:modals
+accounts-google
+momentjs:moment

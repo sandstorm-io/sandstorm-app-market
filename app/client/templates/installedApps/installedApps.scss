@@ -1,0 +1,148 @@
+@import "../../stylesheets/variables";
+
+.installed-apps-title {
+
+  font-size: $app-genre-font-size;
+  color: $installed-apps-header-text;
+  margin-top: $app-genre-margin-top;
+  margin-bottom: $app-genre-margin-bottom;
+
+  &.large {
+    font-size: $genre-page-title-height;
+  }
+
+}
+
+.update-selector {
+
+  .float-right {
+
+    float: right;
+
+  }
+
+  .update-selector-text {
+
+    display: inline-block;
+    font-size: $update-selector-text-font-size;
+    color: $update-selector-text;
+    vertical-align: middle;
+
+  }
+
+  .update-selector-buttons {
+
+    display: inline-block;
+    vertical-align: middle;
+
+    .button {
+
+      position: relative;
+      display: inline;
+      font-size: $update-selector-button-font-size;
+      padding-top: $update-selector-button-padding-tb;
+      padding-bottom: $update-selector-button-padding-tb;
+      padding-left: $update-selector-button-padding-lr;
+      padding-right: $update-selector-button-padding-lr;
+      color: $update-selector-button-text;
+      background-color: $update-selector-button-bg;
+      border: 1px solid rgba(0, 0, 0, 0);
+      border-radius: 0.5rem;
+      cursor: pointer;
+
+      i {
+        color: $update-selector-button-icon;
+      }
+
+      &.left {
+        left: 0.5rem;
+      }
+
+      &.active {
+        color: $update-selector-button-active-text;
+        background-color: $update-selector-button-active-bg;
+        border-color: $update-selector-button-active-border;
+        border-width: 1px;
+        border-style: solid;
+        z-index: 1;
+
+        i {
+          color: #c9add0;
+        }
+      }
+
+    }
+
+  }
+
+}
+
+.uninstall-box {
+
+  &.anti-modal-box {
+
+    width: $uninstall-app-modal-width;
+
+  }
+
+  padding-top: $uninstall-app-modal-padding-tb;
+  padding-bottom: $uninstall-app-modal-padding-tb;
+  padding-left: $uninstall-app-modal-padding-lr;
+  padding-right: $uninstall-app-modal-padding-lr;
+  color: $uninstall-app-modal-text;
+  background-color: $uninstall-app-modal-bg;
+
+  .header {
+
+    text-align: center;
+    font-size: $uninstall-app-modal-header-font-size;
+    margin-bottom: $uninstall-app-modal-header-margin-bottom;
+
+  }
+
+  .divider {
+
+    width: 100%;
+    border-bottom: 1px solid $uninstall-app-modal-divider;
+
+  }
+
+  .blurb {
+
+    letter-spacing: 1px;
+    line-height: 1.4;
+    font-size: $uninstall-app-modal-blurb-font-size;
+
+    p {
+      margin-top: $uninstall-app-modal-blurb-p-margin-top;
+      margin-bottom: $uninstall-app-modal-blurb-p-margin-bottom;
+    }
+
+  }
+
+  .buttons {
+
+    word-spacing: $uninstall-app-modal-button-spacing;
+
+    .button {
+
+      display: inline-block;
+      color: $uninstall-app-modal-button-text;
+      background-color: $uninstall-app-modal-button-bg;
+      padding-top: $uninstall-app-modal-button-padding-tb;
+      padding-bottom: $uninstall-app-modal-button-padding-tb;
+      padding-left: $uninstall-app-modal-button-padding-lr;
+      padding-right: $uninstall-app-modal-button-padding-lr;
+      border-radius: 0.5rem;
+      font-size: $uninstall-app-modal-button-font-size;
+      cursor: pointer;
+
+      &:hover, &:active {
+        background-color: $uninstall-app-modal-button-hover-bg;
+      }
+
+    }
+
+  }
+
+}

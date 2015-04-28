@@ -16,6 +16,7 @@
 //
 // extraGenres - this is simply an array of objects, each of which has a name
 //   and a selector/options pair to apply to a query on the Apps collection.
+//   selector and options can be an object or a function returning an object.
 
 var extraGenres = [
 
@@ -65,14 +66,42 @@ var extraGenres = [
     },
     priority: 0,
     showSummary: true
-  }
+  },
 
+  {
+    name: 'Installed',
+    selector: function(userId) {
+      var user = Meteor.users.findOne(
+        userId ||
+        this.userId ||
+        (Meteor.userId && Meteor.userId())
+      );
+      return user && {_id: {$in: _.keys(user.installedApps)}};
+    },
+    options: {},
+    priority: 2,
+    showSummary: false
+  }
 
 ];
 
+function invokeGenreFunctions(extraGenre, origSelector, origOptions, context) {
+
+  var eGenSelector = extraGenre.selector,
+      eGenOptions = extraGenre.options;
+  if (_.isFunction(eGenSelector)) eGenSelector = eGenSelector.apply(context);
+  if (_.isFunction(eGenOptions)) eGenOptions = eGenOptions.apply(context);
+
+  return {
+    selector: _.extend(origSelector, eGenSelector),
+    options: _.extend(origOptions, eGenOptions)
+  };
+
+}
+
 Genres = {
 
-  findIn: function(name, selector, options) {
+  findIn: function(name, selector, options, context) {
 
     selector = selector || {};
     options = options || {};
@@ -85,16 +114,15 @@ Genres = {
       return Apps.find(selector, options);
     }
     else if (extraGenre) {
-      _.extend(selector, extraGenre.selector);
-      _.extend(options, extraGenre.options);
-      return Apps.find(selector, options);
+      var params = invokeGenreFunctions(extraGenre, selector, options, context);
+      return Apps.find(params.selector, params.options);
     } else {
       return Apps.find(null);
     }
 
   },
 
-  findOneIn: function(name, selector, options) {
+  findOneIn: function(name, selector, options, context) {
 
     selector = selector || {};
     options = options || {};
@@ -107,9 +135,8 @@ Genres = {
       return Apps.findOne(selector, options);
     }
     else if (extraGenre) {
-      _.extend(selector, extraGenre.selector);
-      _.extend(options, extraGenre.options);
-      return Apps.findOne(selector, options);
+      var params = invokeGenreFunctions(extraGenre, selector, options, context);
+      return Apps.findOne(params.selector, params.options);
     }
 
   },
