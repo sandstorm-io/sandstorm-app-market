@@ -12,6 +12,7 @@ SyncedCron.add({
       category: _.sample(categories),
       description: faker.lorem.paragraph(),
       image: faker.image.image(),
+      approved: _.sample(_.range(4)),
       author: _.sample(users),
       versions: ['0.0.1']
     });

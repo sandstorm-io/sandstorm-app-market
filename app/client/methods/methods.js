@@ -25,5 +25,17 @@ Meteor.methods({
       $unset: unset
     });
 
+  },
+
+  'apps/togglePrivate': function(appId) {
+
+    var app = Apps.findOne(appId);
+    if (!app || app.author !== Meteor.userId()) return false;
+
+    Apps.update(appId, {$set: {public: !app.public}});
+
+    return true;
+
   }
+
 });

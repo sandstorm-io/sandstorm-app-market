@@ -62,9 +62,19 @@ Schemas.Apps = new SimpleSchema({
     defaultValue: 0,
     index: true
   },
+  // Approval state
+  // 0 - Approved
+  // 1 - Pending
+  // 2 - Revision Requested
+  // 3 - Rejected
   approved: {
+    type: Number,
+    defaultValue: 1,
+    index: true
+  },
+  public: {
     type: Boolean,
-    defaultValue: false,
+    defaultValue: true,
     index: true
   },
   createdAt: {

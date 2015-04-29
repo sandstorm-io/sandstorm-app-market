@@ -5,7 +5,7 @@
   background-color: $modal-bg;
   color: $modal-text;
   font-size: $modal-font-size;
-  font-family: "Lato", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-family: $main-font;
 
   #login-email-label-and-input, #login-password-label-and-input {
 
@@ -18,7 +18,7 @@
       color: $modal-text;
       background: none;
       font-size: $modal-font-size;
-      font-family: "Lato", Helvetica, Arial, "Lucida Grande", sans-serif;
+      font-family: $main-font;
       border: 1px solid $topbar-item-bg;
       padding-left: $topbar-item-padding-lr;
       padding-right: $topbar-item-padding-lr;

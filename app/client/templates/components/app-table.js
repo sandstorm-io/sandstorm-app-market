@@ -31,10 +31,12 @@ Template.appTable.helpers({
   appList: function() {
 
     var options = {
-      sort: {installCount: -1},
       skip: 0,
       reactive: !!this.reactive
     };
+    if (this.sortAsc) options.sort[this.sortAsc] = 1;
+    else if (this.sortDesc) options.sort[this.sortDesc] = -1;
+    else options.sort = {installCount: -1};
     if (this.bigLeader) options.skip += 1;
     if (this.skipLines) {
       options.skip += (App.lineCapacity.get() * this.skipLines);
@@ -82,10 +84,12 @@ Template.appTableLarge.helpers({
   appList: function() {
 
     var options = {
-      sort: {installCount: -1},
+      sort: [ 'createdAt' ],
       skip: 0,
       reactive: !!this.reactive
     };
+    if (this.sortAsc) options.sort.unshift([this.sortAsc, 'asc']);
+    if (this.sortDesc) options.sort.unshift([this.sortDesc, 'desc']);
 
     return (options.limit === 0) ? [] : Genres.findIn(this.genre, {}, options);
 

@@ -71,10 +71,10 @@ var helpers = {
 
   },
 
-  briefDate: function(date) {
+  dateFormat: function(date, format) {
 
     if (!(date instanceof Date)) return '#NAD';
-    else return moment(date).format('MMM DD');
+    else return moment(date).format(format);
 
   },
 

@@ -96,7 +96,7 @@
               INSTALLED
             </div>
             <div class="install-date-inner">
-              {{briefDate installDetails.dateTime}}
+              {{dateFormat installDetails.dateTime 'MMM DD'}}
             </div>
           </div>
 
@@ -193,60 +193,6 @@
         </div>
 
       </div>
-
-    </div>
-
-  </div>
-
-</template>
-
-<template name="appItemLarge">
-
-  <div class="app-item-container-large">
-
-    <div class="app-item-inner">
-
-      {{#with app}}
-
-      <div class="image-surround">
-
-        <div class="image" style="background-image: url('{{image}}');"></div>
-
-      </div>
-
-      <div class="text-section">
-
-        <div class="app-name">{{name}}</div>
-
-        <div class="app-author">{{getUsername author}}</div>
-
-        <div class="app-rating">{{{appRating stars}}}</div>
-
-        <div class="install-price">
-
-          {{#if installed}}
-          <div class="app-install installed">
-            INSTALLED
-          </div>
-          {{else}}
-          <div class="app-install" data-action="install-app">
-            INSTALL <i class="icon-arrow-install"></i>
-          </div>
-          {{/if}}
-
-          <div class="app-price {{#if free price}}free{{/if}}">
-            {{#if free price}}FREE{{else}}{{price}}{{/if}}
-          </div>
-
-        </div>
-
-        <div class="app-description">
-          {{prune description 300}}
-        </div>
-
-      </div>
-
-      {{/with}}
 
     </div>
 

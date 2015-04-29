@@ -135,7 +135,7 @@ Template.updateChrome.events({
 
 });
 
-Template.appItemLarge.helpers({
+Template.appItemFullWidth.helpers({
 
   appRating: function(stars) {
 
@@ -152,6 +152,6 @@ Template.appItemLarge.helpers({
 
     return price === 0;
 
-  }  
+  }
 
 });

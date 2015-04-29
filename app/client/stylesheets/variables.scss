@@ -12,6 +12,9 @@ $large-screen: 1440px;
 $xlarge-screen: 1600px;
 $xxlarge-screen: 1920px;
 
+// FONTS
+$main-font: "Source Sans Pro", sans-serif;
+
 // COLORS
 $menu-active-text: #ffffff;
 $menu-active-bg: #a460ba;
@@ -143,7 +146,8 @@ $app-container-margin-lr: 1.167rem;
 $app-container-padding-lr: 1.667rem;
 $app-container-padding-top: 2.48rem;
 $app-container-padding-bottom: 1.25rem;
-$app-container-box-shadow: 0.083rem 0.166rem $app-box-drp-shdw;
+$app-container-box-shadow-size: 0.083rem;
+$app-container-box-shadow: $app-container-box-shadow-size ($app-container-box-shadow-size * 2) $app-box-drp-shdw;
 $app-container-margin-tb: 2.416rem;
 $app-genre-font-size: 2rem;
 $app-image-height: 13.25rem;
