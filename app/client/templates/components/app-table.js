@@ -8,6 +8,18 @@ Template.registerHelper('apps', function(genre, skip, limit) {
 
 });
 
+Template.registerHelper('appsCount', function(genre, skip, limit) {
+
+  var options = {sort: {installCount: -1}};
+  if (!App.isBlankKeyword(skip)) options.skip = skip;
+  if (!App.isBlankKeyword(limit)) options.limit = limit;
+
+  return Genres.findIn(genre, {}, options).count();
+
+});
+
+// SMALL APP ITEM TABLE
+
 Template.appTable.helpers({
 
   leader: function() {
@@ -19,10 +31,12 @@ Template.appTable.helpers({
   appList: function() {
 
     var options = {
-      sort: {installCount: -1},
       skip: 0,
       reactive: !!this.reactive
     };
+    if (this.sortAsc) options.sort[this.sortAsc] = 1;
+    else if (this.sortDesc) options.sort[this.sortDesc] = -1;
+    else options.sort = {installCount: -1};
     if (this.bigLeader) options.skip += 1;
     if (this.skipLines) {
       options.skip += (App.lineCapacity.get() * this.skipLines);
@@ -61,4 +75,24 @@ function recalcLineCapacity() {
 
 Template.appTable.onDestroyed(function() {
   $(window).off('resize.appTable');
+});
+
+// LARGE APP ITEM TABLE
+
+Template.appTableLarge.helpers({
+
+  appList: function() {
+
+    var options = {
+      sort: [ 'createdAt' ],
+      skip: 0,
+      reactive: !!this.reactive
+    };
+    if (this.sortAsc) options.sort.unshift([this.sortAsc, 'asc']);
+    if (this.sortDesc) options.sort.unshift([this.sortDesc, 'desc']);
+
+    return (options.limit === 0) ? [] : Genres.findIn(this.genre, {}, options);
+
+  }
+
 });

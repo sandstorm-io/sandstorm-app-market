@@ -91,6 +91,18 @@ Meteor.methods({
 
     return true;
 
+  },
+
+  'apps/togglePrivate': function(appId) {
+
+    this.unblock();
+    var app = Apps.findOne(appId);
+    if (!app || app.author !== this.userId) return false;
+
+    Apps.update(appId, {$set: {public: !app.public}});
+
+    return true;
+
   }
 
 });

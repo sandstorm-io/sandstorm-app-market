@@ -1,0 +1,185 @@
+@import "../../stylesheets/variables";
+
+.app-item-container.full-width {
+
+  width: 100%;
+  max-width: 125rem;
+
+  .app-item-inner {
+
+    height: 29.12rem;
+    position: relative;
+
+    .image-section {
+
+      float: left;
+      margin-right: 5.66rem;
+      height: 100%;
+
+      .image-surround-full-width {
+
+        position: relative;
+        height: 85%;
+        width: 23rem;
+        min-width: 15rem;
+
+        .image {
+
+          content: "";
+          background-size: cover;
+          background-position: center;
+          display: block;
+          height: 100%;
+
+        }
+
+      }
+
+      .message-box {
+
+        font-size: 1.7rem;
+        margin-top: 1.3rem;
+
+        &.approved {
+          color: #4b9441;
+        }
+        &.pending {
+          color: #7f7f7f;
+        }
+        &.revise {
+          color: #ad2f80;
+        }
+        &.rejected {
+          color: #424242;
+        }
+
+      }
+
+    }
+
+    .text-section {
+
+      .divider {
+
+        border-bottom: 1px solid #cfb5d6;
+
+      }
+
+      height: 100%;
+      overflow-y: auto;
+
+      .top-section {
+
+        border-bottom: 1px solid #cfb5d6;
+        color: #222222;
+
+        .edit-button, .public-private {
+          float: right;
+          clear: right;
+          font-size: 0;
+          margin-bottom: 0.9rem;
+        }
+
+        .app-name-full-width {
+          float: left;
+          clear: none;
+          font-size: 3.1rem;
+        }
+
+        .app-author-full-width {
+          clear: left;
+          font-size: 1.7rem;
+        }
+
+      }
+
+      .bottom-section {
+
+        .details-block {
+
+          width: 27.5%;
+          line-height: 1.4;
+          margin-right: 2.3rem;
+
+        }
+
+        .date {
+          margin-top: 1rem;
+          font-size: 1.7rem;
+        }
+
+        .genre {
+          margin-bottom: 1rem;
+          font-size: 1.7rem;
+          color: #783189;
+        }
+
+        .key {
+
+          float: left;
+          clear: left;
+          width: 7.5rem;
+          font-size: 1.5rem;
+          color: #7d627c;
+
+        }
+
+        .value {
+
+          overflow: hidden;
+          text-overflow: ellipsis;
+          font-size: 1.5rem;
+          color: #7d627c;
+
+        }
+
+      }
+
+      .app-description {
+
+        padding-top: 1.5rem;
+        font-size: $app-description-large-font-size;
+        color: $app-description-text;
+        clear: both;
+        overflow: ellipsis;
+        font-size: 1.5rem;
+        line-height: 1.4;
+        color: #222222;
+
+      }
+
+    }
+
+  }
+
+  .state-bar {
+
+    position: relative;
+    top: -($app-container-box-shadow-size * 2);
+    margin-bottom: -($app-container-box-shadow-size * 2);
+    font-size: 1.32rem;
+    height: 2.8rem;
+    line-height: 2.8rem;
+    padding-left: $app-container-padding-lr;
+    padding-right: $app-container-padding-lr;
+
+    &.approved, &.pending {
+      display: none;
+    }
+    &.revise {
+      background-color: #ad2f80;
+      color: #ffffff;
+    }
+    &.rejected {
+      background-color: #424242;
+      color: #ffffff;
+    }
+
+    a {
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+  }
+
+}

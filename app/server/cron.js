@@ -1,7 +1,7 @@
 SyncedCron.add({
   name: 'Generate fake apps',
   schedule: function(parser) {
-    return parser.text('every 2 minutes');
+    return parser.text('every 10 minutes');
   },
   job: function() {
     var categories = _.pluck(Categories.find({}, {fields: {name: 1}}).fetch(), 'name'),
@@ -12,6 +12,7 @@ SyncedCron.add({
       category: _.sample(categories),
       description: faker.lorem.paragraph(),
       image: faker.image.image(),
+      approved: _.sample(_.range(4)),
       author: _.sample(users),
       versions: ['0.0.1']
     });
@@ -21,7 +22,7 @@ SyncedCron.add({
 SyncedCron.add({
   name: 'Update fake apps',
   schedule: function(parser) {
-    return parser.text('every 30 seconds');
+    return parser.text('every 2 minutes');
   },
   job: function() {
 
@@ -37,8 +38,6 @@ SyncedCron.add({
       Apps.update(app._id, {$push: {
         versions: newVersion(_.last(app.versions))
       }});
-
-      console.log(Apps.findOne(app._id));
 
     });
   }

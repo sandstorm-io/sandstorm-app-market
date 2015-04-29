@@ -24,6 +24,12 @@ var helpers = {
 
   },
 
+  getPath: function(routeName, params, queryParams) {
+
+    return FlowRouter.path(routeName, params, queryParams);
+
+  },
+
   // UTILITY HELPERS
   equal: function(a, b) {
 
@@ -65,10 +71,10 @@ var helpers = {
 
   },
 
-  briefDate: function(date) {
+  dateFormat: function(date, format) {
 
     if (!(date instanceof Date)) return '#NAD';
-    else return moment(date).format('MMM DD');
+    else return moment(date).format(format);
 
   },
 

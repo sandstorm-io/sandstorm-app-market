@@ -1,5 +1,4 @@
-// JUST A PLACEHOLDER UNTIL I GET A PROPER FONT
-@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic);
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600);
 @import "variables";
 
 @font-face {
@@ -74,7 +73,7 @@
 .icon-approved_light:before { content: "\f103"; }
 .icon-apps:before { content: "\f104"; }
 .icon-arrow-install:before { content: "\f105";   position: relative; top: -0.3em; }
-.icon-chevron-right:before { content: "\003e"; font-family: "Lato", Helvetica, Arial, "Lucida Grande", sans-serif; }
+.icon-chevron-right:before { content: "\003e"; font-family: $main-font; }
 .icon-edit:before { content: "\f106"; }
 .icon-fb:before { content: "\f107"; }
 .icon-flagged_dark:before { content: "\f108"; }
@@ -101,7 +100,7 @@
 .icon-upload:before { content: "\f11d"; }
 
 html {
-  font-family: "Lato", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-family: $main-font;
   font-weight: 300;
   font-size: 12px;
   font-size: 0.65vw;
@@ -136,6 +135,20 @@ html {
 
   display: flex;
 
+}
+
+.left-float {
+  float: left;
+  clear: non;
+}
+
+.right-float {
+  float: right;
+  clear: none;
+}
+
+.rem-space-float {
+  overflow: hidden;
 }
 
 .clearfix {

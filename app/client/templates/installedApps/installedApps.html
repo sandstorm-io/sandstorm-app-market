@@ -4,7 +4,7 @@
 
     <div class="contents">
 
-      <div class="installed-apps-title large">INSTALLED APPS</div>
+      <div class="apps-title large">INSTALLED APPS</div>
 
     </div>
 
@@ -61,7 +61,7 @@
             {{else}}
               <div class="title">PENDING UPDATES</div>
               <div class="button-container">
-                <div class="sandstorm-button active" data-action="update-all-apps">
+                <div class="sandstorm-button secondary" data-action="update-all-apps">
                   <i class="fa fa-magic"></i>
                   UPDATE ALL
                 </div>
@@ -84,7 +84,7 @@
 
         <div class="genre-other">
 
-          {{> appTable genre='Installed No Updates' installPage=true reactive=true}}
+          {{> appTable genre='No Updates' installPage=true reactive=true}}
 
         </div>
 
