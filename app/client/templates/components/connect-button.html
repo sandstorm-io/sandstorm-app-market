@@ -1,0 +1,15 @@
+<template name="connectButton">
+
+  <div class="button-row">
+    {{#with serviceDetails}}
+    <div class="connect-button {{status}}" data-action="connect">
+
+      <i class="{{icon}}"></i>
+      Connect with
+      <span class="service-name">{{name}}</span>
+
+    </div>
+    {{/with}}
+  </div>
+
+</template>

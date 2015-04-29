@@ -124,3 +124,15 @@
   }
 
 }
+
+.margin-right {
+
+  margin-right: $app-section-padding-right;
+
+  @media screen and (max-width: $small-tablet) {
+
+    margin-right: auto;
+
+  }
+
+}

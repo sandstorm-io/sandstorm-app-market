@@ -74,52 +74,46 @@
 
   <div class="apps-by-me-standard">
 
-    {{> appsByMeBar}}
+    <div class="apps-by-me-bar">
+
+      <div class="left-float">
+
+        <div class="button-block">
+          <a class="sandstorm-button primary" href="">
+            <i class="icon-myapps"></i>
+            UPLOAD NEW APP
+          </a>
+          <a class="sandstorm-button secondary" href="https://github.com/sandstorm-io/sandstorm/wiki/Porting-Guide" target="_blank">
+            <i class="icon-porting-guide"></i>
+            APP PORTING GUIDE
+          </a>
+        </div>
+
+      </div>
+      <div class="right-float">
+
+        <div class="button-block">
+          <div class="sandstorm-button neutral" data-action="open-sort-menu">
+            SORT
+            <i class="fa fa-caret-down"></i>
+          </div>
+          <div class="sandstorm-input">
+            <div class="input">
+              <input type="text" data-field="search-by" />
+            </div>
+            <div class="button">
+              <i class="icon-search" data-action="apply-search"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
 
     <div class="apps-by-me-container">
 
-    {{> appTableLarge genre='Apps By Me' reactive=true sortDesc='approved'}}
-
-    </div>
-
-  </div>
-
-</template>
-
-<template name="appsByMeBar">
-
-  <div class="apps-by-me-bar">
-
-    <div class="left-float">
-
-      <div class="button-container">
-        <a class="sandstorm-button primary" href="">
-          <i class="icon-myapps"></i>
-          UPLOAD NEW APP
-        </a>
-        <a class="sandstorm-button secondary" href="https://github.com/sandstorm-io/sandstorm/wiki/Porting-Guide" target="_blank">
-          <i class="icon-porting-guide"></i>
-          APP PORTING GUIDE
-        </a>
-      </div>
-
-    </div>
-    <div class="right-float">
-
-      <div class="button-container">
-        <div class="sandstorm-button neutral" data-action="open-sort-menu">
-          SORT
-          <i class="fa fa-caret-down"></i>
-        </div>
-        <div class="sandstorm-input">
-          <div class="input">
-            <input type="text" data-field="search-by" />
-          </div>
-          <div class="button">
-            <i class="icon-search"></i>
-          </div>
-        </div>
-      </div>
+    {{> appTableLarge genre='Apps By Me' reactive=true sortDesc='approved' searchTerm=searchTerm}}
 
     </div>
 

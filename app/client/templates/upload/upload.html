@@ -1,0 +1,135 @@
+<template name="Upload">
+
+  <div class="genre-title-section">
+
+    <div class="contents">
+
+      <div class="apps-title large">APP UPLOAD</div>
+
+    </div>
+
+  </div>
+
+  <div class="upload-box">
+
+    <div class="right-float">
+
+      <div class="button-block">
+        <div class="sandstorm-button neutral" data-action="submit">
+          SUBMIT APP FOR REVIEW
+        </div>
+        <div class="sandstorm-button neutral">
+          SAVE
+        </div>
+        <i class="icon-garbage"></i>
+      </div>
+
+    </div>
+
+    <div class="section">
+
+      <h3 class="title">Application File</h3>
+
+      <div class="half-col">
+
+        <div class="upload-box">
+
+          Please upload the *.spk file for your app.
+          <div class="aside"><a href="https://github.com/sandstorm-io/sandstorm/wiki/Porting-Guide">What's an *.spk?</a></div>
+
+          <input type="file" class="browse-box" /><div class="upload-button"></div>
+
+        </div>
+
+      </div>
+
+      <div class="half-col">
+
+        <h3 class="title">Title</h3>
+        <input type="text" data-field="title" />
+
+        <h3 class="title">Author</h3>
+        <div class="read-only">Kenton Varda (todo)</div>
+
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+
+      <div class="half-col">
+
+        <h4 class="mini-title">Ported by</h4>
+        <div class="read-only">Kenton Varda (todo)</div>
+
+        <h4 class="mini-title">Code URL</h4>
+        <input type="text" data-field="code-url" />
+
+        <h4 class="mini-title">License</h4>
+        <input type="text" data-field="license" />
+
+        <h4 class="mini-title">Version</h4>
+        <input type="text" data-field="version" />
+
+      </div>
+
+      <div class="half-col">
+
+        <h4 class="mini-title">Website</h4>
+        <input type="text" data-field="website" />
+
+        {{> connectButton service="github"}}
+        {{> connectButton service="google"}}
+
+      </div>
+
+      <h3 class="title">Genre</h3>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+
+      <div class="half-col">
+
+        <h3 class="title">Icon</h3>
+
+      </div>
+
+      <div class="half-col">
+
+        <h3 class="title">Display in Market?</h3>
+
+        <div class="public-private">
+          <div class="sandstorm-button left {{#if public}}active{{/if}} small" data-action="toggle-private">
+            <i class="fa fa-eye"></i>
+            PUBLIC
+          </div>
+          <div class="sandstorm-button right {{#unless public}}active{{/unless}} small" data-action="toggle-private">
+            <i class="fa fa-lock"></i>
+            PRIVATE
+          </div>
+        </div>
+
+        <h3 class="title">Suggested Donation <i class="fa fa-caret-down"></i></h3>
+
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+
+      <h3 class="title">Screenshots</h3>
+
+      <h3 class="title">Description</h3>
+
+    </div>
+
+  </div>
+
+</template>

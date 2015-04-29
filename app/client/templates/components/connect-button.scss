@@ -1,0 +1,60 @@
+@import "../../stylesheets/variables";
+
+.button-row {
+
+  display: block;
+
+}
+
+.connect-button {
+
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: 22rem;
+  font-size: 2rem;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: $update-selector-button-padding-lr;
+  padding-right: $update-selector-button-padding-lr;
+  margin-top: 0.8rem;
+  margin-bottom: 0.8rem;
+  color: #783189;
+  background-color: #ffe9f5;
+  border-radius: $button-border-radius;
+  cursor: pointer;
+  font-weight: 300;
+  height: 3.25rem;
+  line-height: 3.25rem;
+
+  i {
+    color: #783189;
+    font-size: 1.2em;
+    margin-right: 0.5rem;
+
+    &:last-child {
+      margin-left: 0.5rem;
+      margin-right: 0;
+    }
+  }
+
+  .service-name {
+
+    font-weight: bold;
+
+  }
+
+  &.left {
+    left: 0.5rem;
+  }
+
+  &.connected {
+    color: #ffe9f5;
+    background-color: #783189;
+
+    i {
+      color: #ffe9f5;
+    }
+  }
+
+}

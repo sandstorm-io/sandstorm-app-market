@@ -133,34 +133,3 @@
   @extend .pad-right;
 
 }
-
-.large-button {
-
-  font-size: $large-button-font-size;
-  padding-top: $large-button-padding-tb;
-  padding-bottom: $large-button-padding-tb;
-  padding-left: $large-button-padding-lr;
-  padding-right: $large-button-padding-lr;
-  background-color: $large-button-bg;
-  color: $large-button-text;
-  border-radius: $button-border-radius;
-  border: 1px solid $large-button-border;
-  cursor: pointer;
-
-  i {
-    color: $large-button-icon;
-  }
-
-  &.primary {
-
-    background-color: $large-button-primary-bg;
-    color: $large-button-primary-text;
-    border: 1px solid $large-button-primary-border;
-
-    i {
-      color: $large-button-primary-icon;
-    }
-
-  }
-
-}

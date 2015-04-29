@@ -73,6 +73,13 @@ FlowRouter.route('/appsByMe', {
   }
 });
 
+FlowRouter.route('/upload', {
+  name: 'upload',
+  action: function() {
+    FlowLayout.render('MasterLayout', {mainSection: 'Upload'});
+  }
+});
+
 FlowRouter.route('/serviceConfigure', {
   name: 'serviceConfiguration',
   action: function() {
