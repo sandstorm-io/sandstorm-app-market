@@ -62,6 +62,17 @@ FlowRouter.route('/installedApps', {
   }
 });
 
+FlowRouter.route('/appsByMe', {
+  name: 'appsByMe',
+  subscriptions: function() {
+    this.register('appsByMe',
+      Meteor.subscribe('apps by me'));
+  },
+  action: function() {
+    FlowLayout.render('MasterLayout', {mainSection: 'AppsByMe'});
+  }
+});
+
 FlowRouter.route('/serviceConfigure', {
   name: 'serviceConfiguration',
   action: function() {

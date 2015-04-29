@@ -1,0 +1,166 @@
+@import "../../stylesheets/variables";
+@import "../../templates/components/menu";
+
+.apps-by-me-no-apps {
+
+  @extend .menu-spacer;
+
+  position: relative;
+
+  .top-section {
+
+    position: relative;
+
+    .sandstorm-cat {
+
+      width: 30%;
+      min-width: 24rem;
+      float: left;
+
+      @media (max-width: $large-phone) {
+
+        min-width: 14rem;
+
+      }
+
+    }
+
+    .bubble-container {
+
+      overflow: hidden;
+
+      .speech-bubble {
+
+        display: inline-block;
+        background-image: url('/images/speechbox-fluid.svg');
+        background-size: 100% 100%;
+        padding-top: $speechbox-padding-tb;
+        padding-bottom: $speechbox-padding-tb;
+        padding-left: $speechbox-padding-left;
+        padding-right: $speechbox-padding-right;
+        line-height: 2;
+        font-size: $speechbox-font-size;
+        color: $speechbox-text;
+        font-weight: lighter;
+        margin-top: $speechbox-margin-top;
+        margin-right: 0.5rem;
+
+        @media (max-width: $large-phone) {
+
+          font-size: $speechbox-font-size * 0.6;
+          padding-top: $speechbox-padding-tb * 0.6;
+          padding-bottom: $speechbox-padding-tb * 0.6;
+          padding-right: $speechbox-padding-right * 0.6;
+          margin-top: 0;
+
+        }
+
+      }
+
+    }
+
+  }
+
+  .purpose {
+
+    font-size: $purpose-font-size;
+    font-weight: lighter;
+    color: $purpose-text;
+    position: absolute;
+    bottom: $large-button-font-size + (2 * $large-button-padding-tb) + $purpose-margin-bottom;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-top: $large-button-padding-tb;
+    padding-bottom: $large-button-padding-tb;
+
+    @media (max-width: $large-tablet) {
+
+      position: relative;
+      width: 100%;
+      text-align: center;
+      transform: none;
+      left: auto;
+      bottom: auto;
+      clear: both;
+
+    }
+
+  }
+
+  .action-buttons {
+
+    display: block;
+    clear: both;
+
+    .or {
+
+      width: $or-gap;
+      text-align: center;
+      font-size: $large-button-font-size;
+      padding-top: $large-button-padding-tb;
+      padding-bottom: $large-button-padding-tb;
+
+    }
+
+    .container {
+
+      display: inline;
+
+      > * {
+        display: inline-block;
+      }
+
+    }
+
+    @media (max-width: $large-tablet) {
+
+      .container {
+
+        display: block;
+        text-align: center;
+
+      }
+
+    }
+
+  }
+
+}
+
+.apps-by-me-standard {
+
+  @extend .menu-spacer;
+  @extend .pad-right;
+
+}
+
+.large-button {
+
+  font-size: $large-button-font-size;
+  padding-top: $large-button-padding-tb;
+  padding-bottom: $large-button-padding-tb;
+  padding-left: $large-button-padding-lr;
+  padding-right: $large-button-padding-lr;
+  background-color: $large-button-bg;
+  color: $large-button-text;
+  border-radius: $button-border-radius;
+  border: 1px solid $large-button-border;
+  cursor: pointer;
+
+  i {
+    color: $large-button-icon;
+  }
+
+  &.primary {
+
+    background-color: $large-button-primary-bg;
+    color: $large-button-primary-text;
+    border: 1px solid $large-button-primary-border;
+
+    i {
+      color: $large-button-primary-icon;
+    }
+
+  }
+
+}

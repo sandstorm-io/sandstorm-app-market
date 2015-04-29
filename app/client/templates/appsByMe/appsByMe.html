@@ -1,0 +1,106 @@
+<template name="AppsByMe">
+
+  <div class="genre-title-section">
+
+    <div class="contents">
+
+      <div class="apps-title large">APPS BY ME</div>
+
+    </div>
+
+  </div>
+
+  {{#if appsCount 'Apps By Me'}}
+
+    {{> appsByMe_standard}}
+
+  {{else}}
+
+    {{> appsByMe_noApps}}
+
+  {{/if}}
+
+</template>
+
+<template name="appsByMe_noApps">
+
+  <div class="apps-by-me-no-apps">
+
+    <div class="top-section">
+
+      <img class="sandstorm-cat" src="/images/sand-cat.png" />
+
+      <div class="bubble-container">
+
+        <div class="speech-bubble">
+          Hmm,<br>
+          it looks like you haven't uploaded any apps yet.
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="purpose">
+      Give this page a purpose:
+    </div>
+
+    <div class="action-buttons">
+
+      <div class="container">
+        <a class="primary large-button" href=""> <!-- TODO: add link to edit app -->
+          <i class="icon-myapps"></i>
+          UPLOAD YOUR FIRST APP
+        </a>
+      </div>
+      <div class="container">
+        <div class="or">
+          OR
+        </div>
+      </div>
+      <div class="container">
+        <a class="large-button" href="https://github.com/sandstorm-io/sandstorm/wiki/Porting-Guide" target="_blank">
+          <i class="icon-porting-guide"></i>
+          READ THE APP PORTING GUIDE
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+</template>
+
+<template name="appsByMe_standard">
+
+  <div class="apps-by-me-standard">
+
+    {{> appsByMeBar}}
+
+    <div class="apps-by-me-container">
+
+    {{> appTableLarge genre='Apps By Me'}}
+
+    </div>
+
+  </div>
+
+</template>
+
+<template name="appsByMeBar">
+
+  <div class="apps-by-me-bar">
+
+    <div class="left-items">
+
+      <!-- TODO: once app-button component css has been merged -->
+
+    </div>
+    <div class="right-items">
+
+      <!-- TODO: once app-button component css has been merged -->
+
+    </div>
+
+  </div>
+
+</template>

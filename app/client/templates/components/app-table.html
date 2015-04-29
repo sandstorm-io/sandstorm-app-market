@@ -13,3 +13,15 @@
   </div>
 
 </template>
+
+<template name="appTableLarge">
+
+  <div class="app-table-large">
+
+    {{#each appList}}
+      {{> appItemLarge app=this}}
+    {{/each}}
+
+  </div>
+
+</template>

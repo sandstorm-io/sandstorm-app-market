@@ -54,7 +54,7 @@
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow-x: hidden;
-
+      
     }
 
     .app-author {
@@ -317,6 +317,8 @@
 
           }
 
+        i {
+          color: $update-app-open-caret;
         }
 
       }

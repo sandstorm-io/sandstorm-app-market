@@ -8,6 +8,18 @@ Template.registerHelper('apps', function(genre, skip, limit) {
 
 });
 
+Template.registerHelper('appsCount', function(genre, skip, limit) {
+
+  var options = {sort: {installCount: -1}};
+  if (!App.isBlankKeyword(skip)) options.skip = skip;
+  if (!App.isBlankKeyword(limit)) options.limit = limit;
+
+  return Genres.findIn(genre, {}, options).count();
+
+});
+
+// SMALL APP ITEM TABLE
+
 Template.appTable.helpers({
 
   leader: function() {
@@ -61,4 +73,22 @@ function recalcLineCapacity() {
 
 Template.appTable.onDestroyed(function() {
   $(window).off('resize.appTable');
+});
+
+// LARGE APP ITEM TABLE
+
+Template.appTableLarge.helpers({
+
+  appList: function() {
+
+    var options = {
+      sort: {installCount: -1},
+      skip: 0,
+      reactive: !!this.reactive
+    };
+
+    return (options.limit === 0) ? [] : Genres.findIn(this.genre, {}, options);
+
+  }
+
 });

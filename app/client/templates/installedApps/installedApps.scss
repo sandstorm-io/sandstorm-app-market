@@ -1,6 +1,6 @@
 @import "../../stylesheets/variables";
 
-.installed-apps-title {
+.apps-title {
 
   font-size: $app-genre-font-size;
   color: $installed-apps-header-text;
@@ -70,6 +70,45 @@
       text-align: right;
       margin-right: 7%;
 
+    }
+
+  }
+
+}
+
+.autoupdate-button {
+
+  position: relative;
+  display: inline;
+  font-size: $update-selector-button-font-size;
+  padding-top: $update-selector-button-padding-tb;
+  padding-bottom: $update-selector-button-padding-tb;
+  padding-left: $update-selector-button-padding-lr;
+  padding-right: $update-selector-button-padding-lr;
+  color: $update-selector-button-text;
+  background-color: $update-selector-button-bg;
+  border: 1px solid rgba(0, 0, 0, 0);
+  border-radius: $button-border-radius;
+  cursor: pointer;
+
+  i {
+    color: $update-selector-button-icon;
+  }
+
+  &.left {
+    left: 0.5rem;
+  }
+
+  &.active {
+    color: $update-selector-button-active-text;
+    background-color: $update-selector-button-active-bg;
+    border-color: $update-selector-button-active-border;
+    border-width: 1px;
+    border-style: solid;
+    z-index: 1;
+
+    i {
+      color: #c9add0;
     }
 
   }
