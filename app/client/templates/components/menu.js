@@ -14,6 +14,7 @@ Template.Menu.events({
 
   },
 
+  // LEGACY EVENT HANDLER TO LAUNCH LOGIN MODAL, LEFT IN CASE OF REUSE
   'click [data-action="login-modal"]': function() {
 
     var loginServicesCount = _.filter(getLoginServices(), function(service) {

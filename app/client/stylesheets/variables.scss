@@ -155,6 +155,8 @@ $installed-bar-icon-size: 1.55rem;
 $installed-bar-padding-left: 1.9rem;
 $installed-bar-padding-right: 1.3rem;
 
+$button-block-margin: 0.5rem;
+
 $welcome-message-height: 16.333rem;
 $welcome-message-font-size: 2rem;
 
@@ -193,3 +195,7 @@ $update-app-section-margin-tb: 0.77rem;
 $update-app-padding-lr: 1.4rem;
 $update-app-update-button-width: 7.1rem;
 $update-app-update-button-height: 1.32rem;
+
+$login-form-font-size: 2rem;
+$login-form-text: $topbar-item-bg;
+$login-form-active-text: $topbar-item-active-bg;

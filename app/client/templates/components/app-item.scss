@@ -54,7 +54,7 @@
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow-x: hidden;
-      
+
     }
 
     .app-author {
@@ -153,34 +153,45 @@
       font-size: $installed-bar-font-size;
       padding-left: $installed-bar-padding-left;
       padding-right: $installed-bar-padding-right;
+      white-space: nowrap;
 
-      > * {
+      .installed-details {
 
         display: inline-block;
+        max-width: 85%;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
 
-      }
-
-      .install-date {
-
-        margin-right: 0.6rem;
-
-        .install-date-inner {
+        > * {
 
           display: inline-block;
-          text-transform: uppercase;
 
         }
-      }
 
-      .installed-text {
+        .install-date {
 
-        display: none;
+          margin-right: 0.6rem;
+
+          .install-date-inner {
+
+            display: inline-block;
+            text-transform: uppercase;
+
+          }
+        }
+
+        .installed-text {
+
+          display: none;
+
+        }
 
       }
 
       .uninstall-app {
 
         float: right;
+        display: inline-block;
         font-size: $installed-bar-icon-size;
         color: $installed-bar-icon;
         cursor: pointer;

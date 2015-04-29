@@ -1,0 +1,79 @@
+@import "../../stylesheets/variables";
+
+.login-form {
+
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  font-size: $login-form-font-size;
+  color: $login-form-text;
+
+  .user-info {
+
+    display: inline-block;
+
+    .username {
+
+      font-weight: bold;
+
+    }
+
+  }
+
+  .or {
+
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    margin-left: 5rem;
+    display: block;
+
+  }
+
+  input {
+    display: inline-block;
+    color: $topbar-item-bg;
+    background: none;
+    border: 1px solid $topbar-item-bg;
+    padding-left: $topbar-item-padding-lr;
+    padding-right: $topbar-item-padding-lr;
+    padding-top: $topbar-item-padding-tb;
+    padding-bottom: $topbar-item-padding-tb;
+    &:focus {
+      outline: none;
+      border: 1px solid $topbar-item-active-bg;
+    }
+  }
+
+  > .sandstorm-button {
+
+    display: inline-block;
+
+  }
+
+  .create-account-or-login {
+
+    margin-top: 1.5rem;
+    cursor: pointer;
+    font-style: italic;
+
+    &:hover {
+      color: $login-form-active-text;
+    }
+
+  }
+
+  .error {
+
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+
+  }
+
+  > * {
+
+    vertical-align: middle;
+
+  }
+
+}
