@@ -38,8 +38,6 @@ SyncedCron.add({
         versions: newVersion(_.last(app.versions))
       }});
 
-      console.log(Apps.findOne(app._id));
-
     });
   }
 });

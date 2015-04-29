@@ -54,7 +54,7 @@
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow-x: hidden;
-      
+
     }
 
     .app-author {
@@ -316,6 +316,8 @@
             max-height: $app-image-height - (2.8 *$update-app-height);
 
           }
+
+        }
 
         i {
           color: $update-app-open-caret;
