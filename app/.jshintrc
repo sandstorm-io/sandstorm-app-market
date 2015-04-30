@@ -103,6 +103,7 @@
       "Tracker": false, //Deps renamed to Tracker
       "Deps": false,
       "ReactiveVar": false,
+      "ReactiveDict": false,
       "EJSON": false,
       "HTTP": false,
       "Email": false,

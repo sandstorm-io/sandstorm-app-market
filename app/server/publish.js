@@ -13,6 +13,10 @@ Meteor.publish('categories', function () {
   return Categories.find({name: {$in: popCats}});
 });
 
+Meteor.publish('all categories', function () {
+  return Categories.find({});
+});
+
 Meteor.publish('apps by genre', function (name) {
   var apps = Genres.findIn(name, {}, {}, this);
   return [

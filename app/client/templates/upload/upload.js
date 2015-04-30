@@ -6,6 +6,13 @@ Template.Upload.onCreated(function() {
   tmp.categories = new ReactiveVar();
   tmp.seedString = new ReactiveVar(Random.id());
 
+  window.app = new ReactiveDict('app');
+  window.app.set({
+    name: '',
+    category: '',
+    author: Meteor.userId()
+  });
+
   // Need to wait for categories sub to be ready before recording
   // existing categories.
   tmp.autorun(function(c) {
