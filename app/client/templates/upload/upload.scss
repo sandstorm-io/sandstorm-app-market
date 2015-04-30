@@ -10,6 +10,12 @@
   margin-top: 3.05rem;
   background-color: #ffffff;
 
+  input[type="file"] {
+
+    display: none;
+
+  }
+
   .section {
 
     position: relative;
@@ -147,12 +153,6 @@
 
     }
 
-    .file-picker {
-
-      display: none;
-
-    }
-
     .filename {
 
       float: left;
@@ -237,4 +237,109 @@
 
   }
 
+  .screenshot-container {
+
+    width: 33%;
+    box-sizing: border-box;
+    display: inline-block;
+    position: relative;
+
+    .screenshot {
+
+      position: absolute;
+      top: 0.25rem;
+      bottom: 0.25rem;
+      right: 0.25rem;
+      left: 0.25rem;
+      cursor: pointer;
+      background-position: center;
+      background-size: cover;
+
+      &.placeholder {
+
+        background-color: #e7e4ea;
+        color: #adabae;
+        text-align: center;
+
+        .contents {
+
+          max-width: 70%;
+          margin-top: 27.3%;
+          margin-left: auto;
+          margin-right: auto;
+          transform: translateY(-50%);
+          white-space: nowrap;
+          position: relative;
+
+          .instruction {
+            display: inline-block;
+            width: 60%;
+            font-size: 2.2rem;
+            white-space: normal;
+            vertical-align: middle;
+            text-align: left;
+          }
+
+          i {
+            font-size: 5.15rem;
+            width: 40%;
+            display: inline-block;
+            vertical-align: middle;
+          }
+
+        }
+
+      }
+
+    }
+
+    .remove {
+      position: absolute;
+      right: 1.5rem;
+      color: #222222;
+      font-size: 3.15rem;
+      opacity: 0.7;
+      cursor: pointer;
+      top: 1.5rem;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    &:before {
+      display: block;
+      content: "";
+      width: 100%;
+      padding-top: 56.25%;
+    }
+
+  }
+
+  .description {
+
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 8rem;
+    display: block;
+    box-shadow: none;
+    background: #ffffff;
+    border: 1px solid #ccb8d1;
+    color: #555555;
+    font-size: 1.95rem;
+    font-family: $main-font;
+    height: 2.8rem;
+    line-height: 2.8rem;
+    padding-top: 1.1rem;
+    padding-bottom: 1.1rem;
+    padding-left: 1.1rem;
+    padding-right: 1.1rem;
+    box-sizing: border-box;
+    margin-bottom: 3.7rem;
+
+    &:focus {
+      outline: none;
+    }
+
+  }
 }

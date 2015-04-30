@@ -11,6 +11,8 @@ _.extend(App, {
 
   },
 
-  uploader: new Slingshot.Upload("myFileUploads")
+  spkUploader: new Slingshot.Upload('spkUploader'),
+
+  imageUploader: new Slingshot.Upload('imageUploader')
 
 });

@@ -48,6 +48,11 @@ Schemas.Apps = new SimpleSchema({
     regEx: SimpleSchema.RegEx.Url,
     optional: true
   },
+  spkLink: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Url,
+    optional: true
+  },
   stars: {
     type: Number,
     decimal: true,
@@ -77,6 +82,10 @@ Schemas.Apps = new SimpleSchema({
     defaultValue: true,
     index: true
   },
+  license: {
+    type: String,
+    optional: true
+  },
   createdAt: {
     type: Date,
     autoValue: function() {
@@ -102,7 +111,7 @@ Schemas.Apps = new SimpleSchema({
   versions: {
     type: [String],
     regEx: versionRegEx,
-    defaultValue: ['0.0.1']
+    defaultValue: []
   },
   installCount: {
     type: Number,

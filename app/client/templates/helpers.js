@@ -9,6 +9,14 @@ var helpers = {
 
   },
 
+  getFullname: function(_id) {
+
+    var user = Meteor.users.findOne(_id);
+
+    return user && user.fullname;
+
+  },
+
   //ROUTER/SUB HELPERS
 
   routerSubsReady: function(name) {
