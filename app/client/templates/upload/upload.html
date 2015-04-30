@@ -32,12 +32,16 @@
 
       <div class="half-col">
 
-        <div class="upload-box">
+        <div class="file-box">
 
-          Please upload the *.spk file for your app.
+          <div class="instruction">Please upload the *.spk file for your app.</div>
           <div class="aside"><a href="https://github.com/sandstorm-io/sandstorm/wiki/Porting-Guide">What's an *.spk?</a></div>
 
-          <input type="file" class="browse-box" /><div class="upload-button"></div>
+          <div class="spacer clearfix"></div>
+
+          <input type="text" placeholder="Browse" readonly="true" data-field="filename" class="filename" data-action="choose-file" value="{{filename}}" />
+          <input type="file" class="file-picker" data-action="file-picker" />
+          <div class="square-button dark rem-space-float" data-action="upload">Upload</div>
 
         </div>
 
@@ -87,6 +91,16 @@
 
       <h3 class="title">Genre</h3>
 
+      <div class="genre-list">
+        {{#each categories}}
+
+          <div class="square-button {{#if selected}}active{{/if}}" data-action="select-genre">{{upperCase name}}</div>
+
+        {{/each}}
+
+        <div class="square-button action" data-action="suggest-genre">SUGGEST A NEW GENRE</div><div class="square-button icon" data-action="suggest-genre"><i class="fa fa-plus"></i></div>
+      </div>
+
     </div>
 
     <div class="divider"></div>
@@ -96,6 +110,17 @@
       <div class="half-col">
 
         <h3 class="title">Icon</h3>
+
+        <div class="identicon-container">
+          <img src="{{identicon seedString size=5 scale=50}}" />
+          <div class="regenerate" data-action="regenerate-identicon"><i class="icon-rejected_dark"></i></div>
+          <div class="upload" data-action="upload-icon"><i class="icon-myapps"></i></div>
+        </div>
+
+        <div class="identicon-instructions">
+          <div>For the best results, we suggest the icon be:</div>
+          <div><strong>600px</strong> wide by <strong>600px</strong> high (minimum) in PNG or JPEG format.</div>
+        </div>
 
       </div>
 

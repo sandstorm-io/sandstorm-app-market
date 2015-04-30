@@ -120,6 +120,7 @@
       "WebApp": false,
       "WebAppInternals": false,
       "ServiceConfiguration": false,
+      "Spacebars": false,
 
       // globals useful when creating Meteor packages
       "Npm": false,
@@ -139,6 +140,7 @@
       "AntiModals": false,
       "moment": false,
       "SyncedCron": false,
+      "Slingshot": false,
 
       // Collections
       "Apps": true,

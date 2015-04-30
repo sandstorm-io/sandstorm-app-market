@@ -220,3 +220,45 @@
   }
 
 }
+
+.square-button {
+
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 1.95rem;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 3.15rem;
+  padding-right: 3.15rem;
+  cursor: pointer;
+  font-weight: 300;
+  height: 2.8rem;
+  line-height: 2.8rem;
+  color: #555555;
+  background-color: #e7e4ea;
+  text-align: center;
+
+  &.active {
+    color: #ffffff;
+    background-color: #aa79c6;
+  }
+  &.dark {
+    color: #ffffff;
+    background-color: #553f74;
+  }
+  &.light {
+    color: #a965ba;
+    background-color: #f3e6ff;
+  }
+  &.action {
+    color: #555555;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 1px #e7e4ea;
+  }
+  &.icon {
+    background-color: #e7e4ea;
+    color: #555555;
+  }
+
+}

@@ -9,6 +9,8 @@ _.extend(App, {
             (Array.isArray(value) && value.length === 0) ||
             ((value instanceof Spacebars.kw) && _.isEmpty(value.hash)));
 
-  }
+  },
+
+  uploader: new Slingshot.Upload("myFileUploads")
 
 });

@@ -84,6 +84,18 @@ var helpers = {
 
   },
 
+  upperCase: function(string) {
+
+    return string.toUpperCase && string.toUpperCase();
+
+  },
+
+  lowerCase: function(string) {
+
+    return string.toLowerCase && string.toLowerCase();
+
+  },
+
   // DEBUGGING HELPERS
 
   logThis: function() {

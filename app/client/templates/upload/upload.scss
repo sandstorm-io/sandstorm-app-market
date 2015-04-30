@@ -21,11 +21,16 @@
       display: inline-block;
       box-sizing: border-box;
       vertical-align: top;
+      padding-right: 2rem;
 
-      &:first-child {
-        padding-right: 2rem;
+      > * {
+
+        box-sizing: border-box;
+
       }
-      &:last-child {
+
+      & + .half-col {
+        padding-right: 0;
         padding-left: 2rem;
       }
 
@@ -89,7 +94,14 @@
     background: #e7e4ea;
     border: none;
     color: #555555;
-    font-size: 2.1rem;
+    font-size: 1.95rem;
+    height: 2.8rem;
+    line-height: 2.8rem;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 1.1rem;
+    padding-right: 1.1rem;
+    box-sizing: border-box;
 
     &:focus {
       outline: none;
@@ -101,6 +113,121 @@
 
     font-size: 2.1rem;
     color: #555555;
+
+  }
+
+  .file-box {
+
+    background-color: #e5d7ee;
+    color: #553f74;
+    font-weight: 300;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    padding-top: 2.8rem;
+    padding-bottom: 2.8rem;
+    font-size: 1.85rem;
+
+    .instruction {
+
+      float: left;
+
+    }
+
+    .aside {
+
+      color: #a965ba;
+      float: right;
+
+    }
+
+    .spacer {
+
+      height: 1.9rem;
+      clear: both;
+
+    }
+
+    .file-picker {
+
+      display: none;
+
+    }
+
+    .filename {
+
+      float: left;
+      width: 70%;
+      box-shadow: none;
+      background: #ffffff;
+      border: none;
+      color: #555555;
+      font-size: 2.1rem;
+      font-weight: 300;
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+      }
+
+    }
+
+  }
+
+  .genre-list {
+
+    > * {
+
+      margin-right: 1rem;
+      margin-bottom: 1rem;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+    }
+
+    > .action {
+      margin-right: 0;
+    }
+
+  }
+
+  .identicon-container {
+
+    position: relative;
+    padding: 0.5rem;
+    border: 1px solid #e7e4ea;
+    float: left;
+
+    .regenerate, .upload {
+      position: absolute;
+      right: 1.5rem;
+      color: #222222; // DIFFERENT FROM REQUESTED ffffff, BUT IDENTICONS ARE LIGHT
+      font-size: 3.15rem;
+      opacity: 0.7;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    .regenerate {
+      top: 1.5rem;
+    }
+
+    .upload {
+      bottom: 1.5rem;
+    }
+
+  }
+
+  .identicon-instructions {
+
+    overflow: hidden;
+    font-size: 1.35rem;
+    line-height: 1.4;
+    padding-left: 1.5rem;
 
   }
 
