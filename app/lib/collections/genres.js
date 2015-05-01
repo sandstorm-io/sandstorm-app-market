@@ -102,11 +102,13 @@ var extraGenres = [
   {
     name: 'No Updates',
     selector: function(userId) {
+
       var user = getUser.call(this, userId);
       if (!user) return null;
 
       return {
         _id: {
+          $in: _.keys(user.installedApps),
           $nin: _.reduce(user.installedApps, function(idList, appDetails, appId) {
             var latest = Apps.findOne(appId);
             if (latest && App.versionOlder(appDetails.version, _.last(latest.versions)))
@@ -132,20 +134,6 @@ var extraGenres = [
   }
 
 ];
-
-function invokeGenreFunctions(extraGenre, origSelector, origOptions, context) {
-
-  var eGenSelector = extraGenre.selector,
-      eGenOptions = extraGenre.options;
-  if (_.isFunction(eGenSelector)) eGenSelector = eGenSelector.apply(context);
-  if (_.isFunction(eGenOptions)) eGenOptions = eGenOptions.apply(context);
-
-  return {
-    selector: _.extend(origSelector, eGenSelector),
-    options: _.extend(origOptions, eGenOptions)
-  };
-
-}
 
 Genres = {
 
@@ -220,7 +208,6 @@ Genres = {
 };
 
 // UTILITY FUNCTIONS
-
 
 function invokeGenreFunctions(extraGenre, origSelector, origOptions, context) {
 

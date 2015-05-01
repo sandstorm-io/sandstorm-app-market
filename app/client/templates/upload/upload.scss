@@ -54,6 +54,10 @@
       color: #a4a3b3;
     }
 
+    &:first-child {
+      margin-top: 0;
+    }
+
   }
 
   .mini-title {
@@ -194,10 +198,32 @@
 
   .identicon-container {
 
+    width: 250px;
+    box-sizing: border-box;
     position: relative;
     padding: 0.5rem;
     border: 1px solid #e7e4ea;
     float: left;
+
+    &:before {
+      display: block;
+      content: "";
+      width: 100%;
+      padding-top: 100%;
+    }
+
+    .identicon {
+
+      position: absolute;
+      top: 0.5rem;
+      bottom: 0.5rem;
+      right: 0.5rem;
+      left: 0.5rem;
+      cursor: pointer;
+      background-position: center;
+      background-size: cover;
+
+    }
 
     .regenerate, .upload {
       position: absolute;

@@ -10,6 +10,7 @@
 
   </div>
 
+  {{#if routerSubsReady}}
   {{#if appsCount 'Apps By Me'}}
 
     {{> appsByMe_standard}}
@@ -18,6 +19,7 @@
 
     {{> appsByMe_noApps}}
 
+  {{/if}}
   {{/if}}
 
 </template>

@@ -21,7 +21,6 @@ var helpers = {
 
   routerSubsReady: function(name) {
 
-    console.log(name);
     return name ? FlowRouter.subsReady(name) : FlowRouter.subsReady();
 
   },

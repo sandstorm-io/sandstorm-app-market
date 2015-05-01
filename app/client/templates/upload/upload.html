@@ -54,7 +54,7 @@
         <input type="text" data-field="name" value="{{name}}" required />
 
         <h3 class="title">Author</h3>
-        <div class="read-only">{{getFullname author}}</div>
+        <div class="read-only">{{getUsername author}}</div>
 
       </div>
 
@@ -67,7 +67,7 @@
       <div class="half-col">
 
         <h4 class="mini-title">Ported by</h4>
-        <div class="read-only">{{getFullname author}}</div>
+        <div class="read-only">{{getUsername author}}</div>
 
         <h4 class="mini-title">Code URL</h4>
         <input type="text" data-field="codeLink" value="{{codeLink}}" pattern="https?://.+" />
@@ -83,7 +83,7 @@
       <div class="half-col">
 
         <h4 class="mini-title">Website</h4>
-        <input type="text" data-field="website" value="{{webLink}}" />
+        <input type="text" data-field="webLink" value="{{webLink}}" />
 
         {{> connectButton service="github"}}
         {{> connectButton service="google"}}
@@ -117,7 +117,7 @@
         <h3 class="title">Icon</h3>
 
         <div class="identicon-container">
-          <img src="{{#if image}}{{imageUrl image}}{{else}}{{identicon seedString size=5 scale=50}}{{/if}}" data-field="icon-image" />
+          <div class="identicon" style="background-image: url('{{#if image}}{{imageUrl image}}{{else}}{{identicon seedString size=5 scale=50}}{{/if}}')" data-field="icon-image"></div>
           <div class="regenerate" data-action="regenerate-identicon"><i class="icon-rejected_dark"></i></div>
           <div class="upload" data-action="choose-file" data-name="identicon"><i class="icon-myapps"></i></div>
         </div>

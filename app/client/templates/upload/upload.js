@@ -40,6 +40,20 @@ Template.Upload.onCreated(function() {
 
   };
 
+  tmp.clearApp = function() {
+
+    var newApp = appProto(),
+        oldApp = tmp.app.all();
+    Schemas.AppsBase.clean(newApp);
+    _.each(oldApp, function(val, key) {
+      tmp.app.set(key, newApp[key]);
+    });
+    Meteor.call('user/delete-saved-app', function(err) {
+      if (err) console.log(err);
+    });
+
+  };
+
   // Need to wait for categories sub to be ready before recording
   // existing categories.
   tmp.autorun(function(c) {
@@ -183,7 +197,7 @@ Template.Upload.events({
         if (err)
           console.error('Error uploading', err);
         else {
-          tmp.app.set('image', downloadUrl);
+          tmp.app.set('image', encodeURI(downloadUrl));
         }
       });
     }
@@ -202,6 +216,7 @@ Template.Upload.events({
           console.error('Error uploading', err);
         else {
           var screenshots = tmp.app.get('screenshots');
+          downloadUrl = encodeURI(downloadUrl);
           if (!('screenshotInd' in tmp) || tmp.screenshotInd < 0) screenshots.push(downloadUrl);
           else {
             screenshots[tmp.screenshotInd] = downloadUrl;
@@ -245,7 +260,7 @@ Template.Upload.events({
       if (err)
         console.error('Error uploading', err);
       else {
-        tmp.app.set('spkLink', downloadUrl);
+        tmp.app.set('spkLink', encodeURI(downloadUrl));
       }
 
     });
@@ -278,8 +293,9 @@ Template.Upload.events({
 
   'load [data-field="icon-image"]': function(evt, tmp) {
 
-    tmp.imageUrl.set(evt.currentTarget.src.substr(0, 4) !== 'data');
-    tmp.app.set('image', evt.currentTarget.src);
+    var backgroundImage = $(evt.currentTarget).css('background-image').slice(4, -1);
+    tmp.imageUrl.set(backgroundImage.substr(0, 4) !== 'data');
+    tmp.app.set('image', backgroundImage);
 
   },
 
@@ -297,9 +313,10 @@ Template.Upload.events({
 
   'click [data-action="submit-app"]': function(evt, tmp) {
 
-    Meteor.call('user/submit-app', tmp.app.all(), function(err) {
+    Meteor.call('user/submit-app', tmp.app.all(), function(err, res) {
       if (err) console.log(err);
-    });  
+      else if (res) tmp.clearApp();
+    });
 
   },
 
@@ -314,12 +331,7 @@ Template.Upload.events({
   'click [data-action="delete-app"]': function(evt, tmp) {
 
     // TODO: Add modal confirm
-    var newApp = appProto();
-    Schemas.Apps.clean(newApp);
-    tmp.app.set(newApp);
-    Meteor.call('user/delete-saved-app', function(err) {
-      if (err) console.log(err);
-    });
+    tmp.clearApp();
 
   },
 

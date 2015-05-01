@@ -1,6 +1,8 @@
 /*****************************************************************************/
 /* Server Only Methods */
 /*****************************************************************************/
+var Future = Npm.require('fibers/future');
+
 Meteor.methods({
   'user/toggleAutoupdate': function() {
 
@@ -98,7 +100,7 @@ Meteor.methods({
     this.unblock();
     if (!this.userId) return false;
 
-    check(app, Schemas.AppsBase);
+    // check(app, Schemas.AppsBase);  TODO: should we be validating here? User should be able to save in place.
     Meteor.users.update(this.userId, {$set: {savedApp: app}});
 
   },
@@ -114,11 +116,19 @@ Meteor.methods({
 
   'user/submit-app': function(app) {
 
+    var fut = new Future();
+
     this.unblock();
     if (!this.userId) return false;
-    if (!this.userId !== app.author) throw new Meteor.Error('wrong author', 'Can only submit app by logged-in user');
+    if (this.userId !== app.author) throw new Meteor.Error('wrong author', 'Can only submit app by logged-in user');
 
-    Apps.insert(app);
+    Apps.insert(app, function(err, res) {
+      console.log('done', err, res);
+      if (err) fut.throw(new Meteor.Error(err));
+      fut.return(res);
+    });
+
+    return fut.wait();
 
   },
 
