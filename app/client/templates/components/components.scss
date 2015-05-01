@@ -223,6 +223,7 @@
 
 .square-button {
 
+  font-family: $main-font;
   position: relative;
   display: inline-block;
   vertical-align: middle;
@@ -238,6 +239,13 @@
   color: #555555;
   background-color: #e7e4ea;
   text-align: center;
+  box-shadow: none;
+  border: none;
+  text-transform: uppercase;
+
+  &:focus {
+    outline: none;
+  }
 
   &.active {
     color: #ffffff;
@@ -254,11 +262,14 @@
   &.action {
     color: #555555;
     background-color: #ffffff;
-    box-shadow: 0 0 0 1px #e7e4ea;
+    box-shadow: 0 0 0 1px #e7e4ea inset;
   }
   &.icon {
     background-color: #e7e4ea;
     color: #555555;
+  }
+  &.input {
+    width: 14rem;
   }
 
 }

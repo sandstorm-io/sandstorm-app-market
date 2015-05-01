@@ -16,7 +16,9 @@ Template.Upload.onCreated(function() {
   tmp.file = new ReactiveVar();
   tmp.categories = new ReactiveVar();
   tmp.seedString = new ReactiveVar(Random.id());
+  tmp.imageUrl = new ReactiveVar(false);
   tmp.screenshotsVis = new ReactiveVar(3);
+  tmp.suggestNewGenre = new ReactiveVar(false);
 
   tmp.app = app;
   tmp.app.set(appProto);
@@ -50,9 +52,23 @@ Template.Upload.helpers({
 
   },
 
+  imageUrl: function(image) {
+
+    return (!image || image.substr(0, 4) === 'data' || image.substr(0, 20) === 'http://cdn.filter.to') ?
+      image :
+      'http://cdn.filter.to/250x250/' + image.substr(8);
+
+  },
+
   categories: function() {
 
     return Template.instance().categories.get();
+
+  },
+
+  suggestNewGenre: function() {
+
+    return Template.instance().suggestNewGenre.get();
 
   },
 
@@ -83,6 +99,53 @@ Template.Upload.events({
   'change [data-action="file-picker"][data-for="spk"]': function(evt) {
 
     Template.instance().file.set(evt.currentTarget.files[0]);
+
+  },
+
+  'click [data-action="select-genre"]': function(evt, tmp) {
+
+    var categories = tmp.categories.get();
+
+    _.each(categories, function(cat) {
+      cat.selected = false;
+    });
+    this.selected = true;
+    tmp.app.set('category', this.name);
+    tmp.categories.dep.changed();
+
+  },
+
+  'click [data-action="suggest-genre"]': function(evt, tmp) {
+
+    var categories = _.filter(tmp.categories.get(), function(cat) {
+      return !cat.new;
+    });
+    tmp.categories.set(categories);
+    tmp.suggestNewGenre.set(true);
+    Tracker.afterFlush(function() {
+      tmp.$('[data-field="new-genre-name"]').focus();
+    });
+
+  },
+
+  'click [data-action="save-genre"], keyup [data-field="new-genre-name"]': function(evt, tmp) {
+
+    if (evt.keyCode && evt.keyCode !== 13) return;
+
+    var newGenreName = tmp.$('[data-field="new-genre-name"]').val(),
+        categories = tmp.categories.get();
+
+    _.each(categories, function(cat) {
+      cat.selected = false;
+    });
+
+    categories.push({
+      name: newGenreName,
+      new: true,
+      selected: true
+    });
+    tmp.suggestNewGenre.set(false);
+    tmp.categories.set(categories);
 
   },
 
@@ -170,7 +233,7 @@ Template.Upload.events({
 
   },
 
-  'change input[type="text"][data-field]': function(evt, tmp) {
+  'change input[type="text"][data-field], change textarea[data-field]': function(evt, tmp) {
 
     var $el = $(evt.currentTarget);
     tmp.app.set($el.data('field'), $el.val());
@@ -187,19 +250,6 @@ Template.Upload.events({
 
   },
 
-  'click [data-action="select-genre"]': function(evt, tmp) {
-
-    var categories = tmp.categories.get();
-
-    _.each(categories, function(cat) {
-      cat.selected = false;
-    });
-    this.selected = true;
-    tmp.app.set('category', this.name);
-    tmp.categories.dep.changed();
-
-  },
-
   'click [data-action="regenerate-identicon"]': function(evt, tmp) {
 
     tmp.seedString.set(Random.id());
@@ -209,6 +259,7 @@ Template.Upload.events({
 
   'load [data-field="icon-image"]': function(evt, tmp) {
 
+    tmp.imageUrl.set(evt.currentTarget.src.substr(0, 4) !== 'data');
     tmp.app.set('image', evt.currentTarget.src);
 
   },

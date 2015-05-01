@@ -77,6 +77,12 @@ Schemas.Users = new SimpleSchema({
     type: Object,
     optional: true,
     blackbox: true
+  },
+  // Required for accounts-meld
+  'registered_emails': {
+    type: [Object],
+    blackbox: true,
+    optional: true
   }
 });
 

@@ -51,7 +51,7 @@
       <div class="half-col">
 
         <h3 class="title">Title</h3>
-        <input type="text" data-field="name" value="name" />
+        <input type="text" data-field="name" value="{{name}}" />
 
         <h3 class="title">Author</h3>
         <div class="read-only">{{getFullname author}}</div>
@@ -95,11 +95,15 @@
       <div class="genre-list">
         {{#each categories}}
 
-          <div class="square-button {{#if selected}}active{{/if}}" data-action="select-genre">{{upperCase name}}</div>
+          <div class="square-button {{#if selected}}{{#if new}}light{{else}}active{{/if}}{{/if}}" data-action="select-genre">{{upperCase name}}</div>
 
         {{/each}}
 
-        <div class="square-button action" data-action="suggest-genre">SUGGEST A NEW GENRE</div><div class="square-button icon" data-action="suggest-genre"><i class="fa fa-plus"></i></div>
+        {{#if suggestNewGenre}}
+        <input class="square-button action input" data-field="new-genre-name" value={{newGenreName}} /><div class="square-button icon" data-action="save-genre"><i class="fa fa-plus"></i></div>
+        {{else}}
+        <div class="square-button action" data-action="suggest-genre">SUGGEST A NEW GENRE</div>
+        {{/if}}
       </div>
 
     </div>
@@ -113,7 +117,7 @@
         <h3 class="title">Icon</h3>
 
         <div class="identicon-container">
-          <img src="{{#if image}}{{image}}{{else}}{{identicon seedString size=5 scale=50}}{{/if}}" data-field="icon-image" />
+          <img src="{{#if image}}{{imageUrl image}}{{else}}{{identicon seedString size=5 scale=50}}{{/if}}" data-field="icon-image" />
           <div class="regenerate" data-action="regenerate-identicon"><i class="icon-rejected_dark"></i></div>
           <div class="upload" data-action="choose-file" data-name="identicon"><i class="icon-myapps"></i></div>
         </div>
@@ -157,7 +161,7 @@
       {{#each screenshots}}
 
         <div class="screenshot-container">
-          <div class="screenshot" style="background-image: url('{{this}}')" data-action="change-screenshot"></div>
+          <div class="screenshot" style="background-image: url('{{imageUrl this}}')" data-action="change-screenshot"></div>
           <div class="remove" data-action="remove-screenshot"><i class="icon-rejected_dark"></i></div>
         </div>
 
