@@ -222,7 +222,7 @@
 
   }
 
-  .identicon-instructions {
+  .identicon-instructions, .screenshot-instructions, .donation-instructions {
 
     overflow: hidden;
     font-size: 1.35rem;
@@ -342,4 +342,58 @@
     }
 
   }
+
+  .donation-box {
+
+    $border-col: #5fa059;
+    $height: 2.6rem;
+    white-space: nowrap;
+    float: left;
+    margin-top: 0.25rem;
+
+    i {
+
+      font-size: 2.25rem;
+      color: #ffffff;
+      height: $height;
+      line-height: $height;
+      display: inline-block;
+      vertical-align: middle;
+      background-color: $border-col;
+      border-top-left-radius: 0.5rem;
+      border-bottom-left-radius: 0.5rem;
+      border: 3px solid $border-col;
+      width: 4rem;
+      text-align: center;
+
+    }
+
+    input {
+
+      display: inline-block;
+      position: relative;
+      left: -0.5rem;
+      vertical-align: middle;
+      font-size: 1.65rem;
+      color: #555555;
+      height: $height;
+      line-height: $height;
+      border-radius: 0.5rem;
+      border: 3px solid $border-col;
+      padding-top: 0;
+      padding-bottom: 0;
+      text-align: center;
+      width: 8rem;
+      outline: none;
+
+    }
+
+  }
+
+  i[data-action] {
+
+    cursor: pointer;
+
+  }
+
 }

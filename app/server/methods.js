@@ -93,6 +93,35 @@ Meteor.methods({
 
   },
 
+  'user/save-app': function(app) {
+
+    this.unblock();
+    if (!this.userId) return false;
+
+    check(app, Schemas.AppsBase);
+    Meteor.users.update(this.userId, {$set: {savedApp: app}});
+
+  },
+
+  'user/delete-saved-app': function() {
+
+    this.unblock();
+    if (!this.userId) return false;
+
+    Meteor.users.update(this.userId, {$unset: {savedApp: 1}});
+
+  },
+
+  'user/submit-app': function(app) {
+
+    this.unblock();
+    if (!this.userId) return false;
+    if (!this.userId !== app.author) throw new Meteor.Error('wrong author', 'Can only submit app by logged-in user');
+
+    Apps.insert(app);
+
+  },
+
   'apps/togglePrivate': function(appId) {
 
     this.unblock();

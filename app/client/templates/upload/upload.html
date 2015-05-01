@@ -11,23 +11,23 @@
   </div>
 
   {{#with app}}
-  <div class="upload-box">
+  <form class="upload-box">
 
-    <div class="right-float">
+    <div class="right-float on-top">
 
       <div class="button-block">
-        <div class="sandstorm-button neutral" data-action="submit">
+        <div class="sandstorm-button neutral" data-action="submit-app">
           SUBMIT APP FOR REVIEW
         </div>
-        <div class="sandstorm-button neutral">
+        <div class="sandstorm-button neutral" data-action="save-app">
           SAVE
         </div>
-        <i class="icon-garbage"></i>
+        <i class="icon-garbage" data-action="delete-app"></i>
       </div>
 
     </div>
 
-    <div class="section">
+    <div class="section clearfix">
 
       <h3 class="title">Application File</h3>
 
@@ -51,7 +51,7 @@
       <div class="half-col">
 
         <h3 class="title">Title</h3>
-        <input type="text" data-field="name" value="{{name}}" />
+        <input type="text" data-field="name" value="{{name}}" required />
 
         <h3 class="title">Author</h3>
         <div class="read-only">{{getFullname author}}</div>
@@ -70,7 +70,7 @@
         <div class="read-only">{{getFullname author}}</div>
 
         <h4 class="mini-title">Code URL</h4>
-        <input type="text" data-field="codeLink" value="{{codeLink}}" />
+        <input type="text" data-field="codeLink" value="{{codeLink}}" pattern="https?://.+" />
 
         <h4 class="mini-title">License</h4>
         <input type="text" data-field="license" value="{{license}}" />
@@ -146,7 +146,19 @@
           </div>
         </div>
 
-        <h3 class="title">Suggested Donation <i class="fa fa-caret-down"></i></h3>
+        <h3 class="title">Suggested Donation
+          <span class="simptip-position-bottom simptip-smooth simptip-fade" data-tooltip="Opt out of app market contributions"><i class="fa fa-caret-down" data-action="make-free" ></i></span>
+        </h3>
+
+        <div class="donation-box">
+          <i class="fa fa-dollar"></i>
+          <input type="number" data-field="price" min="0" step="0.01" value="{{price}}" />
+        </div>
+
+        <div class="donation-instructions">
+          Users&nbsp;can&nbsp;chip&nbsp;in&nbsp;any&nbsp;amount,
+          but&nbsp;authors&nbsp;set&nbsp;the&nbsp;default&nbsp;position&nbsp;of&nbsp;the&nbsp;slider.
+        </div>
 
       </div>
 
@@ -157,6 +169,11 @@
     <div class="section">
 
       <h3 class="title">Screenshots</h3>
+
+      <div class="screenshot-instructions">
+        <div>Show your app in action. These images will be displayed in the a side-scroll. For the best results, we suggest your screenshots be:</div>
+        <div><strong>800px</strong> wide by <strong>450px</strong> high (minimum) in PNG or JPEG format.</div>
+      </div>
 
       {{#each screenshots}}
 
@@ -189,21 +206,21 @@
 
     </div>
 
-    <div class="right-float">
+    <div class="right-float on-top">
 
       <div class="button-block">
-        <div class="sandstorm-button neutral" data-action="submit">
+        <div class="sandstorm-button neutral" data-action="submit-app">
           SUBMIT APP FOR REVIEW
         </div>
-        <div class="sandstorm-button neutral">
+        <div class="sandstorm-button neutral" data-action="save-app">
           SAVE
         </div>
-        <i class="icon-garbage"></i>
+        <i class="icon-garbage" data-action="delete-app"></i>
       </div>
 
     </div>
 
-  </div>
+  </form>
   {{/with}}
 
 </template>

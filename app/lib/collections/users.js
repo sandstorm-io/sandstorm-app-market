@@ -65,6 +65,11 @@ Schemas.Users = new SimpleSchema({
     blackbox: true,
     defaultValue: {}
   },
+  savedApp: {
+    type: Object,
+    blackbox: true,
+    optional: true
+  },
   // Add `roles` to your schema if you use the meteor-roles package.
   // Option 1: Object type
   // If you specify that type as Object, you must also specify the

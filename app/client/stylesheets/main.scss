@@ -154,6 +154,11 @@ html {
   padding-right: 0 !important;
 }
 
+.on-top {
+  position: relative;
+  z-index: 1;  
+}
+
 .clearfix {
 
   &:after {

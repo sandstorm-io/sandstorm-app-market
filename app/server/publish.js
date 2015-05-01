@@ -41,3 +41,9 @@ Meteor.publish('apps by me', function () {
 Meteor.publish('apps all', function() {
   return Apps.find();
 });
+
+Meteor.publish('saved app', function() {
+
+  return Meteor.users.find(this.userId, {fields: {savedApp: 1}});
+
+});

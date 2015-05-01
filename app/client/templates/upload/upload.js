@@ -1,13 +1,14 @@
 // Create and declare app object outside template callbacks, then it will
 // persist across route visits.
 
-var appProto = {
-      name: '',
-      category: '',
-      author: Meteor.userId()
+var appProto = function() {
+      return {
+        name: '',
+        category: '',
+        author: Meteor.userId()
+      };
     },
     app = new ReactiveDict('app');
-Schemas.Apps.clean(appProto);
 
 Template.Upload.onCreated(function() {
 
@@ -21,14 +22,42 @@ Template.Upload.onCreated(function() {
   tmp.suggestNewGenre = new ReactiveVar(false);
 
   tmp.app = app;
-  tmp.app.set(appProto);
+  var newApp = appProto();
+  Schemas.AppsBase.clean(newApp);
+  tmp.app.set(newApp);
+
+  tmp.setCategory = function(category) {
+
+    var categories = tmp.categories.get();
+    if (typeof category === 'string') category = _.findWhere(categories, {name: category});
+
+    _.each(categories, function(cat) {
+      cat.selected = false;
+    });
+    category.selected = true;
+    tmp.app.set('category', category.name);
+    tmp.categories.dep.changed();
+
+  };
 
   // Need to wait for categories sub to be ready before recording
   // existing categories.
   tmp.autorun(function(c) {
 
     if (FlowRouter.subsReady()) {
-      tmp.categories.set(Categories.find().fetch());
+
+      // Now we can store the genre list
+      var categories = Categories.find().fetch();
+      if (categories.length) categories[0].selected = true;
+      tmp.categories.set(categories);
+      tmp.app.set('category', categories.length && categories[0].name);
+
+      // And load the saved app, if present
+      if (Meteor.user() && Meteor.user().savedApp) {
+        tmp.app.set(Meteor.user().savedApp);
+        tmp.setCategory(tmp.app.get('category'));
+      }
+
       c.stop();
     }
 
@@ -104,14 +133,7 @@ Template.Upload.events({
 
   'click [data-action="select-genre"]': function(evt, tmp) {
 
-    var categories = tmp.categories.get();
-
-    _.each(categories, function(cat) {
-      cat.selected = false;
-    });
-    this.selected = true;
-    tmp.app.set('category', this.name);
-    tmp.categories.dep.changed();
+    tmp.setCategory(this);
 
   },
 
@@ -161,7 +183,6 @@ Template.Upload.events({
         if (err)
           console.error('Error uploading', err);
         else {
-          console.log('Download URL is ', downloadUrl);
           tmp.app.set('image', downloadUrl);
         }
       });
@@ -180,7 +201,6 @@ Template.Upload.events({
         if (err)
           console.error('Error uploading', err);
         else {
-          console.log('Download URL is ', downloadUrl);
           var screenshots = tmp.app.get('screenshots');
           if (!('screenshotInd' in tmp) || tmp.screenshotInd < 0) screenshots.push(downloadUrl);
           else {
@@ -225,7 +245,6 @@ Template.Upload.events({
       if (err)
         console.error('Error uploading', err);
       else {
-        console.log('Download URL is ', downloadUrl);
         tmp.app.set('spkLink', downloadUrl);
       }
 
@@ -233,7 +252,7 @@ Template.Upload.events({
 
   },
 
-  'change input[type="text"][data-field], change textarea[data-field]': function(evt, tmp) {
+  'change input[type="text"][data-field], change textarea[data-field], change input[type="number"][data-field]': function(evt, tmp) {
 
     var $el = $(evt.currentTarget);
     tmp.app.set($el.data('field'), $el.val());
@@ -267,6 +286,40 @@ Template.Upload.events({
   'click [data-action="toggle-private"]': function(evt, tmp) {
 
     tmp.app.set('public', !tmp.app.get('public'));
+
+  },
+
+  'click [data-action="make-free"]': function(evt, tmp) {
+
+    tmp.app.set('price', 0);
+
+  },
+
+  'click [data-action="submit-app"]': function(evt, tmp) {
+
+    Meteor.call('user/submit-app', tmp.app.all(), function(err) {
+      if (err) console.log(err);
+    });  
+
+  },
+
+  'click [data-action="save-app"]': function(evt, tmp) {
+
+    Meteor.call('user/save-app', tmp.app.all(), function(err) {
+      if (err) console.log(err);
+    });
+
+  },
+
+  'click [data-action="delete-app"]': function(evt, tmp) {
+
+    // TODO: Add modal confirm
+    var newApp = appProto();
+    Schemas.Apps.clean(newApp);
+    tmp.app.set(newApp);
+    Meteor.call('user/delete-saved-app', function(err) {
+      if (err) console.log(err);
+    });
 
   },
 

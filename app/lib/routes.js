@@ -78,6 +78,8 @@ FlowRouter.route('/upload', {
   subscriptions: function() {
     this.register('all categories',
       Meteor.subscribe('all categories'));
+    this.register('saved app',
+      Meteor.subscribe('saved app'));
   },
   action: function() {
     FlowLayout.render('MasterLayout', {mainSection: 'Upload'});
