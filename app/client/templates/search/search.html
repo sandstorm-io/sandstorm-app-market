@@ -1,0 +1,33 @@
+<template name="Search">
+
+  <div class="genre-title-section">
+
+    <div class="contents">
+
+      <div class="genre-name large">SEARCH RESULTS</div>
+
+    </div>
+
+  </div>
+
+  <div class="genre-other-section">
+
+    <div class="contents">
+
+      <div class="genre-other">
+
+        <div class="app-table">
+
+          {{#each appList}}
+            {{> appItem app=this}}
+          {{/each}}
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</template>

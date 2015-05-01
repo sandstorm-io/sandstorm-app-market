@@ -93,6 +93,16 @@ Template.Topbar.events({
 
   },
 
+  'click [data-action="search-apps"], keyup [data-field="search-term"]': function(evt, tmp) {
+
+    if (evt.keyCode && evt.keyCode !== 13) return false;
+
+    var term = tmp.$('[data-field="search-term"]').val();
+
+    if (term) FlowRouter.go('/appMarket/search?term=' + term);
+
+  }
+
 });
 
 Template.Topbar.onDestroyed(function() {

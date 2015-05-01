@@ -48,6 +48,19 @@ FlowRouter.route('/appMarket/genres/:genre', {
   }
 });
 
+FlowRouter.route('/appMarket/search', {
+  name: 'appSearch',
+  subscriptions: function(params, queryParams) {
+    this.register('appSearchName',
+      Meteor.subscribe('app search name', queryParams.term));
+    this.register('appSearchDescription',
+      Meteor.subscribe('app search description', queryParams.term));
+  },
+  action: function() {
+    FlowLayout.render('MasterLayout', {mainSection: 'Search'});
+  }
+});
+
 FlowRouter.route('/installedApps', {
   name: 'installedApps',
   subscriptions: function() {

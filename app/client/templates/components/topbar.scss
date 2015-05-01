@@ -43,9 +43,16 @@
     bottom: $topbar-padding-bottom;
     white-space: nowrap;
 
+    a {
+
+      display: inline-block;
+
+    }
+
     .genre-box {
 
       display: inline-block;
+      vertical-align: middle;
       background-color: $topbar-item-bg;
       margin-right: $topbar-item-margin-right;
       padding-left: $topbar-item-padding-lr;
@@ -95,7 +102,7 @@
         &.hidden {
 
           display: none;
-          
+
         }
 
       }
@@ -103,9 +110,11 @@
     }
 
     .search-box {
-      display: inline;
+      display: inline-block;
+      vertical-align: middle;
       color: $topbar-item-text;
       background: none;
+      font-family: $main-font;
       font-size: $topbar-item-font-size;
       border: 1px solid $topbar-item-bg;
       padding-left: $topbar-item-padding-lr;
@@ -126,7 +135,8 @@
     }
 
     .search-button {
-      display: inline;
+      display: inline-block;
+      vertical-align: middle;
       background-color: $topbar-item-bg;
       color: $topbar-item-text;
       font-size: $topbar-item-font-size;
