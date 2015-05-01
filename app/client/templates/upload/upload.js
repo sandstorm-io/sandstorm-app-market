@@ -61,7 +61,7 @@ Template.Upload.onCreated(function() {
 
   // Autorun to regenerate identicon when required
   tmp.autorun(function() {
-    tmp.app.set('image', blockies.create({
+    tmp.app.set('image', App.blockies.create({
       seed: tmp.seedString.get(),
       size: 5,
       scale: 50

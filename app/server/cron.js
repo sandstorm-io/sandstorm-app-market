@@ -1,28 +1,48 @@
+var retricon = Meteor.npmRequire('retricon');
+
 SyncedCron.add({
   name: 'Generate fake apps',
   schedule: function(parser) {
-    return parser.text('every 10 minutes');
+    return parser.text('every 5 seconds');
   },
   job: function() {
     var categories = _.pluck(Categories.find({}, {fields: {name: 1}}).fetch(), 'name'),
         users = _.pluck(Meteor.users.find({}, {fields: {_id: 1}}).fetch(), '_id');
 
-    return Apps.insert({
-      name: faker.company.bs(),
-      category: _.sample(categories),
-      description: faker.lorem.paragraph(),
-      image: faker.image.image(),
-      approved: _.sample(_.range(4)),
-      author: _.sample(users),
-      versions: ['0.0.1']
+    if (Apps.find().count() < 200)
+      return Apps.insert({
+        name: faker.company.bs(),
+        category: _.sample(categories),
+        description: faker.lorem.paragraph(),
+        image: retricon(Random.id(), 50, 0).toDataURL(),
+        approved: 1,
+        author: _.sample(users),
+        versions: ['0.0.1']
+      });
+    else return 'full';
+  }
+});
+
+SyncedCron.add({
+  name: 'Approve/Reject fake apps',
+  schedule: function(parser) {
+    return parser.text('every 2 minutes');
+  },
+  job: function() {
+
+    Apps.find({approved: 1}).forEach(function(app) {
+
+      Apps.update(app._id, {$set: {approved: _.sample([0, 0, 0, 2, 3])}});
+
     });
+
   }
 });
 
 SyncedCron.add({
   name: 'Update fake apps',
   schedule: function(parser) {
-    return parser.text('every 2 minutes');
+    return parser.text('every 3 minutes');
   },
   job: function() {
 
@@ -43,7 +63,7 @@ SyncedCron.add({
   }
 });
 
-// SyncedCron.start();
+SyncedCron.start();
 
 function newVersion(version) {
 

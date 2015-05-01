@@ -142,6 +142,7 @@
       "moment": false,
       "SyncedCron": false,
       "Slingshot": false,
+      "faker", false,
 
       // Collections
       "Apps": true,
