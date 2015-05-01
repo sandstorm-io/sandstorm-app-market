@@ -60,6 +60,7 @@ var appsBaseSchema = {
     type: Number,
     min: 0,
     defaultValue: 0,
+    decimal: true,
     index: true
   },
   // Approval state

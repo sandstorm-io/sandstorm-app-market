@@ -10,6 +10,11 @@
   margin-top: 3.05rem;
   background-color: #ffffff;
 
+  @media (max-width: $small-tablet) {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
   input[type="file"] {
 
     display: none;
@@ -20,6 +25,13 @@
 
     position: relative;
     font-size: 0;
+
+    @media (max-width: $small-screen) {
+
+      padding-left: 2rem !important;
+      padding-right: 2rem !important;
+
+    }
 
     .half-col {
 
@@ -38,6 +50,23 @@
       & + .half-col {
         padding-right: 0;
         padding-left: 2rem;
+      }
+
+      @media (max-width: $small-screen) {
+
+        width: 100%;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+
+      }
+
+      .button-row {
+
+        @media (max-width: $small-tablet) {
+          text-align: center;
+          margin-top: 3rem;
+        }
+
       }
 
     }
@@ -205,6 +234,12 @@
     border: 1px solid #e7e4ea;
     float: left;
 
+    @media (max-width: $small-screen) {
+
+      margin-bottom: 2rem;
+
+    }
+
     &:before {
       display: block;
       content: "";
@@ -223,12 +258,30 @@
       background-position: center;
       background-size: cover;
 
+      .tint {
+        background-color: #000000;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        opacity: 0;
+      }
+
+      &:hover {
+
+        .tint {
+          opacity: 0.3;
+        }
+
+      }
+
     }
 
     .regenerate, .upload {
       position: absolute;
-      right: 1.5rem;
-      color: #222222; // DIFFERENT FROM REQUESTED ffffff, BUT IDENTICONS ARE LIGHT
+      right: 1rem;
+      color: #ffffff; // DIFFERENT FROM REQUESTED ffffff, BUT IDENTICONS ARE LIGHT
       font-size: 3.15rem;
       opacity: 0.7;
       cursor: pointer;
@@ -239,11 +292,11 @@
     }
 
     .regenerate {
-      top: 1.5rem;
+      top: 1rem;
     }
 
     .upload {
-      bottom: 1.5rem;
+      bottom: 1rem;
     }
 
   }
@@ -266,9 +319,17 @@
   .screenshot-container {
 
     width: 33.3%;
+    min-width: 22rem;
     box-sizing: border-box;
     display: inline-block;
     position: relative;
+
+    @media (max-width: $small-screen) {
+      width: 50%;
+    }
+    @media (max-width: $small-tablet) {
+      width: 100%;
+    }
 
     .screenshot {
 
