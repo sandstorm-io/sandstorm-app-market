@@ -37,9 +37,16 @@ Meteor.publish('apps by me', function () {
   return Genres.findIn('Apps By Me', {}, {}, this);
 });
 
-
 Meteor.publish('apps all', function() {
   return Apps.find();
+});
+
+Meteor.publish('app search name', function(term) {
+  return Apps.find({name: {$regex: term, $options: 'i'}});
+});
+
+Meteor.publish('app search description', function(term) {
+  return Apps.find({description: {$regex: term, $options: 'i'}});
 });
 
 Meteor.publish('saved app', function() {
