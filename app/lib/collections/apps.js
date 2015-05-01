@@ -63,11 +63,6 @@ var appsBaseSchema = {
     decimal: true,
     index: true
   },
-  // Approval state
-  // 0 - Approved
-  // 1 - Pending
-  // 2 - Revision Requested
-  // 3 - Rejected
   public: {
     type: Boolean,
     defaultValue: true,
@@ -106,6 +101,11 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
     defaultValue: 2.5,
     index: true
   },
+  // Approval state
+  // 0 - Approved
+  // 1 - Pending
+  // 2 - Revision Requested
+  // 3 - Rejected
   approved: {
     type: Number,
     defaultValue: 1,
