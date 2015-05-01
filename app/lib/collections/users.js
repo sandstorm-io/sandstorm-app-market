@@ -7,23 +7,28 @@ Schemas.UserProfile = new SimpleSchema({
 
 Schemas.Users = new SimpleSchema({
   username: {
-      type: String,
-      min: 1,
-      max: 50
+    type: String,
+    min: 1,
+    max: 50
+  },
+  fullname: {
+    type: String,
+    min: 1,
+    max: 100
   },
   emails: {
-      type: [Object],
-      // this must be optional if you also use other login services like
-      // facebook, but if you use only accounts-password, then it
-      // can be required
-      optional: true
+    type: [Object],
+    // this must be optional if you also use other login services like
+    // facebook, but if you use only accounts-password, then it
+    // can be required
+    optional: true
   },
   "emails.$.address": {
-      type: String,
-      regEx: SimpleSchema.RegEx.Email
+    type: String,
+    regEx: SimpleSchema.RegEx.Email
   },
   "emails.$.verified": {
-      type: Boolean
+    type: Boolean
   },
   createdAt: {
     type: Date,
@@ -38,13 +43,13 @@ Schemas.Users = new SimpleSchema({
     }
   },
   profile: {
-      type: Schemas.UserProfile,
-      optional: true
+    type: Schemas.UserProfile,
+    optional: true
   },
   services: {
-      type: Object,
-      optional: true,
-      blackbox: true
+    type: Object,
+    optional: true,
+    blackbox: true
   },
   installedApps: {
     type: Object,
@@ -60,6 +65,11 @@ Schemas.Users = new SimpleSchema({
     blackbox: true,
     defaultValue: {}
   },
+  savedApp: {
+    type: Object,
+    blackbox: true,
+    optional: true
+  },
   // Add `roles` to your schema if you use the meteor-roles package.
   // Option 1: Object type
   // If you specify that type as Object, you must also specify the
@@ -69,9 +79,15 @@ Schemas.Users = new SimpleSchema({
   // You can't mix and match adding with and without a group since
   // you will fail validation in some cases.
   roles: {
-      type: Object,
-      optional: true,
-      blackbox: true
+    type: Object,
+    optional: true,
+    blackbox: true
+  },
+  // Required for accounts-meld
+  'registered_emails': {
+    type: [Object],
+    blackbox: true,
+    optional: true
   }
 });
 

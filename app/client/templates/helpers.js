@@ -9,6 +9,14 @@ var helpers = {
 
   },
 
+  getFullname: function(_id) {
+
+    var user = Meteor.users.findOne(_id);
+
+    return user && user.fullname;
+
+  },
+
   //ROUTER/SUB HELPERS
 
   routerSubsReady: function(name) {
@@ -81,6 +89,18 @@ var helpers = {
   last: function(array) {
 
     return _.last(array);
+
+  },
+
+  upperCase: function(string) {
+
+    return string.toUpperCase && string.toUpperCase();
+
+  },
+
+  lowerCase: function(string) {
+
+    return string.toLowerCase && string.toLowerCase();
 
   },
 

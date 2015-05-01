@@ -1,0 +1,425 @@
+@import "../../stylesheets/variables";
+@import "../../templates/components/menu";
+
+.upload-box {
+
+  @extend .menu-spacer;
+  @extend .margin-right;
+
+  padding: 6.6rem;
+  margin-top: 3.05rem;
+  background-color: #ffffff;
+
+  input[type="file"] {
+
+    display: none;
+
+  }
+
+  .section {
+
+    position: relative;
+    font-size: 0;
+
+    .half-col {
+
+      width: 50%;
+      display: inline-block;
+      box-sizing: border-box;
+      vertical-align: top;
+      padding-right: 2rem;
+
+      > * {
+
+        box-sizing: border-box;
+
+      }
+
+      & + .half-col {
+        padding-right: 0;
+        padding-left: 2rem;
+      }
+
+    }
+
+  }
+
+  .title {
+
+    font-size: 2.55rem;
+    margin-top: 1.6rem;
+    margin-bottom: 0.8rem;
+
+    i {
+      color: #a4a3b3;
+    }
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+  }
+
+  .mini-title {
+
+    font-size: 2.1rem;
+    font-weight: bold;
+    color: #222222;
+    margin-top: 1.6rem;
+    margin-bottom: 0.8rem;
+
+  }
+
+  .divider {
+
+    border-bottom: 1px solid $update-app-divider;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+
+  }
+
+  .button-block {
+
+    .sandstorm-button {
+
+      color: #555555;
+      border-color: #a4a3b3;
+
+    }
+
+    i {
+
+      color: #a4a3b3;
+      cursor: pointer;
+
+    }
+
+  }
+
+  input[type="text"] {
+
+    display: block;
+    width: 100%;
+    box-shadow: none;
+    background: #e7e4ea;
+    border: none;
+    color: #555555;
+    font-size: 1.95rem;
+    height: 2.8rem;
+    line-height: 2.8rem;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 1.1rem;
+    padding-right: 1.1rem;
+    box-sizing: border-box;
+
+    &:focus {
+      outline: none;
+    }
+
+  }
+
+  .read-only {
+
+    font-size: 2.1rem;
+    color: #555555;
+
+  }
+
+  .file-box {
+
+    background-color: #e5d7ee;
+    color: #553f74;
+    font-weight: 300;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    padding-top: 2.8rem;
+    padding-bottom: 2.8rem;
+    font-size: 1.85rem;
+
+    .instruction {
+
+      float: left;
+
+    }
+
+    .aside {
+
+      color: #a965ba;
+      float: right;
+
+    }
+
+    .spacer {
+
+      height: 1.9rem;
+      clear: both;
+
+    }
+
+    .filename {
+
+      float: left;
+      width: 70%;
+      box-shadow: none;
+      background: #ffffff;
+      border: none;
+      color: #555555;
+      font-size: 2.1rem;
+      font-weight: 300;
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+      }
+
+    }
+
+  }
+
+  .genre-list {
+
+    > * {
+
+      margin-right: 1rem;
+      margin-bottom: 1rem;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+    }
+
+    > .action {
+      margin-right: 0;
+    }
+
+  }
+
+  .identicon-container {
+
+    width: 250px;
+    box-sizing: border-box;
+    position: relative;
+    padding: 0.5rem;
+    border: 1px solid #e7e4ea;
+    float: left;
+
+    &:before {
+      display: block;
+      content: "";
+      width: 100%;
+      padding-top: 100%;
+    }
+
+    .identicon {
+
+      position: absolute;
+      top: 0.5rem;
+      bottom: 0.5rem;
+      right: 0.5rem;
+      left: 0.5rem;
+      cursor: pointer;
+      background-position: center;
+      background-size: cover;
+
+    }
+
+    .regenerate, .upload {
+      position: absolute;
+      right: 1.5rem;
+      color: #222222; // DIFFERENT FROM REQUESTED ffffff, BUT IDENTICONS ARE LIGHT
+      font-size: 3.15rem;
+      opacity: 0.7;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    .regenerate {
+      top: 1.5rem;
+    }
+
+    .upload {
+      bottom: 1.5rem;
+    }
+
+  }
+
+  .identicon-instructions, .screenshot-instructions, .donation-instructions {
+
+    overflow: hidden;
+    font-size: 1.35rem;
+    line-height: 1.4;
+    padding-left: 1.5rem;
+    color: #555555;
+    min-width: 15rem;
+
+    > * {
+      margin-bottom: 2rem;
+    }
+
+  }
+
+  .screenshot-container {
+
+    width: 33.3%;
+    box-sizing: border-box;
+    display: inline-block;
+    position: relative;
+
+    .screenshot {
+
+      position: absolute;
+      top: 0.25rem;
+      bottom: 0.25rem;
+      right: 0.25rem;
+      left: 0.25rem;
+      cursor: pointer;
+      background-position: center;
+      background-size: cover;
+
+      &.placeholder {
+
+        background-color: #e7e4ea;
+        color: #adabae;
+        text-align: center;
+
+        .contents {
+
+          max-width: 70%;
+          margin-top: 27.3%;
+          margin-left: auto;
+          margin-right: auto;
+          transform: translateY(-50%);
+          white-space: nowrap;
+          position: relative;
+
+          .instruction {
+            display: inline-block;
+            width: 60%;
+            font-size: 2.2rem;
+            white-space: normal;
+            vertical-align: middle;
+            text-align: left;
+          }
+
+          i {
+            font-size: 5.15rem;
+            width: 40%;
+            display: inline-block;
+            vertical-align: middle;
+          }
+
+        }
+
+      }
+
+    }
+
+    .remove {
+      position: absolute;
+      right: 1.5rem;
+      color: #222222;
+      font-size: 3.15rem;
+      opacity: 0.7;
+      cursor: pointer;
+      top: 1.5rem;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    &:before {
+      display: block;
+      content: "";
+      width: 100%;
+      padding-top: 56.25%;
+    }
+
+  }
+
+  .description {
+
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 8rem;
+    display: block;
+    box-shadow: none;
+    background: #ffffff;
+    border: 1px solid #ccb8d1;
+    color: #555555;
+    font-size: 1.95rem;
+    font-family: $main-font;
+    height: 2.8rem;
+    line-height: 2.8rem;
+    padding-top: 1.1rem;
+    padding-bottom: 1.1rem;
+    padding-left: 1.1rem;
+    padding-right: 1.1rem;
+    box-sizing: border-box;
+    margin-bottom: 3.7rem;
+
+    &:focus {
+      outline: none;
+    }
+
+  }
+
+  .donation-box {
+
+    $border-col: #5fa059;
+    $height: 2.6rem;
+    white-space: nowrap;
+    float: left;
+    margin-top: 0.25rem;
+
+    i {
+
+      font-size: 2.25rem;
+      color: #ffffff;
+      height: $height;
+      line-height: $height;
+      display: inline-block;
+      vertical-align: middle;
+      background-color: $border-col;
+      border-top-left-radius: 0.5rem;
+      border-bottom-left-radius: 0.5rem;
+      border: 3px solid $border-col;
+      width: 4rem;
+      text-align: center;
+
+    }
+
+    input {
+
+      display: inline-block;
+      position: relative;
+      left: -0.5rem;
+      vertical-align: middle;
+      font-size: 1.65rem;
+      color: #555555;
+      height: $height;
+      line-height: $height;
+      border-radius: 0.5rem;
+      border: 3px solid $border-col;
+      padding-top: 0;
+      padding-bottom: 0;
+      text-align: center;
+      width: 8rem;
+      outline: none;
+
+    }
+
+  }
+
+  i[data-action] {
+
+    cursor: pointer;
+
+  }
+
+}

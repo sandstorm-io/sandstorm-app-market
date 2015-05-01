@@ -4,11 +4,14 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
 }});
 
 // TODO Update InstallCountThisWeek daily
-// TODO Investigate RegEx for version number
+// TODO Investigate RegEx for version number and image
 
 var versionRegEx = /.*/; // THIS IS NOT DOING ANYTHING AT THE MOMENT
 
-Schemas.Apps = new SimpleSchema({
+// appsBaseSchema contains the keys that are required for a valid app object,
+// but NOT anything which will be autoValued or receive a default value only
+// when the app is added to the DB.
+var appsBaseSchema = {
   name: {
     type: String,
     max: 200,
@@ -25,7 +28,7 @@ Schemas.Apps = new SimpleSchema({
   },
   image: {
     type: String,
-    regEx: SimpleSchema.RegEx.Url,
+    // regEx: SimpleSchema.RegEx.Url,
     optional: true
   },
   screenshots: {
@@ -48,13 +51,10 @@ Schemas.Apps = new SimpleSchema({
     regEx: SimpleSchema.RegEx.Url,
     optional: true
   },
-  stars: {
-    type: Number,
-    decimal: true,
-    min: 0,
-    max: 5,
-    defaultValue: 2.5,
-    index: true
+  spkLink: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Url,
+    optional: true
   },
   price: {
     type: Number,
@@ -67,16 +67,24 @@ Schemas.Apps = new SimpleSchema({
   // 1 - Pending
   // 2 - Revision Requested
   // 3 - Rejected
-  approved: {
-    type: Number,
-    defaultValue: 1,
-    index: true
-  },
   public: {
     type: Boolean,
     defaultValue: true,
     index: true
   },
+  license: {
+    type: String,
+    optional: true
+  },
+  versions: {
+    type: [String],
+    regEx: versionRegEx,
+    defaultValue: []
+  }
+
+};
+// appsFullSchema adds the autoValue and defaultValue keys
+var appsFullSchema = _.extend({}, appsBaseSchema, {
   createdAt: {
     type: Date,
     autoValue: function() {
@@ -89,6 +97,19 @@ Schemas.Apps = new SimpleSchema({
       }
     }
   },
+  stars: {
+    type: Number,
+    decimal: true,
+    min: 0,
+    max: 5,
+    defaultValue: 2.5,
+    index: true
+  },
+  approved: {
+    type: Number,
+    defaultValue: 1,
+    index: true
+  },
   lastUpdated: {
     type: Date,
     autoValue: function() {
@@ -98,11 +119,6 @@ Schemas.Apps = new SimpleSchema({
     },
     // denyInsert: true,
     optional: true
-  },
-  versions: {
-    type: [String],
-    regEx: versionRegEx,
-    defaultValue: ['0.0.1']
   },
   installCount: {
     type: Number,
@@ -114,9 +130,27 @@ Schemas.Apps = new SimpleSchema({
     min: 0,
     defaultValue: 0
   }
+},
+{
+  // For some reason, SimpleSchema does not like arrays of prototypes being extended,
+  // so we need to add these keys again.
+  screenshots: {
+    type: [String],
+    regEx: SimpleSchema.RegEx.Url,
+    defaultValue: []
+  },
+  versions: {
+    type: [String],
+    regEx: versionRegEx,
+    defaultValue: []
+  }
 });
 
-Apps.attachSchema(Schemas.Apps);
+
+Schemas.AppsBase = new SimpleSchema(appsBaseSchema);
+Schemas.AppsFull = new SimpleSchema(appsFullSchema);
+
+Apps.attachSchema(Schemas.AppsFull);
 
 if (Meteor.isServer) {
   Apps.allow({

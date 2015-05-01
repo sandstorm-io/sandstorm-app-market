@@ -149,6 +149,14 @@ html {
 
 .rem-space-float {
   overflow: hidden;
+  display: block !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.on-top {
+  position: relative;
+  z-index: 1;  
 }
 
 .clearfix {

@@ -73,6 +73,19 @@ FlowRouter.route('/appsByMe', {
   }
 });
 
+FlowRouter.route('/upload', {
+  name: 'upload',
+  subscriptions: function() {
+    this.register('all categories',
+      Meteor.subscribe('all categories'));
+    this.register('saved app',
+      Meteor.subscribe('saved app'));
+  },
+  action: function() {
+    FlowLayout.render('MasterLayout', {mainSection: 'Upload'});
+  }
+});
+
 FlowRouter.route('/serviceConfigure', {
   name: 'serviceConfiguration',
   action: function() {

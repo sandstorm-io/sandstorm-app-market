@@ -79,19 +79,38 @@ Template.appTable.onDestroyed(function() {
 
 // LARGE APP ITEM TABLE
 
+Template.appTableLarge.onCreated(function() {
+
+  this.searchTerm = new ReactiveVar('');
+
+});
+
 Template.appTableLarge.helpers({
 
   appList: function() {
 
     var options = {
-      sort: [ 'createdAt' ],
-      skip: 0,
-      reactive: !!this.reactive
-    };
+          sort: [ 'createdAt' ],
+          skip: 0,
+          reactive: !!this.reactive
+        },
+        query = {};
+
     if (this.sortAsc) options.sort.unshift([this.sortAsc, 'asc']);
     if (this.sortDesc) options.sort.unshift([this.sortDesc, 'desc']);
+    if (this.searchTerm) query = {name: {$regex: new RegExp(this.searchTerm, 'gi')}};
 
-    return (options.limit === 0) ? [] : Genres.findIn(this.genre, {}, options);
+    return (options.limit === 0) ? [] : Genres.findIn(this.genre, query, options);
+
+  }
+
+});
+
+Template.appTableLarge.events({
+
+  'keyup input': function(evt) {
+
+    this.searchTerm.set($(evt.currentTarget).val());
 
   }
 
