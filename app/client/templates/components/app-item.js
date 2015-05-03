@@ -51,17 +51,25 @@ Template.appItem.helpers({
 
 Template.appItem.events({
 
-  'click [data-action="uninstall-app-modal"]': function() {
+  'click [data-action="uninstall-app-modal"]': function(evt) {
 
+    evt.preventDefault();
     AntiModals.overlay('uninstallApp', {data: this});
 
   },
 
-  'click [data-action="install-app"]': function() {
+  'click [data-action="install-app"]': function(evt) {
 
+    evt.preventDefault();
     Meteor.call('user/installApp', this._id, function(err) {
       if (err) console.log(err);
     });
+
+  },
+
+  'click [data-link="single-app"]': function() {
+
+    FlowRouter.go('/appMarket/app/' + this._id);
 
   }
 

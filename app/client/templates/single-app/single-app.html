@@ -1,0 +1,101 @@
+<template name="SingleApp">
+
+  {{#if routerSubsReady}}
+
+  <div class="app-table-large">
+
+    <div class="app-item-container full-width">
+
+      <div class="app-item-inner">
+
+        {{#with app}}
+
+        <div class="image-section">
+
+          <div class="image-surround-full-width">
+
+            <div class="image" style="background-image: url('{{imageUrl image}}');"></div>
+
+          </div>
+
+          {{#with approvalState}}
+          <div class="message-box {{messageClass}}"><i class="{{iconClass}}"></i> {{message}}</div>
+          {{/with}}
+
+        </div>
+
+        <div class="text-section">
+
+          <div class="top-section clearfix">
+
+            <div class="left-float">
+
+              <div class="app-name-full-width">{{name}}</div>
+
+              <div class="app-author-full-width">{{getUsername author}}</div>
+
+            </div>
+
+            <div class="right-float">
+
+              <div class="edit-button">
+                <div class="sandstorm-button neutral small" data-action="update-all-apps">
+                  <i class="icon-edit"></i>
+                  EDIT
+                </div>
+              </div>
+
+              <div class="public-private">
+                <div class="sandstorm-button left {{#if public}}active{{/if}} small" data-action="toggle-private">
+                  <i class="fa fa-eye"></i>
+                  PUBLIC
+                </div>
+                <div class="sandstorm-button right {{#unless public}}active{{/unless}} small" data-action="toggle-private">
+                  <i class="fa fa-lock"></i>
+                  PRIVATE
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="bottom-section clearfix">
+
+            <div class="left-float details-block">
+
+              <div class="date">{{dateFormat createdAt 'MMMM DD, YYYY'}}</div>
+              <div class="genre">{{category}}</div>
+
+              <div class="divider"></div>
+
+              <div class="key">Ported by:</div><div class="value">{{getUsername author}}</div>
+              <div class="key">License:</div><div class="value">MIT TODO</div>
+              <div class="key">Code:</div><div class="value">On Github TODO</div>
+              <div class="key">Version:</div><div class="value">{{getLatestVersion}}</div>
+
+            </div>
+
+            <div class="rem-space-float">
+
+              <div class="app-description">
+                {{description}}
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        {{/with}}
+
+      </div>
+
+    </div>
+
+  </div>
+
+  {{/if}}
+
+</template>

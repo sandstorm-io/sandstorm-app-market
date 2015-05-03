@@ -26,6 +26,17 @@ FlowRouter.route('/login', {
   }
 });
 
+FlowRouter.route('/appMarket/app/:appId', {
+  name: 'singleApp',
+  subscriptions: function(params) {
+    this.register('apps by id',
+      Meteor.subscribe('apps by id', params.appId));
+  },
+  action: function() {
+    FlowLayout.render('MasterLayout', {mainSection: 'SingleApp'});
+  }
+});
+
 FlowRouter.route('/appMarket', {
   name: 'appMarket',
   action: function() {
