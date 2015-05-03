@@ -117,9 +117,11 @@
         <h3 class="title">Icon</h3>
 
         <div class="identicon-container">
-          <div class="identicon" style="background-image: url('{{#if image}}{{imageUrl image}}{{else}}{{identicon seedString size=5 scale=50}}{{/if}}')" data-field="icon-image"></div>
-          <div class="regenerate" data-action="regenerate-identicon"><i class="icon-rejected_dark"></i></div>
-          <div class="upload" data-action="choose-file" data-name="identicon"><i class="icon-myapps"></i></div>
+          <div class="identicon" style="background-image: url('{{imageUrl image}}')" data-field="icon-image">#
+            <div class="tint"></div>
+            <div class="regenerate" data-action="regenerate-identicon"><i class="icon-rejected_dark"></i></div>
+            <div class="upload" data-action="choose-file" data-name="identicon"><i class="icon-myapps"></i></div>
+          </div>
         </div>
 
         <input type="file" class="file-picker" data-action="file-picker" data-for="identicon" accept="image/*" />
@@ -136,11 +138,11 @@
         <h3 class="title">Display in Market?</h3>
 
         <div class="public-private">
-          <div class="sandstorm-button left {{#if public}}active{{/if}} small" data-action="toggle-private">
+          <div class="sandstorm-button left {{#if public}}active{{/if}}" data-action="toggle-private">
             <i class="fa fa-eye"></i>
             PUBLIC
           </div>
-          <div class="sandstorm-button right {{#unless public}}active{{/unless}} small" data-action="toggle-private">
+          <div class="sandstorm-button right {{#unless public}}active{{/unless}}" data-action="toggle-private">
             <i class="fa fa-lock"></i>
             PRIVATE
           </div>

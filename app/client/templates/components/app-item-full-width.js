@@ -21,7 +21,7 @@ var approvalStateMatrix = [
     messageClass: 'rejected',
     iconClass: 'fa fa-times',
     message: 'REJECTED',
-    fullMessage: 'This app has been rejected. <a href="">Edit</a> to view the Admin\'s commnents'
+    fullMessage: 'This app has been rejected. <a href="">Edit</a> to view the Admin\'s comments'
   }
 ];
 

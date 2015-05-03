@@ -3,6 +3,8 @@
 .button-row {
 
   display: block;
+  margin-top: 1.9rem;
+  margin-bottom: 1.9rem;
 
 }
 
@@ -17,9 +19,6 @@
   padding-bottom: 0;
   padding-left: $update-selector-button-padding-lr;
   padding-right: $update-selector-button-padding-lr;
-  margin-top: 0.8rem;
-  margin-bottom: 0.8rem;
-  color: #783189;
   background-color: #ffe9f5;
   border-radius: $button-border-radius;
   cursor: pointer;

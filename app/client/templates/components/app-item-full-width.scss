@@ -101,6 +101,10 @@
           line-height: 1.4;
           margin-right: 2.3rem;
 
+          @media (max-width: $small-screen) {
+            width: auto;
+          }
+
         }
 
         .date {
@@ -133,6 +137,12 @@
 
         }
 
+      }
+
+      .rem-space-float {
+        @media (max-width: $small-screen) {
+          overflow: initial;
+        }
       }
 
       .app-description {

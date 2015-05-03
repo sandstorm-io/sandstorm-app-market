@@ -104,6 +104,16 @@ var helpers = {
 
   },
 
+  // IMAGE HELPERS
+  
+  imageUrl: function(image) {
+
+    return (!image || image.substr(0, 4) === 'data' || image.substr(0, 20) === 'http://cdn.filter.to') ?
+      image :
+      'http://cdn.filter.to/250x250/' + image.substr(8);
+
+  },
+
   // DEBUGGING HELPERS
 
   logThis: function() {

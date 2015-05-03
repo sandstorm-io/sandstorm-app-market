@@ -18,7 +18,7 @@ Meteor.publish('all categories', function () {
 });
 
 Meteor.publish('apps by genre', function (name) {
-  var apps = Genres.findIn(name, {}, {}, this);
+  var apps = Genres.findIn(name, {public: true, approved: 0}, {}, this);
   return [
     apps,
     Meteor.users.find({_id: {$in: _.uniq(apps.map(function(app) {
@@ -42,11 +42,11 @@ Meteor.publish('apps all', function() {
 });
 
 Meteor.publish('app search name', function(term) {
-  return Apps.find({name: {$regex: term, $options: 'i'}});
+  return Apps.find({name: {$regex: term, $options: 'i'}, public: true, approved: 0});
 });
 
 Meteor.publish('app search description', function(term) {
-  return Apps.find({description: {$regex: term, $options: 'i'}});
+  return Apps.find({description: {$regex: term, $options: 'i'}, public: true, approved: 0});
 });
 
 Meteor.publish('saved app', function() {

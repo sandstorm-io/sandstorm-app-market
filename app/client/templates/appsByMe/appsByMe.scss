@@ -15,6 +15,7 @@
 
       width: 25%;
       min-width: 24rem;
+      max-width: 48rem;
       float: left;
 
       @media (max-width: $large-phone) {
@@ -66,11 +67,8 @@
     font-size: $purpose-font-size;
     font-weight: lighter;
     color: $purpose-text;
-    position: absolute;
     bottom: $large-button-font-size + (2 * $large-button-padding-tb) + $purpose-margin-bottom;
-    left: 50%;
-    transform: translateX(-50%);
-    padding-top: $large-button-padding-tb;
+    padding-top: calc(8% - 3rem);
     padding-bottom: $large-button-padding-tb;
 
     @media (max-width: $large-tablet) {

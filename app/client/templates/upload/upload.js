@@ -21,6 +21,11 @@ Template.Upload.onCreated(function() {
   tmp.screenshotsVis = new ReactiveVar(3);
   tmp.suggestNewGenre = new ReactiveVar(false);
 
+  var resetScreenshotsVis = function() {
+    tmp.screenshotsVis.set(Math.min(Math.ceil(($(window).width() - 300) / 600), 3));
+  };
+  resetScreenshotsVis();
+
   tmp.app = app;
   var newApp = appProto();
   Schemas.AppsBase.clean(newApp);
@@ -54,6 +59,15 @@ Template.Upload.onCreated(function() {
 
   };
 
+  // Autorun to regenerate identicon when required
+  tmp.autorun(function() {
+    tmp.app.set('image', App.blockies.create({
+      seed: tmp.seedString.get(),
+      size: 5,
+      scale: 50
+    }).toDataURL());
+  });
+
   // Need to wait for categories sub to be ready before recording
   // existing categories.
   tmp.autorun(function(c) {
@@ -77,6 +91,21 @@ Template.Upload.onCreated(function() {
 
   });
 
+  var resetScreenshotsVis = function() {
+    tmp.screenshotsVis.set(Math.min(Math.ceil(($(window).width() - 300) / 600), 3));
+  };
+
+  $(window).on('resize.upload', resetScreenshotsVis);
+
+  // TODO: delete this, debug method
+  window.showApp = function() {
+    console.log(tmp.app.all());
+  };
+
+});
+
+Template.Upload.onDestroyed(function() {
+  $(window).off('resize.upload');
 });
 
 Template.Upload.helpers({
@@ -92,14 +121,6 @@ Template.Upload.helpers({
     var tmp = Template.instance(),
         file = tmp.file.get();
     return file && file.name;
-
-  },
-
-  imageUrl: function(image) {
-
-    return (!image || image.substr(0, 4) === 'data' || image.substr(0, 20) === 'http://cdn.filter.to') ?
-      image :
-      'http://cdn.filter.to/250x250/' + image.substr(8);
 
   },
 
@@ -288,14 +309,6 @@ Template.Upload.events({
 
     tmp.seedString.set(Random.id());
     tmp.app.set('image', '');
-
-  },
-
-  'load [data-field="icon-image"]': function(evt, tmp) {
-
-    var backgroundImage = $(evt.currentTarget).css('background-image').slice(4, -1);
-    tmp.imageUrl.set(backgroundImage.substr(0, 4) !== 'data');
-    tmp.app.set('image', backgroundImage);
 
   },
 
