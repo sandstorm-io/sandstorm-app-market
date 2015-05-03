@@ -75,13 +75,6 @@
       line-height: $star-line-height;
       padding-bottom: 0.5rem;
 
-      .dark {
-        color: $star-col-dark;
-      }
-      .light {
-        color: $star-col-light;
-      }
-
       .rate-it {
         display: inline-block;
         margin-left: 1rem;
@@ -421,6 +414,17 @@
 
     }
 
+  }
+
+}
+
+.icon-star {
+
+  &.dark {
+    color: $star-col-dark;
+  }
+  &.light {
+    color: $star-col-light;
   }
 
 }

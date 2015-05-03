@@ -123,7 +123,8 @@ Meteor.methods({
     if (this.userId !== app.author) throw new Meteor.Error('wrong author', 'Can only submit app by logged-in user');
 
     Apps.insert(app, function(err, res) {
-      if (err) throw new Meteor.Error(err);
+      console.log(err, res);
+      if (err) throw new Meteor.Error(err.message);
       else fut.return(res);
     });
 

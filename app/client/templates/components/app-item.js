@@ -16,17 +16,6 @@ Template.appItem.helpers({
 
   },
 
-  appRating: function(stars) {
-
-    stars = stars || 0;
-    return _.reduce(_.range(5), function(html, ind) {
-      if (stars >= ind + 0.5) html += '<i class="icon-star dark"></i>';
-      else html += '<i class="icon-star light"></i>';
-      return html;
-    }, '');
-
-  },
-
   myRating: function(app) {
 
     var user = Meteor.users.findOne(Meteor.userId(), {fields: {appRatings: 1}});
@@ -69,7 +58,7 @@ Template.appItem.events({
 
   'click [data-link="single-app"]': function() {
 
-    FlowRouter.go('/appMarket/app/' + this._id);
+    FlowRouter.go('/appMarket/app/' + this.app._id);
 
   }
 

@@ -1,87 +1,113 @@
 <template name="SingleApp">
 
-  {{#if routerSubsReady}}
+  <div class="apps-by-me-standard">
 
-  <div class="app-table-large">
+      <div class="single-app-container">
 
-    <div class="app-item-container full-width">
+      {{#if routerSubsReady}}
 
-      <div class="app-item-inner">
+      <div class="app-table-large">
 
         {{#with app}}
 
-        <div class="image-section">
+        <div class="single-app-container">
 
-          <div class="image-surround-full-width">
+          <div class="app-item-inner">
 
-            <div class="image" style="background-image: url('{{imageUrl image}}');"></div>
+            <div class="image-section">
 
-          </div>
+              <div class="image-surround-full-width">
 
-          {{#with approvalState}}
-          <div class="message-box {{messageClass}}"><i class="{{iconClass}}"></i> {{message}}</div>
-          {{/with}}
+                <div class="image" style="background-image: url('{{imageUrl image}}');"></div>
 
-        </div>
-
-        <div class="text-section">
-
-          <div class="top-section clearfix">
-
-            <div class="left-float">
-
-              <div class="app-name-full-width">{{name}}</div>
-
-              <div class="app-author-full-width">{{getUsername author}}</div>
-
-            </div>
-
-            <div class="right-float">
-
-              <div class="edit-button">
-                <div class="sandstorm-button neutral small" data-action="update-all-apps">
-                  <i class="icon-edit"></i>
-                  EDIT
-                </div>
-              </div>
-
-              <div class="public-private">
-                <div class="sandstorm-button left {{#if public}}active{{/if}} small" data-action="toggle-private">
-                  <i class="fa fa-eye"></i>
-                  PUBLIC
-                </div>
-                <div class="sandstorm-button right {{#unless public}}active{{/unless}} small" data-action="toggle-private">
-                  <i class="fa fa-lock"></i>
-                  PRIVATE
-                </div>
               </div>
 
             </div>
 
-          </div>
+            <div class="text-section">
 
-          <div class="bottom-section clearfix">
+              <div class="top-section clearfix">
 
-            <div class="left-float details-block">
+                <div class="left-float">
 
-              <div class="date">{{dateFormat createdAt 'MMMM DD, YYYY'}}</div>
-              <div class="genre">{{category}}</div>
+                  <div class="header">{{name}}</div>
 
-              <div class="divider"></div>
+                  <div class="app-author-full-width">{{getUsername author}}</div>
 
-              <div class="key">Ported by:</div><div class="value">{{getUsername author}}</div>
-              <div class="key">License:</div><div class="value">MIT TODO</div>
-              <div class="key">Code:</div><div class="value">On Github TODO</div>
-              <div class="key">Version:</div><div class="value">{{getLatestVersion}}</div>
+                </div>
+
+              </div>
+
+              <div class="bottom-section clearfix">
+
+                <div class="half-col">
+
+                  <div class="date">{{dateFormat createdAt 'MMMM DD, YYYY'}}</div>
+                  <div class="genre">{{category}}</div>
+
+                </div>
+
+                <div class="half-col">
+
+                  <div class="key">Ported by:</div><div class="value">{{getUsername author}}</div>
+                  <div class="key">License:</div><div class="value">MIT TODO</div>
+                  <div class="key">Code:</div><div class="value">On Github TODO</div>
+                  <div class="key">Version:</div><div class="value">{{getLatestVersion}}</div>
+
+                </div>
+
+                <div class="ratings-bar">
+
+                  <div class="left-float">
+                    <div class="app-rating">
+                      {{{appRating stars}}}
+                    </div>
+                    <span>( {{ratingsCount}} )</span>
+                  </div>
+
+                  <div class="right-float social">
+                    <i class="icon-tw"></i>
+                    <i class="icon-go"></i>
+                    <i class="icon-fb"></i>
+                  </div>
+
+                </div>
+
+                <div class="action-buttons clearfix">
+
+                  <div class="install button" data-action="install">INSTALL <i class="icon-arrow-install"></i></div>
+                  <div class="chip-in button" data-action="chip-in">CHIP IN <i class="fa fa-money"></i></div>
+                  <div class="blurb">This app is free, and if you like it, feel free to chip in.</div>
+
+                </div>
+
+              </div>
 
             </div>
 
-            <div class="rem-space-float">
+            {{> carousel images=screenshots}}
 
-              <div class="app-description">
-                {{description}}
+            <div class="header">Description</div>
+            <div class="right-float option">
+              Flag this app
+              <i class="icon-flagged_light"></i>
+            </div>
+
+            <div class="divider clearfix"></div>
+
+            <div class="description">
+              <div class="text">
+                {{{getDescription description}}}
+              </div>
+              <div class="flag-box {{#unless flagBox}}hidden{{/unless}}">
+
               </div>
 
+              <div class="read-more-bar">
+                <div class="read-more" data-action="read-more">
+                  Read More <i class="fa {{#if readMore}}fa-caret-up{{else}}fa-caret-down{{/if}}"></i>
+                </div>
+              </div>
             </div>
 
           </div>
@@ -92,10 +118,28 @@
 
       </div>
 
+      {{/if}}
+
     </div>
 
   </div>
 
-  {{/if}}
+</template>
+
+<template name="carousel">
+
+  <div class="carousel">
+
+    <div class="prev-button" data-action="carousel-prev"><i class="fa fa-angle-left"></i></div>
+    <div class="owl-carousel">
+      {{#each images}}
+      <div class="screenshot-container">
+        <div class="screenshot" style="background-image: url('{{screenshotImageUrl this}}')"></div>
+      </div>
+      {{/each}}
+    </div>
+    <div class="next-button" data-action="carousel-next"><i class="fa fa-angle-right"></i></div>
+
+  </div>
 
 </template>

@@ -1,6 +1,6 @@
 var helpers = {
 
-  //USER HELPERS
+  // USER HELPERS
   getUsername: function(_id) {
 
     var user = Meteor.users.findOne(_id);
@@ -17,7 +17,20 @@ var helpers = {
 
   },
 
-  //ROUTER/SUB HELPERS
+  // APP HELPERS
+
+  appRating: function(stars) {
+
+    stars = stars || 0;
+    return _.reduce(_.range(5), function(html, ind) {
+      if (stars >= ind + 0.5) html += '<i class="icon-star dark"></i>';
+      else html += '<i class="icon-star light"></i>';
+      return html;
+    }, '');
+
+  },
+
+  // ROUTER/SUB HELPERS
 
   routerSubsReady: function(name) {
 
@@ -105,12 +118,20 @@ var helpers = {
   },
 
   // IMAGE HELPERS
-  
+
   imageUrl: function(image) {
 
     return (!image || image.substr(0, 4) === 'data' || image.substr(0, 20) === 'http://cdn.filter.to') ?
       image :
       'http://cdn.filter.to/250x250/' + image.substr(8);
+
+  },
+
+  screenshotImageUrl: function(image) {
+
+    return (!image || image.substr(0, 4) === 'data' || image.substr(0, 20) === 'http://cdn.filter.to') ?
+      image :
+      'http://cdn.filter.to/800x450/' + image.substr(8);
 
   },
 

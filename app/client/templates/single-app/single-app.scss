@@ -1,0 +1,358 @@
+@import "../../stylesheets/variables";
+
+.single-app-container {
+
+  width: 100%;
+  max-width: 125rem;
+  text-align: left;
+  padding-left: $app-container-margin-lr;
+  padding-right: $app-container-margin-lr;
+  padding-top: $app-container-margin-tb;
+  padding-bottom: $app-container-margin-tb;
+  box-sizing: border-box;
+
+  .app-item-inner {
+
+    padding-top: $app-container-padding-top;
+    padding-bottom: $app-container-padding-bottom;
+    padding-left: 4.6rem;
+    padding-right: 4.6rem;
+    box-shadow: $app-container-box-shadow;
+    background-color: $app-box-bg;
+    box-sizing: border-box;
+    position: relative;
+
+    .image-section {
+
+      float: left;
+      margin-right: 5.66rem;
+      height: 26.5rem;
+
+      .image-surround-full-width {
+
+        position: relative;
+        height: 85%;
+        width: 23rem;
+        min-width: 15rem;
+
+        .image {
+
+          content: "";
+          background-size: cover;
+          background-position: center;
+          display: block;
+          height: 100%;
+
+        }
+
+      }
+
+    }
+
+    .header {
+      float: left;
+      font-weight: normal;
+      clear: none;
+      font-size: 3.1rem;
+    }
+
+    .option {
+
+      font-size: 1.7rem;
+
+      i {
+        font-size: 3.8rem;
+        color: #c9add0;
+      }
+
+    }
+
+    .divider {
+
+      border-bottom: 1px solid #cfb5d6;
+
+    }
+
+    .text-section {
+
+      height: 100%;
+      overflow-y: auto;
+
+      .top-section {
+
+        border-bottom: 1px solid #cfb5d6;
+        color: #222222;
+
+        .edit-button, .public-private {
+          float: right;
+          clear: right;
+          font-size: 0;
+          margin-bottom: 0.9rem;
+        }
+
+        .app-name-full-width {
+          float: left;
+          clear: none;
+          font-size: 3.1rem;
+        }
+
+        .app-author-full-width {
+          clear: left;
+          font-size: 1.7rem;
+        }
+
+      }
+
+      .bottom-section {
+
+        .details-block {
+
+          width: 27.5%;
+          line-height: 1.4;
+          margin-right: 2.3rem;
+
+          @media (max-width: $small-screen) {
+            width: auto;
+          }
+
+        }
+
+        .date {
+          margin-top: 1rem;
+          font-size: 1.7rem;
+        }
+
+        .genre {
+          margin-bottom: 1rem;
+          font-size: 1.7rem;
+          color: #783189;
+        }
+
+        .key {
+
+          float: left;
+          clear: left;
+          width: 7.5rem;
+          font-size: 1.5rem;
+          color: #7d627c;
+
+        }
+
+        .value {
+
+          overflow: hidden;
+          text-overflow: ellipsis;
+          font-size: 1.5rem;
+          color: #7d627c;
+
+        }
+
+      }
+
+      .app-description {
+
+        padding-top: 1.5rem;
+        font-size: $app-description-large-font-size;
+        color: $app-description-text;
+        clear: both;
+        overflow: ellipsis;
+        font-size: 1.5rem;
+        line-height: 1.4;
+        color: #222222;
+
+      }
+
+    }
+
+    .half-col {
+
+      display: inline-block;
+      width: 50%;
+
+    }
+
+  }
+
+}
+
+.ratings-bar {
+
+  background-color: #f1ecf6;
+  padding-left: 1.275rem;
+  padding-right: 1.275rem;
+  line-height: 3.5rem;
+  height: 3.5rem;
+  font-size: 1.7rem;
+  color: #783189;
+
+  .app-rating, span, i {
+
+    display: inline;
+    line-height: 3.5rem;
+    height: 3.5rem;
+
+  }
+
+  .social {
+
+    i {
+      margin-left: 1.5rem;
+      color: #783189;
+      cursor: pointer;
+      &:hover {
+        color: #c18ace;
+      }
+    }
+
+  }
+
+}
+
+.action-buttons {
+
+  font-size: 0;
+  clear: both;
+  margin-top: 1rem;
+
+  .button {
+
+    display: inline-block;
+    text-transform: uppercase;
+    border-radius: 0.5rem;
+    font-size: 2rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    height: 3.75rem;
+    line-height: 3.75rem;
+    margin-right: 1.5rem;
+    cursor: pointer;
+
+    &.install {
+      color: #ffffff;
+      background-color: #783189;
+      i {
+        color: #c18ace;
+      }
+    }
+
+    &.chip-in {
+      color: #ffffff;
+      background-color: #5fa059;
+      i {
+        color: #ace286;
+      }
+    }
+
+  }
+
+  .blurb {
+
+    display: inline-block;
+    font-size: 1.5rem;
+    color: #7d627c;
+
+  }
+
+}
+
+.description {
+
+  .text {
+
+    overflow: hidden;
+    font-size: 1.7rem;
+
+  }
+
+  .flag-box {
+
+    float: right;
+    width: 12rem;
+
+    &.hidden {
+      display: none;
+    }
+
+  }
+
+  .read-more-bar {
+
+    clear: both;
+    text-align: center;
+
+    .read-more {
+      display: inline-block;
+      padding: 0.5rem 1rem 0 1rem;
+      border-top: 1px solid #cfb5d6;
+      font-size: 1.9rem;
+      color: #783189;
+      cursor: pointer;
+
+      i {
+        color: #c9add0;
+      }
+    }
+
+  }
+
+}
+
+.carousel {
+
+  clear: both;
+  font-size: 0;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+
+  .owl-carousel {
+
+    display: inline-block;
+    vertical-align: middle;
+    background-color: #e0e0e0;
+    width: 94%;
+
+    .screenshot-container {
+
+      width: 100%;
+      min-width: 22rem;
+      box-sizing: border-box;
+      display: inline-block;
+      position: relative;
+
+      .screenshot {
+
+        position: absolute;
+        top: 0.6rem;
+        bottom: 0.6rem;
+        right: 0.6rem;
+        left: 0.6rem;
+        background-position: center;
+        background-size: cover;
+
+      }
+
+      &:before {
+        display: block;
+        content: "";
+        width: 100%;
+        padding-top: 56.25%;
+      }
+
+    }
+
+  }
+
+  .prev-button, .next-button {
+
+    width: 3%;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 7rem;
+    color: #783189;
+    font-weight: 300;
+    cursor: pointer;
+
+  }
+
+}
