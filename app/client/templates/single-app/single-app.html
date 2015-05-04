@@ -88,19 +88,21 @@
             {{> carousel images=screenshots}}
 
             <div class="header">Description</div>
-            <div class="right-float option">
+            <div class="right-float option" data-action="flag-app">
               Flag this app
-              <i class="icon-flagged_light"></i>
+              <i class="{{#if flagged}}icon-flagged_dark{{else}}icon-flagged_light{{/if}}"></i>
             </div>
 
             <div class="divider clearfix"></div>
 
             <div class="description">
+
+              {{#if flagApp}}
+                {{> flagBox flagDetails}}
+              {{/if}}
+
               <div class="text">
                 {{{getDescription description}}}
-              </div>
-              <div class="flag-box {{#unless flagBox}}hidden{{/unless}}">
-
               </div>
 
               <div class="read-more-bar">
@@ -141,5 +143,42 @@
     <div class="next-button" data-action="carousel-next"><i class="fa fa-angle-right"></i></div>
 
   </div>
+
+</template>
+
+<template name="flagBox">
+
+  <form class="flag-box">
+    <div>I believe this app is:</div>
+    <div class="divider"></div>
+    <div>
+      <div>
+        <input type="radio" data-category="inappropriate" id="inappropriate" name="flag-reason">
+        <label for="inappropriate"><span class="vis-radio"><span></span></span><span>Inappropriate</span></label>
+      </div>
+      <div>
+        <input type="radio" data-category="spam" id="spam" name="flag-reason">
+        <label for="spam"><span class="vis-radio"><span></span></span><span>Spam</span></label>
+      </div>
+      <div>
+        <input type="radio" data-category="duplicate" id="duplicate" name="flag-reason">
+        <label for="duplicate"><span class="vis-radio"><span></span></span><span>Duplicate</span></label>
+      </div>
+      <div>
+        <input type="radio" data-category="plagiarized" id="plagiarized" name="flag-reason">
+        <label for="plagiarized"><span class="vis-radio"><span></span></span><span>Plagiarized</span></label>
+      </div>
+      <div>
+        <input type="radio" data-category="other" id="other" name="flag-reason">
+        <label for="other"><span class="vis-radio"><span></span></span><span>Other</span></label>
+      </div>
+    </div>
+    <input type="text" data-field="flag-other" />
+    <div>Additional information:</div>
+    {{!-- <textarea data-field="additional-info" resize="none"></textarea> --}}
+    <div class="additional-info" data-field="additional-info" contenteditable>{{additional}}</div>
+    <div class="button" data-action="submit-flag-app">SUBMIT</div>
+    <div class="button" data-action="flag-app">CLOSE</div>
+  </form>
 
 </template>

@@ -149,6 +149,11 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
     type: [String],
     regEx: versionRegEx,
     defaultValue: []
+  },
+  flags: {
+    type: Object,
+    blackbox: true,
+    optional: true
   }
 });
 

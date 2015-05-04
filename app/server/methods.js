@@ -132,6 +132,26 @@ Meteor.methods({
 
   },
 
+  'user/flag-app': function(appId, flag) {
+
+    this.unblock();
+    if (!this.userId) return false;
+
+    if (!Apps.findOne(appId)) throw new Meteor.Error('no matching app', 'Cannot submit a review for an app which is not in the database');
+
+    var userFlag = {},
+        appFlag = {};
+
+    appFlag['flags.' + this.userId] = flag;
+    userFlag['flags.' + appId] = flag;
+
+    Apps.update(appId, {$set: appFlag});
+    Meteor.users.update(this.userId, {$set: userFlag});
+
+    return true;
+
+  },
+
   'apps/togglePrivate': function(appId) {
 
     this.unblock();
