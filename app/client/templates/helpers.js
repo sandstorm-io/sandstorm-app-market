@@ -39,9 +39,9 @@ var helpers = {
   codeFormat: function(url) {
 
     // TODO: Need more options here
-    if (url.search('github.com') > -1) return '<a href="' + url + '">On Github</a>';
-    else if (url) return '<a href="' + url + '">' + url + '</a>';
-    else return 'No link';
+    if (!url) return 'No link';
+    else if (url.search('github.com') > -1) return '<a href="' + url + '">On Github</a>';
+    else return '<a href="' + url + '">' + url + '</a>';
 
   },
 
