@@ -31,8 +31,10 @@ FlowRouter.route('/appMarket/app/:appId', {
   subscriptions: function(params) {
     this.register('apps by id',
       Meteor.subscribe('apps by id', params.appId));
-      this.register('user flags',
-        Meteor.subscribe('user flags'));
+    this.register('user flags',
+      Meteor.subscribe('user flags'));
+    this.register('users reviewed',
+      Meteor.subscribe('users reviewed', params.appId));
   },
   action: function() {
     FlowLayout.render('MasterLayout', {mainSection: 'SingleApp'});

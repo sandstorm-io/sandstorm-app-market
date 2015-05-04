@@ -60,6 +60,7 @@
 
       font-size: 1.7rem;
       cursor: pointer;
+      margin-top: -1rem;
 
       i {
         font-size: 3.8rem;
@@ -410,17 +411,109 @@
 
   }
 
-  .prev-button, .next-button {
+}
 
-    width: 3%;
-    text-align: center;
+.app-item-inner.reviews-section {
+
+  padding-bottom: 4.6rem;
+
+  .review-entry {
+    width: 100%;
+    outline: none;
+    resize: none;
+    background-color: white;
+    border: 1px solid #e4dfe5;
+    color: #6d627c;
+    font-family: $main-font;
+    font-weight: 300;
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+    padding: 1.2rem;
+    box-sizing: border-box;
+  }
+
+  .divider.margin-top {
+    margin-top: 0.8rem;
+  }
+
+  .rating {
+    .app-rating, span, i {
+
+      font-size: 1.7rem;
+      display: inline;
+      line-height: 3.5rem;
+      height: 3.5rem;
+
+    }
+  }
+
+  .sandstorm-button.neutral.submit {
+    cursor: initial;
+  }
+
+  .review-frame {
+
+    margin-top: 2.4rem;
+
+  }
+
+  .reviews {
+
     display: inline-block;
     vertical-align: middle;
-    font-size: 7rem;
-    color: #783189;
-    font-weight: 300;
-    cursor: pointer;
+    width: 94%;
+    position: relative;
+    box-sizing: border-box;
 
+    .review-box {
+
+      padding: 1.9rem;
+      box-sizing: border-box;
+      height: 15rem;
+      overflow: hidden;
+
+      .username {
+        font-size: 1.8rem;
+        color: #222222;
+      }
+
+      .rating {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 1.5rem;
+      }
+
+      .date {
+        font-size: 1.5rem;
+        display: inline-block;
+        vertical-align: middle;
+        color: #6d627c;
+      }
+
+      .review {
+        font-size: 1.5rem;
+        font-style: italic;
+        color: #6d627c;
+      }
+
+    }
+
+  }
+
+}
+
+.prev-button, .next-button {
+
+  width: 3%;
+  text-align: center;
+  display: inline-block;
+  vertical-align: middle;
+  color: #783189;
+  font-weight: 300;
+  cursor: pointer;
+
+  i {
+    font-size: 7rem;
   }
 
 }

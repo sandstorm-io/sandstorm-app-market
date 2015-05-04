@@ -12,7 +12,7 @@
             Logged in as <span class="username">{{currentUser.username}}</span>
           </div>
           <div class="sandstorm-button active" data-action="logout">
-            Logout
+            <span class="text">Logout</span>
           </div>
 
         {{else}}
@@ -22,11 +22,11 @@
 
           {{#if createAccount}}
           <div class="sandstorm-button active" data-action="create-account">
-            Create Account
+            <span class="text">Create Account</span>
           </div>
           {{else}}
           <div class="sandstorm-button active" data-action="login-with-email">
-            Login with Email
+            <span class="text">Login with Email</span>
           </div>
           {{/if}}
 
@@ -44,12 +44,12 @@
 
             <div class="sandstorm-button active" data-action="login-with-github">
               <i class="icon-gh"></i>
-              Login with GitHub
+              <span class="text">Login with GitHub</span>
             </div>
 
             <div class="sandstorm-button active" data-action="login-with-google">
               <i class="icon-go"></i>
-              Login with Google
+              <span class="text">Login with Google</span>
             </div>
 
           </div>

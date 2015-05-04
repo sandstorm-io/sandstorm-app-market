@@ -56,3 +56,26 @@ Meteor.publish('saved app', function() {
 Meteor.publish('user flags', function() {
   return Meteor.users.find(this.userId, {fields: {flags: 1}});
 });
+
+Meteor.publish('users reviewed', function(appId) {
+
+  var fields = {username: 1},
+      query = {},
+      reviewPath = 'appReviews.' + appId,
+      _this = this;
+
+  fields[reviewPath] = 1;
+  query[reviewPath] = {$exists: true};
+
+  Meteor.users.find(query, {fields: fields}).forEach(function(user) {
+
+    _this.added('reviews', Random.id(), {
+      username: user.username,
+      review: user.appReviews[appId]
+    });
+
+  });
+
+  _this.ready();
+
+});

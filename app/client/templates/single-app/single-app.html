@@ -116,6 +116,66 @@
 
         </div>
 
+        <div class="single-app-container">
+
+          <div class="app-item-inner reviews-section">
+
+            <div class="header">Reviews</div>
+
+            <div class="clearfix"></div>
+
+            <div class="review-bar">
+              <div class="rating left-float">
+                <div class="app-rating">
+                  {{{appRating stars}}}
+                </div>
+                <span>( {{ratingsCount}} )</span>
+              </div>
+
+              <div class="right-float option" data-action="write-review">
+                Write a review
+                <i class="fa {{#if writeReview}}fa-caret-up{{else}}fa-caret-down{{/if}}"></i>
+              </div>
+              {{#if writeReview}}
+                <div class="right-float">
+                  <div class="rating">
+                    <div class="app-rating" data-action="rate-app">
+                      {{{appRating myReview.stars}}}
+                    </div>
+                  </div>
+                </div>
+              {{/if}}
+
+            </div>
+
+            {{#if writeReview}}
+
+              <div class="clearfix"></div>
+              <textarea class="review-entry" data-field="review-text">{{myReview.text}}</textarea>
+              <div class="right-float on-top">
+                <div class="button-block">
+                  <div class="sandstorm-button {{#if reviewValid}}primary{{else}}neutral submit{{/if}}" data-action="{{#if reviewValid}}submit-review{{/if}}">
+                    SUBMIT REVIEW
+                  </div>
+                  <div class="sandstorm-button neutral" data-action="discard-review">
+                    <i class="icon-garbage"></i>
+                    <span class="text">DISCARD</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="clearfix"></div>
+
+            {{/if}}
+
+            <div class="divider clearfix margin-top"></div>
+
+            {{> reviewFrame reviews=reviews}}
+
+          </div>
+
+        </div>
+
         {{/with}}
 
       </div>
@@ -181,4 +241,38 @@
     <div class="button" data-action="flag-app">CLOSE</div>
   </form>
 
+</template>
+
+<template name="reviewFrame">
+
+  <div class="review-frame">
+    <div class="prev-button" data-action="reviews-prev"><i class="fa fa-angle-left"></i></div>
+    <div class="reviews">
+      <div class="owl-carousel">
+        {{#each reviewGroups}}
+          <div class="review-group">
+            {{#each this}}
+              {{> reviewBox this}}
+            {{/each}}
+          </div>
+        {{/each}}
+      </div>
+    </div>
+    <div class="next-button" data-action="reviews-next"><i class="fa fa-angle-right"></i></div>
+  </div>
+
+</template>
+
+<template name="reviewBox">
+  {{logThis}}
+  <div class="review-box">
+    <div class="username">{{username}}</div>
+    <div class="rating">
+      <div class="app-rating">
+        {{{appRating review.stars}}}
+      </div>
+    </div>
+    <div class="date">{{dateFormat review.createdAt 'MMMM D YYYY'}}</div>
+    <div class="review">{{review.text}}</div>
+  </div>
 </template>

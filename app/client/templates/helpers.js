@@ -23,8 +23,8 @@ var helpers = {
 
     stars = stars || 0;
     return _.reduce(_.range(5), function(html, ind) {
-      if (stars >= ind + 0.5) html += '<i class="icon-star dark"></i>';
-      else html += '<i class="icon-star light"></i>';
+      if (stars >= ind + 0.5) html += '<i class="icon-star dark" data-index="' + ind + '"></i>';
+      else html += '<i class="icon-star light" data-index="' + ind + '"></i>';
       return html;
     }, '');
 
