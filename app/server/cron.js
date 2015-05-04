@@ -63,7 +63,7 @@ SyncedCron.add({
   }
 });
 
-// SyncedCron.start();
+SyncedCron.start();
 
 function newVersion(version) {
 

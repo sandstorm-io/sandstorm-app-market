@@ -105,7 +105,9 @@ Template.updateChrome.helpers({
 
 Template.updateChrome.events({
 
-  'click [data-action="toggle-open"]': function() {
+  'click [data-action="toggle-open"]': function(evt) {
+
+    evt.stopPropagation();
 
     var template = Template.instance();
     template.open.set(!template.open.get());
