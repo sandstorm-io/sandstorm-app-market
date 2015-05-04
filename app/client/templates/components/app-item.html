@@ -71,13 +71,13 @@
       {{#if ../../../installPage}}
       <div class="app-rating">
         {{{appRating myRating}}}
-        <div class="rate-it">
+        <a class="rate-it" href="/appMarket/app/{{this._id}}">
           {{#if myRating}}
           YOUR RATING
           {{else}}
           RATE IT
           {{/if}}
-        </div>
+        </a>
       </div>
       {{else}}
       <div class="app-rating">

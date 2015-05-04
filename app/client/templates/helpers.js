@@ -30,6 +30,21 @@ var helpers = {
 
   },
 
+  getLatestVersion: function() {
+
+    return this.latestVersion();
+
+  },
+
+  codeFormat: function(url) {
+
+    // TODO: Need more options here
+    if (url.search('github.com') > -1) return '<a href="' + url + '">On Github</a>';
+    else if (url) return '<a href="' + url + '">' + url + '</a>';
+    else return 'No link';
+
+  },
+
   // ROUTER/SUB HELPERS
 
   routerSubsReady: function(name) {
@@ -52,6 +67,7 @@ var helpers = {
   },
 
   // UTILITY HELPERS
+
   equal: function(a, b) {
 
     return a === b;

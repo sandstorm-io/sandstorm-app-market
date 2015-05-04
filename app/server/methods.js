@@ -132,6 +132,26 @@ Meteor.methods({
 
   },
 
+  'user/chip-in': function(appId, amount) {
+
+    this.unblock();
+
+    check(amount, Number);
+    check(amount, Match.Where(function(amount) {return (0 < amount) && (40 >= amount);}));
+
+    var user = Meteor.users.findOne(this.userId),
+        app = Apps.findOne(appId);
+
+    if (!user) throw new Meteor.Error('no authenticated user', 'Cannot chip in if user is not authenticated');
+    if (!Apps.findOne(appId)) throw new Meteor.Error('no matching app', 'Cannot chip in for an app which is not in the database');
+
+    // TODO: Actually make a payment
+    console.log('User ' + user.username + ' wants to chip in ' + amount + ' for the app ' + app.name);
+
+    return true;
+
+  },
+
   'user/flag-app': function(appId, flag) {
 
     this.unblock();

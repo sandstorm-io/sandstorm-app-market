@@ -27,12 +27,6 @@ var approvalStateMatrix = [
 
 Template.appItemFullWidth.helpers({
 
-  getLatestVersion: function() {
-
-    return this.latestVersion();
-
-  },
-
   approvalState: function() {
 
     return approvalStateMatrix[this.approved];

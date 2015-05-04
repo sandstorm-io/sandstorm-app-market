@@ -18,11 +18,11 @@ Template.appItem.helpers({
 
   myRating: function(app) {
 
-    var user = Meteor.users.findOne(Meteor.userId(), {fields: {appRatings: 1}});
+    var user = Meteor.user();
     app = app || this;
 
     if (!user) return;
-    else return user.appRatings[this._id];
+    else return user.appReviews && user.appReviews[app._id] && user.appReviews[app._id].stars;
 
   },
 

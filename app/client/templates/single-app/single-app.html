@@ -50,8 +50,8 @@
                 <div class="half-col">
 
                   <div class="key">Ported by:</div><div class="value">{{getUsername author}}</div>
-                  <div class="key">License:</div><div class="value">MIT TODO</div>
-                  <div class="key">Code:</div><div class="value">On Github TODO</div>
+                  <div class="key">License:</div><div class="value">{{license}}</div>
+                  <div class="key">Code:</div><div class="value">{{{codeFormat codeLink}}}</div>
                   <div class="key">Version:</div><div class="value">{{getLatestVersion}}</div>
 
                 </div>
@@ -73,11 +73,18 @@
 
                 </div>
 
-                <div class="action-buttons clearfix">
+                <div class="action-buttons force-height clearfix">
 
-                  <div class="install button" data-action="install">INSTALL <i class="icon-arrow-install"></i></div>
-                  <div class="chip-in button" data-action="chip-in">CHIP IN <i class="fa fa-money"></i></div>
-                  <div class="blurb">This app is free, and if you like it, feel free to chip in.</div>
+                  <div class="install button" data-action="install-app">INSTALL <i class="icon-arrow-install"></i></div>
+                  <div class="chip-in-section {{#unless chipIn}}hidden{{/unless}}">
+                    <div class="slider-section">
+                      <div class="text">How much would you like to chip in? All proceeds go to the author.</div>
+                      <span class="dollar-sign">&#36;</span><input type="number" class="chip-amount" data-field="chip-amount" /><div class="slider"></div>
+                    </div>
+                    <div class="chip-in button" data-action="confirm-chip">CONFIRM</div>
+                  </div>
+                  <div class="chip-in button {{#if chipIn}}hidden{{/if}}" data-action="chip-in">CHIP IN <i class="fa fa-money"></i></div>
+                  <div class="blurb {{#if chipIn}}hidden{{/if}}">This app is free, and if you like it, feel free to chip in.</div>
 
                 </div>
 
@@ -264,7 +271,6 @@
 </template>
 
 <template name="reviewBox">
-  {{logThis}}
   <div class="review-box">
     <div class="username">{{username}}</div>
     <div class="rating">

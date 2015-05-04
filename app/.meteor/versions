@@ -76,6 +76,7 @@ observe-sequence@1.0.6
 ordered-dict@1.0.3
 percolate:synced-cron@1.2.0
 random@1.0.3
+rcy:nouislider@7.0.7_2
 reactive-dict@1.1.0
 reactive-var@1.0.5
 reload@1.1.3

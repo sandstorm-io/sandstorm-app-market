@@ -1,10 +1,11 @@
 var reviewRows = 4,
     reviewCols = 3;
 
-Template.onCreated(function() {
+Template.SingleApp.onCreated(function() {
 
   var tmp = this;
 
+  tmp.chipIn = new ReactiveVar(false);
   tmp.readMore = new ReactiveVar(false);
   tmp.flagApp = new ReactiveVar(false);
   tmp.writeReview = new ReactiveVar(false);
@@ -34,11 +35,40 @@ Template.onCreated(function() {
 
 });
 
+Template.SingleApp.onRendered(function() {
+
+  var tmp = this;
+
+  this.autorun(function(c) {
+    if (FlowRouter.subsReady()) {
+      Tracker.afterFlush(function() {
+        tmp.$('.slider').noUiSlider({
+          orientation: 'horizontal',
+          range: {
+            min: 0,
+            max: 40
+          },
+          start: 0
+        });
+        $('.slider').Link('lower').to($('[data-field="chip-amount"]'));
+      });
+      c.stop();
+    }
+  });
+
+});
+
 Template.SingleApp.helpers({
 
   app: function() {
 
     return Apps.findOne(FlowRouter.getParam('appId'));
+
+  },
+
+  chipIn: function() {
+
+    return Template.instance().chipIn.get();
 
   },
 
@@ -62,7 +92,7 @@ Template.SingleApp.helpers({
 
   flagDetails: function() {
 
-    return Meteor.user() && Meteor.user().flags[this._id];
+    return Meteor.user() && Meteor.user().flags && Meteor.user().flags[this._id];
 
   },
 
@@ -111,15 +141,27 @@ Template.SingleApp.helpers({
 
 Template.SingleApp.events({
 
-  'click [data-action="install"]': function(evt, tmp) {
+  'click [data-action="install-app"]': function() {
 
-
+    Meteor.call('user/installApp', this._id, function(err) {
+      if (err) console.log(err);
+    });
 
   },
 
   'click [data-action="chip-in"]': function(evt, tmp) {
 
+    tmp.chipIn.set(!tmp.chipIn.get());
 
+  },
+
+  'click [data-action="confirm-chip"]': function(evt, tmp) {
+
+    var amount = parseFloat(tmp.$('[data-field="chip-amount"]').val(), 10);
+    Meteor.call('user/chip-in', FlowRouter.getParam('appId'), amount, function(err) {
+      if (err) console.log(err);
+      tmp.chipIn.set(false);
+    });
 
   },
 
