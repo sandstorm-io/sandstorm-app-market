@@ -48,6 +48,18 @@ FlowRouter.route('/appMarket', {
   }
 });
 
+FlowRouter.route('/appMarket/author/:authorId', {
+  name: 'appMarketAuthor',
+  subscriptions: function(params) {
+    this.register('authorGenre',
+      Meteor.subscribe('apps by author', params.authorId));
+  },
+  action: function() {
+    FlowRouter.setParams({genre: 'Apps by Author'});
+    FlowLayout.render('MasterLayout', {mainSection: 'Genre'});
+  }
+});
+
 FlowRouter.route('/appMarket/genres/:genre', {
   name: 'appMarketGenre',
   subscriptions: function(params) {

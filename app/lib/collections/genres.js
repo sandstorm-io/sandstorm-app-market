@@ -96,7 +96,9 @@ var extraGenres = [
         }
       };
 
-    }
+    },
+    priority: 0,
+    showSummary: false
   },
 
   {
@@ -118,7 +120,9 @@ var extraGenres = [
         }
       };
 
-    }
+    },
+    priority: 0,
+    showSummary: false
   },
 
   {
@@ -130,7 +134,20 @@ var extraGenres = [
       return {
         author: user._id
       };
-    }
+    },
+    priority: 0,
+    showSummary: false
+  },
+
+  {
+    name: 'Apps by Author',
+    selector: function() {
+      return {
+        author: this.authorId || FlowRouter.getParam('authorId')
+      };
+    },
+    priority: 0,
+    showSummary: false
   }
 
 ];

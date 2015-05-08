@@ -41,6 +41,10 @@ Meteor.publish('apps all', function() {
   return Apps.find();
 });
 
+Meteor.publish('apps by author', function(authorId) {
+  return Apps.find({author: authorId});
+});
+
 Meteor.publish('app search name', function(term) {
   return Apps.find({name: {$regex: term, $options: 'i'}, public: true, approved: 0}, {fields: {flags: 0}});
 });
@@ -57,7 +61,7 @@ Meteor.publish('user flags', function() {
   return Meteor.users.find(this.userId, {fields: {flags: 1}});
 });
 
-// Cache 
+// Cache
 
 Meteor.publish('users reviewed', function(appId) {
 
