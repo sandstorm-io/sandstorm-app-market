@@ -57,6 +57,8 @@ Meteor.publish('user flags', function() {
   return Meteor.users.find(this.userId, {fields: {flags: 1}});
 });
 
+// Cache 
+
 Meteor.publish('users reviewed', function(appId) {
 
   var fields = {username: 1},

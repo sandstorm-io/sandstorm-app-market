@@ -42,14 +42,14 @@ Template.appItem.events({
 
   'click [data-action="uninstall-app-modal"]': function(evt) {
 
-    evt.preventDefault();
+    evt.stopPropagation();
     AntiModals.overlay('uninstallApp', {data: this});
 
   },
 
   'click [data-action="install-app"]': function(evt) {
 
-    evt.preventDefault();
+    evt.stopPropagation();
     Meteor.call('user/installApp', this._id, function(err) {
       if (err) console.log(err);
     });

@@ -36,6 +36,24 @@ Meteor.methods({
 
     return true;
 
-  }
+  },
+
+  'user/review-app': function(appId, review) {
+
+    if (!Meteor.userId()) return false;
+
+    check(review.stars, Match.Where(function(stars) {return (0 < stars) && (5 >= stars);}));
+    check(review.stars, Match.Integer);
+    check(review.text, String);
+    check(review.text, Match.Where(function(text) {return text.length > 0;}));
+
+    if (!Apps.findOne(appId)) throw new Meteor.Error('no matching app', 'Cannot submit a review for an app which is not in the database');
+
+    Reviews.insert({
+      username: Meteor.user().username,
+      review: review
+    });
+
+  },
 
 });

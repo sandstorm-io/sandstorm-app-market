@@ -23,7 +23,7 @@ Template.SingleApp.onCreated(function() {
     if (FlowRouter.subsReady()) {
       var appId = FlowRouter.getParam('appId'),
           user = Meteor.user();
-      if (user.appReviews && appId in user.appReviews) {
+      if (user && user.appReviews && appId in user.appReviews) {
         tmp.myReview.set({
           stars: user.appReviews[appId].stars,
           text: user.appReviews[appId].text
@@ -123,17 +123,6 @@ Template.SingleApp.helpers({
   reviews: function() {
 
     return Reviews.find().fetch();
-
-    // return _.map(_.range(7), function() {
-    //   return {
-    //     username: "ABCDEF GHIJKL",
-    //     review: {
-      //     stars: _.sample([1, 2, 3, 4, 5]),
-      //     createdAt: new Date(new Date() - (Math.random() * 1000 * 60 * 60 * 24 * 60)),
-      //     review: "Donec quis magna erat. Sed consectetur porttitor ligula aliquet viverra. Pellentesque malesuada dolor et mi fermentum, ac molestie ipsum lobortis. Morbi et mauris sit amet ipsum dictum convallis. Vestibulum diam metus, ultrices nec nisl eget, pharetra ullamcorper turpis. Fusce id vulputate libero. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque diam erat, rutrum gravida eros nec, pharetra volutpat ante. Integer fermentum augue quis elementum laoreet. Etiam sodales tellus fermentum, auctor erat at, tincidunt urna. Interdum et malesuada fames ac ante ipsum primis in faucibus."
-    //     }
-    //   };
-    // });
 
   }
 
