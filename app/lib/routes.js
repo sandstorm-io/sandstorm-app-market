@@ -29,8 +29,15 @@ FlowRouter.route('/login', {
 FlowRouter.route('/appMarket/app/:appId', {
   name: 'singleApp',
   subscriptions: function(params) {
+    var route = this;
     this.register('apps by id',
-      Meteor.subscribe('apps by id', params.appId));
+      Meteor.subscribe('apps by id', params.appId, function() {
+        thisApp = Apps.findOne(params.appId);
+        console.log(thisApp.author);
+        thisApp && route.register('author',
+          Meteor.subscribe('user basic', thisApp.author));
+      })
+    );
     this.register('user flags',
       Meteor.subscribe('user flags'));
     this.register('users reviewed',

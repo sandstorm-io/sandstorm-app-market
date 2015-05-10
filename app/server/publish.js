@@ -63,9 +63,9 @@ Meteor.publish('user flags', function() {
 
 Meteor.publish('user basic', function(_id) {
   if (Array.isArray(_id))
-    return Metor.users.find({_id: {$in: _id}}, {fields: {username: 1, profile: 1}});
+    return Meteor.users.find({_id: {$in: _id}}, {fields: {username: 1, profile: 1}});
   else
-    return Metor.users.find(_id, {fields: {username: 1, profile: 1}});
+    return Meteor.users.find(_id, {fields: {username: 1, profile: 1}});
 });
 
 // Cache
