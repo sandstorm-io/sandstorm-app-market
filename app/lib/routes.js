@@ -53,6 +53,7 @@ FlowRouter.route('/appMarket/author/:authorId', {
   subscriptions: function(params) {
     this.register('authorGenre',
       Meteor.subscribe('apps by author', params.authorId));
+      Meteor.subscribe('user basic');
   },
   action: function() {
     FlowLayout.render('MasterLayout', {mainSection: 'Genre'});

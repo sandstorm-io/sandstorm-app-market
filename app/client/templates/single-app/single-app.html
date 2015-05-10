@@ -32,7 +32,7 @@
 
                   <div class="header">{{name}}</div>
 
-                  <div class="app-author-full-width">{{getUsername author}}</div>
+                  <div class="app-author-full-width"><a href="/appMarket/author/{{author}}">{{getUsername author}}</a></div>
 
                 </div>
 
@@ -43,7 +43,7 @@
                 <div class="half-col">
 
                   <div class="date">{{dateFormat createdAt 'MMMM DD, YYYY'}}</div>
-                  <div class="genre">{{category}}</div>
+                  <div class="genre"><a href="/appMarket/genres/{{category}}">{{category}}</a></div>
 
                 </div>
 

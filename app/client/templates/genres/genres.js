@@ -4,6 +4,12 @@ Template.Genre.helpers({
 
     return FlowRouter.getParam('authorId') ? 'Apps by Author' : FlowRouter.getParam('genre');
 
+  },
+
+  authorId: function() {
+
+    return FlowRouter.getParam('authorId');
+
   }
 
 });
