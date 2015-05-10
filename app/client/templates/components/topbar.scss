@@ -46,6 +46,12 @@
     a {
 
       display: inline-block;
+      
+      &.hide-above-small-phone {
+        @media (min-width: ($medium-phone + 1px)) {
+            display: none;
+        }
+      }
 
     }
 
@@ -95,6 +101,10 @@
           .genre-box {
             display: block;
             margin-right: 0;
+          }
+
+          a {
+            display: inline;
           }
 
         }

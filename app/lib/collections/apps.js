@@ -23,7 +23,7 @@ var appsBaseSchema = {
   },
   description: {
     type: String,
-    max: 1000,
+    max: 5000,
     defaultValue: ''
   },
   image: {
@@ -101,6 +101,11 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
     defaultValue: 2.5,
     index: true
   },
+  ratingsCount: {
+    type: Number,
+    min: 0,
+    defaultValue: 0
+  },
   // Approval state
   // 0 - Approved
   // 1 - Pending
@@ -144,6 +149,11 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
     type: [String],
     regEx: versionRegEx,
     defaultValue: []
+  },
+  flags: {
+    type: Object,
+    blackbox: true,
+    optional: true
   }
 });
 

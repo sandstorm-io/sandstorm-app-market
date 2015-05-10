@@ -28,7 +28,7 @@ $topbar-bg-1: #723086;
 $topbar-bg-2: #552976;
 $topbar-bg-3: #603281;
 $topbar-bg-4: #4e2e77;
-$topbar-bg: #612c7d; // THIS IS TEMPORARY
+$topbar-bg: #612c7d; // FALLBACK
 $topbar-bg: linear-gradient(165deg, $topbar-bg-1 0%,$topbar-bg-2 60%,$topbar-bg-3 60.1%,$topbar-bg-4 100%);
 $topbar-logo-text: #ffffff;
 $topbar-item-text: #ffffff;

@@ -139,12 +139,16 @@ html {
 
 .left-float {
   float: left;
-  clear: non;
+  clear: none;
 }
 
 .right-float {
   float: right;
   clear: none;
+
+  & +.right-float {
+    margin-right: 2rem;
+  }
 }
 
 .rem-space-float {
@@ -156,7 +160,7 @@ html {
 
 .on-top {
   position: relative;
-  z-index: 1;  
+  z-index: 1;
 }
 
 .clearfix {

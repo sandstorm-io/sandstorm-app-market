@@ -26,10 +26,37 @@ FlowRouter.route('/login', {
   }
 });
 
+FlowRouter.route('/appMarket/app/:appId', {
+  name: 'singleApp',
+  subscriptions: function(params) {
+    this.register('apps by id',
+      Meteor.subscribe('apps by id', params.appId));
+    this.register('user flags',
+      Meteor.subscribe('user flags'));
+    this.register('users reviewed',
+      Meteor.subscribe('users reviewed', params.appId));
+  },
+  action: function() {
+    FlowLayout.render('MasterLayout', {mainSection: 'SingleApp'});
+  }
+});
+
 FlowRouter.route('/appMarket', {
   name: 'appMarket',
   action: function() {
     FlowLayout.render('MasterLayout', {mainSection: 'Home'});
+  }
+});
+
+FlowRouter.route('/appMarket/author/:authorId', {
+  name: 'appMarketAuthor',
+  subscriptions: function(params) {
+    this.register('authorGenre',
+      Meteor.subscribe('apps by author', params.authorId));
+  },
+  action: function() {
+    FlowRouter.setParams({genre: 'Apps by Author'});
+    FlowLayout.render('MasterLayout', {mainSection: 'Genre'});
   }
 });
 

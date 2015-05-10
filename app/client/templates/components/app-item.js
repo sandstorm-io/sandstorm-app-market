@@ -16,24 +16,13 @@ Template.appItem.helpers({
 
   },
 
-  appRating: function(stars) {
-
-    stars = stars || 0;
-    return _.reduce(_.range(5), function(html, ind) {
-      if (stars >= ind + 0.5) html += '<i class="icon-star dark"></i>';
-      else html += '<i class="icon-star light"></i>';
-      return html;
-    }, '');
-
-  },
-
   myRating: function(app) {
 
-    var user = Meteor.users.findOne(Meteor.userId(), {fields: {appRatings: 1}});
+    var user = Meteor.user();
     app = app || this;
 
     if (!user) return;
-    else return user.appRatings[this._id];
+    else return user.appReviews && user.appReviews[app._id] && user.appReviews[app._id].stars;
 
   },
 
@@ -51,17 +40,25 @@ Template.appItem.helpers({
 
 Template.appItem.events({
 
-  'click [data-action="uninstall-app-modal"]': function() {
+  'click [data-action="uninstall-app-modal"]': function(evt) {
 
+    evt.stopPropagation();
     AntiModals.overlay('uninstallApp', {data: this});
 
   },
 
-  'click [data-action="install-app"]': function() {
+  'click [data-action="install-app"]': function(evt) {
 
+    evt.stopPropagation();
     Meteor.call('user/installApp', this._id, function(err) {
       if (err) console.log(err);
     });
+
+  },
+
+  'click [data-link="single-app"]': function() {
+
+    FlowRouter.go('/appMarket/app/' + this.app._id);
 
   }
 
@@ -108,7 +105,9 @@ Template.updateChrome.helpers({
 
 Template.updateChrome.events({
 
-  'click [data-action="toggle-open"]': function() {
+  'click [data-action="toggle-open"]': function(evt) {
+
+    evt.stopPropagation();
 
     var template = Template.instance();
     template.open.set(!template.open.get());

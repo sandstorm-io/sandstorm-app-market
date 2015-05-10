@@ -25,11 +25,17 @@
     font-size: 1.2em;
     margin-right: 0.5rem;
     display: none;
+    vertical-align: text-bottom;
 
     &:last-child {
       margin-left: 0.5rem;
       margin-right: 0;
     }
+  }
+
+  .text {
+    display: inline-block;
+    vertical-align: text-bottom;
   }
 
   &.left {
@@ -45,7 +51,7 @@
 
     i {
       color: #c9add0;
-      display: inline;
+      display: inline-block;
     }
   }
 
@@ -58,7 +64,7 @@
 
     i {
       color: #aa79c6;
-      display: inline;
+      display: inline-block;
     }
   }
 
@@ -71,7 +77,7 @@
 
     i {
       color: #6d627c;
-      display: inline;
+      display: inline-block;
     }
 
   }

@@ -60,12 +60,18 @@ Schemas.Users = new SimpleSchema({
     type: Boolean,
     optional: true
   },
-  appRatings: {
+  appReviews: {
     type: Object,
     blackbox: true,
     defaultValue: {}
   },
   savedApp: {
+    type: Object,
+    blackbox: true,
+    optional: true
+  },
+  // Currently storing flags in both object and user objects
+  flags: {
     type: Object,
     blackbox: true,
     optional: true

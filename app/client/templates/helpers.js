@@ -1,6 +1,6 @@
 var helpers = {
 
-  //USER HELPERS
+  // USER HELPERS
   getUsername: function(_id) {
 
     var user = Meteor.users.findOne(_id);
@@ -17,7 +17,35 @@ var helpers = {
 
   },
 
-  //ROUTER/SUB HELPERS
+  // APP HELPERS
+
+  appRating: function(stars) {
+
+    stars = stars || 0;
+    return _.reduce(_.range(5), function(html, ind) {
+      if (stars >= ind + 0.5) html += '<i class="icon-star dark" data-index="' + ind + '"></i>';
+      else html += '<i class="icon-star light" data-index="' + ind + '"></i>';
+      return html;
+    }, '');
+
+  },
+
+  getLatestVersion: function() {
+
+    return this.latestVersion();
+
+  },
+
+  codeFormat: function(url) {
+
+    // TODO: Need more options here
+    if (!url) return 'No link';
+    else if (url.search('github.com') > -1) return '<a href="' + url + '">On Github</a>';
+    else return '<a href="' + url + '">' + url + '</a>';
+
+  },
+
+  // ROUTER/SUB HELPERS
 
   routerSubsReady: function(name) {
 
@@ -39,6 +67,7 @@ var helpers = {
   },
 
   // UTILITY HELPERS
+
   equal: function(a, b) {
 
     return a === b;
@@ -105,12 +134,20 @@ var helpers = {
   },
 
   // IMAGE HELPERS
-  
+
   imageUrl: function(image) {
 
     return (!image || image.substr(0, 4) === 'data' || image.substr(0, 20) === 'http://cdn.filter.to') ?
       image :
       'http://cdn.filter.to/250x250/' + image.substr(8);
+
+  },
+
+  screenshotImageUrl: function(image) {
+
+    return (!image || image.substr(0, 4) === 'data' || image.substr(0, 20) === 'http://cdn.filter.to') ?
+      image :
+      'http://cdn.filter.to/800x450/' + image.substr(8);
 
   },
 

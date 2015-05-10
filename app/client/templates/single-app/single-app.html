@@ -1,0 +1,284 @@
+<template name="SingleApp">
+
+  <div class="apps-by-me-standard">
+
+      <div class="single-app-container">
+
+      {{#if routerSubsReady}}
+
+      <div class="app-table-large">
+
+        {{#with app}}
+
+        <div class="single-app-container">
+
+          <div class="app-item-inner">
+
+            <div class="image-section">
+
+              <div class="image-surround-full-width">
+
+                <div class="image" style="background-image: url('{{imageUrl image}}');"></div>
+
+              </div>
+
+            </div>
+
+            <div class="text-section">
+
+              <div class="top-section clearfix">
+
+                <div class="left-float">
+
+                  <div class="header">{{name}}</div>
+
+                  <div class="app-author-full-width">{{getUsername author}}</div>
+
+                </div>
+
+              </div>
+
+              <div class="bottom-section clearfix">
+
+                <div class="half-col">
+
+                  <div class="date">{{dateFormat createdAt 'MMMM DD, YYYY'}}</div>
+                  <div class="genre">{{category}}</div>
+
+                </div>
+
+                <div class="half-col">
+
+                  <div class="key">Ported by:</div><div class="value">{{getUsername author}}</div>
+                  <div class="key">License:</div><div class="value">{{license}}</div>
+                  <div class="key">Code:</div><div class="value">{{{codeFormat codeLink}}}</div>
+                  <div class="key">Version:</div><div class="value">{{getLatestVersion}}</div>
+
+                </div>
+
+                <div class="ratings-bar">
+
+                  <div class="left-float">
+                    <div class="app-rating">
+                      {{{appRating stars}}}
+                    </div>
+                    <span>( {{ratingsCount}} )</span>
+                  </div>
+
+                  <div class="right-float social">
+                    <i class="icon-tw"></i>
+                    <i class="icon-go"></i>
+                    <i class="icon-fb"></i>
+                  </div>
+
+                </div>
+
+                <div class="action-buttons force-height clearfix">
+
+                  <div class="install button" data-action="install-app">INSTALL <i class="icon-arrow-install"></i></div>
+                  <div class="chip-in-section {{#unless chipIn}}hidden{{/unless}}">
+                    <div class="slider-section">
+                      <div class="text">How much would you like to chip in? All proceeds go to the author.</div>
+                      <span class="dollar-sign">&#36;</span><input type="number" class="chip-amount" data-field="chip-amount" /><div class="slider"></div>
+                    </div>
+                    <div class="chip-in button" data-action="confirm-chip">CONFIRM</div>
+                  </div>
+                  <div class="chip-in button {{#if chipIn}}hidden{{/if}}" data-action="chip-in">CHIP IN <i class="fa fa-money"></i></div>
+                  <div class="blurb {{#if chipIn}}hidden{{/if}}">This app is free, and if you like it, feel free to chip in.</div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            {{> carousel images=screenshots}}
+
+            <div class="header">Description</div>
+            <div class="right-float option" data-action="flag-app">
+              Flag this app
+              <i class="{{#if flagged}}icon-flagged_dark{{else}}icon-flagged_light{{/if}}"></i>
+            </div>
+
+            <div class="divider clearfix"></div>
+
+            <div class="description">
+
+              {{#if flagApp}}
+                {{> flagBox flagDetails}}
+              {{/if}}
+
+              <div class="text">
+                {{{getDescription description}}}
+              </div>
+
+              <div class="read-more-bar">
+                <div class="read-more" data-action="read-more">
+                  Read More <i class="fa {{#if readMore}}fa-caret-up{{else}}fa-caret-down{{/if}}"></i>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="single-app-container">
+
+          <div class="app-item-inner reviews-section">
+
+            <div class="header">Reviews</div>
+
+            <div class="clearfix"></div>
+
+            <div class="review-bar">
+              <div class="rating left-float">
+                <div class="app-rating">
+                  {{{appRating stars}}}
+                </div>
+                <span>( {{ratingsCount}} )</span>
+              </div>
+
+              <div class="right-float option" data-action="write-review">
+                Write a review
+                <i class="fa {{#if writeReview}}fa-caret-up{{else}}fa-caret-down{{/if}}"></i>
+              </div>
+              {{#if writeReview}}
+                <div class="right-float">
+                  <div class="rating">
+                    <div class="app-rating" data-action="rate-app">
+                      {{{appRating myReview.stars}}}
+                    </div>
+                  </div>
+                </div>
+              {{/if}}
+
+            </div>
+
+            {{#if writeReview}}
+
+              <div class="clearfix"></div>
+              <textarea class="review-entry" data-field="review-text">{{myReview.text}}</textarea>
+              <div class="right-float on-top">
+                <div class="button-block">
+                  <div class="sandstorm-button {{#if reviewValid}}primary{{else}}neutral submit{{/if}}" data-action="{{#if reviewValid}}submit-review{{/if}}">
+                    SUBMIT REVIEW
+                  </div>
+                  <div class="sandstorm-button neutral" data-action="discard-review">
+                    <i class="icon-garbage"></i>
+                    <span class="text">DISCARD</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="clearfix"></div>
+
+            {{/if}}
+
+            <div class="divider clearfix margin-top"></div>
+
+            {{> reviewFrame reviews=reviews}}
+
+          </div>
+
+        </div>
+
+        {{/with}}
+
+      </div>
+
+      {{/if}}
+
+    </div>
+
+  </div>
+
+</template>
+
+<template name="carousel">
+
+  <div class="carousel">
+
+    <div class="prev-button" data-action="carousel-prev"><i class="fa fa-angle-left"></i></div>
+    <div class="owl-carousel">
+      {{#each images}}
+      <div class="screenshot-container">
+        <div class="screenshot" style="background-image: url('{{screenshotImageUrl this}}')"></div>
+      </div>
+      {{/each}}
+    </div>
+    <div class="next-button" data-action="carousel-next"><i class="fa fa-angle-right"></i></div>
+
+  </div>
+
+</template>
+
+<template name="flagBox">
+
+  <form class="flag-box">
+    <div>I believe this app is:</div>
+    <div class="divider"></div>
+    <div>
+      <div>
+        <input type="radio" data-category="inappropriate" id="inappropriate" name="flag-reason">
+        <label for="inappropriate"><span class="vis-radio"><span></span></span><span>Inappropriate</span></label>
+      </div>
+      <div>
+        <input type="radio" data-category="spam" id="spam" name="flag-reason">
+        <label for="spam"><span class="vis-radio"><span></span></span><span>Spam</span></label>
+      </div>
+      <div>
+        <input type="radio" data-category="duplicate" id="duplicate" name="flag-reason">
+        <label for="duplicate"><span class="vis-radio"><span></span></span><span>Duplicate</span></label>
+      </div>
+      <div>
+        <input type="radio" data-category="plagiarized" id="plagiarized" name="flag-reason">
+        <label for="plagiarized"><span class="vis-radio"><span></span></span><span>Plagiarized</span></label>
+      </div>
+      <div>
+        <input type="radio" data-category="other" id="other" name="flag-reason">
+        <label for="other"><span class="vis-radio"><span></span></span><span>Other</span></label>
+      </div>
+    </div>
+    <input type="text" data-field="flag-other" />
+    <div>Additional information:</div>
+    {{!-- <textarea data-field="additional-info" resize="none"></textarea> --}}
+    <div class="additional-info" data-field="additional-info" contenteditable>{{additional}}</div>
+    <div class="button" data-action="submit-flag-app">SUBMIT</div>
+    <div class="button" data-action="flag-app">CLOSE</div>
+  </form>
+
+</template>
+
+<template name="reviewFrame">
+
+  <div class="review-frame">
+    <div class="prev-button" data-action="reviews-prev"><i class="fa fa-angle-left"></i></div>
+    <div class="reviews">
+      <div class="owl-carousel">
+        {{#each reviewGroups}}
+          <div class="review-group">
+            {{#each this}}
+              {{> reviewBox this}}
+            {{/each}}
+          </div>
+        {{/each}}
+      </div>
+    </div>
+    <div class="next-button" data-action="reviews-next"><i class="fa fa-angle-right"></i></div>
+  </div>
+
+</template>
+
+<template name="reviewBox">
+  <div class="review-box">
+    <div class="username">{{username}}</div>
+    <div class="rating">
+      <div class="app-rating">
+        {{{appRating review.stars}}}
+      </div>
+    </div>
+    <div class="date">{{dateFormat review.createdAt 'MMMM D YYYY'}}</div>
+    <div class="review">{{review.text}}</div>
+  </div>
+</template>
