@@ -4,7 +4,7 @@
 
     <div class="contents">
 
-      <div class="genre-name large">{{genre}}</div>
+      <div class="genre-name large">{{genre}}{{#if authorId}} - {{getUsername authorId}}{{/if}}</div>
 
     </div>
 
@@ -50,6 +50,9 @@
 
 <template name="genreTablePopular">
 
+  {{#if routerSubsReady}}
+  {{#if countApps genre}}
+
   <div class="genre-popular">
 
     <div class="contents">
@@ -62,15 +65,24 @@
 
   </div>
 
+  {{/if}}
+  {{/if}}
+
 </template>
 
 
 <template name="genreTableOther">
+
+  {{#if routerSubsReady}}
+  {{#if countApps genre}}
 
   <div class="genre-other">
 
     {{> appTable skipLines=1 afterBigLeader=true genre=genre}}
 
   </div>
+
+  {{/if}}
+  {{/if}}
 
 </template>
