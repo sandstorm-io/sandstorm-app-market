@@ -55,7 +55,6 @@ FlowRouter.route('/appMarket/author/:authorId', {
       Meteor.subscribe('apps by author', params.authorId));
   },
   action: function() {
-    FlowRouter.setParams({genre: 'Apps by Author'});
     FlowLayout.render('MasterLayout', {mainSection: 'Genre'});
   }
 });
@@ -71,7 +70,7 @@ FlowRouter.route('/appMarket/genres/:genre', {
       FlowRouter.setParams({genre: s.capitalize(params.genre)});
 
     if (params.genre === 'Popular') FlowLayout.render('MasterLayout', {mainSection: 'Popular'});
-    else FlowLayout.render('MasterLayout', {mainSection: 'Genre'});
+    else FlowLayout.render('MasterLayout', {mainSection: 'Genre', genre: FlowRouter.getParam('genre')});
   }
 });
 
