@@ -48,7 +48,17 @@
       color: $menu-text;
     }
 
-    &.active:not(.disabled), &:hover:not(.disabled), &:active:not(.disabled) {
+    &:hover:not(.disabled) {
+
+      background-color: #f3e6ff;
+
+      &:after {
+        visibility: hidden;
+      }
+
+    }
+
+    &.active:not(.disabled), &:active:not(.disabled) {
 
       background-color: $menu-active-bg;
 
