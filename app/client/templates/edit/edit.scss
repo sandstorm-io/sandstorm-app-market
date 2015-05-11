@@ -1,0 +1,51 @@
+@import "../../stylesheets/variables";
+
+.edit-box {
+
+  div[data-field] {
+
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    box-shadow: none;
+    border: none;
+    color: #555555;
+    font-size: 1.95rem;
+    height: 2.8rem;
+    line-height: 2.8rem;
+    padding-top: 0;
+    padding-bottom: 0;
+    box-sizing: border-box;
+
+  }
+
+  textarea[data-field="version-changes"] {
+
+    margin-left: 2rem;
+    width: 100%;
+    margin-top: 2rem;
+    min-height: 6rem;
+    box-sizing: border-box;
+    display: block;
+    box-shadow: none;
+    background: #ffffff;
+    border: 1px solid #ccb8d1;
+    color: #555555;
+    font-size: 1.95rem;
+    font-family: $main-font;
+    height: 2.8rem;
+    line-height: 2.8rem;
+    padding-top: 1.1rem;
+    padding-bottom: 1.1rem;
+    padding-left: 1.1rem;
+    padding-right: 1.1rem;
+    box-sizing: border-box;
+    margin-bottom: 3.7rem;
+
+    &:focus {
+      outline: none;
+    }
+
+  }
+
+}

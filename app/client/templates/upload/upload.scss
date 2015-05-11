@@ -1,7 +1,7 @@
 @import "../../stylesheets/variables";
 @import "../../templates/components/menu";
 
-.upload-box {
+.upload-box, .edit-box {
 
   @extend .menu-spacer;
   @extend .margin-right;
@@ -197,9 +197,16 @@
       font-size: 2.1rem;
       font-weight: 300;
       cursor: pointer;
+      margin-right: 0.5rem;
 
       &:focus {
         outline: none;
+      }
+
+      &.existing {
+        background-color: #e5d7ee;
+        color: #553f74;
+        border: 2px solid #ffffff;
       }
 
     }
@@ -281,7 +288,7 @@
     .regenerate, .upload {
       position: absolute;
       right: 1rem;
-      color: #ffffff; // DIFFERENT FROM REQUESTED ffffff, BUT IDENTICONS ARE LIGHT
+      color: #ffffff;
       font-size: 3.15rem;
       opacity: 0.7;
       cursor: pointer;

@@ -10,7 +10,7 @@ var appProto = function() {
     },
     app = new ReactiveDict();
 
-Template.Upload.onCreated(function() {
+Template.Edit.onCreated(function() {
 
   var tmp = this;
 
@@ -20,6 +20,8 @@ Template.Upload.onCreated(function() {
   tmp.imageUrl = new ReactiveVar(false);
   tmp.screenshotsVis = new ReactiveVar(3);
   tmp.suggestNewGenre = new ReactiveVar(false);
+  tmp.editingFields = new ReactiveVar({});
+  tmp.newVersion = new ReactiveVar(false);
 
   var resetScreenshotsVis = function() {
     tmp.screenshotsVis.set(Math.min(Math.ceil(($(window).width() - 300) / 600), 3));
@@ -80,11 +82,13 @@ Template.Upload.onCreated(function() {
       tmp.categories.set(categories);
       tmp.app.set('category', categories.length && categories[0].name);
 
-      // And load the saved app, if present
-      if (Meteor.user() && Meteor.user().savedApp && Meteor.user().savedApp.new) {
-        tmp.app.set(Meteor.user().savedApp.new);
-        tmp.setCategory(tmp.app.get('category'));
+      // And load either the saved version or the actual app,
+      if (Meteor.user() && Meteor.user().savedApp && Meteor.user().savedApp[FlowRouter.getParam('appId')]) {
+        tmp.app.set(Meteor.user().savedApp[FlowRouter.getParam('appId')]);
+      } else {
+        tmp.app.set(Schemas.AppsBase.clean(Apps.findOne(FlowRouter.current().params.appId)));
       }
+      tmp.setCategory(tmp.app.get('category'));
 
       c.stop();
     }
@@ -104,11 +108,11 @@ Template.Upload.onCreated(function() {
 
 });
 
-Template.Upload.onDestroyed(function() {
+Template.Edit.onDestroyed(function() {
   $(window).off('resize.upload');
 });
 
-Template.Upload.helpers({
+Template.Edit.helpers({
 
   app: function() {
 
@@ -148,11 +152,35 @@ Template.Upload.helpers({
 
     return _.range(Math.max(tmp.screenshotsVis.get() - tmp.app.get('screenshots').length, 1));
 
+  },
+
+  fieldEdit: function(field) {
+
+    return (field in Template.instance().editingFields.get());
+
+  },
+
+  newVersion: function() {
+
+    return Template.instance().newVersion.get();
+
   }
 
 });
 
-Template.Upload.events({
+Template.Edit.events({
+
+  'click div[data-field]': function(evt, tmp) {
+
+    var fields = tmp.editingFields.get(),
+        thisField = $(evt.currentTarget).data('field');
+    fields[thisField] = true;
+    tmp.editingFields.set(fields);
+    Tracker.afterFlush(function() {
+      tmp.$('[data-field="' + thisField + '"]').focus();
+    });
+
+  },
 
   'click [data-action="choose-file"]': function(evt, tmp) {
 
@@ -163,6 +191,12 @@ Template.Upload.events({
   'change [data-action="file-picker"][data-for="spk"]': function(evt) {
 
     Template.instance().file.set(evt.currentTarget.files[0]);
+
+  },
+
+  'click [data-action="update-version"]': function(evt, tmp) {
+
+    tmp.newVersion.set(true);
 
   },
 

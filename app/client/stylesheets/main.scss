@@ -165,6 +165,8 @@ html {
 
 .clearfix {
 
+  clear: both;
+
   &:after {
     content:  "";
     display:  table;

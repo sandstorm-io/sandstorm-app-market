@@ -54,7 +54,6 @@ var appsBaseSchema = {
   spkLink: {
     type: String,
     regEx: SimpleSchema.RegEx.Url,
-    optional: true
   },
   price: {
     type: Number,

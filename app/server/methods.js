@@ -101,7 +101,7 @@ Meteor.methods({
     if (!this.userId) return false;
 
     // check(app, Schemas.AppsBase);  TODO: should we be validating here? User should be able to save in place.
-    Meteor.users.update(this.userId, {$set: {savedApp: app}});
+    Meteor.users.update(this.userId, {$set: {'savedApp.new': app}});
 
   },
 
@@ -110,7 +110,7 @@ Meteor.methods({
     this.unblock();
     if (!this.userId) return false;
 
-    Meteor.users.update(this.userId, {$unset: {savedApp: 1}});
+    Meteor.users.update(this.userId, {$unset: {'savedApp.new': 1}});
 
   },
 
