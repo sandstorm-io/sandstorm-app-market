@@ -259,6 +259,12 @@
       }
     }
 
+    &.installed {
+      color: #783189;
+      background-color: #c18ace;
+      cursor: initial;
+    }
+
     &.chip-in {
       color: #ffffff;
       background-color: #5fa059;

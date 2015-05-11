@@ -75,7 +75,12 @@
 
                 <div class="action-buttons force-height clearfix">
 
-                  <div class="install button" data-action="install-app">INSTALL <i class="icon-arrow-install"></i></div>
+                  {{#if installed}}
+                    <div class="installed button">INSTALLED</div>
+                  {{else}}
+                    <div class="install button" data-action="install-app">INSTALL <i class="icon-arrow-install"></i></div>
+                  {{/if}}
+
                   <div class="chip-in-section {{#unless chipIn}}hidden{{/unless}}">
                     <div class="slider-section">
                       <div class="text">How much would you like to chip in? All proceeds go to the author.</div>

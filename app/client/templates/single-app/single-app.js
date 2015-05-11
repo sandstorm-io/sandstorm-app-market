@@ -66,6 +66,12 @@ Template.SingleApp.helpers({
 
   },
 
+  installed: function() {
+
+    return (Meteor.user() && this._id in Meteor.user().installedApps);
+
+  },
+
   chipIn: function() {
 
     return Template.instance().chipIn.get();
