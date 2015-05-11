@@ -22,7 +22,9 @@ Template.SingleApp.onCreated(function() {
   tmp.autorun(function(c) {
     if (FlowRouter.subsReady()) {
       var appId = FlowRouter.getParam('appId'),
-          user = Meteor.user();
+          user = Meteor.user(),
+          app = Apps.findOne(appId);
+      if (!app || !app.screenshots.length) tmp.readMore.set(true);
       if (user && user.appReviews && appId in user.appReviews) {
         tmp.myReview.set({
           stars: user.appReviews[appId].stars,
@@ -81,6 +83,12 @@ Template.SingleApp.helpers({
   getDescription: function() {
 
     return Template.instance().readMore.get() ? this.description : s.prune(this.description, 1200);
+
+  },
+
+  extendedDescription: function() {
+
+    return this.description.length > 1200;
 
   },
 
@@ -309,6 +317,12 @@ Template.reviewFrame.helpers({
         return Math.floor(i / size);
     });
     return _.values(res);
+
+  },
+
+  extraReviews: function() {
+
+    return this.reviews.length > reviewRows * reviewCols;
 
   }
 

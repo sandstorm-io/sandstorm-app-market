@@ -97,7 +97,9 @@
 
             </div>
 
-            {{> carousel images=screenshots}}
+            {{#if screenshots}}
+              {{> carousel images=screenshots}}
+            {{/if}}
 
             <div class="header">Description</div>
             <div class="right-float option" data-action="flag-app">
@@ -113,15 +115,17 @@
                 {{> flagBox flagDetails}}
               {{/if}}
 
-              <div class="text">
+              <div class="text {{#unless extendedDescription}}padded{{/unless}}">
                 {{{getDescription description}}}
               </div>
 
+              {{#if extendedDescription}}
               <div class="read-more-bar">
                 <div class="read-more" data-action="read-more">
                   Read More <i class="fa {{#if readMore}}fa-caret-up{{else}}fa-caret-down{{/if}}"></i>
                 </div>
               </div>
+              {{/if}}
             </div>
 
           </div>
@@ -258,7 +262,7 @@
 <template name="reviewFrame">
 
   <div class="review-frame">
-    <div class="prev-button" data-action="reviews-prev"><i class="fa fa-angle-left"></i></div>
+    <div class="prev-button {{#unless extraReviews}}disabled{{/unless}}" data-action="reviews-prev"><i class="fa fa-angle-left"></i></div>
     <div class="reviews">
       <div class="owl-carousel">
         {{#each reviewGroups}}
@@ -270,7 +274,7 @@
         {{/each}}
       </div>
     </div>
-    <div class="next-button" data-action="reviews-next"><i class="fa fa-angle-right"></i></div>
+    <div class="next-button {{#unless extraReviews}}disabled{{/unless}}" data-action="reviews-next"><i class="fa fa-angle-right"></i></div>
   </div>
 
 </template>

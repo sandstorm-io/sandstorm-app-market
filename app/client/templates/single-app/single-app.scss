@@ -380,6 +380,11 @@
     overflow: hidden;
     font-size: 1.7rem;
 
+    &.padded {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+
   }
 
   .flag-box {
@@ -627,6 +632,13 @@
   color: #783189;
   font-weight: 300;
   cursor: pointer;
+
+  &.disabled {
+
+    cursor: initial;
+    color: #c9add0;
+
+  }
 
   i {
     font-size: 7rem;

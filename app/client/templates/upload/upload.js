@@ -39,8 +39,10 @@ Template.Upload.onCreated(function() {
     _.each(categories, function(cat) {
       cat.selected = false;
     });
-    category.selected = true;
-    tmp.app.set('category', category.name);
+    if (category) {
+      category.selected = true;
+      tmp.app.set('category', category.name);
+    }
     tmp.categories.dep.changed();
 
   };
