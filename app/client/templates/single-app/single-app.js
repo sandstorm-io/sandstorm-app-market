@@ -15,7 +15,7 @@ Template.SingleApp.onCreated(function() {
   });
   tmp.reviewValid = new ReactiveVar(false);
   tmp.validateReview = function() {
-    tmp.reviewValid.set(tmp.myReview.get().text && tmp.myReview.get().stars);
+    tmp.reviewValid.set(!!tmp.myReview.get().text);
   };
 
   // Load existing review of this app (if it exists)

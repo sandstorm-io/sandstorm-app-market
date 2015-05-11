@@ -142,7 +142,7 @@
 
             <div class="review-bar">
               <div class="rating left-float">
-                <div class="app-rating">
+                <div class="app-rating monochrome">
                   {{{appRating stars}}}
                 </div>
                 <span>( {{ratingsCount}} )</span>
@@ -282,11 +282,13 @@
 <template name="reviewBox">
   <div class="review-box">
     <div class="username">{{username}}</div>
+    {{#if review.stars}}
     <div class="rating">
       <div class="app-rating">
         {{{appRating review.stars}}}
       </div>
     </div>
+    {{/if}}
     <div class="date">{{dateFormat review.createdAt 'MMMM D YYYY'}}</div>
     <div class="review">{{review.text}}</div>
   </div>

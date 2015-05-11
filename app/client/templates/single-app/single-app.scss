@@ -566,6 +566,15 @@
       height: 3.5rem;
 
     }
+
+    .app-rating.monochrome {
+      .icon-star.light {
+        color: #cccccc;
+      }
+      .icon-star.dark {
+        color: #222222;
+      }
+    }
   }
 
   .sandstorm-button.neutral.submit {
@@ -609,6 +618,7 @@
         display: inline-block;
         vertical-align: middle;
         color: #6d627c;
+        line-height: 3.5rem;
       }
 
       .review {
