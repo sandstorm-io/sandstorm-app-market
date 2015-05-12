@@ -2,7 +2,7 @@
 
 .edit-box {
 
-  div[data-field] {
+  div[data-alt-field] {
 
     cursor: pointer;
     display: block;
@@ -19,32 +19,47 @@
 
   }
 
-  textarea[data-field="version-changes"] {
+  .version-changes {
 
-    margin-left: 2rem;
-    width: 100%;
-    margin-top: 2rem;
-    min-height: 6rem;
-    box-sizing: border-box;
-    display: block;
-    box-shadow: none;
-    background: #ffffff;
-    border: 1px solid #ccb8d1;
-    color: #555555;
-    font-size: 1.95rem;
-    font-family: $main-font;
-    height: 2.8rem;
-    line-height: 2.8rem;
-    padding-top: 1.1rem;
-    padding-bottom: 1.1rem;
-    padding-left: 1.1rem;
-    padding-right: 1.1rem;
-    box-sizing: border-box;
-    margin-bottom: 3.7rem;
+    padding-left: 1rem;
+    overflow: auto;
 
-    &:focus {
-      outline: none;
+    textarea {
+
+      width: 100%;
+      margin-top: 2rem;
+      margin-bottom: 3.7rem;
+      min-height: 6rem;
+      box-sizing: border-box;
+      display: block;
+      box-shadow: none;
+      background: #ffffff;
+      border: 1px solid #ccb8d1;
+      color: #555555;
+      font-size: 1.75rem;
+      font-family: $main-font;
+      height: 2.8rem;
+      line-height: 2.8rem;
+      padding-top: 0.55rem;
+      padding-bottom: 0.55rem;
+      padding-left: 0.55rem;
+      padding-right: 0.55rem;
+      box-sizing: border-box;
+      resize: none;
+
+      &:focus {
+        outline: none;
+      }
+
     }
+
+  }
+
+  .description-caption {
+
+    font-size: 1.2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 
   }
 

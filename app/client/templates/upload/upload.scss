@@ -429,7 +429,12 @@
     padding-left: 1.1rem;
     padding-right: 1.1rem;
     box-sizing: border-box;
-    margin-bottom: 3.7rem;
+    resize: vertical;
+
+    .spacer {
+      display: block;
+      margin-bottom: 3.7rem;
+    }
 
     &:focus {
       outline: none;

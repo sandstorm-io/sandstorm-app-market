@@ -11,7 +11,7 @@
   </div>
 
   {{#with app}}
-  <form class="edit-box">
+  <form class="edit-box clearfix">
 
     <div class="right-float on-top">
 
@@ -70,7 +70,7 @@
         {{#if fieldEdit 'name'}}
           <input type="text" data-field="name" value="{{name}}" required />
         {{else}}
-          <div data-field="name">{{name}}</div>
+          <div data-alt-field="name">{{name}}</div>
         {{/if}}
 
         <h3 class="title">Author</h3>
@@ -93,21 +93,21 @@
         {{#if fieldEdit 'codeLink'}}
           <input type="text" data-field="codeLink" value="{{codeLink}}" pattern="https?://.+" />
         {{else}}
-          <div data-field="codeLink">{{verboseNone codeLink}}</div>
+          <div data-alt-field="codeLink">{{verboseNone codeLink}}</div>
         {{/if}}
 
         <h4 class="mini-title">License</h4>
         {{#if fieldEdit 'license'}}
           <input type="text" data-field="license" value="{{license}}" />
         {{else}}
-          <div data-field="license">{{verboseNone license}}</div>
+          <div data-alt-field="license">{{verboseNone license}}</div>
         {{/if}}
 
         <h4 class="mini-title">Version</h4>
         {{#if fieldEdit 'latestVersion'}}
           <input type="text" data-action="update-version" value="{{latestVersion}}" />
         {{else}}
-          <div data-field="latestVersion" data-action="update-version">{{verboseNone latestVersion}}</div>
+          <div data-alt-field="latestVersion" data-action="update-version">{{verboseNone latestVersion}}</div>
         {{/if}}
 
       </div>
@@ -118,7 +118,7 @@
         {{#if fieldEdit 'webLink'}}
           <input type="text" data-field="webLink" value="{{webLink}}" />
         {{else}}
-          <div data-field="webLink">{{verboseNone webLink}}</div>
+          <div data-alt-field="webLink">{{verboseNone webLink}}</div>
         {{/if}}
 
         {{> connectButton service="github"}}
@@ -129,9 +129,9 @@
       {{#if newVersion}}
         <h4 class="mini-title left-float">Version Changes</h4>
 
-        <div class="rem-space-float">
-          <textarea class="version-changes rem-space-float" data-field="version-changes" placeholder="What's new in this version?"></textarea>
-        </div>    
+        <div class="version-changes">
+          <textarea data-field="version-changes" placeholder="What's new in this version?"></textarea>
+        </div>
       {{/if}}
 
       <h3 class="title">Genre</h3>
@@ -252,7 +252,15 @@
 
     </div>
 
-    <div class="right-float on-top">
+    <div class="right-float description-caption">
+      <p>
+        Edits will not be published until approved by an Admin. Don't want to commit your edits? Save Edits and come back to them later.
+      </p>
+    </div>
+
+    <div></div>
+
+    <div class="right-float clearfix on-top">
 
       <div class="button-block">
         <div class="sandstorm-button neutral" data-action="submit-app">

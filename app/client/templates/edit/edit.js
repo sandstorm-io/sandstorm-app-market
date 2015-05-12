@@ -170,10 +170,10 @@ Template.Edit.helpers({
 
 Template.Edit.events({
 
-  'click div[data-field]': function(evt, tmp) {
+  'click div[data-alt-field]': function(evt, tmp) {
 
     var fields = tmp.editingFields.get(),
-        thisField = $(evt.currentTarget).data('field');
+        thisField = $(evt.currentTarget).data('alt-field');
     fields[thisField] = true;
     tmp.editingFields.set(fields);
     Tracker.afterFlush(function() {
