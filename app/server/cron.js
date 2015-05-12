@@ -17,7 +17,10 @@ SyncedCron.add({
         image: retricon(Random.id(), 50, 0).toDataURL(),
         approved: 1,
         author: _.sample(users),
-        versions: ['0.0.1'],
+        versions: [{
+          number: '0.0.1',
+          dateTime: new Date()
+        }],
         spkLink: 'http://exampleurl.com/spkfile.spk'
       });
     else return 'full';
@@ -57,7 +60,11 @@ SyncedCron.add({
       if (!app) return false;
 
       Apps.update(app._id, {$push: {
-        versions: newVersion(_.last(app.versions))
+        versions: {
+          number: newVersion(_.last(app.versions).number),
+          changes: faker.lorem.sentences(2),
+          dateTime: new Date()
+        }
       }});
 
     });
