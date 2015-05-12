@@ -23,7 +23,7 @@
     </a>
 
     {{#if isAdmin}}
-    <a class="menu-link" href="/admin">
+    <a class="menu-link {{routeRoot '/admin'}}" href="{{getPath 'admin'}}">
       <i class="icon-admin"></i>
       <div class="menu-text">Admin</div>
     </a>

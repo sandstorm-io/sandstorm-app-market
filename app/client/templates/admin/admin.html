@@ -1,5 +1,33 @@
 <template name="Admin">
 
-  <h1>THIS IS THE ADMIN CONSOLE</h1>
+  <div class="genre-title-section">
+
+    <div class="contents">
+
+      <div class="apps-title large">ADMIN PANEL</div>
+
+    </div>
+
+  </div>
+
+  <div class="admin-section">
+
+    {{#each adminFilters}}
+
+      <div class="admin-filter {{color}} {{active}}">
+
+        <i class="{{icon}}"></i>
+        <div class="text">
+          {{text}}
+        </div>
+        <div class="count">
+          {{count}}
+        </div>
+
+      </div>
+
+    {{/each}}
+
+  </div>
 
 </template>
