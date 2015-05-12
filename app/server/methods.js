@@ -102,9 +102,9 @@ Meteor.methods({
 
     // check(app, Schemas.AppsBase);  TODO: should we be validating here? User should be able to save in place.
     var set = {},
-        setString = 'savedApp.' + (app.replacesApp || 'new');
-    set.$set[setString] = app;
-    return Meteor.users.update(this.userId, set);
+      setString = 'savedApp.' + (app.replacesApp || 'new');
+    set[setString] = app;
+    return Meteor.users.update(this.userId, {$set: set});
 
   },
 
@@ -114,9 +114,9 @@ Meteor.methods({
     if (!this.userId) return false;
 
     var unset = {},
-        unsetString = 'savedApp.' + (appId || 'new');
-    unset.$unset[setString] = app;
-    return Meteor.users.update(this.userId, unset);
+      unsetString = 'savedApp.' + (appId || 'new');
+    unset[unsetString] = true;
+    return Meteor.users.update(this.userId, {$unset: unset});
 
   },
 

@@ -134,9 +134,8 @@ var helpers = {
   },
 
   stripFilename: function(path) {
-
-    return path && path.split('/').pop();
-
+    var uri = path && path.split('/').pop();
+    return decodeURI(uri)
   },
 
   verboseNone: function(string) {

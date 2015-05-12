@@ -388,9 +388,17 @@ Template.Edit.events({
   'click [data-action="discard-edits"]': function(evt, tmp) {
 
     Meteor.call('user/delete-saved-app', tmp.app.get('replacesApp'), function(err, res) {
-      if (err) console.log(err);
+      if (err) {
+        console.log(err);
+      }
       else {
         tmp.clearApp();
+        var newVersion = Apps.findOne(FlowRouter.current().params.appId);
+        newVersion.replacesApp = newVersion._id;
+        newVersion.versions = [];
+        Schemas.AppsBase.clean(newVersion);
+        tmp.app.set(newVersion);
+        tmp.setCategory(tmp.app.get('category'));
       }
     });
 

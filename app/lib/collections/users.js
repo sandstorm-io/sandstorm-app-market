@@ -68,7 +68,7 @@ Schemas.Users = new SimpleSchema({
   savedApp: {
     type: Object,
     blackbox: true,
-    optional: true
+    defaultValue: {}
   },
   // Currently storing flags in both object and user objects
   flags: {
