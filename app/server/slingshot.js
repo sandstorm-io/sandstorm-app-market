@@ -20,7 +20,7 @@ if (Meteor.settings.AWSAccessKeyId) {
     key: function (file) {
       //Store file into a directory by the user's username.
       var user = Meteor.users.findOne(this.userId);
-      return user.username + ' ' + new moment().format("hh:mm:ss_DD-MM-YY") + ' ' + file.name;
+      return  file.name + '_' + user.username + '_' + new moment().format("hh-mm-ss_DD-MM-YY");
     }
   });
 

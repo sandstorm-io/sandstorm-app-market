@@ -298,10 +298,11 @@ Template.Upload.events({
   'change [data-action="update-version"]': function(evt, tmp) {
 
     var versions = tmp.app.get('versions'),
-        $el = $(evt.currentTarget),
-        latest = _.last(versions);
-    if (!latest || $el.val() !== latest) versions.push($el.val());
-    tmp.app.set('versions', versions);
+        $el = $(evt.currentTarget);
+    tmp.app.set('versions', {
+      dateTime: new Date(),
+      number: $el.val()
+    });
 
   },
 
@@ -328,7 +329,7 @@ Template.Upload.events({
 
     Meteor.call('user/submit-app', tmp.app.all(), function(err, res) {
       if (err) console.log(err);
-      else if (res) tmp.clearApp();
+      else if (res) FlowRouter.go('appsByMe');
     });
 
   },

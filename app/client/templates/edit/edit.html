@@ -44,7 +44,6 @@
           <div class="spacer clearfix"></div>
 
           <input type="text" placeholder="Browse" readonly="true" data-field="filename" class="filename existing" data-action="choose-file" data-name="spk" value="{{stripFilename spkLink}}" />
-          <input type="file" class="file-picker" data-action="file-picker" data-for="spk" accept=".spk" />
           <div class="two square-buttons rem-space-float">
             <a class="square-button dark" href="{{spkLink}}"><i class="fa fa-download"></i></a>
             <div class="square-button dark" data-action="upload-spk"><i class="icon-garbage"></i></div>
@@ -105,7 +104,7 @@
 
         <h4 class="mini-title">Version</h4>
         {{#if fieldEdit 'latestVersion'}}
-          <input type="text" data-action="update-version" value="{{latestVersion}}" />
+          <input type="text" data-action="update-version" data-version-field="number" value="{{latestVersion}}" />
         {{else}}
           <div data-alt-field="latestVersion" data-action="update-version">{{verboseNone latestVersion}}</div>
         {{/if}}
@@ -130,7 +129,7 @@
         <h4 class="mini-title left-float">Version Changes</h4>
 
         <div class="version-changes">
-          <textarea data-field="version-changes" placeholder="What's new in this version?"></textarea>
+          <textarea placeholder="What's new in this version?" data-action="update-version" data-version-field="changes"></textarea>
         </div>
       {{/if}}
 

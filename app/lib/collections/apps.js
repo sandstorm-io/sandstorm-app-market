@@ -75,6 +75,11 @@ var appsBaseSchema = {
     type: [String],
     regEx: versionRegEx,
     defaultValue: []
+  },
+  replacesApp: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+    optional: true
   }
 
 };
@@ -145,9 +150,9 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
     defaultValue: []
   },
   versions: {
-    type: [String],
-    regEx: versionRegEx,
-    defaultValue: []
+    type: [Object],
+    defaultValue: [],
+    blackbox: true
   },
   flags: {
     type: Object,
