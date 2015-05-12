@@ -259,6 +259,12 @@
       }
     }
 
+    &.installed {
+      color: #783189;
+      background-color: #c18ace;
+      cursor: initial;
+    }
+
     &.chip-in {
       color: #ffffff;
       background-color: #5fa059;
@@ -373,6 +379,11 @@
 
     overflow: hidden;
     font-size: 1.7rem;
+
+    &.padded {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
 
   }
 
@@ -555,6 +566,15 @@
       height: 3.5rem;
 
     }
+
+    .app-rating.monochrome {
+      .icon-star.light {
+        color: #cccccc;
+      }
+      .icon-star.dark {
+        color: #222222;
+      }
+    }
   }
 
   .sandstorm-button.neutral.submit {
@@ -598,6 +618,7 @@
         display: inline-block;
         vertical-align: middle;
         color: #6d627c;
+        line-height: 3.5rem;
       }
 
       .review {
@@ -621,6 +642,13 @@
   color: #783189;
   font-weight: 300;
   cursor: pointer;
+
+  &.disabled {
+
+    cursor: initial;
+    color: #c9add0;
+
+  }
 
   i {
     font-size: 7rem;

@@ -177,8 +177,10 @@ Meteor.methods({
     this.unblock();
     if (!this.userId) return false;
 
-    check(review.stars, Match.Where(function(stars) {return (0 < stars) && (5 >= stars);}));
-    check(review.stars, Match.Integer);
+    if (review.stars) {
+      check(review.stars, Match.Integer);
+      check(review.stars, Match.Where(function(stars) {return (0 <= stars) && (5 >= stars);}));
+    }
     check(review.text, String);
     check(review.text, Match.Where(function(text) {return text.length > 0;}));
 

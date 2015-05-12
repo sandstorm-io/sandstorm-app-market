@@ -63,6 +63,14 @@ SyncedCron.add({
   }
 });
 
+SyncedCron.add({
+  name: 'Autoupdate apps',
+  schedule: function(parser) {
+    return parser.recur().on('01:00:00').time();
+  },
+  job: autoupdateApps
+});
+
 SyncedCron.start();
 
 function newVersion(version) {
@@ -73,5 +81,24 @@ function newVersion(version) {
   nums[lIn] = parseInt(nums[lIn], 10) + 1;
 
   return nums.join('.');
+
+}
+
+function autoupdateApps() {
+
+    Meteor.users.find({autoupdateApps: true}).forEach(function(user) {
+      Genres.findIn('Updates Available', {}, {}, {userId: user._id}).forEach(function(app) {
+        var set = {};
+
+        // TODO: actually update the app!
+        set['installedApps.' + app._id] = {
+          version: app.latestVersion(),
+          dateTime: new Date()
+        };
+        Meteor.users.update(user._id, {
+          $set: set
+        });
+      });
+    });
 
 }
