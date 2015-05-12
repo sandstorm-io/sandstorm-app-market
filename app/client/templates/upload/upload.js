@@ -299,10 +299,10 @@ Template.Upload.events({
 
     var versions = tmp.app.get('versions'),
         $el = $(evt.currentTarget);
-    tmp.app.set('versions', {
+    tmp.app.set('versions', [{
       dateTime: new Date(),
       number: $el.val()
-    });
+    }]);
 
   },
 
