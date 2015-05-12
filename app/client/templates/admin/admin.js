@@ -1,7 +1,7 @@
 var adminFilters = [
 
   {
-    icon: '.icon-star',
+    icon: 'icon-star',
     text: 'New Apps to Review',
     color: 'purple',
     filter: function() {
@@ -19,7 +19,7 @@ var adminFilters = [
   },
 
   {
-    icon: '.icon-updated',
+    icon: 'icon-updated',
     text: 'Updated Apps',
     color: 'blue',
     filter: function() {
@@ -56,11 +56,19 @@ var adminFilters = [
 
 ];
 
+Template.Admin.onCreated(function() {
+
+  var tmp = this;
+
+  tmp.filter = new ReactiveVar(0);
+
+});
+
 Template.Admin.helpers({
 
   adminFilters: function() {
 
-    return adminFilters;
+    return _.map(adminFilters, function(filter, ind) {filter.index = ind; return filter;});
 
   },
 
@@ -72,7 +80,17 @@ Template.Admin.helpers({
 
   active: function() {
 
-    return 'active';
+    return this.index === Template.instance().filter.get() ? 'active' : '';
+
+  }
+
+});
+
+Template.Admin.events({
+
+  'click [data-action="select-filter"]': function(evt, tmp) {
+
+    tmp.filter.set(this.index);
 
   }
 

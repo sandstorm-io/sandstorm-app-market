@@ -17,10 +17,15 @@
   border-radius: $button-border-radius;
   padding-left: 0.75rem;
   cursor: pointer;
+  margin-right: 1rem;
+
+  &:last-child {
+    margin-right: 0;
+  }
 
   > * {
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: bottom;
   }
 
   .text {
