@@ -135,7 +135,7 @@ var helpers = {
 
   stripFilename: function(path) {
 
-    return path.split('/').pop();
+    return path && path.split('/').pop();
 
   },
 
