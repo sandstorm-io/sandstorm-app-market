@@ -101,16 +101,22 @@ Meteor.methods({
     if (!this.userId) return false;
 
     // check(app, Schemas.AppsBase);  TODO: should we be validating here? User should be able to save in place.
-    Meteor.users.update(this.userId, {$set: {savedApp: app}});
+    var set = {},
+      setString = 'savedApp.' + (app.replacesApp || 'new');
+    set[setString] = app;
+    return Meteor.users.update(this.userId, {$set: set});
 
   },
 
-  'user/delete-saved-app': function() {
+  'user/delete-saved-app': function(appId) {
 
     this.unblock();
     if (!this.userId) return false;
 
-    Meteor.users.update(this.userId, {$unset: {savedApp: 1}});
+    var unset = {},
+      unsetString = 'savedApp.' + (appId || 'new');
+    unset[unsetString] = true;
+    return Meteor.users.update(this.userId, {$unset: unset});
 
   },
 
@@ -129,6 +135,40 @@ Meteor.methods({
     });
 
     return fut.wait();
+
+  },
+
+  'user/submit-update': function(app) {
+
+    var fut = new Future();
+
+    this.unblock();
+    if (!this.userId) return false;
+    if (this.userId !== app.author) throw new Meteor.Error('wrong author', 'Can only submit app by logged-in user');
+
+    check(app.versions.length, Match.Where(function(l) {return l > 0;}));
+
+    Apps.insert(app, function(err, res) {
+      console.log(err, res);
+      if (err) throw new Meteor.Error(err.message);
+      else fut.return(res);
+    });
+
+    return fut.wait();
+
+  },
+
+  'user/delete-app': function(appId) {
+
+    var fut = new Future(),
+        app = Apps.findOne(appId);
+
+    this.unblock();
+    if (!this.userId) return false;
+    if (!app || this.userId !== app.author) throw new Meteor.Error('wrong author', 'Can only delete app by logged-in user');
+
+    return Apps.remove(appId);
+    // TODO: should we inform installed users that this app is no longer available?
 
   },
 

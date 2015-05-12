@@ -17,7 +17,8 @@ SyncedCron.add({
         image: retricon(Random.id(), 50, 0).toDataURL(),
         approved: 1,
         author: _.sample(users),
-        versions: ['0.0.1']
+        versions: ['0.0.1'],
+        spkLink: 'http://exampleurl.com/spkfile.spk'
       });
     else return 'full';
   }

@@ -233,7 +233,7 @@
   position: relative;
   display: inline-block;
   vertical-align: middle;
-  font-size: 1.95rem;
+  font-size: 1.75rem;
   padding-top: 0;
   padding-bottom: 0;
   padding-left: 3.15rem;
@@ -276,6 +276,39 @@
   }
   &.input {
     width: 14rem;
+  }
+
+}
+
+.square-buttons {
+
+  text-align: justify;
+  white-space: nowrap;
+
+  > .square-button {
+
+    display: inline-block;
+    padding-left: 0;
+    padding-right: 0;
+
+  }
+
+  &.two {
+    > .square-button {
+      width: 50%;
+    }
+  }
+
+  &.three {
+    > .square-button {
+      width: 33.3%;
+    }
+  }
+
+  &.four {
+    > .square-button {
+      width: 25%;
+    }
   }
 
 }

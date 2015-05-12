@@ -1,0 +1,66 @@
+@import "../../stylesheets/variables";
+
+.edit-box {
+
+  div[data-alt-field] {
+
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    box-shadow: none;
+    border: none;
+    color: #555555;
+    font-size: 1.95rem;
+    height: 2.8rem;
+    line-height: 2.8rem;
+    padding-top: 0;
+    padding-bottom: 0;
+    box-sizing: border-box;
+
+  }
+
+  .version-changes {
+
+    padding-left: 1rem;
+    overflow: auto;
+
+    textarea {
+
+      width: 100%;
+      margin-top: 2rem;
+      margin-bottom: 3.7rem;
+      min-height: 6rem;
+      box-sizing: border-box;
+      display: block;
+      box-shadow: none;
+      background: #ffffff;
+      border: 1px solid #ccb8d1;
+      color: #555555;
+      font-size: 1.75rem;
+      font-family: $main-font;
+      height: 2.8rem;
+      line-height: 2.8rem;
+      padding-top: 0.55rem;
+      padding-bottom: 0.55rem;
+      padding-left: 0.55rem;
+      padding-right: 0.55rem;
+      box-sizing: border-box;
+      resize: none;
+
+      &:focus {
+        outline: none;
+      }
+
+    }
+
+  }
+
+  .description-caption {
+
+    font-size: 1.2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+  }
+
+}

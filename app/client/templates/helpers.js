@@ -133,6 +133,17 @@ var helpers = {
 
   },
 
+  stripFilename: function(path) {
+    var uri = path && path.split('/').pop();
+    return decodeURI(uri)
+  },
+
+  verboseNone: function(string) {
+
+    return string || 'None';
+
+  },
+
   // IMAGE HELPERS
 
   imageUrl: function(image) {

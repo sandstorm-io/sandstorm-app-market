@@ -1,17 +1,17 @@
-<template name="Upload">
+<template name="Edit">
 
   <div class="genre-title-section">
 
     <div class="contents">
 
-      <div class="apps-title large">APP UPLOAD</div>
+      <div class="apps-title large">APP EDIT</div>
 
     </div>
 
   </div>
 
   {{#with app}}
-  <form class="upload-box">
+  <form class="edit-box clearfix">
 
     <div class="right-float on-top">
 
@@ -20,7 +20,10 @@
           SUBMIT APP FOR REVIEW
         </div>
         <div class="sandstorm-button neutral" data-action="save-app">
-          SAVE
+          SAVE EDITS
+        </div>
+        <div class="sandstorm-button neutral" data-action="discard-edits">
+          DISCARD EDITS
         </div>
         <i class="icon-garbage" data-action="delete-app"></i>
       </div>
@@ -35,8 +38,20 @@
 
         <div class="file-box">
 
-          <div class="instruction">Please upload the *.spk file for your app.</div>
+          <div class="instruction">This is your app package</div>
           <div class="aside"><a href="https://github.com/sandstorm-io/sandstorm/wiki/Porting-Guide" target="_blank">(What's an *.spk?)</a></div>
+
+          <div class="spacer clearfix"></div>
+
+          <input type="text" placeholder="Browse" readonly="true" data-field="filename" class="filename existing" data-action="choose-file" data-name="spk" value="{{stripFilename spkLink}}" />
+          <div class="two square-buttons rem-space-float">
+            <a class="square-button dark" href="{{spkLink}}"><i class="fa fa-download"></i></a>
+            <div class="square-button dark" data-action="upload-spk"><i class="icon-garbage"></i></div>
+          </div>
+
+          <div class="spacer clearfix"></div>
+
+          <div class="instruction">New spk?</div>
 
           <div class="spacer clearfix"></div>
 
@@ -51,7 +66,11 @@
       <div class="half-col">
 
         <h3 class="title">Title</h3>
-        <input type="text" data-field="name" value="{{name}}" required />
+        {{#if fieldEdit 'name'}}
+          <input type="text" data-field="name" value="{{name}}" required />
+        {{else}}
+          <div data-alt-field="name">{{name}}</div>
+        {{/if}}
 
         <h3 class="title">Author</h3>
         <div class="read-only">{{getUsername author}}</div>
@@ -70,25 +89,49 @@
         <div class="read-only">{{getUsername author}}</div>
 
         <h4 class="mini-title">Code URL</h4>
-        <input type="text" data-field="codeLink" value="{{codeLink}}" pattern="https?://.+" />
+        {{#if fieldEdit 'codeLink'}}
+          <input type="text" data-field="codeLink" value="{{codeLink}}" pattern="https?://.+" />
+        {{else}}
+          <div data-alt-field="codeLink">{{verboseNone codeLink}}</div>
+        {{/if}}
 
         <h4 class="mini-title">License</h4>
-        <input type="text" data-field="license" value="{{license}}" />
+        {{#if fieldEdit 'license'}}
+          <input type="text" data-field="license" value="{{license}}" />
+        {{else}}
+          <div data-alt-field="license">{{verboseNone license}}</div>
+        {{/if}}
 
         <h4 class="mini-title">Version</h4>
-        <input type="text" data-action="update-version" value="{{latestVersion}}" />
+        {{#if fieldEdit 'latestVersion'}}
+          <input type="text" data-action="update-version" data-version-field="number" value="{{latestVersion}}" />
+        {{else}}
+          <div data-alt-field="latestVersion" data-action="update-version">{{verboseNone latestVersion}}</div>
+        {{/if}}
 
       </div>
 
       <div class="half-col">
 
         <h4 class="mini-title">Website</h4>
-        <input type="text" data-field="webLink" value="{{webLink}}" />
+        {{#if fieldEdit 'webLink'}}
+          <input type="text" data-field="webLink" value="{{webLink}}" />
+        {{else}}
+          <div data-alt-field="webLink">{{verboseNone webLink}}</div>
+        {{/if}}
 
         {{> connectButton service="github"}}
         {{> connectButton service="google"}}
 
       </div>
+
+      {{#if newVersion}}
+        <h4 class="mini-title left-float">Version Changes</h4>
+
+        <div class="version-changes">
+          <textarea placeholder="What's new in this version?" data-action="update-version" data-version-field="changes"></textarea>
+        </div>
+      {{/if}}
 
       <h3 class="title">Genre</h3>
 
@@ -206,18 +249,27 @@
 
       <textarea class="description" data-field="description" placeholder="What does your app do?">{{description}}</textarea>
 
-      <div class="spacer"></div>
-      
     </div>
 
-    <div class="right-float on-top">
+    <div class="right-float description-caption">
+      <p>
+        Edits will not be published until approved by an Admin. Don't want to commit your edits? Save Edits and come back to them later.
+      </p>
+    </div>
+
+    <div></div>
+
+    <div class="right-float clearfix on-top">
 
       <div class="button-block">
         <div class="sandstorm-button neutral" data-action="submit-app">
           SUBMIT APP FOR REVIEW
         </div>
         <div class="sandstorm-button neutral" data-action="save-app">
-          SAVE
+          SAVE EDITS
+        </div>
+        <div class="sandstorm-button neutral" data-action="discard-edits">
+          DISCARD EDITS
         </div>
         <i class="icon-garbage" data-action="delete-app"></i>
       </div>

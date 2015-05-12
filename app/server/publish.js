@@ -53,7 +53,7 @@ Meteor.publish('app search description', function(term) {
   return Apps.find({description: {$regex: term, $options: 'i'}, public: true, approved: 0}, {fields: {flags: 0}});
 });
 
-Meteor.publish('saved app', function() {
+Meteor.publish('saved apps', function() {
   return Meteor.users.find(this.userId, {fields: {savedApp: 1}});
 });
 

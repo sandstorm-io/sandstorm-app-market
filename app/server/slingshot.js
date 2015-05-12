@@ -1,7 +1,7 @@
 if (Meteor.settings.AWSAccessKeyId) {
 
   Slingshot.createDirective("spkUploader", Slingshot.S3Storage, {
-    bucket: "sandstorm-spks",
+    bucket: Meteor.settings.spkBucket,
 
     region: "eu-west-1",
 
@@ -20,15 +20,15 @@ if (Meteor.settings.AWSAccessKeyId) {
     key: function (file) {
       //Store file into a directory by the user's username.
       var user = Meteor.users.findOne(this.userId);
-      return file.name;
+      return  file.name + '_' + user.username + '_' + new moment().format("hh-mm-ss_DD-MM-YY");
     }
   });
 
   Slingshot.createDirective("imageUploader", Slingshot.S3Storage, {
-    bucket: "sandstorm-images",
+    bucket: Meteor.settings.imageBucket,
 
     region: "eu-west-1",
-    
+
     acl: "public-read",
 
     authorize: function () {
@@ -44,7 +44,7 @@ if (Meteor.settings.AWSAccessKeyId) {
     key: function (file) {
       //Store file into a directory by the user's username.
       var user = Meteor.users.findOne(this.userId);
-      return file.name;
+      return user.username + ' ' + new moment().format("hh:mm:ss_DD-MM-YY") + ' ' + file.name;
     }
   });
 

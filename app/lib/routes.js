@@ -119,13 +119,28 @@ FlowRouter.route('/appsByMe', {
   }
 });
 
+FlowRouter.route('/upload/edit/:appId', {
+  name: 'edit',
+  subscriptions: function(params) {
+    this.register('all categories',
+      Meteor.subscribe('all categories'));
+    this.register('saved apps',
+      Meteor.subscribe('saved apps'));
+    this.register('this app',
+      Meteor.subscribe('apps by id', params.appId));
+  },
+  action: function() {
+    FlowLayout.render('MasterLayout', {mainSection: 'Edit'});
+  }
+});
+
 FlowRouter.route('/upload', {
   name: 'upload',
   subscriptions: function() {
     this.register('all categories',
       Meteor.subscribe('all categories'));
-    this.register('saved app',
-      Meteor.subscribe('saved app'));
+    this.register('saved apps',
+      Meteor.subscribe('saved apps'));
   },
   action: function() {
     FlowLayout.render('MasterLayout', {mainSection: 'Upload'});

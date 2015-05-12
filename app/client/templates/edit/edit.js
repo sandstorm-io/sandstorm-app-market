@@ -10,7 +10,7 @@ var appProto = function() {
     },
     app = new ReactiveDict();
 
-Template.Upload.onCreated(function() {
+Template.Edit.onCreated(function() {
 
   var tmp = this;
 
@@ -20,6 +20,8 @@ Template.Upload.onCreated(function() {
   tmp.imageUrl = new ReactiveVar(false);
   tmp.screenshotsVis = new ReactiveVar(3);
   tmp.suggestNewGenre = new ReactiveVar(false);
+  tmp.editingFields = new ReactiveVar({});
+  tmp.newVersion = new ReactiveVar(false);
 
   var resetScreenshotsVis = function() {
     tmp.screenshotsVis.set(Math.min(Math.ceil(($(window).width() - 300) / 600), 3));
@@ -39,10 +41,8 @@ Template.Upload.onCreated(function() {
     _.each(categories, function(cat) {
       cat.selected = false;
     });
-    if (category) {
-      category.selected = true;
-      tmp.app.set('category', category.name);
-    }
+    category.selected = true;
+    tmp.app.set('category', category.name);
     tmp.categories.dep.changed();
 
   };
@@ -82,11 +82,17 @@ Template.Upload.onCreated(function() {
       tmp.categories.set(categories);
       tmp.app.set('category', categories.length && categories[0].name);
 
-      // And load the saved app, if present
-      if (Meteor.user() && Meteor.user().savedApp && Meteor.user().savedApp.new) {
-        tmp.app.set(Meteor.user().savedApp.new);
-        tmp.setCategory(tmp.app.get('category'));
+      // And load either the saved version or the actual app,
+      if (Meteor.user() && Meteor.user().savedApp && Meteor.user().savedApp[FlowRouter.getParam('appId')]) {
+        tmp.app.set(Meteor.user().savedApp[FlowRouter.getParam('appId')]);
+      } else {
+        var newVersion = Apps.findOne(FlowRouter.current().params.appId);
+        newVersion.replacesApp = newVersion._id;
+        newVersion.versions = [];
+        Schemas.AppsBase.clean(newVersion);
+        tmp.app.set(newVersion);
       }
+      tmp.setCategory(tmp.app.get('category'));
 
       c.stop();
     }
@@ -106,11 +112,11 @@ Template.Upload.onCreated(function() {
 
 });
 
-Template.Upload.onDestroyed(function() {
+Template.Edit.onDestroyed(function() {
   $(window).off('resize.upload');
 });
 
-Template.Upload.helpers({
+Template.Edit.helpers({
 
   app: function() {
 
@@ -150,11 +156,35 @@ Template.Upload.helpers({
 
     return _.range(Math.max(tmp.screenshotsVis.get() - tmp.app.get('screenshots').length, 1));
 
+  },
+
+  fieldEdit: function(field) {
+
+    return (field in Template.instance().editingFields.get());
+
+  },
+
+  newVersion: function() {
+
+    return Template.instance().newVersion.get();
+
   }
 
 });
 
-Template.Upload.events({
+Template.Edit.events({
+
+  'click div[data-alt-field]': function(evt, tmp) {
+
+    var fields = tmp.editingFields.get(),
+        thisField = $(evt.currentTarget).data('alt-field');
+    fields[thisField] = true;
+    tmp.editingFields.set(fields);
+    Tracker.afterFlush(function() {
+      tmp.$('[data-field="' + thisField + '"]').focus();
+    });
+
+  },
 
   'click [data-action="choose-file"]': function(evt, tmp) {
 
@@ -297,14 +327,21 @@ Template.Upload.events({
 
   },
 
+  'click [data-action="update-version"]': function(evt, tmp) {
+
+    tmp.newVersion.set(true);
+
+  },
+
   'change [data-action="update-version"]': function(evt, tmp) {
 
     var versions = tmp.app.get('versions'),
-        $el = $(evt.currentTarget);
-    tmp.app.set('versions', {
-      dateTime: new Date(),
-      number: $el.val()
-    });
+        newVersion = {
+          dateTime: new Date(),
+          number: tmp.$('[data-version-field="number"]').val(),
+          changes: tmp.$('[data-version-field="changes"]').val()
+        };
+    tmp.app.set('versions', [newVersion]);
 
   },
 
@@ -329,10 +366,14 @@ Template.Upload.events({
 
   'click [data-action="submit-app"]': function(evt, tmp) {
 
-    Meteor.call('user/submit-app', tmp.app.all(), function(err, res) {
-      if (err) console.log(err);
-      else if (res) FlowRouter.go('appsByMe');
-    });
+    if (tmp.app.get('versions').length > 0) {
+      Meteor.call('user/submit-update', tmp.app.all(), function(err, res) {
+        if (err) console.log(err);
+        else if (res) FlowRouter.go('appsByMe');
+      });
+    } else {
+      console.log('No new version specified');
+    }
 
   },
 
@@ -344,10 +385,34 @@ Template.Upload.events({
 
   },
 
+  'click [data-action="discard-edits"]': function(evt, tmp) {
+
+    Meteor.call('user/delete-saved-app', tmp.app.get('replacesApp'), function(err, res) {
+      if (err) {
+        console.log(err);
+      }
+      else {
+        tmp.clearApp();
+        var newVersion = Apps.findOne(FlowRouter.current().params.appId);
+        newVersion.replacesApp = newVersion._id;
+        newVersion.versions = [];
+        Schemas.AppsBase.clean(newVersion);
+        tmp.app.set(newVersion);
+        tmp.setCategory(tmp.app.get('category'));
+      }
+    });
+
+  },
+
   'click [data-action="delete-app"]': function(evt, tmp) {
 
     // TODO: Add modal confirm
-    tmp.clearApp();
+    Meteor.call('user/delete-app', tmp.app.get('replacesApp'), function(err, res) {
+      if (err) console.log(err);
+      else {
+        tmp.clearApp();
+      }     
+    });
 
   },
 
