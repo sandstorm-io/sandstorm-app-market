@@ -1,7 +1,7 @@
 if (Meteor.settings.AWSAccessKeyId) {
 
   Slingshot.createDirective("spkUploader", Slingshot.S3Storage, {
-    bucket: "sandstorm-spks",
+    bucket: Meteor.settings.spkBucket,
 
     region: "eu-west-1",
 
@@ -25,10 +25,10 @@ if (Meteor.settings.AWSAccessKeyId) {
   });
 
   Slingshot.createDirective("imageUploader", Slingshot.S3Storage, {
-    bucket: "sandstorm-images",
+    bucket: Meteor.settings.imageBucket,
 
     region: "eu-west-1",
-    
+
     acl: "public-read",
 
     authorize: function () {
