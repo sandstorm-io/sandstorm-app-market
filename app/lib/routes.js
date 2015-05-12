@@ -147,6 +147,19 @@ FlowRouter.route('/upload', {
   }
 });
 
+FlowRouter.route('/admin', {
+  name: 'admin',
+  subscriptions: function() {
+    this.register('apps all',
+      Meteor.subscribe('apps all'));
+  },
+  action: function() {
+    if (Roles.userIsInRole(Meteor.userId(), 'admin'))
+      FlowLayout.render('MasterLayout', {mainSection: 'Admin'});
+    else FlowRouter.go('appMarket');
+  }
+});
+
 FlowRouter.route('/serviceConfigure', {
   name: 'serviceConfiguration',
   action: function() {

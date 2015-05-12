@@ -163,6 +163,14 @@ var helpers = {
 
   },
 
+  // ADMIN HELPERS
+
+  isAdmin: function() {
+
+    return Roles.userIsInRole(Meteor.userId(), 'admin');
+
+  },
+
   // DEBUGGING HELPERS
 
   logThis: function() {

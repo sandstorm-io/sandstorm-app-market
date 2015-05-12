@@ -38,7 +38,22 @@ Meteor.publish('apps by me', function () {
 });
 
 Meteor.publish('apps all', function() {
-  return Apps.find();
+
+  if (Roles.userIsInRole(this.userId, 'admin')) {
+
+    var appsC = Apps.find(),
+        userIds = _.uniq(appsC.map(function(app) { return app.author; }));
+    return [
+      Apps.find(),
+      Meteor.users.find({_id: {$in: userIds}})
+    ];
+
+  } else {
+
+    return this.stop();
+
+  }
+  
 });
 
 Meteor.publish('apps by author', function(authorId) {

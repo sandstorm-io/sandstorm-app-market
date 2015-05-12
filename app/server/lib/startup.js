@@ -6,6 +6,7 @@ Meteor.publish(null, function(){
     appReviews: 1,
     autoupdateApps: 1,
     appsByMe: 1,
-    services: 1
+    services: 1,
+    roles: 1
   }});
 });
