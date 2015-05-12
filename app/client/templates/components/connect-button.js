@@ -13,7 +13,7 @@ Template.connectButton.helpers({
 Template.connectButton.events({
 
   'click [data-action="connect"]': function() {
-
+    console.log('Clicked OK')
     this.login && this.login.apply(this);
 
   }
