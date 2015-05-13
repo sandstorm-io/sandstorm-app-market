@@ -82,6 +82,30 @@
 
   }
 
+  &.color {
+    background-color: #ffffff;
+    border-color: #cdc7d3;
+
+    i { display: inline-block; }
+
+    &.green {
+      color: #4b9441;
+      i { color: #4b9441; }
+    }
+    &.purple {
+      color: #a965ba;
+      i { color: #a965ba; }
+    }
+    &.yellow {
+      color: #e5a045;
+      i { color: #e5a045; }
+    }
+    &.black {
+      color: #424242;
+      i { color: #424242; }
+    }
+  }
+
   &.active {
     @extend .sandstorm-button.secondary;
     z-index: 1;

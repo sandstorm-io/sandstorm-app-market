@@ -4,6 +4,7 @@
 
   width: 100%;
   max-width: 125rem;
+  font-size: 1.5rem;
   cursor: initial;
 
   .app-item-inner {
@@ -63,6 +64,8 @@
       .divider {
 
         border-bottom: 1px solid #cfb5d6;
+        margin-top: 0;
+        margin-bottom: 0;
 
       }
 
@@ -121,19 +124,24 @@
 
         .key {
 
-          float: left;
-          clear: left;
+          display: inline-block;
           width: 7.5rem;
-          font-size: 1.5rem;
+          font-size: 1.3rem;
+          line-height: 1.3rem;
+          height: 1.3rem;
           color: #7d627c;
 
         }
 
         .value {
 
-          overflow: hidden;
+          display: inline-block;
+          width: calc(100% - 7.5rem);
+          white-space: nowrap;
           text-overflow: ellipsis;
-          font-size: 1.5rem;
+          font-size: 1.3rem;
+          line-height: 1.3rem;
+          height: 1.3rem;
           color: #7d627c;
           white-space: nowrap;
 

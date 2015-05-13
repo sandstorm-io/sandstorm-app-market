@@ -13,15 +13,19 @@
 
     .app-item-inner {
 
-      .abs-right {
+      .app-author-full-width,
+      .app-name-full-width {
 
-        position: absolute;
-        top: 2rem;
-        right: 2rem;
+        width: 100%;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
 
-        .sandstorm-button.neutral {
-          background-color: #ffffff;
-        }
+      }
+
+      .pad-top-to-align {
+
+        padding-top: 0.8rem;
 
       }
 
@@ -59,7 +63,7 @@
         width: 100%;
         display: block;
         resize: none;
-        height: 50%;
+        height: 65%;
         box-sizing: border-box;
         box-shadow: none;
         background: #ffffff;
@@ -79,8 +83,8 @@
     .button-block {
 
       position: absolute;
-      bottom: 1rem;
-      right: 1rem;
+      bottom: $app-container-padding-bottom;
+      right: $app-container-padding-lr;
       max-width: calc(100% - 2rem);
 
     }
