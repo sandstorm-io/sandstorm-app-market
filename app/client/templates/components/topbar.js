@@ -44,7 +44,7 @@ Template.Topbar.helpers({
 
   extraGenres: function() {
 
-    var genres = Genres.getAll(),
+    var genres = Genres.getAll({where: {showSummary: true}}),
         template = Template.instance();
 
     return genres.slice(template.genreCount.get());
