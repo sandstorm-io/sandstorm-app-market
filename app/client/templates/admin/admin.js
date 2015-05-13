@@ -6,7 +6,10 @@ var adminFilters = [
     tooltip: 'New Apps to Review',
     color: 'purple',
     filter: function() {
-      return {};
+      return {
+        approved: 1,
+        replacesApp: {$exists: false}
+      };
     }
   },
 
@@ -16,7 +19,9 @@ var adminFilters = [
     tooltip: 'Revisions to Review',
     color: 'light-purple',
     filter: function() {
-      return {};
+      return {
+        approved: 2
+      };
     }
   },
 
@@ -26,7 +31,10 @@ var adminFilters = [
     tooltip: 'Updated Apps',
     color: 'blue',
     filter: function() {
-      return {};
+      return {
+        approved: 1,
+        replacesApp: {$exists: false}
+      };
     }
   },
 
@@ -36,7 +44,7 @@ var adminFilters = [
     tooltip: 'Flagged',
     color: 'yellow',
     filter: function() {
-      return {};
+      return { flags: {$exists: true} };
     }
   },
 
@@ -46,7 +54,9 @@ var adminFilters = [
     tooltip: 'Approved',
     color: 'green',
     filter: function() {
-      return {};
+      return {
+        approved: 0
+      };
     }
   },
 
@@ -56,7 +66,9 @@ var adminFilters = [
     tooltip: 'Rejected',
     color: 'black',
     filter: function() {
-      return {};
+      return {
+        approved: 3
+      };
     }
   }
 
@@ -67,6 +79,9 @@ Template.Admin.onCreated(function() {
   var tmp = this;
 
   tmp.filter = new ReactiveVar(0);
+  tmp.filter.run = function(index) {
+    return adminFilters[_.isNumber(index) ? index : this.get()].filter.call(tmp);
+  };
 
 });
 
@@ -80,7 +95,10 @@ Template.adminFilters.helpers({
 
   count: function() {
 
-    return 15;
+    var filterObj = Template.instance().get('filter'),
+        filter = filterObj.run(this.index);
+
+    return Apps.find(filter).count();
 
   },
 
@@ -108,7 +126,10 @@ Template.chronology.helpers({
 
     var apps = {};
 
-    Apps.find({}).forEach(function(app) {
+    var filterObj = Template.instance().get('filter'),
+        filter = filterObj.run();
+
+    Apps.find(filter).forEach(function(app) {
       var sod = new moment(app.updatedAt).startOf('day'),
           sodString = sod.format('DDMMYY');
       if (sodString in apps) apps[sodString].apps.push(app);
@@ -118,5 +139,5 @@ Template.chronology.helpers({
     return _.values(apps);
 
   }
-  
+
 });

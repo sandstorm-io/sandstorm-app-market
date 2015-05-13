@@ -247,6 +247,59 @@ Meteor.methods({
 
     return true;
 
+  },
+
+  'apps/approve': function(appId) {
+
+    if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Can only be executed by admin user');
+    var app = Apps.findOne(appId);
+    if (!app) throw new Meteor.Error('No app matching id ' + appId);
+    return Apps.update(appId, {$set: {approved: 0}});
+
+  },
+
+  'apps/request-revision': function(appId) {
+
+    if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Can only be executed by admin user');
+    var app = Apps.findOne(appId);
+    if (!app) throw new Meteor.Error('No app matching id ' + appId);
+    return Apps.update(appId, {$set: {approved: 2}});
+
+  },
+
+  'apps/flag': function(appId) {
+
+    if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Can only be executed by admin user');
+    var app = Apps.findOne(appId);
+    if (!app) throw new Meteor.Error('No app matching id ' + appId);
+
+  },
+
+  'apps/reject': function(appId) {
+
+    if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Can only be executed by admin user');
+    var app = Apps.findOne(appId);
+    if (!app) throw new Meteor.Error('No app matching id ' + appId);
+    return Apps.update(appId, {$set: {approved: 3}});
+
+  },
+
+  'admin/removeAllApps': function() {
+
+    if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Can only be executed by admin user');
+    Apps.remove({});
+
+  },
+
+  'admin/seedApps': function(n) {
+
+    check(n, Number);
+    check(n, Match.Where(function(x) { return x < 500; }));
+
+    while (Apps.find().count() < n)
+      App.fakeApp();
+
   }
+
 
 });

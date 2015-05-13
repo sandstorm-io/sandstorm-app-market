@@ -1,75 +1,60 @@
 var retricon = Meteor.npmRequire('retricon');
 
-SyncedCron.add({
-  name: 'Generate fake apps',
-  schedule: function(parser) {
-    return parser.text('every 5 seconds');
-  },
-  job: function() {
-    var categories = _.pluck(Categories.find({}, {fields: {name: 1}}).fetch(), 'name'),
-        users = _.pluck(Meteor.users.find({}, {fields: {_id: 1}}).fetch(), '_id');
+// SyncedCron.add({
+//   name: 'Generate fake apps',
+//   schedule: function(parser) {
+//     return parser.text('every 5 seconds');
+//   },
+//   job: function() {
+//     if (Apps.find().count() < 200)
+//       return App.fakeApp();
+//     else return 'full';
+//   }
+// });
 
-    if (Apps.find().count() < 200)
-      return Apps.insert({
-        name: faker.company.bs(),
-        category: _.sample(categories),
-        description: faker.lorem.paragraph(),
-        image: retricon(Random.id(), 50, 0).toDataURL(),
-        approved: 1,
-        author: _.sample(users),
-        versions: [{
-          number: '0.0.1',
-          dateTime: new Date()
-        }],
-        spkLink: 'http://exampleurl.com/spkfile.spk'
-      });
-    else return 'full';
-  }
-});
+// SyncedCron.add({
+//   name: 'Approve/Reject fake apps',
+//   schedule: function(parser) {
+//     return parser.text('every 2 minutes');
+//   },
+//   job: function() {
+//
+//     Apps.find({approved: 1}).forEach(function(app) {
+//
+//       Apps.update(app._id, {$set: {approved: _.sample([0, 0, 0, 2, 3])}});
+//
+//     });
+//
+//   }
+// });
 
-SyncedCron.add({
-  name: 'Approve/Reject fake apps',
-  schedule: function(parser) {
-    return parser.text('every 2 minutes');
-  },
-  job: function() {
-
-    Apps.find({approved: 1}).forEach(function(app) {
-
-      Apps.update(app._id, {$set: {approved: _.sample([0, 0, 0, 2, 3])}});
-
-    });
-
-  }
-});
-
-SyncedCron.add({
-  name: 'Update fake apps',
-  schedule: function(parser) {
-    return parser.text('every 3 minutes');
-  },
-  job: function() {
-
-    _.each(Meteor.server.sessions, function(session) {
-
-      var user = Meteor.users.findOne(session.userId);
-      if (!user || _.isEmpty(user.installedApps)) return false;
-
-      var app = Apps.findOne(_.sample(_.keys(user.installedApps)));
-
-      if (!app) return false;
-
-      Apps.update(app._id, {$push: {
-        versions: {
-          number: newVersion(_.last(app.versions).number),
-          changes: faker.lorem.sentences(2),
-          dateTime: new Date()
-        }
-      }});
-
-    });
-  }
-});
+// SyncedCron.add({
+//   name: 'Update fake apps',
+//   schedule: function(parser) {
+//     return parser.text('every 3 minutes');
+//   },
+//   job: function() {
+//
+//     _.each(Meteor.server.sessions, function(session) {
+//
+//       var user = Meteor.users.findOne(session.userId);
+//       if (!user || _.isEmpty(user.installedApps)) return false;
+//
+//       var app = Apps.findOne(_.sample(_.keys(user.installedApps)));
+//
+//       if (!app) return false;
+//
+//       Apps.update(app._id, {$push: {
+//         versions: {
+//           number: newVersion(_.last(app.versions).number),
+//           changes: faker.lorem.sentences(2),
+//           dateTime: new Date()
+//         }
+//       }});
+//
+//     });
+//   }
+// });
 
 SyncedCron.add({
   name: 'Autoupdate apps',
@@ -110,3 +95,24 @@ function autoupdateApps() {
     });
 
 }
+
+App.fakeApp = function() {
+
+  var categories = _.pluck(Categories.find({}, {fields: {name: 1}}).fetch(), 'name'),
+      users = _.pluck(Meteor.users.find({}, {fields: {_id: 1}}).fetch(), '_id');
+
+  return Apps.insert({
+    name: faker.company.bs(),
+    category: _.sample(categories),
+    description: faker.lorem.paragraph(),
+    image: retricon(Random.id(), 50, 0).toDataURL(),
+    approved: 1,
+    author: _.sample(users),
+    versions: [{
+      number: '0.0.1',
+      dateTime: new Date()
+    }],
+    spkLink: 'http://exampleurl.com/spkfile.spk'
+  });
+
+};
