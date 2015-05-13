@@ -4,6 +4,22 @@
 .admin-section {
 
   @extend .menu-spacer;
+  @extend .pad-right;
+
+  .divider {
+
+    border-bottom: 1px solid $update-app-divider;
+    display: block;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+
+  }
+
+  .date {
+
+    font-size: 1.6rem;
+
+  }
 
 }
 
@@ -18,6 +34,15 @@
   padding-left: 0.75rem;
   cursor: pointer;
   margin-right: 1rem;
+
+  // THIS IS THE TOOLTIP
+  &.simptip-position-top:after {
+    background-color: #ffffff;
+    color: #5b5b5b;
+  }
+  &.simptip-position-top:before {
+    border-top-color: #ffffff;
+  }
 
   &:last-child {
     margin-right: 0;

@@ -1,0 +1,118 @@
+<template name="appAdminItem">
+
+  <div class="app-item-container full-width admin">
+
+    {{#with app}}
+
+    <div class="left-half">
+
+      <div class="app-item-inner">
+
+        <div class="image-section">
+
+          <div class="image-surround-full-width">
+
+            <div class="image" style="background-image: url('{{imageUrl image}}');"></div>
+
+          </div>
+
+          {{#with approvalState}}
+          <div class="message-box {{messageClass}}"><i class="{{iconClass}}"></i> {{message}}</div>
+          {{/with}}
+
+        </div>
+
+        <div class="text-section">
+
+          <div class="top-section clearfix">
+
+            <div class="left-float">
+
+              <div class="app-name-full-width">{{name}}</div>
+
+              <div class="app-author-full-width">{{getUsername author}}</div>
+
+            </div>
+
+            <div class="abs-right">
+
+              <div class="edit-button">
+                <a class="sandstorm-button neutral small" href="/upload/edit/{{_id}}">
+                  <i class="icon-edit"></i>
+                  <span class="text">EDIT</span>
+                </a>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="bottom-section clearfix">
+
+            <div class="left-float details-block">
+
+              <div class="date">{{dateFormat createdAt 'MMMM DD, YYYY'}}</div>
+              <div class="genre">{{category}}</div>
+
+              <div class="divider"></div>
+
+              <div class="key">Ported by:</div><div class="value">{{getUsername author}}&nbsp;</div>
+              <div class="key">License:</div><div class="value">{{verboseNone license}}&nbsp;</div>
+              <div class="key">Code:</div><div class="value">{{verboseNone codeLink}}&nbsp;</div>
+              <div class="key">Version:</div><div class="value">{{verboseNone getLatestVersion}}&nbsp;</div>
+
+            </div>
+
+            <div class="rem-space-float">
+
+              <div class="app-description">
+                {{{description}}}
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="right-half">
+
+      <div class="app-item-inner">
+
+        <div class="label">Notes to the Author:</div>
+        <textarea class="admin-notes" data-field="admin-notes">{{adminNotes}}</textarea>
+
+        <div class="button-block">
+
+          <div class="sandstorm-button neutral" data-action="approve">
+            <i class="icon-approved_light"></i>
+            <div class="text">Approve</div>
+          </div>
+          <div class="sandstorm-button neutral" data-action="request-revision">
+            <i class="icon-revisions"></i>
+            <div class="text">Request Revision</div>
+          </div>
+          <div class="sandstorm-button neutral" data-action="flag">
+            <i class="icon-flagged_light"></i>
+            <div class="text">Flag</div>
+          </div>
+          <div class="sandstorm-button neutral" data-action="reject">
+            <i class="icon-rejected_light"></i>
+            <div class="text">Reject</div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    {{/with}}
+
+  </div>
+
+</template>

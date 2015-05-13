@@ -173,9 +173,9 @@ var helpers = {
 
   // DEBUGGING HELPERS
 
-  logThis: function() {
+  logThis: function(varName) {
 
-    console.log(this);
+    console.log(varName ? this[varName] : this);
 
   },
 

@@ -12,22 +12,48 @@
 
   <div class="admin-section">
 
-    {{#each adminFilters}}
+    {{> adminFilters}}
 
-      <div class="admin-filter {{color}} {{active}}" data-action="select-filter">
+    <div class="divider"></div>
 
-        <i class="{{icon}}"></i>
-        <div class="text">
-          {{text}}
-        </div>
-        <div class="count">
-          {{count}}
-        </div>
+    {{> chronology}}
 
+  </div>
+
+</template>
+
+<template name="adminFilters">
+
+  {{#each adminFilters}}
+
+    <div class="admin-filter simptip-position-top simptip-fade {{color}} {{active}}" data-action="select-filter" data-tooltip={{tooltip}}>
+
+      <i class="{{icon}}"></i>
+      <div class="text">
+        {{text}}
       </div>
+      <div class="count">
+        {{count}}
+      </div>
+
+    </div>
+
+  {{/each}}
+
+</template>
+
+<template name="chronology">
+
+  {{#each chronology}}
+
+    <div class="date">{{dateFormat date 'MMMM.DD.YYYY'}}</div>
+
+    {{#each this.apps}}
+
+      {{>appAdminItem app=this}}
 
     {{/each}}
 
-  </div>
+  {{/each}}
 
 </template>
