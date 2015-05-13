@@ -1,3 +1,4 @@
 .meteor/local
 .meteor/meteorite
 app/settings.json
+app/npm-debug.log
