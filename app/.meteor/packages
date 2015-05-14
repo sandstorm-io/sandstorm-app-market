@@ -8,7 +8,6 @@ meteor-platform
 fourseven:scss
 wolves:bourbon
 msavin:mongol
-aldeed:collection2
 meteorhacks:flow-router
 meteorhacks:flow-layout
 meteorhacks:fast-render
@@ -41,3 +40,4 @@ rcy:nouislider
 
 npm-container
 aldeed:template-extension
+aldeed:collection2

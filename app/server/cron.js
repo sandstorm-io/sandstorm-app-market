@@ -96,6 +96,8 @@ function autoupdateApps() {
 
 }
 
+function oldDate() { var d = new Date(); d -= Math.random() * 1000 * 60 * 60 * 24 * 7; return new Date(d); }
+
 App.fakeApp = function() {
 
   var categories = _.pluck(Categories.find({}, {fields: {name: 1}}).fetch(), 'name'),
@@ -112,6 +114,7 @@ App.fakeApp = function() {
       number: '0.0.1',
       dateTime: new Date()
     }],
+    updatedAt: oldDate(),
     spkLink: 'http://exampleurl.com/spkfile.spk'
   });
 

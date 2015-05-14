@@ -181,13 +181,13 @@ Template.chronology.helpers({
     if (searchTerm) _.extend(filter, {name: {$regex: searchTerm} });
 
     Apps.find(filter).forEach(function(app) {
-      var sod = new moment(app.updatedAt).startOf('day'),
+      var sod = new moment(app.lastUpdated).startOf('day'),
           sodString = sod.format('DDMMYY');
       if (sodString in apps) apps[sodString].apps.push(app);
       else apps[sodString] = {apps: [app], date: sod.toDate()};
     });
 
-    return _.values(apps);
+    return _.sortBy(_.values(apps), 'date');
 
   }
 

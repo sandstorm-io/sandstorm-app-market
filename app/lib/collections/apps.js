@@ -122,9 +122,14 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
   },
   lastUpdated: {
     type: Date,
-    autoValue: function() {
+    autoValue: function(doc) {
+      console.log(this, doc);
       if (this.isUpdate && this.userId && !Roles.userIsInRole(this.userId, 'admin')) {
         return new Date();
+      } else if (this.isFromTrustedCode) {
+        return this.value;
+      } else {
+        this.unset();
       }
     },
     // denyInsert: true,
@@ -132,9 +137,14 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
   },
   lastUpdatedAdmin: {
     type: Date,
-    autoValue: function() {
+    autoValue: function(doc) {
+      console.log(this, doc);
       if (this.isUpdate && this.userId && Roles.userIsInRole(this.userId, 'admin')) {
         return new Date();
+      } else if (this.isFromTrustedCode) {
+        return this.value;
+      } else {
+        this.unset();
       }
     },
     // denyInsert: true,
