@@ -88,6 +88,8 @@ Template.Admin.onCreated(function() {
   tmp.filters = adminFilters;
   tmp.filterInd = new ReactiveVar('new');
   tmp.filterObj = new ReactiveVar(adminFilters[tmp.filterInd.get()]);
+  tmp.searchOpen = new ReactiveVar(false);
+  tmp.searchTerm = new ReactiveVar();
 
   tmp.autorun(function() {
     tmp.filterObj.set(adminFilters[tmp.filterInd.get()]);
@@ -126,6 +128,12 @@ Template.adminFilters.helpers({
 
     return Template.instance().get('filterObj').get();
 
+  },
+
+  searchOpen: function() {
+
+    return Template.instance().get('searchOpen').get();
+
   }
 
 });
@@ -135,6 +143,26 @@ Template.adminFilters.events({
   'click [data-action="select-filter"]': function(evt, tmp) {
 
     tmp.get('filterInd').set(this.index);
+    tmp.get('searchTerm').set(null);
+    tmp.get('searchOpen').set(false);
+
+  },
+
+  'click [data-action="search"]': function(evt, tmp) {
+
+    tmp.get('searchOpen').set(true);
+    Tracker.afterFlush(function() {
+      tmp.$('[data-field="search-term"]').focus();
+    });
+
+  },
+
+  'keyup [data-field="search-term"]': function(evt, tmp) {
+
+    if (evt.keyCode !== 13) return false;
+    else {
+      tmp.get('searchTerm').set($(evt.currentTarget).val());
+    }
 
   }
 
@@ -144,10 +172,13 @@ Template.chronology.helpers({
 
   chronology: function() {
 
-    var apps = {};
+    var apps = {},
+        tmp = Template.instance(),
+        filterObj = tmp.get('filterObj'),
+        filter = filterObj.run(),
+        searchTerm = tmp.get('searchTerm').get();
 
-    var filterObj = Template.instance().get('filterObj'),
-        filter = filterObj.run();
+    if (searchTerm) _.extend(filter, {name: {$regex: searchTerm} });
 
     Apps.find(filter).forEach(function(app) {
       var sod = new moment(app.updatedAt).startOf('day'),

@@ -26,7 +26,7 @@
 
   {{#each adminFilters}}
 
-    <div class="admin-filter simptip-position-top simptip-fade {{color}} {{active}}" data-action="select-filter" data-tooltip={{tooltip}}>
+    <div class="admin-filter {{#if tooltip}}simptip-position-top simptip-fade{{/if}} {{color}} {{active}}" data-action="select-filter" data-tooltip={{tooltip}}>
 
       <i class="{{icon}}"></i>
       <div class="text">
@@ -44,6 +44,7 @@
 
     <div class="right-float">
       <div class="sandstorm-button neutral big-icon" data-action="search">
+        {{#if searchOpen}}<input type="text" class="button-search" data-field="search-term" />{{/if}}
         <i class="icon-search"></i>
       </div>
     </div>
