@@ -25,7 +25,7 @@
     font-size: 1.2em;
     margin-right: 0.5rem;
     display: none;
-    vertical-align: middle;
+    vertical-align: text-bottom;
 
     &:last-child {
       margin-left: 0.5rem;
@@ -159,7 +159,7 @@
   .button-search {
 
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: super;
     box-shadow: none;
     background: none;
     border: none;
