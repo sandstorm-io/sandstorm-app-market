@@ -123,7 +123,17 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
   lastUpdated: {
     type: Date,
     autoValue: function() {
-      if (this.isUpdate) {
+      if (this.isUpdate && this.userId && !Roles.userIsInRole(this.userId, 'admin')) {
+        return new Date();
+      }
+    },
+    // denyInsert: true,
+    optional: true
+  },
+  lastUpdatedAdmin: {
+    type: Date,
+    autoValue: function() {
+      if (this.isUpdate && this.userId && Roles.userIsInRole(this.userId, 'admin')) {
         return new Date();
       }
     },
