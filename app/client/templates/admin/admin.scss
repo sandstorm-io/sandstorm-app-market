@@ -104,6 +104,11 @@ body.admin {
     padding-right: 0.75rem;
   }
 
+  &.square {
+    border-radius: 0;
+    .count {border-radius: 0}
+  }
+
 
   // DIFFERENT COLOUR-SCHEMES
   &.purple {
@@ -251,6 +256,33 @@ body.admin {
 
       .count {
         border-left: 1px solid #fcfcfc;
+      }
+
+    }
+  }
+
+  &.grey {
+    color: #6d627c;
+    background-color: #fcfcfc;
+
+    .count {
+      color: #6d627c;
+      background-color: #fcfcfc;
+      border-left: none;
+    }
+
+    &.active {
+      color: #ffffff;
+      background-color: #6d627c;
+
+      i {
+        color: #fcfcfc;
+      }
+
+      .count {
+        color: #ffffff;
+        background-color: #6d627c;
+        border-left: none;
       }
 
     }

@@ -6,7 +6,7 @@
 
 
 Meteor.publish('categories', function () {
-  var allCats = _.pluck(Categories.find({}, {fields: {name: 1}}).fetch(), 'name'),
+  var allCats = _.pluck(Categories.find({suggested: {$ne: true}}, {fields: {name: 1}}).fetch(), 'name'),
       popCats = _.filter(allCats, function(catId) {
         return Apps.findOne({category: catId});
       });
@@ -14,7 +14,14 @@ Meteor.publish('categories', function () {
 });
 
 Meteor.publish('all categories', function () {
-  return Categories.find({});
+  return Categories.find({suggested: {$ne: true}});
+});
+
+Meteor.publish('suggested categories', function() {
+
+  if (Roles.userIsInRole(this.userId, 'admin')) return Categories.find({suggested: true});
+  else return this.stop();
+
 });
 
 Meteor.publish('apps by genre', function (name) {
@@ -53,7 +60,7 @@ Meteor.publish('apps all', function() {
     return this.stop();
 
   }
-  
+
 });
 
 Meteor.publish('apps by author', function(authorId) {

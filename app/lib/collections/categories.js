@@ -18,6 +18,12 @@ Schemas.Categories = new SimpleSchema({
     label: "Show Category in Aggregted Views",
     index: true,
     defaultValue: true
+  },
+  suggested: {
+    type: Boolean,
+    label: "Suggested by a User but not yet approved",
+    index: true,
+    optional: true
   }
 });
 

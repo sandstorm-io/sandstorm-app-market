@@ -168,6 +168,10 @@ FlowRouter.route('/admin', {
   subscriptions: function() {
     this.register('apps all',
       Meteor.subscribe('apps all'));
+    this.register('all categories',
+      Meteor.subscribe('all categories'));
+    this.register('suggested categories',
+      Meteor.subscribe('suggested categories'));
   },
   action: function() {
     if (!Roles.userIsInRole(Meteor.userId(), 'admin')) FlowRouter.go('appMarket');

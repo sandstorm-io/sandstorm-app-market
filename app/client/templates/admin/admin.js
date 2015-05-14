@@ -130,6 +130,12 @@ Template.adminFilters.helpers({
 
   },
 
+  suggestedGenresCount: function() {
+
+    return Categories.find({suggested: true}).count();
+
+  },
+
   searchOpen: function() {
 
     return Template.instance().get('searchOpen').get();
