@@ -31,6 +31,15 @@
       margin-left: 0.5rem;
       margin-right: 0;
     }
+    &:only-child {
+      margin-left: 0;
+    }
+  }
+
+  &.big-icon {
+    i {
+      font-size: 1.6em;
+    }
   }
 
   .text {

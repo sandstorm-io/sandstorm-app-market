@@ -40,6 +40,27 @@
 
   {{/each}}
 
+  <div class="filter-description-row clearfix">
+
+    <div class="right-float">
+      <div class="sandstorm-button neutral big-icon" data-action="search">
+        <i class="icon-search"></i>
+      </div>
+    </div>
+
+    {{#with liveFilter}}
+    <div class="filter-description">
+      {{#if this.tooltip}}
+        <i class="{{this.icon}}"></i>
+        <div class="text">
+          {{this.tooltip}}
+        </div>
+      {{/if}}
+    </div>
+    {{/with}}
+
+  </div>
+
 </template>
 
 <template name="chronology">

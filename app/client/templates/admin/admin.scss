@@ -15,6 +15,35 @@ body.admin {
   @extend .menu-spacer;
   @extend .pad-right;
 
+  .filter-description-row {
+
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+
+    .filter-description{
+
+      display: inline-block;
+      color: #6d627c;
+      font-weight: 300;
+      clear: none;
+
+      i {
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 2.5rem;
+      }
+
+      .text {
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 1.8rem;
+        margin-left: 2rem;
+      }
+
+    }
+
+  }
+
   .divider {
 
     border-bottom: 1px solid $update-app-divider;

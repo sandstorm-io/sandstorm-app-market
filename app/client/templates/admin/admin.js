@@ -3,7 +3,7 @@ adminFilters = {
   new: {
     icon: 'icon-star',
     text: 'New Apps to Review',
-    tooltip: 'New Apps to Review',
+    tooltip: '',
     color: 'purple',
     filter: {
       approved: 1,
@@ -17,7 +17,7 @@ adminFilters = {
   'request-revision': {
     icon: 'icon-revisions',
     text: 'Revisions to Review',
-    tooltip: 'Revisions to Review',
+    tooltip: 'These authors have made revisions in response to Admin requests',
     color: 'light-purple',
     filter: {
       approved: 2
@@ -30,7 +30,7 @@ adminFilters = {
   updated: {
     icon: 'icon-updated',
     text: 'Updated Apps',
-    tooltip: 'Updated Apps',
+    tooltip: 'These apps have a new release, live in the marketplace - check them out some time!',
     color: 'blue',
     filter: {
       approved: 1,
@@ -44,7 +44,7 @@ adminFilters = {
   flagged: {
     icon: 'icon-flagged_light',
     text: 'Flagged',
-    tooltip: 'Flagged',
+    tooltip: 'A User has flagged these apps for your attention',
     color: 'yellow',
     filter: {
       flags: {$exists: true}
@@ -57,7 +57,7 @@ adminFilters = {
   approved: {
     icon: 'icon-approved_light',
     text: 'Approved',
-    tooltip: 'Approved',
+    tooltip: 'These apps are live on the App Market',
     color: 'green',
     filter: {
       approved: 0
@@ -69,7 +69,7 @@ adminFilters = {
   rejected: {
     icon: 'icon-rejected_light',
     text: 'Rejected',
-    tooltip: 'Rejected',
+    tooltip: 'These apps have been rejected from the App Market',
     color: 'black',
     filter: {
       approved: 3
@@ -119,6 +119,12 @@ Template.adminFilters.helpers({
   active: function() {
 
     return this.index === Template.instance().get('filterInd').get() ? 'active' : '';
+
+  },
+
+  liveFilter: function() {
+
+    return Template.instance().get('filterObj').get();
 
   }
 
