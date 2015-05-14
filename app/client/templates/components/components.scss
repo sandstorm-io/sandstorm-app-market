@@ -91,18 +91,42 @@
     &.green {
       color: #4b9441;
       i { color: #4b9441; }
+      &.active {
+        background-color: #4b9441;
+        border-color: #4b9441;
+        color: #ffffff;
+        i { color: #ffffff; }
+      }
     }
     &.purple {
       color: #a965ba;
       i { color: #a965ba; }
+      &.active {
+        background-color: #a965ba;
+        border-color: #a965ba;
+        color: #ffffff;
+        i { color: #ffffff; }
+      }
     }
     &.yellow {
       color: #e5a045;
       i { color: #e5a045; }
+      &.active {
+        background-color: #e5a045;
+        border-color: #e5a045;
+        color: #ffffff;
+        i { color: #ffffff; }
+      }
     }
     &.black {
       color: #424242;
       i { color: #424242; }
+      &.active {
+        background-color: #424242;
+        border-color: #424242;
+        color: #ffffff;
+        i { color: #ffffff; }
+      }
     }
   }
 

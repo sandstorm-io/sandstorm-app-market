@@ -90,19 +90,19 @@
 
         <div class="button-block">
 
-          <div class="sandstorm-button color green" data-action="approve">
+          <div class="sandstorm-button color green {{filter 'approved'}}" data-action="approve">
             <i class="icon-approved_light"></i>
             <div class="text">Approve</div>
           </div>
-          <div class="sandstorm-button color purple" data-action="request-revision">
+          <div class="sandstorm-button color purple {{filter 'request-revision'}}" data-action="request-revision">
             <i class="icon-revisions"></i>
             <div class="text">Request Revision</div>
           </div>
-          <div class="sandstorm-button color yellow" data-action="flag">
+          <div class="sandstorm-button color yellow {{filter 'flagged'}}" data-action="flag">
             <i class="icon-flagged_light"></i>
             <div class="text">Flag</div>
           </div>
-          <div class="sandstorm-button color black" data-action="reject">
+          <div class="sandstorm-button color black {{filter 'rejected'}}" data-action="reject">
             <i class="icon-rejected_light"></i>
             <div class="text">Reject</div>
           </div>
