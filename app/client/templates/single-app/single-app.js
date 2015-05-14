@@ -258,7 +258,7 @@ Template.SingleApp.events({
 
 Template.flagBox.onRendered(function() {
 
-  if (this.data.cat) {
+  if (this.data && this.data.cat) {
     if (!this.$('input[type="radio"][data-category="' + this.data.cat + '"]').length) {
       this.$('input[type="radio"][data-category="other"]').prop("checked", true);
       this.$('[data-field="flag-other"]').val(this.data.cat);
