@@ -1,6 +1,15 @@
 @import "../../stylesheets/variables";
 @import "../../templates/components/menu";
 
+body.admin {
+
+  // At present, there is no responsive styling for the admin console
+  // It is designed to be viewed on an HD laptop, and will cover > 100%
+  // of the screen width if viewed on a smaller screen.
+  min-width: 175rem;
+
+}
+
 .admin-section {
 
   @extend .menu-spacer;
