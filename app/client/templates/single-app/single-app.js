@@ -170,7 +170,11 @@ Template.SingleApp.events({
 
   'click [data-action="flag-app"]': function(evt, tmp) {
 
-    tmp.flagApp.set(!tmp.flagApp.get());
+    if (Meteor.userId()) tmp.flagApp.set(!tmp.flagApp.get());
+    else {
+      App.loginRedirect = FlowRouter.current().path;
+      FlowRouter.go('login');
+    }
 
   },
 
@@ -203,7 +207,11 @@ Template.SingleApp.events({
 
   'click [data-action="write-review"]': function(evt, tmp) {
 
-    tmp.writeReview.set(!tmp.writeReview.get());
+    if (Meteor.userId()) tmp.writeReview.set(!tmp.writeReview.get());
+    else {
+      App.loginRedirect = FlowRouter.current().path;
+      FlowRouter.go('login');
+    }
 
   },
 
