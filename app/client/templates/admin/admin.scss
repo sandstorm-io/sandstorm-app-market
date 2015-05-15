@@ -105,7 +105,14 @@ body.admin {
 
   &.square {
     border-radius: 0;
+    height: 2.5rem;
+    vertical-align: bottom;
     .count {border-radius: 0}
+
+    &.active {
+      color: #ffffff;
+      background-color: #6d627c;
+    }
   }
 
 

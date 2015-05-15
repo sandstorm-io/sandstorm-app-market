@@ -16,7 +16,11 @@
 
     <div class="divider"></div>
 
-    {{> chronology}}
+    {{#if genreView}}
+      {{> genreSection}}
+    {{else}}
+      {{> chronology}}
+    {{/if}}
 
   </div>
 
@@ -40,7 +44,7 @@
 
   {{/each}}
 
-  <div class="admin-filter grey square" data-action="suggested-genres">
+  <div class="admin-filter grey square {{#if genreView}}active{{/if}}" data-action="genre-view">
     <div class="text">
       Suggested Genres
     </div>
@@ -86,5 +90,37 @@
     {{/each}}
 
   {{/each}}
+
+</template>
+
+<template name="genreSection">
+
+  <div class="admin-filter grey square {{#if genreFilter 'suggestedGenres'}}active{{/if}}" data-action="select-genre" data-genre="suggestedGenres">
+    <div class="text">
+      Suggested Genres
+    </div>
+  </div>
+
+  <div class="admin-filter grey square {{#if genreFilter 'approved'}}active{{/if}}" data-action="select-genre" data-genre="approved">
+    <div class="text">
+      Approved
+    </div>
+  </div>
+
+  <div class="admin-filter grey square {{#if genreFilter 'rejected'}}active{{/if}}" data-action="select-genre" data-genre="rejected">
+    <div class="text">
+      Rejected
+    </div>
+  </div>
+
+  {{#each categories}}
+    <div class="admin-filter grey square {{#if genreFilter name}}active{{/if}}" data-action="select-genre">
+      <div class="text">
+        {{name}}
+      </div>
+    </div>
+  {{/each}}
+
+  <div class="divider"></div>
 
 </template>

@@ -127,6 +127,7 @@ Template.Admin.onCreated(function() {
   tmp.filterObj = new ReactiveVar(adminFilters[tmp.filterInd.get()]);
   tmp.searchOpen = new ReactiveVar(false);
   tmp.searchTerm = new ReactiveVar();
+  tmp.genreView = new ReactiveVar(false);
 
   tmp.autorun(function() {
     tmp.filterObj.set(adminFilters[tmp.filterInd.get()]);
@@ -135,6 +136,16 @@ Template.Admin.onCreated(function() {
   tmp.filterObj.run = function(index) {
     return index ? adminFilters[index].filter : this.get().filter;
   };
+
+});
+
+Template.Admin.helpers({
+
+  genreView: function() {
+
+    return Template.instance().get('genreView').get();
+
+  }
 
 });
 
@@ -177,6 +188,12 @@ Template.adminFilters.helpers({
 
     return Template.instance().get('searchOpen').get();
 
+  },
+
+  genreView: function() {
+
+    return Template.instance().get('genreView').get();
+
   }
 
 });
@@ -188,6 +205,14 @@ Template.adminFilters.events({
     tmp.get('filterInd').set(this.index);
     tmp.get('searchTerm').set(null);
     tmp.get('searchOpen').set(false);
+    tmp.get('genreView').set(false);
+
+  },
+
+  'click [data-action="genre-view"]': function(evt, tmp) {
+
+    tmp.get('genreView').set('suggestedGenres');
+    // tmp.get('filterInd').set(null);
 
   },
 
@@ -206,6 +231,33 @@ Template.adminFilters.events({
     else {
       tmp.get('searchTerm').set($(evt.currentTarget).val());
     }
+
+  }
+
+});
+
+Template.genreSection.helpers({
+
+  genreFilter: function(name) {
+
+    return Template.instance().get('genreView').get() === name;
+
+  },
+
+  categories: function() {
+
+    return Categories.find();
+
+  }
+
+});
+
+Template.genreSection.events({
+
+  'click [data-action="select-genre"]': function(evt, tmp) {
+
+    var newGenre = $(evt.currentTarget).data('genre') || this.name;
+    tmp.get('genreView').set(newGenre);
 
   }
 
