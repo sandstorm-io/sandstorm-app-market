@@ -128,6 +128,13 @@ Meteor.methods({
     if (!this.userId) return false;
     if (this.userId !== app.author) throw new Meteor.Error('wrong author', 'Can only submit app by logged-in user');
 
+    _.each(app.categories, function(cat) {
+      if (!Categories.findOne({name: cat})) Categories.insert({
+        name: cat,
+        suggested: true
+      });
+    });
+
     Apps.insert(app, function(err, res) {
       console.log(err, res);
       if (err) throw new Meteor.Error(err.message);
@@ -147,6 +154,13 @@ Meteor.methods({
     if (this.userId !== app.author) throw new Meteor.Error('wrong author', 'Can only submit app by logged-in user');
 
     check(app.versions.length, Match.Where(function(l) {return l > 0;}));
+
+    _.each(app.categories, function(cat) {
+      if (!Categories.findOne({name: cat})) Categories.insert({
+        name: cat,
+        suggested: true
+      });
+    });
 
     Apps.insert(app, function(err, res) {
       console.log(err, res);

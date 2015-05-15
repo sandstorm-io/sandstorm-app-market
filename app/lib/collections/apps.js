@@ -4,9 +4,6 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
 }});
 
 // TODO Update InstallCountThisWeek daily
-// TODO Investigate RegEx for version number and image
-
-var versionRegEx = /.*/; // THIS IS NOT DOING ANYTHING AT THE MOMENT
 
 // appsBaseSchema contains the keys that are required for a valid app object,
 // but NOT anything which will be autoValued or receive a default value only
@@ -17,9 +14,10 @@ var appsBaseSchema = {
     max: 200,
     index: true
   },
-  category: {
-    type: String,
-    index: true
+  categories: {
+    type: [String],
+    index: true,
+    defaultValue: []
   },
   description: {
     type: String,
@@ -73,7 +71,6 @@ var appsBaseSchema = {
   },
   versions: {
     type: [String],
-    regEx: versionRegEx,
     defaultValue: []
   },
   replacesApp: {
@@ -164,6 +161,10 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
 {
   // For some reason, SimpleSchema does not like arrays of prototypes being extended,
   // so we need to add these keys again.
+  categories: {
+    type: [String],
+    index: true
+  },
   screenshots: {
     type: [String],
     regEx: SimpleSchema.RegEx.Url,

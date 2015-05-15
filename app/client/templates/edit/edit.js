@@ -33,16 +33,41 @@ Template.Edit.onCreated(function() {
   Schemas.AppsBase.clean(newApp);
   tmp.app.set(newApp);
 
-  tmp.setCategory = function(category) {
+  tmp.setCategories = function(categories) {
+
+    var allCategories = tmp.categories.get();
+
+    _.each(categories, function(cat) {
+      var thisCat = _.findWhere(allCategories, {name: cat});
+      if (thisCat) thisCat.selected = true;
+      else allCategories.push({
+        name: cat,
+        showSummary: true,
+        new: true,
+        selected: true
+      });
+    });
+
+    tmp.categories.set(allCategories);
+    // tmp.app.set('categories', allCategories);
+    tmp.categories.dep.changed();
+
+  };
+
+  tmp.toggleCategory = function(category) {
 
     var categories = tmp.categories.get();
     if (typeof category === 'string') category = _.findWhere(categories, {name: category});
+    if (!category) return;
 
-    _.each(categories, function(cat) {
-      cat.selected = false;
-    });
-    category.selected = true;
-    tmp.app.set('category', category.name);
+    if (category.selected) {
+      delete category.selected;
+      tmp.app.set('categories', _.without(tmp.app.get('categories'), category.name));
+      if (category.new) tmp.categories.set(_.reject(categories, function(thisCat) { return thisCat.name === category.name; }));
+    } else {
+      category.selected = true;
+      tmp.app.set('categories', tmp.app.get('categories').concat(category.name));
+    }
     tmp.categories.dep.changed();
 
   };
@@ -78,21 +103,21 @@ Template.Edit.onCreated(function() {
 
       // Now we can store the genre list
       var categories = Categories.find().fetch();
-      if (categories.length) categories[0].selected = true;
       tmp.categories.set(categories);
-      tmp.app.set('category', categories.length && categories[0].name);
 
       // And load either the saved version or the actual app,
       if (Meteor.user() && Meteor.user().savedApp && Meteor.user().savedApp[FlowRouter.getParam('appId')]) {
         tmp.app.set(Meteor.user().savedApp[FlowRouter.getParam('appId')]);
       } else {
-        var newVersion = Apps.findOne(FlowRouter.current().params.appId);
+        var newVersion = Apps.findOne(FlowRouter.current().params.appId),
+            lastVersionNumber = newVersion.latestVersion();
         newVersion.replacesApp = newVersion._id;
         newVersion.versions = [];
         Schemas.AppsBase.clean(newVersion);
+        newVersion.lastVersionNumber = lastVersionNumber;
         tmp.app.set(newVersion);
       }
-      tmp.setCategory(tmp.app.get('category'));
+      tmp.setCategories(tmp.app.get('categories'));
 
       c.stop();
     }
@@ -200,17 +225,20 @@ Template.Edit.events({
 
   'click [data-action="select-genre"]': function(evt, tmp) {
 
-    tmp.setCategory(this);
+    tmp.toggleCategory(this);
 
   },
 
   'click [data-action="suggest-genre"]': function(evt, tmp) {
 
-    var categories = _.filter(tmp.categories.get(), function(cat) {
-      return !cat.new;
+    var categories = tmp.categories.get();
+    categories.push({
+      name: '',
+      showSummary: true,
+      new: true,
+      editing: true
     });
     tmp.categories.set(categories);
-    tmp.suggestNewGenre.set(true);
     Tracker.afterFlush(function() {
       tmp.$('[data-field="new-genre-name"]').focus();
     });
@@ -219,22 +247,22 @@ Template.Edit.events({
 
   'click [data-action="save-genre"], keyup [data-field="new-genre-name"]': function(evt, tmp) {
 
-    if (evt.keyCode && evt.keyCode !== 13) return;
+    if (evt.keyCode && evt.keyCode !== 13) {
 
-    var newGenreName = tmp.$('[data-field="new-genre-name"]').val(),
-        categories = tmp.categories.get();
+      this.name = s.titleize(tmp.$('[data-field="new-genre-name"]').val());
 
-    _.each(categories, function(cat) {
-      cat.selected = false;
-    });
+    } else {
 
-    categories.push({
-      name: newGenreName,
-      new: true,
-      selected: true
-    });
-    tmp.suggestNewGenre.set(false);
-    tmp.categories.set(categories);
+      var categories = tmp.categories.get();
+
+      delete this.editing;
+      this.selected = true;
+      tmp.app.set('categories', tmp.app.get('categories').concat(this.name));
+      categories = _.reject(categories, function(cat) { return !cat.name; });
+
+      tmp.categories.set(categories);
+
+    }
 
   },
 
@@ -330,6 +358,9 @@ Template.Edit.events({
   'click [data-action="update-version"]': function(evt, tmp) {
 
     tmp.newVersion.set(true);
+    Tracker.afterFlush(function() {
+      $('[data-version-field="number" ]').focus();
+    });
 
   },
 
@@ -398,7 +429,7 @@ Template.Edit.events({
         newVersion.versions = [];
         Schemas.AppsBase.clean(newVersion);
         tmp.app.set(newVersion);
-        tmp.setCategory(tmp.app.get('category'));
+        tmp.setCategories(tmp.app.get('categories'));
       }
     });
 
@@ -411,7 +442,7 @@ Template.Edit.events({
       if (err) console.log(err);
       else {
         tmp.clearApp();
-      }     
+      }
     });
 
   },
