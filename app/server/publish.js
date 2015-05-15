@@ -8,7 +8,7 @@
 Meteor.publish('categories', function () {
   var allCats = _.pluck(Categories.find({approved: 0}, {fields: {name: 1}}).fetch(), 'name'),
       popCats = _.filter(allCats, function(catId) {
-        return Apps.findOne({category: catId});
+        return Apps.findOne({categories: catId});
       });
   return Categories.find({name: {$in: popCats}});
 });
