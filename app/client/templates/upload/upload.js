@@ -46,7 +46,8 @@ Template.Upload.onCreated(function() {
       });
     });
 
-    tmp.app.set('categories', allCategories);
+    tmp.categories.set(allCategories);
+    // tmp.app.set('categories', allCategories);
     tmp.categories.dep.changed();
 
   };
@@ -214,7 +215,7 @@ Template.Upload.events({
 
     if (evt.keyCode && evt.keyCode !== 13) {
 
-      this.name = tmp.$('[data-field="new-genre-name"]').val();
+      this.name = s.titleize(tmp.$('[data-field="new-genre-name"]').val());
 
     } else {
 
