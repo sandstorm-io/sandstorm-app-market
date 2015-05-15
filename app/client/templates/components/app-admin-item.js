@@ -6,13 +6,10 @@ Template.appAdminItem.onCreated(function() {
 
 Template.appAdminItem.helpers({
 
-  filter: function(filterName) {
+  showButton: function(action) {
 
-    var filters = Template.instance().filters,
-        filterObj = filters && filters[filterName];
-
-    if (!filterObj) return '';
-    else return filterObj.filterFunc(this) ? 'active' : '';
+    var filterObj = Template.instance().get('filterObj').get();
+    return (filterObj && filterObj.actions[action]) ? '' : 'hidden';
 
   }
 

@@ -11,6 +11,12 @@ adminFilters = {
     },
     filterFunc: function(app) {
       return (app.approved === 1 && !('replacesApp' in app));
+    },
+    actions: {
+      'request-revision': true,
+      flagged: true,
+      approved: true,
+      rejected: false
     }
   },
 
@@ -24,6 +30,12 @@ adminFilters = {
     },
     filterFunc: function(app) {
       return app.approved === 2;
+    },
+    actions: {
+      'request-revision': true,
+      flagged: true,
+      approved: true,
+      rejected: false
     }
   },
 
@@ -38,6 +50,12 @@ adminFilters = {
     },
     filterFunc: function(app) {
       return (app.approved === 1 && ('replacesApp' in app));
+    },
+    actions: {
+      'request-revision': true,
+      flagged: false,
+      approved: false,
+      rejected: false
     }
   },
 
@@ -51,6 +69,12 @@ adminFilters = {
     },
     filterFunc: function(app) {
       return ('flags' in app);
+    },
+    actions: {
+      'request-revision': true,
+      flagged: false,
+      approved: true,
+      rejected: true
     }
   },
 
@@ -64,7 +88,14 @@ adminFilters = {
     },
     filterFunc: function(app) {
       return app.approved === 0;
-    }  },
+    },
+    actions: {
+      'request-revision': true,
+      flagged: true,
+      approved: false,
+      rejected: false
+    }
+  },
 
   rejected: {
     icon: 'icon-rejected_light',
@@ -76,6 +107,12 @@ adminFilters = {
     },
     filterFunc: function(app) {
       return app.approved === 3;
+    },
+    actions: {
+      'request-revision': true,
+      flagged: false,
+      approved: true,
+      rejected: false
     }
   }
 

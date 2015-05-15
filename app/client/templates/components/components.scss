@@ -146,6 +146,10 @@
 
   }
 
+  &.hidden {
+    display: none !important;
+  }
+
   &.active {
     @extend .sandstorm-button.secondary;
     z-index: 1;
