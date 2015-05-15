@@ -6,7 +6,7 @@
 
 
 Meteor.publish('categories', function () {
-  var allCats = _.pluck(Categories.find({suggested: {$ne: true}}, {fields: {name: 1}}).fetch(), 'name'),
+  var allCats = _.pluck(Categories.find({approved: 0}, {fields: {name: 1}}).fetch(), 'name'),
       popCats = _.filter(allCats, function(catId) {
         return Apps.findOne({category: catId});
       });
@@ -14,7 +14,7 @@ Meteor.publish('categories', function () {
 });
 
 Meteor.publish('all categories', function () {
-  return Categories.find({suggested: {$ne: true}});
+  return Categories.find({approved: 0});
 });
 
 Meteor.publish('suggested categories', function() {

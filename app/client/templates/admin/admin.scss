@@ -72,6 +72,8 @@ body.admin {
   padding-left: 0.75rem;
   cursor: pointer;
   margin-right: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 
   // THIS IS THE TOOLTIP
   &.simptip-position-top:after {
@@ -294,4 +296,51 @@ body.admin {
     }
   }
 
+}
+
+.genre-button {
+
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+  border-radius: $button-border-radius;
+  background-color: #a4a3b3;
+  color: white;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  box-sizing: border-box;
+  margin-right: 1rem;
+  width: 8rem;
+
+  > * {
+    display: block;
+    text-align: center;
+  }
+
+  i {
+    font-size:3.5rem;
+  }
+  .caption {
+    font-size: 1.3rem;
+  }
+
+  &.approved {
+    background-color: #4b9441;
+  }
+
+  &.rejected {
+    background-color: #424242;
+  }
+
+}
+
+.admin-section .spacer {
+  height: 1rem;
+}
+
+.admin-section .push-right {
+  margin-right: 3rem;
 }

@@ -128,7 +128,9 @@ Meteor.methods({
     if (!this.userId) return false;
     if (this.userId !== app.author) throw new Meteor.Error('wrong author', 'Can only submit app by logged-in user');
 
+    console.log(app);
     _.each(app.categories, function(cat) {
+      console.log(cat);
       if (!Categories.findOne({name: cat})) Categories.insert({
         name: cat,
         suggested: true
@@ -307,13 +309,37 @@ Meteor.methods({
 
   'admin/seedApps': function(n) {
 
+    if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Can only be executed by admin user');
     check(n, Number);
     check(n, Match.Where(function(x) { return x < 500; }));
 
     while (Apps.find().count() < n)
       App.fakeApp();
 
-  }
+  },
 
+  'admin/approveGenre': function(genre) {
+
+    if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Can only be executed by admin user');
+    var cat = Categories.findOne({name: genre});
+
+    if (!cat) throw new Meteor.Error('No genre with the name ' + genre + ' has been suggested');
+    return Categories.update({name: genre}, {$set: {
+      approved: 0
+    }});
+
+  },
+
+  'admin/rejectGenre': function(genre) {
+
+    if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Can only be executed by admin user');
+    var cat = Categories.findOne({name: genre});
+
+    if (!cat) throw new Meteor.Error('No genre with the name ' + genre + ' has been suggested');
+    return Categories.update({name: genre}, {$set: {
+      approved: 1
+    }});
+
+  }
 
 });

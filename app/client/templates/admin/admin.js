@@ -118,6 +118,25 @@ adminFilters = {
 
 };
 
+var genreTemplates = {
+
+  'suggestedGenres': {
+    template: 'suggestedGenres',
+    data: {filter: null}
+  },
+
+  'approved': {
+    template: 'suggestedGenres',
+    data: {filter: 0}
+  },
+
+  'rejected': {
+    template: 'suggestedGenres',
+    data: {filter: 1}
+  }
+
+};
+
 Template.Admin.onCreated(function() {
 
   var tmp = this;
@@ -212,7 +231,7 @@ Template.adminFilters.events({
   'click [data-action="genre-view"]': function(evt, tmp) {
 
     tmp.get('genreView').set('suggestedGenres');
-    // tmp.get('filterInd').set(null);
+    tmp.get('filterInd').set(null);
 
   },
 
@@ -244,9 +263,29 @@ Template.genreSection.helpers({
 
   },
 
+  genreView: function() {
+
+    return Template.instance().get('genreView').get();
+
+  },
+
   categories: function() {
 
     return Categories.find();
+
+  },
+
+  genreTemp: function() {
+
+    var genreView = Template.instance().get('genreView').get(),
+        tempDetails = genreTemplates[genreView];
+
+    return tempDetails || {
+      template: 'genreDisplay',
+      data: {
+        categories: genreView
+      }
+    };
 
   }
 
@@ -283,6 +322,58 @@ Template.chronology.helpers({
     });
 
     return _.sortBy(_.values(apps), 'date');
+
+  }
+
+});
+
+Template.genreDisplay.helpers({
+
+  appList: function() {
+
+    return Apps.find(this);
+
+  }
+
+});
+
+Template.suggestedGenres.helpers({
+
+  genres: function() {
+
+    var query = {suggested: true};
+    if (_.isNumber(this.filter)) {
+      query.approved = this.filter;
+      delete query.suggested;
+    }
+
+    return Categories.find(query).map(function(cat) {
+      return {
+        name: cat.name,
+        appList: Apps.find({categories: cat.name}),
+        approved: cat.approved
+      };
+    });
+
+  }
+
+});
+
+Template.suggestedGenres.events({
+
+  'click [data-action="approve-genre"]': function() {
+
+    Meteor.call('admin/approveGenre', this.name, function(err) {
+      if (err) console.log(err);
+    });
+
+  },
+
+  'click [data-action="reject-genre"]': function() {
+
+    Meteor.call('admin/rejectGenre', this.name, function(err) {
+      if (err) console.log(err);
+    });
 
   }
 

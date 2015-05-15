@@ -428,3 +428,61 @@
   }
 
 }
+
+// App Item Tiny
+
+.app-item-tiny {
+
+  display: inline-block;
+  vertical-align: top;
+  text-align: left;
+  width: 15rem;
+  padding-left: $app-container-margin-lr;
+  padding-right: $app-container-margin-lr;
+  padding-bottom: $app-container-margin-tb;
+  box-sizing: border-box;
+  cursor: pointer;
+
+  .app-item-inner {
+
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    background-color: $app-box-bg;
+    box-sizing: border-box;
+    position: relative;
+
+    .image-surround {
+
+      position: relative;
+      height: 10rem;
+
+
+      .image {
+
+        content: "";
+        background-size: cover;
+        background-position: center;
+        display: block;
+        height: 100%;
+
+      }
+
+    }
+
+    .app-name {
+
+      font-size: 1.25rem;
+      font-weight: 400;
+      margin-top: 0.5rem;
+      color: $app-name-text;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow-x: hidden;
+
+    }
+
+  }
+
+}
