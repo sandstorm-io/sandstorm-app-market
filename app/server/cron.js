@@ -12,7 +12,7 @@ SyncedCron.add({
     if (Apps.find().count() < 200)
       return Apps.insert({
         name: faker.company.bs(),
-        category: _.sample(categories),
+        categories: [_.sample(categories)],
         description: faker.lorem.paragraph(),
         image: retricon(Random.id(), 50, 0).toDataURL(),
         approved: 1,

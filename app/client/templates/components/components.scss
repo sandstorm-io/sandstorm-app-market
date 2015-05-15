@@ -1,5 +1,11 @@
 @import "../../stylesheets/variables";
 
+.button-wrapper {
+  display: inline-block;
+  white-space: nowrap;
+  vertical-align: top;
+}
+
 .sandstorm-button {
 
   position: relative;
@@ -275,7 +281,7 @@
     color: #555555;
   }
   &.input {
-    width: 14rem;
+    width: 10rem;
   }
 
 }
