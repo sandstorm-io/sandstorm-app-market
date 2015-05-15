@@ -358,9 +358,11 @@ Template.Edit.events({
   'click [data-action="update-version"]': function(evt, tmp) {
 
     tmp.newVersion.set(true);
-    Tracker.afterFlush(function() {
-      $('[data-version-field="number" ]').focus();
-    });
+    if (evt.currentTarget.nodeName === 'INPUT') {
+      Tracker.afterFlush(function() {
+        $('[data-version-field="number" ]').focus();
+      });
+    }
 
   },
 
