@@ -116,6 +116,13 @@ var helpers = {
 
   },
 
+  numberFormat: function(number, format) {
+
+    if (typeof number !== 'number') return '#NAN';
+    else return numeral(number).format(format);
+
+  },
+
   last: function(array) {
 
     return _.last(array);

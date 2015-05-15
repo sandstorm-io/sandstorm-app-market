@@ -321,7 +321,6 @@
     overflow: hidden;
     font-size: 1.35rem;
     line-height: 1.4;
-    padding-left: 1.5rem;
     color: #555555;
     min-width: 15rem;
 
@@ -330,6 +329,13 @@
     }
 
   }
+
+  .identicon-instructions, .donation-instructions {
+
+    padding-left: 1.5rem;
+    
+  }
+
 
   .screenshot-container {
 

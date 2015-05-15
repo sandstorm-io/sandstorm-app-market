@@ -41,7 +41,7 @@
           {{/if}}
 
           <div class="app-price {{#if free price}}free{{/if}}">
-            {{#if free price}}FREE{{else}}{{price}}{{/if}}
+            {{#if free price}}FREE{{else}}{{numberFormat price '$0,0.00'}}{{/if}}
           </div>
 
         </div>
@@ -126,7 +126,7 @@
         {{/if}}
 
         <div class="app-price {{#if free price}}free{{/if}}">
-          {{#if free price}}FREE{{else}}{{price}}{{/if}}
+          {{#if free price}}FREE{{else}}{{numberFormat price '$0,0.00'}}{{/if}}
         </div>
 
       </div>
