@@ -3,6 +3,8 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
   return app;
 }});
 
+var converter = new Showdown.converter();
+
 // TODO Update InstallCountThisWeek daily
 
 // appsBaseSchema contains the keys that are required for a valid app object,
@@ -156,6 +158,16 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
     type: Number,
     min: 0,
     defaultValue: 0
+  },
+  htmlDescription: {
+    type: String,
+    optional: true,
+    autoValue: function(doc) {
+      var markdownContent = this.field("description");
+      if (Meteor.isServer && markdownContent.isSet) {
+        return converter.makeHtml(markdownContent.value);
+      }
+    }
   }
 },
 {
