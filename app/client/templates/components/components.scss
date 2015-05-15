@@ -1,5 +1,11 @@
 @import "../../stylesheets/variables";
 
+.button-wrapper {
+  display: inline-block;
+  white-space: nowrap;
+  vertical-align: top;
+}
+
 .sandstorm-button {
 
   position: relative;
