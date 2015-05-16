@@ -152,6 +152,20 @@ var helpers = {
 
   },
 
+  getReactive: function(varName) {
+
+    var thisVar = Template.instance().get(varName);
+
+    return thisVar && thisVar.get && thisVar.get();
+
+  },
+
+  get: function(varName) {
+
+    return Template.instance().get(varName);
+
+  },
+
   // IMAGE HELPERS
 
   imageUrl: function(image) {
@@ -189,6 +203,15 @@ var helpers = {
   logParentData: function(depth) {
 
     console.log(Template.parentData(depth));
+
+  },
+
+  logHeirarchy: function() {
+    
+    console.log(Template.parentData(0));
+    console.log(Template.parentData(1));
+    console.log(Template.parentData(2));
+    console.log(Template.parentData(3));
 
   }
 

@@ -35,9 +35,16 @@ Meteor.publish('apps by genre', function (name) {
 });
 
 Meteor.publish('apps by id', function (ids) {
-  return Array.isArray(ids) ?
-    Apps.find({_id: {$in: ids}}, {fields: {flags: 0}}) :
-    Apps.find(ids, {fields: {flags: 0}});
+  var apps = Array.isArray(ids) ?
+        Apps.find({_id: {$in: ids}}, {fields: {flags: 0}}) :
+        Apps.find(ids, {fields: {flags: 0}}),
+      authorIds = _.unique(_.pluck(apps.fetch(), 'author')),
+      authors = Meteor.users.find({_id: {$in: authorIds}}, {fields: {username: 1}});
+
+  return [
+    apps,
+    authors
+  ];
 });
 
 Meteor.publish('apps by me', function () {

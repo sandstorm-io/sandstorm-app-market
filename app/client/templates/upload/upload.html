@@ -33,18 +33,7 @@
 
       <div class="half-col">
 
-        <div class="file-box">
-
-          <div class="instruction">Please upload the *.spk file for your app.</div>
-          <div class="aside"><a href="https://github.com/sandstorm-io/sandstorm/wiki/Porting-Guide" target="_blank">(What's an *.spk?)</a></div>
-
-          <div class="spacer clearfix"></div>
-
-          <input type="text" placeholder="Browse" readonly="true" data-field="filename" class="filename" data-action="choose-file" data-name="spk" value="{{filename}}" />
-          <input type="file" class="file-picker" data-action="file-picker" data-for="spk" accept=".spk" />
-          <div class="square-button dark rem-space-float" data-action="upload-spk">Upload</div>
-
-        </div>
+        {{> fileBox}}
 
       </div>
 
@@ -92,19 +81,7 @@
 
       <h3 class="title">Genre</h3>
 
-      <div class="genre-list">
-        {{#each categories}}
-          {{#if this.editing}}
-            <div class="button-wrapper">
-              <input class="square-button action input" data-field="new-genre-name" value={{newGenreName}} />
-              <div class="square-button icon" data-action="save-genre"><i class="fa fa-plus"></i></div>
-            </div>
-          {{else}}
-            <div class="square-button {{#if selected}}{{#if new}}light{{else}}active{{/if}}{{/if}}" data-action="select-genre">{{upperCase name}}</div>
-          {{/if}}
-        {{/each}}
-        <div class="square-button action" data-action="suggest-genre">SUGGEST A NEW GENRE</div>
-      </div>
+      {{> genreGrid}}
 
     </div>
 
@@ -226,5 +203,40 @@
 
   </form>
   {{/with}}
+
+</template>
+
+<template name="fileBox">
+
+  <div class="file-box">
+
+    <div class="instruction">Please upload the *.spk file for your app.</div>
+    <div class="aside"><a href="https://github.com/sandstorm-io/sandstorm/wiki/Porting-Guide" target="_blank">(What's an *.spk?)</a></div>
+
+    <div class="spacer clearfix"></div>
+
+    <input type="text" placeholder="Browse" readonly="true" data-field="filename" class="filename" data-action="choose-file" data-name="spk" value="{{filename}}" />
+    <input type="file" class="file-picker" data-action="file-picker" data-for="spk" accept=".spk" />
+    <div class="square-button dark rem-space-float" data-action="upload-spk">Upload</div>
+
+  </div>
+
+</template>
+
+<template name="genreGrid">
+
+  <div class="genre-list">
+    {{#each categories}}
+      {{#if this.editing}}
+        <div class="button-wrapper">
+          <input class="square-button action input" data-field="new-genre-name" value={{newGenreName}} />
+          <div class="square-button icon" data-action="save-genre"><i class="fa fa-plus"></i></div>
+        </div>
+      {{else}}
+        <div class="square-button {{#if selected}}{{#if new}}light{{else}}active{{/if}}{{/if}}" data-action="select-genre">{{upperCase name}}</div>
+      {{/if}}
+    {{/each}}
+    <div class="square-button action" data-action="suggest-genre">SUGGEST A NEW GENRE</div>
+  </div>
 
 </template>
