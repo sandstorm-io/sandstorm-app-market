@@ -36,30 +36,7 @@
 
       <div class="half-col">
 
-        <div class="file-box">
-
-          <div class="instruction">This is your app package</div>
-          <div class="aside"><a href="https://github.com/sandstorm-io/sandstorm/wiki/Porting-Guide" target="_blank">(What's an *.spk?)</a></div>
-
-          <div class="spacer clearfix"></div>
-
-          <input type="text" placeholder="Browse" readonly="true" data-field="filename" class="filename existing" data-action="choose-file" data-name="spk" value="{{stripFilename spkLink}}" />
-          <div class="two square-buttons rem-space-float">
-            <a class="square-button dark" href="{{spkLink}}"><i class="fa fa-download"></i></a>
-            <div class="square-button dark" data-action="upload-spk"><i class="icon-garbage"></i></div>
-          </div>
-
-          <div class="spacer clearfix"></div>
-
-          <div class="instruction">New spk?</div>
-
-          <div class="spacer clearfix"></div>
-
-          <input type="text" placeholder="Browse" readonly="true" data-field="filename" class="filename" data-action="choose-file" data-name="spk" value="{{filename}}" />
-          <input type="file" class="file-picker" data-action="file-picker" data-for="spk" accept=".spk" />
-          <div class="square-button dark rem-space-float" data-action="upload-spk">Upload</div>
-
-        </div>
+        {{> fileBox version="update"}}
 
       </div>
 
@@ -135,19 +112,7 @@
 
       <h3 class="title">Genre</h3>
 
-      <div class="genre-list">
-        {{#each categories}}
-          {{#if this.editing}}
-            <div class="button-wrapper">
-              <input class="square-button action input" data-field="new-genre-name" value={{newGenreName}} />
-              <div class="square-button icon" data-action="save-genre"><i class="fa fa-plus"></i></div>
-            </div>
-          {{else}}
-            <div class="square-button {{#if selected}}{{#if new}}light{{else}}active{{/if}}{{/if}}" data-action="select-genre">{{upperCase name}}</div>
-          {{/if}}
-        {{/each}}
-        <div class="square-button action" data-action="suggest-genre">SUGGEST A NEW GENRE</div>
-      </div>
+      {{> genreGrid}}
 
     </div>
 
@@ -159,15 +124,7 @@
 
         <h3 class="title">Icon</h3>
 
-        <div class="identicon-container">
-          <div class="identicon" style="background-image: url('{{imageUrl image}}')" data-field="icon-image">#
-            <div class="tint"></div>
-            <div class="regenerate" data-action="regenerate-identicon"><i class="icon-rejected_dark"></i></div>
-            <div class="upload" data-action="choose-file" data-name="identicon"><i class="icon-myapps"></i></div>
-          </div>
-        </div>
-
-        <input type="file" class="file-picker" data-action="file-picker" data-for="identicon" accept="image/*" />
+        {{> iconPicker}}
 
         <div class="identicon-instructions">
           <div>For the best results, we suggest the icon be:</div>
@@ -220,30 +177,7 @@
         <div><strong>800px</strong> wide by <strong>450px</strong> high (minimum) in PNG or JPEG format.</div>
       </div>
 
-      {{#each screenshots}}
-
-        <div class="screenshot-container">
-          <div class="screenshot" style="background-image: url('{{imageUrl this}}')" data-action="change-screenshot"></div>
-          <div class="remove" data-action="remove-screenshot"><i class="icon-rejected_dark"></i></div>
-        </div>
-
-      {{/each}}
-      {{#each screenshotPlaceholders}}
-
-        <div class="screenshot-container">
-          <div class="screenshot placeholder" data-action="choose-file" data-name="screenshot">
-            <div class="contents">
-              <i class="icon-myapps"></i>
-              <div class="instruction">
-                Upload a Screenshot
-              </div>
-            </div>
-          </div>
-        </div>
-
-      {{/each}}
-
-      <input type="file" class="file-picker" data-action="file-picker" data-for="screenshot" accept="image/*" />
+      {{> screenshotPicker}}
 
       <h3 class="title">Description</h3>
 

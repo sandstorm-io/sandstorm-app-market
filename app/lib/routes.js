@@ -159,7 +159,7 @@ FlowRouter.route('/admin/edit/:appId', {
   },
   action: function() {
     if (!Roles.userIsInRole(Meteor.userId(), 'admin')) FlowRouter.go('appMarket');
-    FlowLayout.render('MasterLayout', {mainSection: 'Edit'});
+    FlowLayout.render('MasterLayout', {mainSection: 'AdminEdit'});
   }
 });
 
