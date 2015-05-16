@@ -137,97 +137,11 @@ Template.Upload.helpers({
 
     return Template.instance().app.all();
 
-  },
-
-  seedString: function() {
-
-    return Template.instance().seedString.get();
-
-  },
-
-  screenshotPlaceholders: function() {
-
-    var tmp = Template.instance();
-
-    return _.range(Math.max(tmp.screenshotsVis.get() - tmp.app.get('screenshots').length, 1));
-
   }
 
 });
 
 Template.Upload.events({
-
-  'click [data-action="choose-file"]': function(evt, tmp) {
-
-    tmp.$('[data-action="file-picker"][data-for="' + $(evt.currentTarget).data('name') + '"]').click();
-
-  },
-
-  'change [data-action="file-picker"][data-for="identicon"]': function(evt, tmp) {
-
-    var file = evt.currentTarget.files[0];
-
-    if (file) {
-      tmp.app.set('image', App.imageUploader.url(true));
-
-      App.imageUploader.send(file, function(err, downloadUrl) {
-
-        if (err)
-          console.error('Error uploading', err);
-        else {
-          tmp.app.set('image', encodeURI(downloadUrl));
-        }
-      });
-    }
-
-  },
-
-  'change [data-action="file-picker"][data-for="screenshot"]': function(evt, tmp) {
-
-    var file = evt.currentTarget.files[0];
-
-    if (file) {
-
-      App.imageUploader.send(file, function(err, downloadUrl) {
-
-        if (err)
-          console.error('Error uploading', err);
-        else {
-          var screenshots = tmp.app.get('screenshots');
-          downloadUrl = encodeURI(downloadUrl);
-          if (!('screenshotInd' in tmp) || tmp.screenshotInd < 0) screenshots.push(downloadUrl);
-          else {
-            screenshots[tmp.screenshotInd] = downloadUrl;
-            delete tmp.screenshotInd;
-          }
-          tmp.app.set('screenshots', screenshots);
-        }
-      });
-    }
-
-  },
-
-  'click [data-action="change-screenshot"]': function(evt, tmp) {
-
-    var screenshots = tmp.app.get('screenshots');
-
-    tmp.screenshotInd = screenshots.indexOf(this.toString());
-
-    tmp.$('[data-action="file-picker"][data-for="screenshot"]').click();
-
-  },
-
-  'click [data-action="remove-screenshot"]': function(evt, tmp) {
-
-    var screenshots = tmp.app.get('screenshots'),
-        screenshotInd = screenshots.indexOf(this.toString());
-
-    if (screenshotInd > -1) {
-      screenshots.splice(screenshotInd, 1);
-      tmp.app.set('screenshots', screenshots);
-    }
-
-  },
 
   'change input[type="text"][data-field], change textarea[data-field], change input[type="number"][data-field]': function(evt, tmp) {
 
@@ -244,13 +158,6 @@ Template.Upload.events({
       dateTime: new Date(),
       number: $el.val()
     }]);
-
-  },
-
-  'click [data-action="regenerate-identicon"]': function(evt, tmp) {
-
-    tmp.seedString.set(Random.id());
-    tmp.app.set('image', '');
 
   },
 
@@ -396,5 +303,122 @@ Template.genreGrid.events({
     }
 
   },
+
+});
+
+Template.iconPicker.helpers({
+
+  seedString: function() {
+
+    return Template.instance().get('seedString').get();
+
+  }
+
+});
+
+Template.iconPicker.events({
+
+  'click [data-action="choose-file"]': function(evt, tmp) {
+
+    tmp.$('[data-action="file-picker"][data-for="' + $(evt.currentTarget).data('name') + '"]').click();
+    evt.stopPropagation();
+
+  },
+
+  'change [data-action="file-picker"][data-for="identicon"]': function(evt, tmp) {
+
+    var file = evt.currentTarget.files[0];
+
+    if (file) {
+      tmp.get('app').set('image', App.imageUploader.url(true));
+
+      App.imageUploader.send(file, function(err, downloadUrl) {
+
+        if (err)
+          console.error('Error uploading', err);
+        else {
+          tmp.get('app').set('image', encodeURI(downloadUrl));
+        }
+      });
+    }
+
+  },
+
+  'click [data-action="regenerate-identicon"]': function(evt, tmp) {
+
+    tmp.get('seedString').set(Random.id());
+    tmp.get('app').set('image', '');
+
+  }
+
+});
+
+Template.screenshotPicker.helpers({
+
+  screenshotPlaceholders: function() {
+
+    var tmp = Template.instance();
+
+    return _.range(Math.max(tmp.get('screenshotsVis').get() - tmp.get('app').get('screenshots').length, 1));
+
+  }
+
+});
+
+Template.screenshotPicker.events({
+
+  'click [data-action="choose-file"]': function(evt, tmp) {
+
+    tmp.$('[data-action="file-picker"][data-for="' + $(evt.currentTarget).data('name') + '"]').click();
+    evt.stopPropagation();
+
+  },
+
+  'change [data-action="file-picker"][data-for="screenshot"]': function(evt, tmp) {
+
+    var file = evt.currentTarget.files[0];
+
+    if (file) {
+
+      App.imageUploader.send(file, function(err, downloadUrl) {
+
+        if (err)
+          console.error('Error uploading', err);
+        else {
+          var screenshots = tmp.get('app').get('screenshots');
+          downloadUrl = encodeURI(downloadUrl);
+          if (!('screenshotInd' in tmp) || tmp.screenshotInd < 0) screenshots.push(downloadUrl);
+          else {
+            screenshots[tmp.screenshotInd] = downloadUrl;
+            delete tmp.screenshotInd;
+          }
+          tmp.get('app').set('screenshots', screenshots);
+        }
+      });
+    }
+
+  },
+
+  'click [data-action="change-screenshot"]': function(evt, tmp) {
+
+    var screenshots = tmp.get('app').get('screenshots');
+
+    tmp.screenshotInd = screenshots.indexOf(this.toString());
+
+    tmp.$('[data-action="file-picker"][data-for="screenshot"]').click();
+
+  },
+
+  'click [data-action="remove-screenshot"]': function(evt, tmp) {
+
+    var screenshots = tmp.get('app').get('screenshots'),
+        screenshotInd = screenshots.indexOf(this.toString());
+
+    if (screenshotInd > -1) {
+      screenshots.splice(screenshotInd, 1);
+      tmp.get('app').set('screenshots', screenshots);
+    }
+
+  }
 
 });
