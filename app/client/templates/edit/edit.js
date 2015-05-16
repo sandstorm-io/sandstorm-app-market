@@ -149,40 +149,6 @@ Template.Edit.helpers({
 
   },
 
-  filename: function() {
-
-    var tmp = Template.instance(),
-        file = tmp.file.get();
-    return file && file.name;
-
-  },
-
-  categories: function() {
-
-    return Template.instance().categories.get();
-
-  },
-
-  suggestNewGenre: function() {
-
-    return Template.instance().suggestNewGenre.get();
-
-  },
-
-  seedString: function() {
-
-    return Template.instance().seedString.get();
-
-  },
-
-  screenshotPlaceholders: function() {
-
-    var tmp = Template.instance();
-
-    return _.range(Math.max(tmp.screenshotsVis.get() - tmp.app.get('screenshots').length, 1));
-
-  },
-
   fieldEdit: function(field) {
 
     return (field in Template.instance().editingFields.get());
@@ -207,143 +173,6 @@ Template.Edit.events({
     tmp.editingFields.set(fields);
     Tracker.afterFlush(function() {
       tmp.$('[data-field="' + thisField + '"]').focus();
-    });
-
-  },
-
-  'click [data-action="choose-file"]': function(evt, tmp) {
-
-    tmp.$('[data-action="file-picker"][data-for="' + $(evt.currentTarget).data('name') + '"]').click();
-
-  },
-
-  'change [data-action="file-picker"][data-for="spk"]': function(evt) {
-
-    Template.instance().file.set(evt.currentTarget.files[0]);
-
-  },
-
-  'click [data-action="select-genre"]': function(evt, tmp) {
-
-    tmp.toggleCategory(this);
-
-  },
-
-  'click [data-action="suggest-genre"]': function(evt, tmp) {
-
-    var categories = tmp.categories.get();
-    categories.push({
-      name: '',
-      showSummary: true,
-      new: true,
-      editing: true
-    });
-    tmp.categories.set(categories);
-    Tracker.afterFlush(function() {
-      tmp.$('[data-field="new-genre-name"]').focus();
-    });
-
-  },
-
-  'click [data-action="save-genre"], keyup [data-field="new-genre-name"]': function(evt, tmp) {
-
-    if (evt.keyCode && evt.keyCode !== 13) {
-
-      this.name = s.titleize(tmp.$('[data-field="new-genre-name"]').val());
-
-    } else {
-
-      var categories = tmp.categories.get();
-
-      delete this.editing;
-      this.selected = true;
-      tmp.app.set('categories', tmp.app.get('categories').concat(this.name));
-      categories = _.reject(categories, function(cat) { return !cat.name; });
-
-      tmp.categories.set(categories);
-
-    }
-
-  },
-
-  'change [data-action="file-picker"][data-for="identicon"]': function(evt, tmp) {
-
-    var file = evt.currentTarget.files[0];
-
-    if (file) {
-      tmp.app.set('image', App.imageUploader.url(true));
-
-      App.imageUploader.send(file, function(err, downloadUrl) {
-
-        if (err)
-          console.error('Error uploading', err);
-        else {
-          tmp.app.set('image', encodeURI(downloadUrl));
-        }
-      });
-    }
-
-  },
-
-  'change [data-action="file-picker"][data-for="screenshot"]': function(evt, tmp) {
-
-    var file = evt.currentTarget.files[0];
-
-    if (file) {
-
-      App.imageUploader.send(file, function(err, downloadUrl) {
-
-        if (err)
-          console.error('Error uploading', err);
-        else {
-          var screenshots = tmp.app.get('screenshots');
-          downloadUrl = encodeURI(downloadUrl);
-          if (!('screenshotInd' in tmp) || tmp.screenshotInd < 0) screenshots.push(downloadUrl);
-          else {
-            screenshots[tmp.screenshotInd] = downloadUrl;
-            delete tmp.screenshotInd;
-          }
-          tmp.app.set('screenshots', screenshots);
-        }
-      });
-    }
-
-  },
-
-  'click [data-action="change-screenshot"]': function(evt, tmp) {
-
-    var screenshots = tmp.app.get('screenshots');
-
-    tmp.screenshotInd = screenshots.indexOf(this.toString());
-
-    tmp.$('[data-action="file-picker"][data-for="screenshot"]').click();
-
-  },
-
-  'click [data-action="remove-screenshot"]': function(evt, tmp) {
-
-    var screenshots = tmp.app.get('screenshots'),
-        screenshotInd = screenshots.indexOf(this.toString());
-
-    if (screenshotInd > -1) {
-      screenshots.splice(screenshotInd, 1);
-      tmp.app.set('screenshots', screenshots);
-    }
-
-  },
-
-  'click [data-action="upload-spk"]': function(evt, tmp) {
-
-    var file = tmp.file.get();
-
-    if (file) App.spkUploader.send(file, function(err, downloadUrl) {
-
-      if (err)
-        console.error('Error uploading', err);
-      else {
-        tmp.app.set('spkLink', encodeURI(downloadUrl));
-      }
-
     });
 
   },
@@ -375,13 +204,6 @@ Template.Edit.events({
           changes: tmp.$('[data-version-field="changes"]').val()
         };
     tmp.app.set('versions', [newVersion]);
-
-  },
-
-  'click [data-action="regenerate-identicon"]': function(evt, tmp) {
-
-    tmp.seedString.set(Random.id());
-    tmp.app.set('image', '');
 
   },
 

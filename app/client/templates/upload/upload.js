@@ -239,7 +239,7 @@ Template.fileBox.events({
 
     });
 
-  },
+  }
 
 });
 

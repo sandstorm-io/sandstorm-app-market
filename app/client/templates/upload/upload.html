@@ -179,6 +179,28 @@
 
   <div class="file-box">
 
+    {{#if equal version "update"}}
+
+    <div class="instruction">This is your app package</div>
+    <div class="aside"><a href="https://github.com/sandstorm-io/sandstorm/wiki/Porting-Guide" target="_blank">(What's an *.spk?)</a></div>
+
+    <div class="spacer clearfix"></div>
+
+    <input type="text" placeholder="Browse" readonly="true" data-field="filename" class="filename existing" data-action="choose-file" data-name="spk" value="{{stripFilename ../spkLink}}" />
+    <a class="square-button dark rem-space-float" href="{{spkLink}}"><i class="fa fa-download"></i></a>
+
+    <div class="spacer clearfix"></div>
+
+    <div class="instruction">New spk?</div>
+
+    <div class="spacer clearfix"></div>
+
+    <input type="text" placeholder="Browse" readonly="true" data-field="filename" class="filename" data-action="choose-file" data-name="spk" value="{{filename}}" />
+    <input type="file" class="file-picker" data-action="file-picker" data-for="spk" accept=".spk" />
+    <div class="square-button dark rem-space-float" data-action="upload-spk">Upload</div>
+
+    {{else}}
+
     <div class="instruction">Please upload the *.spk file for your app.</div>
     <div class="aside"><a href="https://github.com/sandstorm-io/sandstorm/wiki/Porting-Guide" target="_blank">(What's an *.spk?)</a></div>
 
@@ -187,6 +209,8 @@
     <input type="text" placeholder="Browse" readonly="true" data-field="filename" class="filename" data-action="choose-file" data-name="spk" value="{{filename}}" />
     <input type="file" class="file-picker" data-action="file-picker" data-for="spk" accept=".spk" />
     <div class="square-button dark rem-space-float" data-action="upload-spk">Upload</div>
+
+    {{/if}}
 
   </div>
 
