@@ -6,15 +6,22 @@
 
 
 Meteor.publish('categories', function () {
-  var allCats = _.pluck(Categories.find({}, {fields: {name: 1}}).fetch(), 'name'),
+  var allCats = _.pluck(Categories.find({approved: 0}, {fields: {name: 1}}).fetch(), 'name'),
       popCats = _.filter(allCats, function(catId) {
-        return Apps.findOne({category: catId});
+        return Apps.findOne({categories: catId});
       });
   return Categories.find({name: {$in: popCats}});
 });
 
 Meteor.publish('all categories', function () {
-  return Categories.find({});
+  return Categories.find({approved: 0});
+});
+
+Meteor.publish('suggested categories', function() {
+
+  if (Roles.userIsInRole(this.userId, 'admin')) return Categories.find({suggested: true});
+  else return this.stop();
+
 });
 
 Meteor.publish('apps by genre', function (name) {
@@ -38,7 +45,22 @@ Meteor.publish('apps by me', function () {
 });
 
 Meteor.publish('apps all', function() {
-  return Apps.find();
+
+  if (Roles.userIsInRole(this.userId, 'admin')) {
+
+    var appsC = Apps.find(),
+        userIds = _.uniq(appsC.map(function(app) { return app.author; }));
+    return [
+      Apps.find(),
+      Meteor.users.find({_id: {$in: userIds}})
+    ];
+
+  } else {
+
+    return this.stop();
+
+  }
+
 });
 
 Meteor.publish('apps by author', function(authorId) {

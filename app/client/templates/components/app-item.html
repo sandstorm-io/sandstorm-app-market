@@ -101,7 +101,7 @@
           </div>
 
           <div class="installed-version">
-            V {{installDetails.version}}
+            V {{installDetails.version.number}}
           </div>
 
         </div>
@@ -193,6 +193,34 @@
         </div>
 
       </div>
+
+    </div>
+
+  </div>
+
+</template>
+
+<template name="appItemTiny">
+
+  <div class="app-item-tiny">
+
+    <div class="app-item-inner" data-action="admin-edit">
+
+      {{#with app}}
+
+        <div class="image-surround large">
+
+          <div class="image" style="background-image: url('{{imageUrl image}}');"></div>
+
+        </div>
+
+        <div class="text-section">
+
+          <div class="app-name">{{name}}</div>
+
+        </div>
+
+      {{/with}}
 
     </div>
 

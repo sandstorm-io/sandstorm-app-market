@@ -163,7 +163,7 @@ Genres = {
         extraGenre = _.findWhere(extraGenres, {name: name});
 
     if (category) {
-      _.extend(selector, {category: category.name});
+      _.extend(selector, {categories: category.name});
       return Apps.find(selector, options);
     }
     else if (extraGenre) {
@@ -184,7 +184,7 @@ Genres = {
         extraGenre = _.findWhere(extraGenres, {name: name});
 
     if (category) {
-      _.extend(selector, {category: category.name});
+      _.extend(selector, {categories: category.name});
       return Apps.findOne(selector, options);
     }
     else if (extraGenre) {

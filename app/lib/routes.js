@@ -147,6 +147,38 @@ FlowRouter.route('/upload', {
   }
 });
 
+FlowRouter.route('/admin/edit/:appId', {
+  name: 'admin-edit',
+  subscriptions: function(params) {
+    this.register('all categories',
+      Meteor.subscribe('all categories'));
+    this.register('saved apps',
+      Meteor.subscribe('saved apps'));
+    this.register('this app',
+      Meteor.subscribe('apps by id', params.appId));
+  },
+  action: function() {
+    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) FlowRouter.go('appMarket');
+    FlowLayout.render('MasterLayout', {mainSection: 'Edit'});
+  }
+});
+
+FlowRouter.route('/admin', {
+  name: 'admin',
+  subscriptions: function() {
+    this.register('apps all',
+      Meteor.subscribe('apps all'));
+    this.register('all categories',
+      Meteor.subscribe('all categories'));
+    this.register('suggested categories',
+      Meteor.subscribe('suggested categories'));
+  },
+  action: function() {
+    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) FlowRouter.go('appMarket');
+    FlowLayout.render('MasterLayout', {mainSection: 'Admin'});
+  }
+});
+
 FlowRouter.route('/serviceConfigure', {
   name: 'serviceConfiguration',
   action: function() {

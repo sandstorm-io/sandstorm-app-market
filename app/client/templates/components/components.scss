@@ -37,6 +37,15 @@
       margin-left: 0.5rem;
       margin-right: 0;
     }
+    &:only-child {
+      margin-left: 0;
+    }
+  }
+
+  &.big-icon {
+    i {
+      font-size: 1.6em;
+    }
   }
 
   .text {
@@ -88,6 +97,59 @@
 
   }
 
+  &.color {
+    background-color: #ffffff;
+    border-color: #cdc7d3;
+
+    i { display: inline-block; }
+
+    &.green {
+      color: #4b9441;
+      i { color: #4b9441; }
+      &.active {
+        background-color: #4b9441;
+        border-color: #4b9441;
+        color: #ffffff;
+        i { color: #ffffff; }
+      }
+    }
+    &.purple {
+      color: #a965ba;
+      i { color: #a965ba; }
+      &.active {
+        background-color: #a965ba;
+        border-color: #a965ba;
+        color: #ffffff;
+        i { color: #ffffff; }
+      }
+    }
+    &.yellow {
+      color: #e5a045;
+      i { color: #e5a045; }
+      &.active {
+        background-color: #e5a045;
+        border-color: #e5a045;
+        color: #ffffff;
+        i { color: #ffffff; }
+      }
+    }
+    &.black {
+      color: #424242;
+      i { color: #424242; }
+      &.active {
+        background-color: #424242;
+        border-color: #424242;
+        color: #ffffff;
+        i { color: #ffffff; }
+      }
+    }
+
+  }
+
+  &.hidden {
+    display: none !important;
+  }
+
   &.active {
     @extend .sandstorm-button.secondary;
     z-index: 1;
@@ -101,6 +163,21 @@
     font-size: 1.2rem;
     padding-left: 1rem;
     padding-right: 1rem;
+
+  }
+
+  .button-search {
+
+    display: inline-block;
+    vertical-align: super;
+    box-shadow: none;
+    background: none;
+    border: none;
+    color: #6d627c;
+    width: 14rem;
+    &:focus {
+      outline: none;
+    }
 
   }
 

@@ -39,7 +39,9 @@ rcy:nouislider
 
 
 npm-container
-numeral:numeral
+<<<<<<< HEAD
 aldeed:template-extension
 aldeed:collection2
-markdown
+=======
+numeral:numeral
+>>>>>>> master

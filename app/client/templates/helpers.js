@@ -170,11 +170,19 @@ var helpers = {
 
   },
 
+  // ADMIN HELPERS
+
+  isAdmin: function() {
+
+    return Roles.userIsInRole(Meteor.userId(), 'admin');
+
+  },
+
   // DEBUGGING HELPERS
 
-  logThis: function() {
+  logThis: function(varName) {
 
-    console.log(this);
+    console.log(varName ? this[varName] : this);
 
   },
 
