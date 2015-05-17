@@ -119,15 +119,39 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
     defaultValue: 1,
     index: true
   },
+  note: {
+    type: String,
+    optional: true
+  },
   notes: {
     type: [Object],
     blackbox: true,
-    defaultValue: []
+    autoValue: function(doc) {
+      var note = this.field('note');
+      if (note.isSet) {
+        var authorObj = Meteor.users.findOne(this.userId),
+            app = Apps.findOne(this.docId),
+            noteObj =  {
+              text: note.value,
+              author: this.userId,
+              authorName: authorObj ? authorObj.username : 'system',
+              admin: Roles.userIsInRole(this.userId, 'admin'),
+              byAuthor: this.userId === app.author,
+              dateTime: new Date()
+            };
+        if (this.isInsert) {
+          return [noteObj];
+        } else {
+          return {$push: noteObj};
+        }
+      } else {
+        this.unset();
+      }
+    }
   },
   lastUpdated: {
     type: Date,
     autoValue: function(doc) {
-      console.log(this, doc);
       if (this.isUpdate && this.userId && !Roles.userIsInRole(this.userId, 'admin')) {
         return new Date();
       } else if (this.isFromTrustedCode) {
@@ -142,7 +166,6 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
   lastUpdatedAdmin: {
     type: Date,
     autoValue: function(doc) {
-      console.log(this, doc);
       if (this.isUpdate && this.userId && Roles.userIsInRole(this.userId, 'admin')) {
         return new Date();
       } else if (this.isFromTrustedCode) {

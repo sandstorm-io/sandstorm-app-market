@@ -25,7 +25,7 @@ Meteor.publish('suggested categories', function() {
 });
 
 Meteor.publish('apps by genre', function (name) {
-  var apps = Genres.findIn(name, {public: true, approved: 0}, {fields: {flags: 0}}, this);
+  var apps = Genres.findIn(name, {public: true, approved: 0}, {fields: {flags: 0, notes: 0}}, this);
   return [
     apps,
     Meteor.users.find({_id: {$in: _.uniq(apps.map(function(app) {
@@ -48,17 +48,17 @@ Meteor.publish('apps by id', function (ids) {
 });
 
 Meteor.publish('apps by me', function () {
-  return Genres.findIn('Apps By Me', {}, {fields: {flags: 0}}, this);
+  return Genres.findIn('Apps By Me', {}, {fields: {flags: 0, notes: 0}}, this);
 });
 
 Meteor.publish('apps all', function() {
 
   if (Roles.userIsInRole(this.userId, 'admin')) {
 
-    var appsC = Apps.find(),
+    var appsC = Apps.find({}, {fields: {notes: 0}}),
         userIds = _.uniq(appsC.map(function(app) { return app.author; }));
     return [
-      Apps.find(),
+      Apps.find({}, {fields: {notes: 0}}),
       Meteor.users.find({_id: {$in: userIds}})
     ];
 

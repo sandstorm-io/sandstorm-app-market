@@ -149,6 +149,13 @@ Template.Review.helpers({
 
   },
 
+  notes: function() {
+
+    var app = Apps.findOne(FlowRouter.current().params.appId);
+    return app && app.notes;
+
+  },
+
   fieldEdit: function(field) {
 
     return (field in Template.instance().editingFields.get());
@@ -158,6 +165,12 @@ Template.Review.helpers({
   newVersion: function() {
 
     return Template.instance().newVersion.get();
+
+  },
+
+  appNotes: function() {
+
+    return Template.instance().get('appNotes').get();
 
   }
 

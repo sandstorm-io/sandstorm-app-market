@@ -214,3 +214,23 @@
   {{/with}}
 
 </template>
+
+<template name="appNotesBox">
+
+  <div class="app-notes">
+
+  {{#each notes}}
+
+    <div class="note">
+
+      On {{dateFormat dateTime 'YYYY-MM-DD'}}, {{#if authorName}}{{authorName}}{{else}}unknown user{{/if}}
+      {{#if admin}} (admin){{/if}} wrote{{#unless byAuthor}} to the author{{/unless}}:<br>
+      {{text}}
+
+    </div>
+
+  {{/each}}
+
+  </div>
+
+</template>
