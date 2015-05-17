@@ -300,6 +300,46 @@ Meteor.methods({
 
   },
 
+  'apps/getNotes': function(appId) {
+
+    var notes = '',
+        app = Apps.findOne(appId);
+
+    if (!app) return null;
+
+    _.forEach(app.notes, function(note) {
+
+      var author = Meteor.users.findOne(note.writtenBy);
+      notes += 'On ' + moment(note.dateTime).format('YYYY-MM-DD') + ', ' +
+               (author ? author.username : 'unknown') +
+               (Roles.userIsInRole(author, 'admin') ? ' (admin)' : '') +
+               ' wrote' + (note.writtenBy === app.author ? '' : ' to the author') + ':\n\r' +
+               note.text + '\n\r' +
+               '--------------------------------------------------------\n\r';
+
+    });
+
+    return notes;
+
+  },
+
+  'apps/writeNote': function(appId, note) {
+
+    var app = Apps.findOne(appId);
+    if (!app) throw new Meteor.Error('No app with id ' + appId);
+    if (!(Roles.userIsInRole(this.userId, 'admin') || app.author === this.userId))
+      throw new Meteor.Error('Notes can only be written by app author or admin user');
+
+    var noteObj = {
+      text: note,
+      dateTime: new Date(),
+      writtenBy: this.userId
+    };
+
+    return Apps.update(appId, {$push: {notes: noteObj}});
+
+  },
+
   'admin/removeAllApps': function() {
 
     if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Can only be executed by admin user');

@@ -119,6 +119,11 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
     defaultValue: 1,
     index: true
   },
+  notes: {
+    type: [Object],
+    blackbox: true,
+    defaultValue: []
+  },
   lastUpdated: {
     type: Date,
     autoValue: function(doc) {

@@ -147,8 +147,8 @@ FlowRouter.route('/upload', {
   }
 });
 
-FlowRouter.route('/admin/edit/:appId', {
-  name: 'admin-edit',
+FlowRouter.route('/admin/review/:appId', {
+  name: 'admin-review',
   subscriptions: function(params) {
     this.register('all categories',
       Meteor.subscribe('all categories'));
@@ -159,7 +159,7 @@ FlowRouter.route('/admin/edit/:appId', {
   },
   action: function() {
     if (!Roles.userIsInRole(Meteor.userId(), 'admin')) FlowRouter.go('appMarket');
-    FlowLayout.render('MasterLayout', {mainSection: 'AdminEdit'});
+    FlowLayout.render('MasterLayout', {mainSection: 'Review'});
   }
 });
 

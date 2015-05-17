@@ -157,9 +157,9 @@ Template.appItemFullWidth.helpers({
 
 Template.appItemTiny.events({
 
-  'click [data-action="admin-edit"]': function() {
+  'click [data-action="admin-review"]': function() {
 
-    FlowRouter.go('/admin/edit/' + this.app._id);
+    FlowRouter.go('/admin/review/' + this.app._id);
 
   }
 

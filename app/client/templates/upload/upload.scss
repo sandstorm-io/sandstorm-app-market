@@ -21,6 +21,14 @@
 
   }
 
+  .spacer {
+
+    clear: both;
+    height: 1.9rem;
+    display: block;
+
+  }
+
   .section {
 
     position: relative;
@@ -30,14 +38,6 @@
 
       padding-left: 2rem !important;
       padding-right: 2rem !important;
-
-    }
-
-    .spacer {
-
-      clear: both;
-      height: 1.9rem;
-      display: block;
 
     }
 
@@ -119,8 +119,11 @@
 
     .sandstorm-button {
 
-      color: #555555;
       border-color: #a4a3b3;
+
+      &:not(.color) {
+        color: #555555;
+      }
 
     }
 
@@ -333,7 +336,7 @@
   .identicon-instructions, .donation-instructions {
 
     padding-left: 1.5rem;
-    
+
   }
 
 
@@ -427,7 +430,6 @@
   .description {
 
     width: 100%;
-    box-sizing: border-box;
     min-height: 8rem;
     display: block;
     box-shadow: none;

@@ -1,0 +1,22 @@
+@import "../../stylesheets/variables";
+
+.note-entry {
+
+  width: 100%;
+  display: block;
+  resize: none;
+  box-sizing: border-box;
+  height: 10rem;
+  border-radius: 1rem;
+  padding: 1.1rem;
+  box-shadow: none;
+  background: #ffffff;
+  border: 1px solid #ccb8d1;
+  color: #555555;
+  font-size: 1.95rem;
+  font-family: $main-font;
+  line-height: 2.8rem;
+  outline: none;
+  overflow-y: hidden;
+
+}

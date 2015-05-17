@@ -1,0 +1,260 @@
+<template name="Review">
+
+  <div class="genre-title-section">
+
+    <div class="contents">
+
+      <div class="apps-title large">APP REVIEW</div>
+
+    </div>
+
+  </div>
+
+  {{#with app}}
+  <form class="edit-box clearfix">
+
+    <div class="section">
+
+      <div class="right-float on-top">
+
+        <div class="button-block">
+
+          <div class="sandstorm-button color green" data-action="approve">
+            <i class="icon-approved_light"></i>
+            <div class="text">Approve</div>
+          </div>
+          <div class="sandstorm-button color purple" data-action="request-revision">
+            <i class="icon-revisions"></i>
+            <div class="text">Request Revision</div>
+          </div>
+          <div class="sandstorm-button color yellow" data-action="flag">
+            <i class="icon-flagged_light"></i>
+            <div class="text">Flag</div>
+          </div>
+          <div class="sandstorm-button color black" data-action="reject">
+            <i class="icon-rejected_light"></i>
+            <div class="text">Reject</div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <h3 class="title inline-block">Notes to the Author: </h3>
+
+      <div class="spacer clearfix"></div>
+
+      <textarea class="note-entry"></textarea>
+
+      <div class="spacer clearfix"></div>
+
+      {{#if notesToAuthor}}
+        <div class="notes-to-author">
+          {{notesToAuthor}}
+        </div>
+        <div class="spacer"></div>
+      {{/if}}
+
+      <div class="right-float on-top">
+
+        <div class="button-block">
+          <div class="sandstorm-button neutral" data-action="save-app">
+            SAVE
+          </div>
+          <div class="sandstorm-button neutral" data-action="submit-app">
+            SUBMIT
+          </div>
+          <i class="icon-garbage" data-action="delete-app"></i>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="section clearfix">
+
+      <h3 class="title">Application File</h3>
+
+      <div class="half-col">
+
+        {{> fileBox version="update"}}
+
+      </div>
+
+      <div class="half-col">
+
+        <h3 class="title">Title</h3>
+        {{#if fieldEdit 'name'}}
+          <input type="text" data-field="name" value="{{name}}" required />
+        {{else}}
+          <div data-alt-field="name">{{name}}</div>
+        {{/if}}
+
+        <h3 class="title">Author</h3>
+        <div class="read-only">{{getUsername author}}</div>
+
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+
+      <div class="half-col">
+
+        <h4 class="mini-title">Ported by</h4>
+        <div class="read-only">{{getUsername author}}</div>
+
+        <h4 class="mini-title">Code URL</h4>
+        {{#if fieldEdit 'codeLink'}}
+          <input type="text" data-field="codeLink" value="{{codeLink}}" pattern="https?://.+" />
+        {{else}}
+          <div data-alt-field="codeLink">{{verboseNone codeLink}}</div>
+        {{/if}}
+
+        <h4 class="mini-title">License</h4>
+        {{#if fieldEdit 'license'}}
+          <input type="text" data-field="license" value="{{license}}" />
+        {{else}}
+          <div data-alt-field="license">{{verboseNone license}}</div>
+        {{/if}}
+
+        <h4 class="mini-title">Version</h4>
+        {{#if fieldEdit 'latestVersion'}}
+          <input type="text" data-action="update-version" data-version-field="number" value="{{latestVersion}}" />
+        {{else}}
+          <div data-alt-field="latestVersion" data-action="update-version">{{verboseNone lastVersionNumber.number}}</div>
+        {{/if}}
+
+      </div>
+
+      <div class="half-col">
+
+        <h4 class="mini-title">Website</h4>
+        {{#if fieldEdit 'webLink'}}
+          <input type="text" data-field="webLink" value="{{webLink}}" />
+        {{else}}
+          <div data-alt-field="webLink">{{verboseNone webLink}}</div>
+        {{/if}}
+
+        {{> connectButton service="github"}}
+        {{> connectButton service="google"}}
+
+      </div>
+
+      {{#if newVersion}}
+        <h4 class="mini-title left-float">Version Changes</h4>
+
+        <div class="version-changes">
+          <textarea placeholder="What's new in this version?" data-action="update-version" data-version-field="changes"></textarea>
+        </div>
+      {{/if}}
+
+      <h3 class="title">Genre</h3>
+
+      {{> genreGrid}}
+
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+
+      <div class="half-col">
+
+        <h3 class="title">Icon</h3>
+
+        {{> iconPicker}}
+
+        <div class="identicon-instructions">
+          <div>For the best results, we suggest the icon be:</div>
+          <div><strong>600px</strong> wide by <strong>600px</strong> high (minimum) in PNG or JPEG format.</div>
+        </div>
+
+      </div>
+
+      <div class="half-col">
+
+        <h3 class="title">Display in Market?</h3>
+
+        <div class="public-private">
+          <div class="sandstorm-button left {{#if public}}active{{/if}}" data-action="toggle-private">
+            <i class="fa fa-eye"></i>
+            PUBLIC
+          </div>
+          <div class="sandstorm-button right {{#unless public}}active{{/unless}}" data-action="toggle-private">
+            <i class="fa fa-lock"></i>
+            PRIVATE
+          </div>
+        </div>
+
+        <h3 class="title">Suggested Donation
+          <span class="simptip-position-bottom simptip-smooth simptip-fade" data-tooltip="Opt out of app market contributions"><i class="fa fa-caret-down" data-action="make-free" ></i></span>
+        </h3>
+
+        <div class="donation-box">
+          <i class="fa fa-dollar"></i>
+          <input type="number" data-field="price" min="0" step="0.01" value="{{price}}" />
+        </div>
+
+        <div class="donation-instructions">
+          Users&nbsp;can&nbsp;chip&nbsp;in&nbsp;any&nbsp;amount,
+          but&nbsp;authors&nbsp;set&nbsp;the&nbsp;default&nbsp;position&nbsp;of&nbsp;the&nbsp;slider.
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+
+      <h3 class="title">Screenshots</h3>
+
+      <div class="screenshot-instructions">
+        <div>Show your app in action. These images will be displayed in a side-scroll. For the best results, we suggest your screenshots be:</div>
+        <div><strong>800px</strong> wide by <strong>450px</strong> high (minimum) in PNG or JPEG format.</div>
+      </div>
+
+      {{> screenshotPicker}}
+
+      <h3 class="title">Description</h3>
+
+      <textarea class="description" data-field="description" placeholder="What does your app do?">{{description}}</textarea>
+
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="right-float clearfix on-top">
+
+      <div class="button-block">
+        <div class="message">
+          Currently marked as:
+        </div>
+        {{#with status}}
+          <div class="status {{color}}">
+            {{text}} <i class="{{icon}}"></i>
+          </div>
+        {{/with}}
+
+        <div class="sandstorm-button neutral" data-action="scroll-top">
+          TOP <i class="fa fa-caret-up"></i>
+        </div>
+        <div class="sandstorm-button neutral" data-action="save-app">
+          SAVE
+        </div>
+        <div class="sandstorm-button neutral" data-action="submit-app">
+          SUBMIT REQUESTS
+        </div>
+        <i class="icon-garbage" data-action="delete-app"></i>
+      </div>
+
+    </div>
+
+  </form>
+  {{/with}}
+
+</template>
