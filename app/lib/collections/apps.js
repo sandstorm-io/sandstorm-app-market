@@ -126,6 +126,7 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
   notes: {
     type: [Object],
     blackbox: true,
+    optional: true,
     autoValue: function(doc) {
       var note = this.field('note');
       if (note.isSet) {

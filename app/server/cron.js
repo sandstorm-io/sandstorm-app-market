@@ -31,7 +31,7 @@ var retricon = Meteor.npmRequire('retricon');
 // SyncedCron.add({
 //   name: 'Update fake apps',
 //   schedule: function(parser) {
-//     return parser.text('every 3 minutes');
+//     return parser.text('every 3 seconds');
 //   },
 //   job: function() {
 //
