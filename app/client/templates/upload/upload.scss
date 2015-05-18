@@ -258,6 +258,14 @@
     border: 1px solid #e7e4ea;
     float: left;
 
+    &.small {
+      width: 150px;
+
+      .identicon {
+        opacity: 0.5;
+      }
+    }
+
     @media (max-width: $small-screen) {
 
       margin-bottom: 2rem;

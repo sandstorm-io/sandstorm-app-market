@@ -188,6 +188,12 @@ Template.Review.helpers({
 
     return Template.instance().editedFields.get()[field];
 
+  },
+
+  originalApp: function() {
+
+    return Template.instance().get('originalApp');
+
   }
 
 });
