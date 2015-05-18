@@ -184,6 +184,12 @@ Template.Review.helpers({
 
 Template.Review.events({
 
+  'click [data-action="submit-note"]': function(evt, tmp) {
+    Meteor.call('apps/addNote', FlowRouter.current().params.appId, tmp.$('[data-field="note-entry"]').val(), function(err) {
+      if (err) throw new Meteor.Error(err.message);
+    });
+  },
+
   'click div[data-alt-field]': function(evt, tmp) {
 
     var fields = tmp.editingFields.get(),

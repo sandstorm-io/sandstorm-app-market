@@ -74,6 +74,8 @@
   font-size: 1.95rem;
   font-family: $main-font;
   line-height: 2.8rem;
+  padding-right: 2rem;
+  padding-left: 2rem;
 
   .note:not(:last-child) {
     border-bottom: 1px dashed #555555;
