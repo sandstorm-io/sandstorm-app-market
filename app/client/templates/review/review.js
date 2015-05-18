@@ -186,6 +186,7 @@ Template.Review.events({
 
   'click [data-action="submit-note"]': function(evt, tmp) {
     Meteor.call('apps/addNote', FlowRouter.current().params.appId, tmp.$('[data-field="note-entry"]').val(), function(err) {
+      tmp.$('[data-field="note-entry"]').val('');
       if (err) throw new Meteor.Error(err.message);
     });
   },
