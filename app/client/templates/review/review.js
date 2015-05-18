@@ -106,6 +106,9 @@ Template.Review.onCreated(function() {
       var categories = Categories.find().fetch();
       tmp.categories.set(categories);
 
+      // Save the original app for comparison
+      tmp.originalApp = Apps.findOne(FlowRouter.getParam('appId'));
+
       // And load either the saved version or the actual app,
       if (Meteor.user() && Meteor.user().savedApp && Meteor.user().savedApp[FlowRouter.getParam('appId')]) {
         tmp.app.set(Meteor.user().savedApp[FlowRouter.getParam('appId')]);
@@ -165,7 +168,7 @@ Template.Review.helpers({
 
   fieldEdit: function(field) {
 
-    return (field in Template.instance().editingFields.get());
+    return Template.instance().editingFields.get()[field];
 
   },
 
@@ -183,7 +186,7 @@ Template.Review.helpers({
 
   edited: function(field) {
 
-    return (field in Template.instance().editedFields.get());
+    return Template.instance().editedFields.get()[field];
 
   }
 
@@ -225,7 +228,7 @@ Template.Review.events({
         editedFields = tmp.editedFields.get(),
         field = $el.data('field');
     delete editingFields[field];
-    editedFields[field] = true;
+    editedFields[field] = ($el.val() !== tmp.originalApp[field]);
     tmp.editingFields.set(editingFields);
     tmp.editedFields.set(editedFields);
 
