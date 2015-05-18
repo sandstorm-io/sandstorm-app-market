@@ -258,3 +258,35 @@ if (Meteor.isServer) {
     }
   });
 }
+
+// Update installed counts
+function updateInstallCount() {
+
+  Apps.find().forEach(function(app) {
+
+    var query = {};
+    query['installedApps.' + app._id] = {$exists: true};
+
+    Apps.update(app._id, {$set: {
+      installCount: Meteor.users.find(query).count()
+    }});
+
+  });
+
+}
+
+function updateInstallCountThisWeek() {
+
+  Apps.find().forEach(function(app) {
+
+    var query = {},
+        lastWeek = new moment().subtract(7, 'days').toDate();
+    query['installedApps.' + app._id + '.dateTime'] = {$gte: lastWeek};
+
+    Apps.update(app._id, {$set: {
+      installCountThisWeek: Meteor.users.find(query).count()
+    }});
+
+  });
+
+}
