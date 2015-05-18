@@ -339,13 +339,38 @@
 
   }
 
-
-  .screenshot-container {
-
+  .screenshot-outer {
+    display: inline-block;
+    vertical-align: top;
     width: 33.3%;
     min-width: 22rem;
     box-sizing: border-box;
-    display: inline-block;
+
+    .comment-box {
+      width: calc(100% - 0.5rem);
+      display: block;
+      resize: none;
+      box-sizing: border-box;
+      height: 5rem;
+      padding-left: 1.1rem;
+      padding-right: 1.1rem;
+      box-shadow: none;
+      background: #ffffff;
+      border: 1px solid #ccb8d1;
+      color: #555555;
+      font-size: 1.35rem;
+      font-family: $main-font;
+      line-height: 2.8rem;
+      outline: none;
+      overflow-y: hidden;
+      margin-left: 0.25rem;
+      margin-right: 0.25rem;
+    }
+  }
+
+  .screenshot-container {
+    display: block;
+
     position: relative;
 
     @media (max-width: $small-screen) {
@@ -412,6 +437,20 @@
       opacity: 0.7;
       cursor: pointer;
       top: 1.5rem;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    .comment {
+      position: absolute;
+      right: 1.5rem;
+      color: #222222;
+      font-size: 3.15rem;
+      opacity: 0.7;
+      cursor: pointer;
+      bottom: 1.5rem;
 
       &:hover {
         opacity: 1;

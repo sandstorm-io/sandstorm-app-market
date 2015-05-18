@@ -75,6 +75,12 @@ var helpers = {
 
   },
 
+  and: function(a, b) {
+
+    return a && b;
+
+  },
+
   prune: function(string, length) {
 
     return s.prune(string, length);

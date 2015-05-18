@@ -32,9 +32,16 @@ var appsBaseSchema = {
     optional: true
   },
   screenshots: {
-    type: [String],
-    regEx: SimpleSchema.RegEx.Url,
+    type: [Object],
     defaultValue: []
+  },
+  'screenshots.$.url': {
+    type: String,
+    regEx: SimpleSchema.RegEx.Url
+  },
+  'screenshots.$.comment': {
+    type: String,
+    optional: true
   },
   author: {
     type: String,

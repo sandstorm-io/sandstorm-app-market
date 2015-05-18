@@ -253,14 +253,26 @@
 
   {{#each screenshots}}
 
-    <div class="screenshot-container">
-      <div class="screenshot" style="background-image: url('{{imageUrl this}}')" data-action="change-screenshot"></div>
-      <div class="remove" data-action="remove-screenshot"><i class="icon-rejected_dark"></i></div>
+  <div class="screenshot-outer">
+      <div class="screenshot-container">
+        <div class="screenshot" style="background-image: url('{{imageUrl this.url}}')" data-action="change-screenshot"></div>
+        <div class="remove" data-action="remove-screenshot"><i class="icon-rejected_dark"></i></div>
+        {{#if ../comments}}<div class="comment" data-action="open-comment-box"><i class="fa fa-comment-o"></i></div>{{/if}}
+      </div>
+      {{#if this.comment}}
+        {{#if equal ../comments 'admin'}}
+          <textarea class="comment-box" data-field="comment-box" placeholder="Suggest feedback?">{{comment}}</textarea>
+        {{/if}}
+        {{#if equal ../comments 'user'}}
+          <div class="comment-box" data-field="comment-box read-only">{{comment}}</div>        
+        {{/if}}
+      {{/if}}
     </div>
 
   {{/each}}
   {{#each screenshotPlaceholders}}
 
+  <div class="screenshot-outer">
     <div class="screenshot-container">
       <div class="screenshot placeholder" data-action="choose-file" data-name="screenshot">
         <div class="contents">
@@ -271,6 +283,7 @@
         </div>
       </div>
     </div>
+  </div>
 
   {{/each}}
 

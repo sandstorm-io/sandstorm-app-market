@@ -313,6 +313,18 @@ Meteor.methods({
 
   },
 
+  'admin/saveEdits': function(appId) {
+
+    this.unblock();
+    if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Only an admin user can save an app that isn\'t theirs');
+
+    var set = {},
+      setString = 'savedApp.' + (app.replacesApp || 'new');
+    set[setString] = app;
+    return Meteor.users.update(this.userId, {$set: set});
+
+  },
+
   'admin/removeAllApps': function() {
 
     if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Can only be executed by admin user');

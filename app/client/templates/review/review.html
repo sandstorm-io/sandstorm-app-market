@@ -217,7 +217,7 @@
         <div><strong>800px</strong> wide by <strong>450px</strong> high (minimum) in PNG or JPEG format.</div>
       </div>
 
-      {{> screenshotPicker}}
+      {{> screenshotPicker screenshots=screenshots comments='admin'}}
 
       <h3 class="title">Description</h3>
 
@@ -264,7 +264,7 @@
     <div class="tab {{#unless viewOriginal}}active{{/unless}}" data-action="edit-markdown">Current</div>
     <div class="tab {{#if viewOriginal}}active{{/if}}" data-action="view-original">Original</div>
     <textarea class="description-editor {{#if viewOriginal}}hidden{{/if}}" data-field="description">{{current}}</textarea>
-    <div class="description-editor {{#unless viewOriginal}}hidden{{/unless}}">{{original}}</div>
+    <div class="description-editor {{#unless viewOriginal}}hidden{{/unless}}">{{{original}}}</div>
   </div>
 
 </template>

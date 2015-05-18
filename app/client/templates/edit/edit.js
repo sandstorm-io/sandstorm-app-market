@@ -281,4 +281,4 @@ Template.appNotesBox.helpers({
 
   }
 
-})
+});
