@@ -207,7 +207,7 @@ var helpers = {
   },
 
   logHeirarchy: function() {
-    
+
     console.log(Template.parentData(0));
     console.log(Template.parentData(1));
     console.log(Template.parentData(2));

@@ -149,10 +149,16 @@ Template.Review.helpers({
 
   },
 
-  notes: function() {
+  parentApp: function() {
+
+    return Apps.findOne(FlowRouter.current().params.appId);
+
+  },
+
+  isFlagged: function() {
 
     var app = Apps.findOne(FlowRouter.current().params.appId);
-    return app && app.notes;
+    return app && !_.isEmpty(app.flags);
 
   },
 
@@ -283,5 +289,83 @@ Template.Review.events({
     });
 
   },
+
+  'click [data-action="scroll-top"]': function() {
+
+    window.scrollTo(0, 0);
+
+  },
+
+  'click [data-action="approve"]': function() {
+    Meteor.call('apps/approve', FlowRouter.current().params.appId, function(err) {
+      if (err) throw new Meteor.Error(err.message);
+    });
+  },
+  'click [data-action="request-revision"]': function() {
+    Meteor.call('apps/request-revision', FlowRouter.current().params.appId, function(err) {
+      if (err) throw new Meteor.Error(err.message);
+    });
+  },
+  'click [data-action="flag"]': function() {
+    Meteor.call('apps/flag', FlowRouter.current().params.appId, function(err) {
+      if (err) throw new Meteor.Error(err.message);
+    });
+  },
+  'click [data-action="reject"]': function() {
+    Meteor.call('apps/reject', FlowRouter.current().params.appId, function(err) {
+      if (err) throw new Meteor.Error(err.message);
+    });
+  },
+
+});
+
+Template.descriptionEditor.onCreated(function() {
+
+  var tmp = this;
+
+  tmp.original = new ReactiveVar();
+  tmp.current = new ReactiveVar();
+  tmp.viewOriginal = new ReactiveVar(false);
+
+  tmp.autorun(function(c) {
+    if (FlowRouter.subsReady()) {
+      Tracker.afterFlush(function() {
+        tmp.original.set(tmp.data.initial);
+        tmp.current.set(tmp.data.initial);
+        c.stop();
+      });
+    }
+  });
+
+});
+
+Template.descriptionEditor.helpers({
+
+  current: function() {
+    return Template.instance().get('current').get();
+  },
+  original: function() {
+    return Template.instance().get('original').get();
+  },
+  viewOriginal: function() {
+    return Template.instance().get('viewOriginal').get();
+  }
+
+});
+
+Template.descriptionEditor.events({
+
+  'click [data-action="edit-markdown"]': function(evt, tmp) {
+    tmp.viewOriginal.set(false);
+  },
+
+  'click [data-action="view-original"]': function(evt, tmp) {
+    tmp.viewOriginal.set(true);
+  },
+
+  'change [data-field="description"]': function(evt, tmp) {
+    var app = tmp.get('app');
+    app.set('description', $(evt.currentTarget).val());
+  }
 
 });

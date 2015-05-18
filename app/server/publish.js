@@ -34,10 +34,14 @@ Meteor.publish('apps by genre', function (name) {
   ];
 });
 
-Meteor.publish('apps by id', function (ids) {
+Meteor.publish('apps by id', function (ids, flags) {
+  var fields = {};
+
+  if (!Roles.userIsInRole(this.userId, 'admin') || !flags) fields = {flags: 0};
+
   var apps = Array.isArray(ids) ?
         Apps.find({_id: {$in: ids}}, {fields: {flags: 0}}) :
-        Apps.find(ids, {fields: {flags: 0}}),
+        Apps.find(ids, {fields: fields}),
       authorIds = _.unique(_.pluck(apps.fetch(), 'author')),
       authors = Meteor.users.find({_id: {$in: authorIds}}, {fields: {username: 1}});
 

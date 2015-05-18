@@ -20,3 +20,51 @@
   overflow-y: hidden;
 
 }
+
+.description-editor-container {
+
+  .tab {
+    display: inline-block;
+    font-size: 1.6rem;
+    height: auto;
+    width: auto;
+    cursor: pointer;
+    padding: 1rem;
+    color: #555555;
+    font-weight: 300;
+
+    &.active {
+      color: #222222;
+      font-weight: 400;
+    }
+  }
+
+}
+
+.description-editor {
+
+  width: 100%;
+  min-height: 8rem;
+  display: block;
+  box-shadow: none;
+  background: #ffffff;
+  border: 1px solid #ccb8d1;
+  color: #555555;
+  font-size: 1.95rem;
+  font-family: $main-font;
+  height: 2.8rem;
+  line-height: 2.8rem;
+  padding-top: 1.1rem;
+  padding-bottom: 1.1rem;
+  padding-left: 1.1rem;
+  padding-right: 1.1rem;
+  box-sizing: border-box;
+  resize: vertical;
+  outline: none;
+  overflow-y: auto;
+
+  &.hidden {
+    display: none;
+  }
+
+}

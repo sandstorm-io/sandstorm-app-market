@@ -19,19 +19,19 @@
 
         <div class="button-block">
 
-          <div class="sandstorm-button color green" data-action="approve">
+          <div class="sandstorm-button color green {{#if equal parentApp.approved 0}}active{{/if}}" data-action="approve">
             <i class="icon-approved_light"></i>
             <div class="text">Approve</div>
           </div>
-          <div class="sandstorm-button color purple" data-action="request-revision">
+          <div class="sandstorm-button color purple {{#if equal parentApp.approved 2}}active{{/if}}" data-action="request-revision">
             <i class="icon-revisions"></i>
             <div class="text">Request Revision</div>
           </div>
-          <div class="sandstorm-button color yellow" data-action="flag">
+          <div class="sandstorm-button color yellow {{#if isFlagged}}active{{/if}}" data-action="flag">
             <i class="icon-flagged_light"></i>
             <div class="text">Flag</div>
           </div>
-          <div class="sandstorm-button color black" data-action="reject">
+          <div class="sandstorm-button color black {{#if equal parentApp.approved 3}}active{{/if}}" data-action="reject">
             <i class="icon-rejected_light"></i>
             <div class="text">Reject</div>
           </div>
@@ -48,7 +48,7 @@
 
       <div class="spacer clearfix"></div>
 
-      {{> appNotesBox notes=notes}}
+      {{> appNotesBox notes=parentApp.notes}}
 
       <div class="right-float on-top">
 
@@ -217,7 +217,7 @@
 
       <h3 class="title">Description</h3>
 
-      <textarea class="description" data-field="description" placeholder="What does your app do?">{{description}}</textarea>
+      {{> descriptionEditor initial=description}}
 
     </div>
 
@@ -251,5 +251,16 @@
 
   </form>
   {{/with}}
+
+</template>
+
+<template name="descriptionEditor">
+
+  <div class="description-editor-container">
+    <div class="tab {{#unless viewOriginal}}active{{/unless}}" data-action="edit-markdown">Current</div>
+    <div class="tab {{#if viewOriginal}}active{{/if}}" data-action="view-original">Original</div>
+    <textarea class="description-editor {{#if viewOriginal}}hidden{{/if}}" data-field="description">{{current}}</textarea>
+    <div class="description-editor {{#unless viewOriginal}}hidden{{/unless}}">{{original}}</div>
+  </div>
 
 </template>

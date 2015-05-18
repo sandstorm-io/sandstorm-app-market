@@ -283,6 +283,7 @@ Meteor.methods({
 
   },
 
+  // TODO: this is probably unnecessary
   'apps/flag': function(appId) {
 
     if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Can only be executed by admin user');

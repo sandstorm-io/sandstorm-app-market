@@ -76,6 +76,7 @@ oauth@1.1.4
 oauth2@1.1.3
 observe-sequence@1.0.6
 ordered-dict@1.0.3
+ovcharik:jsdiff@1.4.0
 percolate:synced-cron@1.2.0
 random@1.0.3
 rcy:nouislider@7.0.7_2

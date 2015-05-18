@@ -82,7 +82,11 @@ var appsBaseSchema = {
   }
 
 };
-// appsFullSchema adds the autoValue and defaultValue keys
+
+Schemas.AppsBase = new SimpleSchema(appsBaseSchema);
+
+// appsFullSchema adds the autoValue and defaultValue keys,
+// plus any keys that the user shouldn't be allowed to set themselves
 var appsFullSchema = _.extend({}, appsBaseSchema, {
   createdAt: {
     type: Date,
@@ -197,6 +201,10 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
         return converter.makeHtml(markdownContent.value);
       }
     }
+  },
+  adminSuggestions: {
+    type: Schemas.AppsBase,
+    optional: true
   }
 },
 {
@@ -223,8 +231,6 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
   }
 });
 
-
-Schemas.AppsBase = new SimpleSchema(appsBaseSchema);
 Schemas.AppsFull = new SimpleSchema(appsFullSchema);
 
 Apps.attachSchema(Schemas.AppsFull);
