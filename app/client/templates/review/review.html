@@ -84,9 +84,10 @@
 
         <h3 class="title">Title</h3>
         {{#if fieldEdit 'name'}}
-          <input type="admin text" data-field="name" value="{{name}}" required />
+          <input type="text" data-field="name" value="{{name}}" required />
+        {{else}}
+          <div data-alt-field="name">{{name}}</div>
         {{/if}}
-        <div data-alt-field="name">{{name}}</div>
 
         <h3 class="title">Author</h3>
         <div class="read-only">{{getUsername author}}</div>
