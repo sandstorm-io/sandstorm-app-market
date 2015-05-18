@@ -21,6 +21,7 @@ Template.Review.onCreated(function() {
   tmp.screenshotsVis = new ReactiveVar(3);
   tmp.suggestNewGenre = new ReactiveVar(false);
   tmp.editingFields = new ReactiveVar({});
+  tmp.editedFields = new ReactiveVar({});
   tmp.newVersion = new ReactiveVar(false);
 
   var resetScreenshotsVis = function() {
@@ -178,6 +179,12 @@ Template.Review.helpers({
 
     return Template.instance().get('appNotes').get();
 
+  },
+
+  edited: function(field) {
+
+    return (field in Template.instance().editedFields.get());
+
   }
 
 });
@@ -207,6 +214,20 @@ Template.Review.events({
 
     var $el = $(evt.currentTarget);
     tmp.app.set($el.data('field'), $el.val());
+
+  },
+
+  'blur [data-field], keyup [data-field]': function(evt, tmp) {
+
+    if (evt.keyCode && evt.keyCode !== 13) return false;
+    var $el = $(evt.currentTarget);
+    var editingFields = tmp.editingFields.get(),
+        editedFields = tmp.editedFields.get(),
+        field = $el.data('field');
+    delete editingFields[field];
+    editedFields[field] = true;
+    tmp.editingFields.set(editingFields);
+    tmp.editedFields.set(editedFields);
 
   },
 

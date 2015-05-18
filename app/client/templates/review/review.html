@@ -86,7 +86,7 @@
         {{#if fieldEdit 'name'}}
           <input type="text" data-field="name" value="{{name}}" required />
         {{else}}
-          <div data-alt-field="name">{{name}}</div>
+          <div class="{{#if edited 'name'}}highlight{{/if}}" data-alt-field="name">{{name}}</div>
         {{/if}}
 
         <h3 class="title">Author</h3>
@@ -109,14 +109,14 @@
         {{#if fieldEdit 'codeLink'}}
           <input type="text" data-field="codeLink" value="{{codeLink}}" pattern="https?://.+" />
         {{else}}
-          <div data-alt-field="codeLink">{{verboseNone codeLink}}</div>
+          <div class="{{#if edited 'codeLink'}}highlight{{/if}}" data-alt-field="codeLink">{{verboseNone codeLink}}</div>
         {{/if}}
 
         <h4 class="mini-title">License</h4>
         {{#if fieldEdit 'license'}}
           <input type="text" data-field="license" value="{{license}}" />
         {{else}}
-          <div data-alt-field="license">{{verboseNone license}}</div>
+          <div class="{{#if edited 'license'}}highlight{{/if}}" data-alt-field="license">{{verboseNone license}}</div>
         {{/if}}
 
         <h4 class="mini-title">Version</h4>
@@ -134,7 +134,7 @@
         {{#if fieldEdit 'webLink'}}
           <input type="text" data-field="webLink" value="{{webLink}}" />
         {{else}}
-          <div data-alt-field="webLink">{{verboseNone webLink}}</div>
+          <div class="{{#if edited 'webLink'}}highlight{{/if}}" data-alt-field="webLink">{{verboseNone webLink}}</div>
         {{/if}}
 
         {{> connectButton service="github"}}
