@@ -194,6 +194,37 @@ Template.Review.helpers({
 
     return Template.instance().get('originalApp');
 
+  },
+
+  status: function() {
+
+    var originalApp = Apps.findOne(FlowRouter.getParam('appId'));
+    return [
+
+      {
+        color: 'green',
+        icon: 'icon-approved_light',
+        text: 'Approved'
+      },
+      {
+        color: '',
+        icon: '',
+        text: 'Pending'
+      },
+      {
+        color: 'purple',
+        icon: 'icon-revisions',
+        text: 'Revision Requested'
+      },
+      {
+        color: 'black',
+        icon: 'icon-rejected_light',
+        text: 'Rejected'
+      },
+
+
+    ][originalApp && originalApp.approved];
+
   }
 
 });

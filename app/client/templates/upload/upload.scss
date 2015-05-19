@@ -140,6 +140,34 @@
 
     }
 
+    .message, .status {
+
+      font-size: 1.8rem;
+      margin-right: 2rem;
+
+    }
+
+    .status {
+      &.purple {
+        color: #783189;
+        i {
+          color: #783189;
+        }
+      }
+      &.green {
+        color: #4b9441;
+        i {
+          color: #4b9441;
+        }
+      }
+      &.black {
+        i {
+          color: #222222;
+        }
+        color: #222222;
+      }
+    }
+
   }
 
   input[type="text"] {
