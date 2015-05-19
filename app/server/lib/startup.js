@@ -13,16 +13,15 @@ Meteor.publish(null, function(){
 
 Meteor.startup(function () {
 
-  seedCategories()
-  seedUser()
-   
+  seedCategories();
+
 });
 
 function seedCategories () {
 
-  if (Categories.find().count() > 0) return
+  if (Categories.find().count() > 0) return;
 
-  var cats = [ 
+  var cats = [
     { name: 'Social', showSummary: true },
     { name: 'Project Management', showSummary: true },
     { name: 'Publishing', showSummary: true },
@@ -31,21 +30,10 @@ function seedCategories () {
     { name: 'Media', showSummary: true },
     { name: 'Science', showSummary: true },
     { name: 'Accounting', showSummary: true },
-    { name: 'Productivity', showSummary: true } ]
+    { name: 'Productivity', showSummary: true },
+    { name: 'Development', showSummary: true }
+  ];
   _.each(cats, function (cat) {
-    Categories.insert(cat)
-  })
-};
-
-function seedUser () {
-
-  if (Meteor.users.find().count() > 0) return 
-
-  var user = {
-    username: 'tableflip',
-    fullname: 'tableflip admin',
-    email: 'richard@tableflip.io'
-  }
-
-  Meteor.users.insert(user)
-};
+    Categories.insert(cat);
+  });
+}
