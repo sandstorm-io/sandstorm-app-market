@@ -209,9 +209,16 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
       }
     }
   },
-  adminSuggestions: {
-    type: Schemas.AppsBase,
-    optional: true
+  adminRequests: {
+    // due to a Simple-Schema problem, optionality doesn't seem to extend to
+    // subschemas, so if we use `type: Schemas.AppsBase` and `optional: true`
+    // it complains that the object has no name, etc., even thought the object
+    // itself is supposed to be optional.  This way, we can declare an array
+    // of max size 1, and either populate it or not.
+    // see: https://github.com/aldeed/meteor-simple-schema/issues/133
+    type: [Schemas.AppsBase],
+    maxCount: 1,
+    defaultValue: []
   }
 },
 {

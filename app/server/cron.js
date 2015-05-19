@@ -55,7 +55,7 @@ var retricon = Meteor.npmRequire('retricon');
 //     });
 //   }
 // });
-
+//
 SyncedCron.add({
   name: 'Autoupdate apps',
   schedule: function(parser) {
@@ -101,21 +101,22 @@ function oldDate() { var d = new Date(); d -= Math.random() * 1000 * 60 * 60 * 2
 App.fakeApp = function() {
 
   var categories = _.pluck(Categories.find({approved: 0}, {fields: {name: 1}}).fetch(), 'name'),
-      users = _.pluck(Meteor.users.find({}, {fields: {_id: 1}}).fetch(), '_id');
+      users = _.pluck(Meteor.users.find({}, {fields: {_id: 1}}).fetch(), '_id'),
+      app = {
+        name: faker.company.bs(),
+        categories: _.sample(categories, _.sample([1, 2, 3])),
+        description: faker.lorem.paragraph(),
+        image: retricon(Random.id(), 50, 0).toDataURL(),
+        approved: 1,
+        author: _.sample(users),
+        versions: [{
+          number: '0.0.1',
+          dateTime: new Date()
+        }],
+        updatedAt: oldDate(),
+        spkLink: 'http://exampleurl.com/spkfile.spk'
+      };
 
-  return Apps.insert({
-    name: faker.company.bs(),
-    categories: _.sample(categories, _.sample([1, 2, 3])),
-    description: faker.lorem.paragraph(),
-    image: retricon(Random.id(), 50, 0).toDataURL(),
-    approved: 1,
-    author: _.sample(users),
-    versions: [{
-      number: '0.0.1',
-      dateTime: new Date()
-    }],
-    updatedAt: oldDate(),
-    spkLink: 'http://exampleurl.com/spkfile.spk'
-  });
+  return Apps.insert(app);
 
 };

@@ -34,13 +34,16 @@ Template.Review.onCreated(function() {
   Schemas.AppsBase.clean(newApp);
   tmp.app.set(newApp);
 
-  tmp.setCategories = function(categories) {
+  tmp.setCategories = function(categories, firstSet) {
 
     var allCategories = tmp.categories.get();
 
     _.each(categories, function(cat) {
       var thisCat = _.findWhere(allCategories, {name: cat});
-      if (thisCat) thisCat.selected = true;
+      if (thisCat) {
+        thisCat.selected = true;
+        if (firstSet) thisCat.original = true;
+      }
       else allCategories.push({
         name: cat,
         showSummary: true,
@@ -108,9 +111,11 @@ Template.Review.onCreated(function() {
 
       // Save the original app for comparison
       tmp.originalApp = Apps.findOne(FlowRouter.getParam('appId'));
-
-      // And load either the saved version or the actual app,
-      if (Meteor.user() && Meteor.user().savedApp && Meteor.user().savedApp[FlowRouter.getParam('appId')]) {
+      // And load either a published admin's requested changes, this admin user's saved
+      // version, or the currently published app (in that order of precedence).
+      if (tmp.originalApp.adminRequests[0]) {
+        tmp.app.set(tmp.originalApp.adminRequests[0]);
+      } else if (Meteor.user() && Meteor.user().savedApp && Meteor.user().savedApp[FlowRouter.getParam('appId')]) {
         tmp.app.set(Meteor.user().savedApp[FlowRouter.getParam('appId')]);
       } else {
         var newVersion = Apps.findOne(FlowRouter.current().params.appId),
@@ -121,7 +126,13 @@ Template.Review.onCreated(function() {
         newVersion.lastVersionNumber = lastVersionNumber;
         tmp.app.set(newVersion);
       }
-      tmp.setCategories(tmp.app.get('categories'));
+      // highlight edited fields
+      var editedFields = tmp.editedFields.get();
+      _.each(tmp.app.all(), function(val, field) {
+        if (val !== tmp.originalApp[field]) editedFields[field] = true;
+      });
+      tmp.editedFields.set(editedFields);
+      tmp.setCategories(tmp.app.get('categories'), true);
 
       c.stop();
     }
@@ -306,20 +317,16 @@ Template.Review.events({
 
   },
 
-  'click [data-action="submit-app"]': function(evt, tmp) {
+  'click [data-action="submit-admin-requests"]': function(evt, tmp) {
 
-    if (tmp.app.get('versions').length > 0) {
-      Meteor.call('user/submit-update', tmp.app.all(), function(err, res) {
-        if (err) console.log(err);
-        else if (res) FlowRouter.go('appsByMe');
-      });
-    } else {
-      console.log('No new version specified');
-    }
+    Meteor.call('admin/submitAdminRequests', tmp.app.all(), function(err, res) {
+      if (err) console.log(err);
+      else if (res) FlowRouter.go('admin');
+    });
 
   },
 
-  'click [data-action="save-app"]': function(evt, tmp) {
+  'click [data-action="save-admin-requests"]': function(evt, tmp) {
 
     Meteor.call('user/save-app', tmp.app.all(), function(err) {
       if (err) console.log(err);
@@ -327,7 +334,7 @@ Template.Review.events({
 
   },
 
-  'click [data-action="discard-edits"]': function(evt, tmp) {
+  'click [data-action="discard-admin-requests"]': function(evt, tmp) {
 
     Meteor.call('user/delete-saved-app', tmp.app.get('replacesApp'), function(err, res) {
       if (err) {

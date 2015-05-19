@@ -199,12 +199,36 @@ Template.Upload.events({
 
 });
 
+Template.fileBox.onCreated(function() {
+
+  this.uploaded = new ReactiveVar();
+
+});
+
 Template.fileBox.helpers({
 
   filename: function() {
 
     var file = Template.instance().get('file').get();
     return file && file.name;
+
+  },
+
+  uploaderStatus: function() {
+
+    return App.spkUploader.status();
+
+  },
+
+  progress: function () {
+
+    return Math.round(App.spkUploader.progress() * 100);
+
+  },
+
+  uploaded: function() {
+
+    return Template.instance().uploaded.get();
 
   }
 
@@ -214,7 +238,7 @@ Template.fileBox.events({
 
   'click [data-action="choose-file"]': function(evt, tmp) {
 
-    tmp.$('[data-action="file-picker"][data-for="' + $(evt.currentTarget).data('name') + '"]').click();
+    tmp.$('[data-action="file-picker"][data-for="spk"]').click();
     evt.stopPropagation();
 
   },
@@ -235,9 +259,12 @@ Template.fileBox.events({
         console.error('Error uploading', err);
       else {
         tmp.get('app').set('spkLink', encodeURI(downloadUrl));
+        tmp.get('uploaded').set(file.name);
       }
 
     });
+
+    else tmp.$('[data-action="file-picker"][data-for="spk"]').click();
 
   }
 

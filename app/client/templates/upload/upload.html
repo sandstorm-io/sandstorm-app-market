@@ -212,6 +212,13 @@
 
     {{/if}}
 
+    {{#if equal uploaderStatus 'transferring'}}
+      <div class="progress-bar"><div class="fill" style="width: {{progress}}%;"></div></div>
+    {{/if}}
+    {{#if uploaded}}
+      <div class="upload-confirm">{{uploaded}} uploaded</div>
+    {{/if}}
+
   </div>
 
 </template>
@@ -264,7 +271,7 @@
           <textarea class="comment-box" data-field="comment-box" placeholder="Suggest feedback?">{{comment}}</textarea>
         {{/if}}
         {{#if equal ../comments 'user'}}
-          <div class="comment-box" data-field="comment-box read-only">{{comment}}</div>        
+          <div class="comment-box" data-field="comment-box read-only">{{comment}}</div>
         {{/if}}
       {{/if}}
     </div>

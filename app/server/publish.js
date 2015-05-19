@@ -4,6 +4,11 @@
  * });
  */
 
+var appUnpublishedFields = {
+  flags: 0,
+  notes: 0,
+  adminReqests: 0
+};
 
 Meteor.publish('categories', function () {
   var allCats = _.pluck(Categories.find({approved: 0}, {fields: {name: 1}}).fetch(), 'name'),
@@ -25,7 +30,7 @@ Meteor.publish('suggested categories', function() {
 });
 
 Meteor.publish('apps by genre', function (name) {
-  var apps = Genres.findIn(name, {public: true, approved: 0}, {fields: {flags: 0, notes: 0}}, this);
+  var apps = Genres.findIn(name, {public: true, approved: 0}, {fields: appUnpublishedFields}, this);
   return [
     apps,
     Meteor.users.find({_id: {$in: _.uniq(apps.map(function(app) {
@@ -37,10 +42,10 @@ Meteor.publish('apps by genre', function (name) {
 Meteor.publish('apps by id', function (ids, flags) {
   var fields = {};
 
-  if (!Roles.userIsInRole(this.userId, 'admin') || !flags) fields = {flags: 0};
+  if (!Roles.userIsInRole(this.userId, 'admin') || !flags) fields.flags = 0;
 
   var apps = Array.isArray(ids) ?
-        Apps.find({_id: {$in: ids}}, {fields: {flags: 0}}) :
+        Apps.find({_id: {$in: ids}}, {fields: fields}) :
         Apps.find(ids, {fields: fields}),
       authorIds = _.unique(_.pluck(apps.fetch(), 'author')),
       authors = Meteor.users.find({_id: {$in: authorIds}}, {fields: {username: 1}});
@@ -52,7 +57,7 @@ Meteor.publish('apps by id', function (ids, flags) {
 });
 
 Meteor.publish('apps by me', function () {
-  return Genres.findIn('Apps By Me', {}, {fields: {flags: 0, notes: 0}}, this);
+  return Genres.findIn('Apps By Me', {}, {fields: appUnpublishedFields}, this);
 });
 
 Meteor.publish('apps all', function() {
@@ -62,7 +67,7 @@ Meteor.publish('apps all', function() {
     var appsC = Apps.find({}, {fields: {notes: 0}}),
         userIds = _.uniq(appsC.map(function(app) { return app.author; }));
     return [
-      Apps.find({}, {fields: {notes: 0}}),
+      Apps.find({}, {fields: appUnpublishedFields}),
       Meteor.users.find({_id: {$in: userIds}})
     ];
 
@@ -79,11 +84,11 @@ Meteor.publish('apps by author', function(authorId) {
 });
 
 Meteor.publish('app search name', function(term) {
-  return Apps.find({name: {$regex: term, $options: 'i'}, public: true, approved: 0}, {fields: {flags: 0}});
+  return Apps.find({name: {$regex: term, $options: 'i'}, public: true, approved: 0}, {fields: appUnpublishedFields});
 });
 
 Meteor.publish('app search description', function(term) {
-  return Apps.find({description: {$regex: term, $options: 'i'}, public: true, approved: 0}, {fields: {flags: 0}});
+  return Apps.find({description: {$regex: term, $options: 'i'}, public: true, approved: 0}, {fields: appUnpublishedFields});
 });
 
 Meteor.publish('saved apps', function() {
