@@ -59,6 +59,7 @@
             {{#if autoupdateApps}}
               <div class="title">RECENTLY UPDATED</div>
             {{else}}
+              {{#if updates}}
               <div class="title">PENDING UPDATES</div>
               <div class="button-container">
                 <div class="sandstorm-button secondary" data-action="update-all-apps">
@@ -66,6 +67,9 @@
                   UPDATE ALL
                 </div>
               </div>
+              {{else}}
+                <div class="force-height"></div>
+              {{/if}}
             {{/if}}
 
             {{> appTable genre='Updates Available' singleLine=true updateChrome=true installPage=true reactive=true}}

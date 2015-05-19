@@ -112,7 +112,7 @@ var extraGenres = [
         _id: {
           $in: _.reduce(user.installedApps, function(idList, appDetails, appId) {
             var current = Apps.findOne(appId);
-            if (current && appDetails.version.dateTime === current.latestVersion().dateTime)
+            if (current && appDetails.version.dateTime >= current.latestVersion().dateTime)
               idList.push(appId);
             return idList;
           }, [])

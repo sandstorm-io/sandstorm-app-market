@@ -4,7 +4,11 @@ function firstVisit() {
 
 Template.InstalledApps.helpers({
 
-  firstVisit: firstVisit
+  firstVisit: firstVisit,
+
+  updates: function() {
+    return Genres.findIn('Updates Available').count();
+  }
 
 });
 
