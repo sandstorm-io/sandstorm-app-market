@@ -33,7 +33,7 @@ var helpers = {
   getLatestVersion: function() {
 
     var version = this.latestVersion();
-    return version && version.name;
+    return version && version.number;
 
   },
 
