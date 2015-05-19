@@ -33,16 +33,41 @@ Template.Edit.onCreated(function() {
   Schemas.AppsBase.clean(newApp);
   tmp.app.set(newApp);
 
-  tmp.setCategory = function(category) {
+  tmp.setCategories = function(categories) {
+
+    var allCategories = tmp.categories.get();
+
+    _.each(categories, function(cat) {
+      var thisCat = _.findWhere(allCategories, {name: cat});
+      if (thisCat) thisCat.selected = true;
+      else allCategories.push({
+        name: cat,
+        showSummary: true,
+        new: true,
+        selected: true
+      });
+    });
+
+    tmp.categories.set(allCategories);
+    // tmp.app.set('categories', allCategories);
+    tmp.categories.dep.changed();
+
+  };
+
+  tmp.toggleCategory = function(category) {
 
     var categories = tmp.categories.get();
     if (typeof category === 'string') category = _.findWhere(categories, {name: category});
+    if (!category) return;
 
-    _.each(categories, function(cat) {
-      cat.selected = false;
-    });
-    category.selected = true;
-    tmp.app.set('category', category.name);
+    if (category.selected) {
+      delete category.selected;
+      tmp.app.set('categories', _.without(tmp.app.get('categories'), category.name));
+      if (category.new) tmp.categories.set(_.reject(categories, function(thisCat) { return thisCat.name === category.name; }));
+    } else {
+      category.selected = true;
+      tmp.app.set('categories', tmp.app.get('categories').concat(category.name));
+    }
     tmp.categories.dep.changed();
 
   };
@@ -78,21 +103,21 @@ Template.Edit.onCreated(function() {
 
       // Now we can store the genre list
       var categories = Categories.find().fetch();
-      if (categories.length) categories[0].selected = true;
       tmp.categories.set(categories);
-      tmp.app.set('category', categories.length && categories[0].name);
 
       // And load either the saved version or the actual app,
       if (Meteor.user() && Meteor.user().savedApp && Meteor.user().savedApp[FlowRouter.getParam('appId')]) {
         tmp.app.set(Meteor.user().savedApp[FlowRouter.getParam('appId')]);
       } else {
-        var newVersion = Apps.findOne(FlowRouter.current().params.appId);
+        var newVersion = Apps.findOne(FlowRouter.current().params.appId),
+            lastVersionNumber = newVersion.latestVersion();
         newVersion.replacesApp = newVersion._id;
         newVersion.versions = [];
         Schemas.AppsBase.clean(newVersion);
+        newVersion.lastVersionNumber = lastVersionNumber;
         tmp.app.set(newVersion);
       }
-      tmp.setCategory(tmp.app.get('category'));
+      tmp.setCategories(tmp.app.get('categories'));
 
       c.stop();
     }
@@ -124,40 +149,6 @@ Template.Edit.helpers({
 
   },
 
-  filename: function() {
-
-    var tmp = Template.instance(),
-        file = tmp.file.get();
-    return file && file.name;
-
-  },
-
-  categories: function() {
-
-    return Template.instance().categories.get();
-
-  },
-
-  suggestNewGenre: function() {
-
-    return Template.instance().suggestNewGenre.get();
-
-  },
-
-  seedString: function() {
-
-    return Template.instance().seedString.get();
-
-  },
-
-  screenshotPlaceholders: function() {
-
-    var tmp = Template.instance();
-
-    return _.range(Math.max(tmp.screenshotsVis.get() - tmp.app.get('screenshots').length, 1));
-
-  },
-
   fieldEdit: function(field) {
 
     return (field in Template.instance().editingFields.get());
@@ -186,140 +177,6 @@ Template.Edit.events({
 
   },
 
-  'click [data-action="choose-file"]': function(evt, tmp) {
-
-    tmp.$('[data-action="file-picker"][data-for="' + $(evt.currentTarget).data('name') + '"]').click();
-
-  },
-
-  'change [data-action="file-picker"][data-for="spk"]': function(evt) {
-
-    Template.instance().file.set(evt.currentTarget.files[0]);
-
-  },
-
-  'click [data-action="select-genre"]': function(evt, tmp) {
-
-    tmp.setCategory(this);
-
-  },
-
-  'click [data-action="suggest-genre"]': function(evt, tmp) {
-
-    var categories = _.filter(tmp.categories.get(), function(cat) {
-      return !cat.new;
-    });
-    tmp.categories.set(categories);
-    tmp.suggestNewGenre.set(true);
-    Tracker.afterFlush(function() {
-      tmp.$('[data-field="new-genre-name"]').focus();
-    });
-
-  },
-
-  'click [data-action="save-genre"], keyup [data-field="new-genre-name"]': function(evt, tmp) {
-
-    if (evt.keyCode && evt.keyCode !== 13) return;
-
-    var newGenreName = tmp.$('[data-field="new-genre-name"]').val(),
-        categories = tmp.categories.get();
-
-    _.each(categories, function(cat) {
-      cat.selected = false;
-    });
-
-    categories.push({
-      name: newGenreName,
-      new: true,
-      selected: true
-    });
-    tmp.suggestNewGenre.set(false);
-    tmp.categories.set(categories);
-
-  },
-
-  'change [data-action="file-picker"][data-for="identicon"]': function(evt, tmp) {
-
-    var file = evt.currentTarget.files[0];
-
-    if (file) {
-      tmp.app.set('image', App.imageUploader.url(true));
-
-      App.imageUploader.send(file, function(err, downloadUrl) {
-
-        if (err)
-          console.error('Error uploading', err);
-        else {
-          tmp.app.set('image', encodeURI(downloadUrl));
-        }
-      });
-    }
-
-  },
-
-  'change [data-action="file-picker"][data-for="screenshot"]': function(evt, tmp) {
-
-    var file = evt.currentTarget.files[0];
-
-    if (file) {
-
-      App.imageUploader.send(file, function(err, downloadUrl) {
-
-        if (err)
-          console.error('Error uploading', err);
-        else {
-          var screenshots = tmp.app.get('screenshots');
-          downloadUrl = encodeURI(downloadUrl);
-          if (!('screenshotInd' in tmp) || tmp.screenshotInd < 0) screenshots.push(downloadUrl);
-          else {
-            screenshots[tmp.screenshotInd] = downloadUrl;
-            delete tmp.screenshotInd;
-          }
-          tmp.app.set('screenshots', screenshots);
-        }
-      });
-    }
-
-  },
-
-  'click [data-action="change-screenshot"]': function(evt, tmp) {
-
-    var screenshots = tmp.app.get('screenshots');
-
-    tmp.screenshotInd = screenshots.indexOf(this.toString());
-
-    tmp.$('[data-action="file-picker"][data-for="screenshot"]').click();
-
-  },
-
-  'click [data-action="remove-screenshot"]': function(evt, tmp) {
-
-    var screenshots = tmp.app.get('screenshots'),
-        screenshotInd = screenshots.indexOf(this.toString());
-
-    if (screenshotInd > -1) {
-      screenshots.splice(screenshotInd, 1);
-      tmp.app.set('screenshots', screenshots);
-    }
-
-  },
-
-  'click [data-action="upload-spk"]': function(evt, tmp) {
-
-    var file = tmp.file.get();
-
-    if (file) App.spkUploader.send(file, function(err, downloadUrl) {
-
-      if (err)
-        console.error('Error uploading', err);
-      else {
-        tmp.app.set('spkLink', encodeURI(downloadUrl));
-      }
-
-    });
-
-  },
-
   'change input[type="text"][data-field], change textarea[data-field], change input[type="number"][data-field]': function(evt, tmp) {
 
     var $el = $(evt.currentTarget);
@@ -330,6 +187,11 @@ Template.Edit.events({
   'click [data-action="update-version"]': function(evt, tmp) {
 
     tmp.newVersion.set(true);
+    if (evt.currentTarget.nodeName === 'INPUT') {
+      Tracker.afterFlush(function() {
+        $('[data-version-field="number" ]').focus();
+      });
+    }
 
   },
 
@@ -342,13 +204,6 @@ Template.Edit.events({
           changes: tmp.$('[data-version-field="changes"]').val()
         };
     tmp.app.set('versions', [newVersion]);
-
-  },
-
-  'click [data-action="regenerate-identicon"]': function(evt, tmp) {
-
-    tmp.seedString.set(Random.id());
-    tmp.app.set('image', '');
 
   },
 
@@ -398,7 +253,7 @@ Template.Edit.events({
         newVersion.versions = [];
         Schemas.AppsBase.clean(newVersion);
         tmp.app.set(newVersion);
-        tmp.setCategory(tmp.app.get('category'));
+        tmp.setCategories(tmp.app.get('categories'));
       }
     });
 
@@ -411,7 +266,7 @@ Template.Edit.events({
       if (err) console.log(err);
       else {
         tmp.clearApp();
-      }     
+      }
     });
 
   },

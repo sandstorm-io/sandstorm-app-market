@@ -41,7 +41,7 @@
           {{/if}}
 
           <div class="app-price {{#if free price}}free{{/if}}">
-            {{#if free price}}FREE{{else}}{{price}}{{/if}}
+            {{#if free price}}FREE{{else}}{{numberFormat price '$0,0.00'}}{{/if}}
           </div>
 
         </div>
@@ -101,7 +101,7 @@
           </div>
 
           <div class="installed-version">
-            V {{installDetails.version}}
+            V {{installDetails.version.number}}
           </div>
 
         </div>
@@ -126,7 +126,7 @@
         {{/if}}
 
         <div class="app-price {{#if free price}}free{{/if}}">
-          {{#if free price}}FREE{{else}}{{price}}{{/if}}
+          {{#if free price}}FREE{{else}}{{numberFormat price '$0,0.00'}}{{/if}}
         </div>
 
       </div>
@@ -193,6 +193,34 @@
         </div>
 
       </div>
+
+    </div>
+
+  </div>
+
+</template>
+
+<template name="appItemTiny">
+
+  <div class="app-item-tiny">
+
+    <div class="app-item-inner" data-action="admin-edit">
+
+      {{#with app}}
+
+        <div class="image-surround large">
+
+          <div class="image" style="background-image: url('{{imageUrl image}}');"></div>
+
+        </div>
+
+        <div class="text-section">
+
+          <div class="app-name">{{name}}</div>
+
+        </div>
+
+      {{/with}}
 
     </div>
 

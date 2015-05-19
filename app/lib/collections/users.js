@@ -85,9 +85,8 @@ Schemas.Users = new SimpleSchema({
   // You can't mix and match adding with and without a group since
   // you will fail validation in some cases.
   roles: {
-    type: Object,
-    optional: true,
-    blackbox: true
+    type: [String],
+    defaultValue: []
   },
   // Required for accounts-meld
   'registered_emails': {

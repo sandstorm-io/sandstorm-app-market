@@ -116,6 +116,13 @@ var helpers = {
 
   },
 
+  numberFormat: function(number, format) {
+
+    if (typeof number !== 'number') return '#NAN';
+    else return numeral(number).format(format);
+
+  },
+
   last: function(array) {
 
     return _.last(array);
@@ -145,6 +152,20 @@ var helpers = {
 
   },
 
+  getReactive: function(varName) {
+
+    var thisVar = Template.instance().get(varName);
+
+    return thisVar && thisVar.get && thisVar.get();
+
+  },
+
+  get: function(varName) {
+
+    return Template.instance().get(varName);
+
+  },
+
   // IMAGE HELPERS
 
   imageUrl: function(image) {
@@ -163,17 +184,34 @@ var helpers = {
 
   },
 
+  // ADMIN HELPERS
+
+  isAdmin: function() {
+
+    return Roles.userIsInRole(Meteor.userId(), 'admin');
+
+  },
+
   // DEBUGGING HELPERS
 
-  logThis: function() {
+  logThis: function(varName) {
 
-    console.log(this);
+    console.log(varName ? this[varName] : this);
 
   },
 
   logParentData: function(depth) {
 
     console.log(Template.parentData(depth));
+
+  },
+
+  logHeirarchy: function() {
+    
+    console.log(Template.parentData(0));
+    console.log(Template.parentData(1));
+    console.log(Template.parentData(2));
+    console.log(Template.parentData(3));
 
   }
 

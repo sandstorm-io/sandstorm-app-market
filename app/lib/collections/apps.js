@@ -3,10 +3,9 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
   return app;
 }});
 
-// TODO Update InstallCountThisWeek daily
-// TODO Investigate RegEx for version number and image
+var converter = new Showdown.converter();
 
-var versionRegEx = /.*/; // THIS IS NOT DOING ANYTHING AT THE MOMENT
+// TODO Update InstallCountThisWeek daily
 
 // appsBaseSchema contains the keys that are required for a valid app object,
 // but NOT anything which will be autoValued or receive a default value only
@@ -17,9 +16,10 @@ var appsBaseSchema = {
     max: 200,
     index: true
   },
-  category: {
-    type: String,
-    index: true
+  categories: {
+    type: [String],
+    index: true,
+    defaultValue: []
   },
   description: {
     type: String,
@@ -73,7 +73,6 @@ var appsBaseSchema = {
   },
   versions: {
     type: [String],
-    regEx: versionRegEx,
     defaultValue: []
   },
   replacesApp: {
@@ -122,9 +121,29 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
   },
   lastUpdated: {
     type: Date,
-    autoValue: function() {
-      if (this.isUpdate) {
+    autoValue: function(doc) {
+      console.log(this, doc);
+      if (this.isUpdate && this.userId && !Roles.userIsInRole(this.userId, 'admin')) {
         return new Date();
+      } else if (this.isFromTrustedCode) {
+        return this.value;
+      } else {
+        this.unset();
+      }
+    },
+    // denyInsert: true,
+    optional: true
+  },
+  lastUpdatedAdmin: {
+    type: Date,
+    autoValue: function(doc) {
+      console.log(this, doc);
+      if (this.isUpdate && this.userId && Roles.userIsInRole(this.userId, 'admin')) {
+        return new Date();
+      } else if (this.isFromTrustedCode) {
+        return this.value;
+      } else {
+        this.unset();
       }
     },
     // denyInsert: true,
@@ -139,11 +158,25 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
     type: Number,
     min: 0,
     defaultValue: 0
+  },
+  htmlDescription: {
+    type: String,
+    optional: true,
+    autoValue: function(doc) {
+      var markdownContent = this.field("description");
+      if (Meteor.isServer && markdownContent.isSet) {
+        return converter.makeHtml(markdownContent.value);
+      }
+    }
   }
 },
 {
   // For some reason, SimpleSchema does not like arrays of prototypes being extended,
   // so we need to add these keys again.
+  categories: {
+    type: [String],
+    index: true
+  },
   screenshots: {
     type: [String],
     regEx: SimpleSchema.RegEx.Url,

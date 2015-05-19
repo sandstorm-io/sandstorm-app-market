@@ -154,3 +154,13 @@ Template.appItemFullWidth.helpers({
   }
 
 });
+
+Template.appItemTiny.events({
+
+  'click [data-action="admin-edit"]': function() {
+
+    FlowRouter.go('/admin/edit/' + this.app._id);
+
+  }
+
+})

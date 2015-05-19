@@ -82,7 +82,7 @@ Template.SingleApp.helpers({
 
   getDescription: function() {
 
-    return Template.instance().readMore.get() ? this.description : s.prune(this.description, 1200);
+    return Template.instance().readMore.get() ? this.htmlDescription : s.prune(this.htmlDescription, 1200);
 
   },
 
@@ -170,7 +170,11 @@ Template.SingleApp.events({
 
   'click [data-action="flag-app"]': function(evt, tmp) {
 
-    tmp.flagApp.set(!tmp.flagApp.get());
+    if (Meteor.userId()) tmp.flagApp.set(!tmp.flagApp.get());
+    else {
+      App.loginRedirect = FlowRouter.current().path;
+      FlowRouter.go('login');
+    }
 
   },
 
@@ -203,7 +207,11 @@ Template.SingleApp.events({
 
   'click [data-action="write-review"]': function(evt, tmp) {
 
-    tmp.writeReview.set(!tmp.writeReview.get());
+    if (Meteor.userId()) tmp.writeReview.set(!tmp.writeReview.get());
+    else {
+      App.loginRedirect = FlowRouter.current().path;
+      FlowRouter.go('login');
+    }
 
   },
 
@@ -250,7 +258,7 @@ Template.SingleApp.events({
 
 Template.flagBox.onRendered(function() {
 
-  if (this.data.cat) {
+  if (this.data && this.data.cat) {
     if (!this.$('input[type="radio"][data-category="' + this.data.cat + '"]').length) {
       this.$('input[type="radio"][data-category="other"]').prop("checked", true);
       this.$('[data-field="flag-other"]').val(this.data.cat);
