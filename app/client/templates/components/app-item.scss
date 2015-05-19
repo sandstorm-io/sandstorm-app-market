@@ -124,6 +124,7 @@
         display: inline-block;
         float: right;
         font-size: $app-price-font-size;
+        font-weight: 400;
         color: $app-price-col;
 
         &.free {
