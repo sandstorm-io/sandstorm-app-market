@@ -89,7 +89,7 @@ var extraGenres = [
         _id: {
           $in: _.reduce(user.installedApps, function(idList, appDetails, appId) {
             var current = Apps.findOne(appId);
-            if (current && App.versionOlder(appDetails.version, current.latestVersion()))
+            if (current && appDetails.version.dateTime < current.latestVersion().dateTime)
               idList.push(appId);
             return idList;
           }, [])
@@ -110,10 +110,9 @@ var extraGenres = [
 
       return {
         _id: {
-          $in: _.keys(user.installedApps),
-          $nin: _.reduce(user.installedApps, function(idList, appDetails, appId) {
-            var latest = Apps.findOne(appId);
-            if (latest && App.versionOlder(appDetails.version, _.last(latest.versions)))
+          $in: _.reduce(user.installedApps, function(idList, appDetails, appId) {
+            var current = Apps.findOne(appId);
+            if (current && appDetails.version.dateTime === current.latestVersion().dateTime)
               idList.push(appId);
             return idList;
           }, [])

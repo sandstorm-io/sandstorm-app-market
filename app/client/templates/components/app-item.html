@@ -150,7 +150,7 @@
 
       <div class="header-row">
 
-        <div class="text">NEW VERSION {{latestVersion}}</div>
+        <div class="text">NEW VERSION {{latestVersion.number}}</div>
 
         <i class="fa {{#if isOpen}}fa-caret-up{{else}}fa-caret-down{{/if}}"></i>
 
@@ -161,7 +161,7 @@
         <div class="divider"></div>
 
         <div class="description">
-          {{updateDescription}}
+          {{latestVersion.changes}}
         </div>
 
         <a class="read-more" href="/appMarket/app/{{../_id}}">
@@ -204,7 +204,7 @@
 
   <div class="app-item-tiny">
 
-    <div class="app-item-inner" data-action="admin-edit">
+    <div class="app-item-inner" data-action="admin-review">
 
       {{#with app}}
 

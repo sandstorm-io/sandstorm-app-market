@@ -199,12 +199,36 @@ Template.Upload.events({
 
 });
 
+Template.fileBox.onCreated(function() {
+
+  this.uploaded = new ReactiveVar();
+
+});
+
 Template.fileBox.helpers({
 
   filename: function() {
 
     var file = Template.instance().get('file').get();
     return file && file.name;
+
+  },
+
+  uploaderStatus: function() {
+
+    return App.spkUploader.status();
+
+  },
+
+  progress: function () {
+
+    return Math.round(App.spkUploader.progress() * 100);
+
+  },
+
+  uploaded: function() {
+
+    return Template.instance().uploaded.get();
 
   }
 
@@ -214,7 +238,7 @@ Template.fileBox.events({
 
   'click [data-action="choose-file"]': function(evt, tmp) {
 
-    tmp.$('[data-action="file-picker"][data-for="' + $(evt.currentTarget).data('name') + '"]').click();
+    tmp.$('[data-action="file-picker"][data-for="spk"]').click();
     evt.stopPropagation();
 
   },
@@ -235,9 +259,12 @@ Template.fileBox.events({
         console.error('Error uploading', err);
       else {
         tmp.get('app').set('spkLink', encodeURI(downloadUrl));
+        tmp.get('uploaded').set(file.name);
       }
 
     });
+
+    else tmp.$('[data-action="file-picker"][data-for="spk"]').click();
 
   }
 
@@ -387,9 +414,9 @@ Template.screenshotPicker.events({
         else {
           var screenshots = tmp.get('app').get('screenshots');
           downloadUrl = encodeURI(downloadUrl);
-          if (!('screenshotInd' in tmp) || tmp.screenshotInd < 0) screenshots.push(downloadUrl);
+          if (!('screenshotInd' in tmp) || tmp.screenshotInd < 0) screenshots.push({url: downloadUrl});
           else {
-            screenshots[tmp.screenshotInd] = downloadUrl;
+            screenshots[tmp.screenshotInd] = {url: downloadUrl};
             delete tmp.screenshotInd;
           }
           tmp.get('app').set('screenshots', screenshots);
@@ -401,9 +428,12 @@ Template.screenshotPicker.events({
 
   'click [data-action="change-screenshot"]': function(evt, tmp) {
 
-    var screenshots = tmp.get('app').get('screenshots');
+    var screenshots = tmp.get('app').get('screenshots'),
+        thisUrl = this.url;
 
-    tmp.screenshotInd = screenshots.indexOf(this.toString());
+    _.each(screenshots, function(screenshot, ind) {
+      if (screenshot.url === thisUrl) tmp.screenshotInd = ind;
+    });
 
     tmp.$('[data-action="file-picker"][data-for="screenshot"]').click();
 
@@ -412,12 +442,49 @@ Template.screenshotPicker.events({
   'click [data-action="remove-screenshot"]': function(evt, tmp) {
 
     var screenshots = tmp.get('app').get('screenshots'),
-        screenshotInd = screenshots.indexOf(this.toString());
+        thisUrl = this.url,
+        screenshotInd = -1;
+
+    _.each(screenshots, function(screenshot, ind) {
+      if (screenshot.url === thisUrl) screenshotInd = ind;
+    });
+
 
     if (screenshotInd > -1) {
       screenshots.splice(screenshotInd, 1);
+      console.log(screenshots);
       tmp.get('app').set('screenshots', screenshots);
     }
+
+  },
+
+  'click [data-action="open-comment-box"]': function(evt, tmp) {
+
+    var screenshots = tmp.get('app').get('screenshots'),
+        thisUrl = this.url,
+        screenshotInd = -1;
+
+    _.each(screenshots, function(screenshot, ind) {
+      if (screenshot.url === thisUrl) screenshotInd = ind;
+    });
+
+    screenshots[screenshotInd].comment = 'Suggest feedback?';
+    tmp.get('app').set('screenshots', screenshots);
+
+  },
+
+  'change [data-field="comment-box"]': function(evt, tmp) {
+
+    var screenshots = tmp.get('app').get('screenshots'),
+        thisUrl = this.url,
+        screenshotInd = -1;
+
+    _.each(screenshots, function(screenshot, ind) {
+      if (screenshot.url === thisUrl) screenshotInd = ind;
+    });
+
+    screenshots[screenshotInd].comment = $(evt.currentTarget).val();
+    tmp.get('app').set('screenshots', screenshots);
 
   }
 

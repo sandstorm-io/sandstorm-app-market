@@ -10,7 +10,7 @@ var appProto = function() {
     },
     app = new ReactiveDict();
 
-Template.Edit.onCreated(function() {
+Template.Review.onCreated(function() {
 
   var tmp = this;
 
@@ -21,6 +21,7 @@ Template.Edit.onCreated(function() {
   tmp.screenshotsVis = new ReactiveVar(3);
   tmp.suggestNewGenre = new ReactiveVar(false);
   tmp.editingFields = new ReactiveVar({});
+  tmp.editedFields = new ReactiveVar({});
   tmp.newVersion = new ReactiveVar(false);
 
   var resetScreenshotsVis = function() {
@@ -33,13 +34,16 @@ Template.Edit.onCreated(function() {
   Schemas.AppsBase.clean(newApp);
   tmp.app.set(newApp);
 
-  tmp.setCategories = function(categories) {
+  tmp.setCategories = function(categories, firstSet) {
 
     var allCategories = tmp.categories.get();
 
     _.each(categories, function(cat) {
       var thisCat = _.findWhere(allCategories, {name: cat});
-      if (thisCat) thisCat.selected = true;
+      if (thisCat) {
+        thisCat.selected = true;
+        if (firstSet) thisCat.original = true;
+      }
       else allCategories.push({
         name: cat,
         showSummary: true,
@@ -105,8 +109,13 @@ Template.Edit.onCreated(function() {
       var categories = Categories.find().fetch();
       tmp.categories.set(categories);
 
-      // And load either the saved version or the actual app,
-      if (Meteor.user() && Meteor.user().savedApp && Meteor.user().savedApp[FlowRouter.getParam('appId')]) {
+      // Save the original app for comparison
+      tmp.originalApp = Apps.findOne(FlowRouter.getParam('appId'));
+      // And load either a published admin's requested changes, this admin user's saved
+      // version, or the currently published app (in that order of precedence).
+      if (tmp.originalApp.adminRequests[0]) {
+        tmp.app.set(tmp.originalApp.adminRequests[0]);
+      } else if (Meteor.user() && Meteor.user().savedApp && Meteor.user().savedApp[FlowRouter.getParam('appId')]) {
         tmp.app.set(Meteor.user().savedApp[FlowRouter.getParam('appId')]);
       } else {
         var newVersion = Apps.findOne(FlowRouter.current().params.appId),
@@ -117,7 +126,13 @@ Template.Edit.onCreated(function() {
         newVersion.lastVersionNumber = lastVersionNumber;
         tmp.app.set(newVersion);
       }
-      tmp.setCategories(tmp.app.get('categories'));
+      // highlight edited fields
+      var editedFields = tmp.editedFields.get();
+      _.each(tmp.app.all(), function(val, field) {
+        if (val !== tmp.originalApp[field]) editedFields[field] = true;
+      });
+      tmp.editedFields.set(editedFields);
+      tmp.setCategories(tmp.app.get('categories'), true);
 
       c.stop();
     }
@@ -137,11 +152,11 @@ Template.Edit.onCreated(function() {
 
 });
 
-Template.Edit.onDestroyed(function() {
+Template.Review.onDestroyed(function() {
   $(window).off('resize.upload');
 });
 
-Template.Edit.helpers({
+Template.Review.helpers({
 
   app: function() {
 
@@ -149,9 +164,22 @@ Template.Edit.helpers({
 
   },
 
+  parentApp: function() {
+
+    return Apps.findOne(FlowRouter.current().params.appId);
+
+  },
+
+  isFlagged: function() {
+
+    var app = Apps.findOne(FlowRouter.current().params.appId);
+    return app && !_.isEmpty(app.flags);
+
+  },
+
   fieldEdit: function(field) {
 
-    return (field in Template.instance().editingFields.get());
+    return Template.instance().editingFields.get()[field];
 
   },
 
@@ -159,11 +187,67 @@ Template.Edit.helpers({
 
     return Template.instance().newVersion.get();
 
+  },
+
+  appNotes: function() {
+
+    return Template.instance().get('appNotes').get();
+
+  },
+
+  edited: function(field) {
+
+    return Template.instance().editedFields.get()[field];
+
+  },
+
+  originalApp: function() {
+
+    return Template.instance().get('originalApp');
+
+  },
+
+  status: function() {
+
+    var originalApp = Apps.findOne(FlowRouter.getParam('appId'));
+    return [
+
+      {
+        color: 'green',
+        icon: 'icon-approved_light',
+        text: 'Approved'
+      },
+      {
+        color: '',
+        icon: '',
+        text: 'Pending'
+      },
+      {
+        color: 'purple',
+        icon: 'icon-revisions',
+        text: 'Revision Requested'
+      },
+      {
+        color: 'black',
+        icon: 'icon-rejected_light',
+        text: 'Rejected'
+      },
+
+
+    ][originalApp && originalApp.approved];
+
   }
 
 });
 
-Template.Edit.events({
+Template.Review.events({
+
+  'click [data-action="submit-note"]': function(evt, tmp) {
+    Meteor.call('apps/addNote', FlowRouter.current().params.appId, tmp.$('[data-field="note-entry"]').val(), function(err) {
+      tmp.$('[data-field="note-entry"]').val('');
+      if (err) throw new Meteor.Error(err.message);
+    });
+  },
 
   'click div[data-alt-field]': function(evt, tmp) {
 
@@ -181,6 +265,20 @@ Template.Edit.events({
 
     var $el = $(evt.currentTarget);
     tmp.app.set($el.data('field'), $el.val());
+
+  },
+
+  'blur [data-field], keyup [data-field]': function(evt, tmp) {
+
+    if (evt.keyCode && evt.keyCode !== 13) return false;
+    var $el = $(evt.currentTarget);
+    var editingFields = tmp.editingFields.get(),
+        editedFields = tmp.editedFields.get(),
+        field = $el.data('field');
+    delete editingFields[field];
+    editedFields[field] = ($el.val() !== tmp.originalApp[field]);
+    tmp.editingFields.set(editingFields);
+    tmp.editedFields.set(editedFields);
 
   },
 
@@ -219,20 +317,16 @@ Template.Edit.events({
 
   },
 
-  'click [data-action="submit-app"]': function(evt, tmp) {
+  'click [data-action="submit-admin-requests"]': function(evt, tmp) {
 
-    if (tmp.app.get('versions').length > 0) {
-      Meteor.call('user/submit-update', tmp.app.all(), function(err, res) {
-        if (err) console.log(err);
-        else if (res) FlowRouter.go('appsByMe');
-      });
-    } else {
-      console.log('No new version specified');
-    }
+    Meteor.call('admin/submitAdminRequests', tmp.app.all(), function(err, res) {
+      if (err) console.log(err);
+      else if (res) FlowRouter.go('admin');
+    });
 
   },
 
-  'click [data-action="save-app"]': function(evt, tmp) {
+  'click [data-action="save-admin-requests"]': function(evt, tmp) {
 
     Meteor.call('user/save-app', tmp.app.all(), function(err) {
       if (err) console.log(err);
@@ -240,7 +334,7 @@ Template.Edit.events({
 
   },
 
-  'click [data-action="discard-edits"]': function(evt, tmp) {
+  'click [data-action="discard-admin-requests"]': function(evt, tmp) {
 
     Meteor.call('user/delete-saved-app', tmp.app.get('replacesApp'), function(err, res) {
       if (err) {
@@ -271,14 +365,82 @@ Template.Edit.events({
 
   },
 
+  'click [data-action="scroll-top"]': function() {
+
+    window.scrollTo(0, 0);
+
+  },
+
+  'click [data-action="approve"]': function() {
+    Meteor.call('apps/approve', FlowRouter.current().params.appId, function(err) {
+      if (err) throw new Meteor.Error(err.message);
+    });
+  },
+  'click [data-action="request-revision"]': function() {
+    Meteor.call('apps/request-revision', FlowRouter.current().params.appId, function(err) {
+      if (err) throw new Meteor.Error(err.message);
+    });
+  },
+  'click [data-action="flag"]': function() {
+    Meteor.call('apps/flag', FlowRouter.current().params.appId, function(err) {
+      if (err) throw new Meteor.Error(err.message);
+    });
+  },
+  'click [data-action="reject"]': function() {
+    Meteor.call('apps/reject', FlowRouter.current().params.appId, function(err) {
+      if (err) throw new Meteor.Error(err.message);
+    });
+  },
+
 });
 
-Template.appNotesBox.helpers({
+Template.descriptionEditor.onCreated(function() {
 
-  sorted: function(notes) {
+  var tmp = this;
 
-    return Array.isArray(notes) && notes.sort(function(a, b) {return b.dateTime - a.dateTime;});
+  tmp.original = new ReactiveVar();
+  tmp.current = new ReactiveVar();
+  tmp.viewOriginal = new ReactiveVar(false);
 
+  tmp.autorun(function(c) {
+    if (FlowRouter.subsReady()) {
+      Tracker.afterFlush(function() {
+        tmp.original.set(tmp.data.initial);
+        tmp.current.set(tmp.data.initial);
+        c.stop();
+      });
+    }
+  });
+
+});
+
+Template.descriptionEditor.helpers({
+
+  current: function() {
+    return Template.instance().get('current').get();
+  },
+  original: function() {
+    return Template.instance().get('original').get();
+  },
+  viewOriginal: function() {
+    return Template.instance().get('viewOriginal').get();
+  }
+
+});
+
+Template.descriptionEditor.events({
+
+  'click [data-action="edit-markdown"]': function(evt, tmp) {
+    tmp.viewOriginal.set(false);
+  },
+
+  'click [data-action="view-original"]': function(evt, tmp) {
+    tmp.viewOriginal.set(true);
+  },
+
+  'change [data-field="description"]': function(evt, tmp) {
+    var app = tmp.get('app');
+    app.set('description', $(evt.currentTarget).val());
   }
 
 });

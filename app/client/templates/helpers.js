@@ -75,6 +75,12 @@ var helpers = {
 
   },
 
+  and: function(a, b) {
+
+    return a && b;
+
+  },
+
   prune: function(string, length) {
 
     return s.prune(string, length);
@@ -143,7 +149,7 @@ var helpers = {
 
   stripFilename: function(path) {
     var uri = path && path.split('/').pop();
-    return decodeURI(uri)
+    return decodeURI(uri);
   },
 
   verboseNone: function(string) {
@@ -207,7 +213,7 @@ var helpers = {
   },
 
   logHeirarchy: function() {
-    
+
     console.log(Template.parentData(0));
     console.log(Template.parentData(1));
     console.log(Template.parentData(2));

@@ -1,10 +1,10 @@
-<template name="Edit">
+<template name="Review">
 
   <div class="genre-title-section">
 
     <div class="contents">
 
-      <div class="apps-title large">APP EDIT</div>
+      <div class="apps-title large">APP REVIEW</div>
 
     </div>
 
@@ -13,20 +13,60 @@
   {{#with app}}
   <form class="edit-box clearfix">
 
-    <div class="right-float on-top">
+    <div class="section">
 
-      <div class="button-block">
-        <div class="sandstorm-button neutral" data-action="submit-app">
-          SUBMIT APP FOR REVIEW
+      <div class="right-float on-top">
+
+        <div class="button-block">
+
+          <div class="sandstorm-button color green {{#if equal parentApp.approved 0}}active{{/if}}" data-action="approve">
+            <i class="icon-approved_light"></i>
+            <div class="text">Approve</div>
+          </div>
+          <div class="sandstorm-button color purple {{#if equal parentApp.approved 2}}active{{/if}}" data-action="request-revision">
+            <i class="icon-revisions"></i>
+            <div class="text">Request Revision</div>
+          </div>
+          <div class="sandstorm-button color black {{#if equal parentApp.approved 3}}active{{/if}}" data-action="reject">
+            <i class="icon-rejected_light"></i>
+            <div class="text">Reject</div>
+          </div>
+          <div class="sandstorm-button color yellow {{#if isFlagged}}active{{/if}}" data-action="flag">
+            <i class="icon-flagged_light"></i>
+            <div class="text">Flag</div>
+          </div>
+
         </div>
-        <div class="sandstorm-button neutral" data-action="save-app">
-          SAVE EDITS
-        </div>
-        <div class="sandstorm-button neutral" data-action="discard-edits">
-          DISCARD EDITS
-        </div>
-        <i class="icon-garbage" data-action="delete-app"></i>
+
       </div>
+
+      <h3 class="title inline-block">Notes to the Author: </h3>
+
+      <div class="spacer clearfix"></div>
+
+      <textarea class="note-entry" data-field="note-entry"></textarea>
+
+      <div class="spacer clearfix"></div>
+
+      {{> appNotesBox notes=parentApp.notes}}
+
+      <div class="spacer clearfix"></div>
+
+      <div class="right-float on-top">
+
+        <div class="button-block">
+          <div class="sandstorm-button neutral" data-action="">
+            SAVE
+          </div>
+          <div class="sandstorm-button neutral" data-action="submit-note">
+            SUBMIT
+          </div>
+          <i class="icon-garbage" data-action=""></i>
+        </div>
+
+      </div>
+
+      <div class="spacer clearfix"></div>
 
     </div>
 
@@ -46,7 +86,7 @@
         {{#if fieldEdit 'name'}}
           <input type="text" data-field="name" value="{{name}}" required />
         {{else}}
-          <div data-alt-field="name">{{name}}</div>
+          <div class="{{#if edited 'name'}}highlight{{/if}}" data-alt-field="name">{{name}}</div>
         {{/if}}
 
         <h3 class="title">Author</h3>
@@ -69,14 +109,14 @@
         {{#if fieldEdit 'codeLink'}}
           <input type="text" data-field="codeLink" value="{{codeLink}}" pattern="https?://.+" />
         {{else}}
-          <div data-alt-field="codeLink">{{verboseNone codeLink}}</div>
+          <div class="{{#if edited 'codeLink'}}highlight{{/if}}" data-alt-field="codeLink">{{verboseNone codeLink}}</div>
         {{/if}}
 
         <h4 class="mini-title">License</h4>
         {{#if fieldEdit 'license'}}
           <input type="text" data-field="license" value="{{license}}" />
         {{else}}
-          <div data-alt-field="license">{{verboseNone license}}</div>
+          <div class="{{#if edited 'license'}}highlight{{/if}}" data-alt-field="license">{{verboseNone license}}</div>
         {{/if}}
 
         <h4 class="mini-title">Version</h4>
@@ -94,7 +134,7 @@
         {{#if fieldEdit 'webLink'}}
           <input type="text" data-field="webLink" value="{{webLink}}" />
         {{else}}
-          <div data-alt-field="webLink">{{verboseNone webLink}}</div>
+          <div class="{{#if edited 'webLink'}}highlight{{/if}}" data-alt-field="webLink">{{verboseNone webLink}}</div>
         {{/if}}
 
         {{> connectButton service="github"}}
@@ -129,7 +169,26 @@
         <div class="identicon-instructions">
           <div>For the best results, we suggest the icon be:</div>
           <div><strong>600px</strong> wide by <strong>600px</strong> high (minimum) in PNG or JPEG format.</div>
+
+          {{#unless equal image originalApp.image}}
+            <div class="identicon-container small">
+              <div class="identicon" style="background-image: url('{{imageUrl originalApp.image}}')" data-field="icon-image">#
+              </div>
+            </div>
+          {{/unless}}
+
         </div>
+
+        {{#unless equal image originalApp.image}}
+        <div class="clearfix icon-captions">
+          <div class="left">
+            NEW ICON
+          </div>
+          <div class="right">
+            CURRENT ICON
+          </div>
+        </div>
+        {{/unless}}
 
       </div>
 
@@ -177,35 +236,38 @@
         <div><strong>800px</strong> wide by <strong>450px</strong> high (minimum) in PNG or JPEG format.</div>
       </div>
 
-      {{> screenshotPicker}}
+      {{> screenshotPicker screenshots=screenshots comments='admin'}}
 
       <h3 class="title">Description</h3>
 
-      <textarea class="description" data-field="description" placeholder="What does your app do?">{{description}}</textarea>
+      {{> descriptionEditor initial=description}}
 
     </div>
 
-    <div class="right-float description-caption">
-      <p>
-        Edits will not be published until approved by an Admin. Don't want to commit your edits? Save Edits and come back to them later.
-      </p>
-    </div>
-
-    <div></div>
+    <div class="spacer"></div>
 
     <div class="right-float clearfix on-top">
 
       <div class="button-block">
-        <div class="sandstorm-button neutral" data-action="submit-app">
-          SUBMIT APP FOR REVIEW
+        <div class="message">
+          Currently marked as:
         </div>
-        <div class="sandstorm-button neutral" data-action="save-app">
-          SAVE EDITS
+        {{#with status}}
+          <div class="status {{color}}">
+            <i class="{{icon}}"></i> {{text}}
+          </div>
+        {{/with}}
+
+        <div class="sandstorm-button neutral" data-action="scroll-top">
+          TOP <i class="fa fa-caret-up"></i>
         </div>
-        <div class="sandstorm-button neutral" data-action="discard-edits">
-          DISCARD EDITS
+        <div class="sandstorm-button neutral" data-action="save-admin-requests">
+          SAVE
         </div>
-        <i class="icon-garbage" data-action="delete-app"></i>
+        <div class="sandstorm-button neutral" data-action="submit-admin-requests">
+          SUBMIT REQUESTS
+        </div>
+        <i class="icon-garbage" data-action="discard-admin-requests"></i>
       </div>
 
     </div>
@@ -215,22 +277,13 @@
 
 </template>
 
-<template name="appNotesBox">
+<template name="descriptionEditor">
 
-  <div class="app-notes">
-
-  {{#each sorted notes}}
-
-    <div class="note">
-
-      On {{dateFormat dateTime 'YYYY-MM-DD'}}, {{#if authorName}}{{authorName}}{{else}}unknown user{{/if}}
-      {{#if admin}} (admin){{/if}} wrote{{#unless byAuthor}} to the author{{/unless}}:<br>
-      {{text}}
-
-    </div>
-
-  {{/each}}
-
+  <div class="description-editor-container">
+    <div class="tab {{#unless viewOriginal}}active{{/unless}}" data-action="edit-markdown">Current</div>
+    <div class="tab {{#if viewOriginal}}active{{/if}}" data-action="view-original">Original</div>
+    <textarea class="description-editor {{#if viewOriginal}}hidden{{/if}}" data-field="description">{{current}}</textarea>
+    <div class="description-editor {{#unless viewOriginal}}hidden{{/unless}}">{{{original}}}</div>
   </div>
 
 </template>

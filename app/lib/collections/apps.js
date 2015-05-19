@@ -32,9 +32,16 @@ var appsBaseSchema = {
     optional: true
   },
   screenshots: {
-    type: [String],
-    regEx: SimpleSchema.RegEx.Url,
+    type: [Object],
     defaultValue: []
+  },
+  'screenshots.$.url': {
+    type: String,
+    regEx: SimpleSchema.RegEx.Url
+  },
+  'screenshots.$.comment': {
+    type: String,
+    optional: true
   },
   author: {
     type: String,
@@ -82,7 +89,11 @@ var appsBaseSchema = {
   }
 
 };
-// appsFullSchema adds the autoValue and defaultValue keys
+
+Schemas.AppsBase = new SimpleSchema(appsBaseSchema);
+
+// appsFullSchema adds the autoValue and defaultValue keys,
+// plus any keys that the user shouldn't be allowed to set themselves
 var appsFullSchema = _.extend({}, appsBaseSchema, {
   createdAt: {
     type: Date,
@@ -119,10 +130,40 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
     defaultValue: 1,
     index: true
   },
+  note: {
+    type: String,
+    optional: true
+  },
+  notes: {
+    type: [Object],
+    blackbox: true,
+    optional: true,
+    autoValue: function(doc) {
+      var note = this.field('note');
+      if (note.isSet) {
+        var authorObj = Meteor.users.findOne(this.userId),
+            app = Apps.findOne(this.docId),
+            noteObj =  {
+              text: note.value,
+              author: this.userId,
+              authorName: authorObj ? authorObj.username : 'system',
+              admin: Roles.userIsInRole(this.userId, 'admin'),
+              byAuthor: this.userId === app.author,
+              dateTime: new Date()
+            };
+        if (this.isInsert) {
+          return [noteObj];
+        } else {
+          return {$push: noteObj};
+        }
+      } else {
+        this.unset();
+      }
+    }
+  },
   lastUpdated: {
     type: Date,
     autoValue: function(doc) {
-      console.log(this, doc);
       if (this.isUpdate && this.userId && !Roles.userIsInRole(this.userId, 'admin')) {
         return new Date();
       } else if (this.isFromTrustedCode) {
@@ -137,7 +178,6 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
   lastUpdatedAdmin: {
     type: Date,
     autoValue: function(doc) {
-      console.log(this, doc);
       if (this.isUpdate && this.userId && Roles.userIsInRole(this.userId, 'admin')) {
         return new Date();
       } else if (this.isFromTrustedCode) {
@@ -168,6 +208,17 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
         return converter.makeHtml(markdownContent.value);
       }
     }
+  },
+  adminRequests: {
+    // due to a Simple-Schema problem, optionality doesn't seem to extend to
+    // subschemas, so if we use `type: Schemas.AppsBase` and `optional: true`
+    // it complains that the object has no name, etc., even thought the object
+    // itself is supposed to be optional.  This way, we can declare an array
+    // of max size 1, and either populate it or not.
+    // see: https://github.com/aldeed/meteor-simple-schema/issues/133
+    type: [Schemas.AppsBase],
+    maxCount: 1,
+    defaultValue: []
   }
 },
 {
@@ -194,8 +245,6 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
   }
 });
 
-
-Schemas.AppsBase = new SimpleSchema(appsBaseSchema);
 Schemas.AppsFull = new SimpleSchema(appsFullSchema);
 
 Apps.attachSchema(Schemas.AppsFull);
@@ -228,4 +277,36 @@ if (Meteor.isServer) {
       return true;
     }
   });
+}
+
+// Update installed counts
+function updateInstallCount() {
+
+  Apps.find().forEach(function(app) {
+
+    var query = {};
+    query['installedApps.' + app._id] = {$exists: true};
+
+    Apps.update(app._id, {$set: {
+      installCount: Meteor.users.find(query).count()
+    }});
+
+  });
+
+}
+
+function updateInstallCountThisWeek() {
+
+  Apps.find().forEach(function(app) {
+
+    var query = {},
+        lastWeek = new moment().subtract(7, 'days').toDate();
+    query['installedApps.' + app._id + '.dateTime'] = {$gte: lastWeek};
+
+    Apps.update(app._id, {$set: {
+      installCountThisWeek: Meteor.users.find(query).count()
+    }});
+
+  });
+
 }

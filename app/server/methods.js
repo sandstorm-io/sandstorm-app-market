@@ -128,9 +128,7 @@ Meteor.methods({
     if (!this.userId) return false;
     if (this.userId !== app.author) throw new Meteor.Error('wrong author', 'Can only submit app by logged-in user');
 
-    console.log(app);
     _.each(app.categories, function(cat) {
-      console.log(cat);
       if (!Categories.findOne({name: cat})) Categories.insert({
         name: cat,
         suggested: true
@@ -270,7 +268,10 @@ Meteor.methods({
     if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Can only be executed by admin user');
     var app = Apps.findOne(appId);
     if (!app) throw new Meteor.Error('No app matching id ' + appId);
-    return Apps.update(appId, {$set: {approved: 0}});
+    // NOTE: admin requests object is removed here, as it is assumed that any
+    // requested amendments have been made satisfactorily for the app to have
+    // been approved.
+    return Apps.update(appId, {$set: {approved: 0, adminRequests: []}});
 
   },
 
@@ -283,6 +284,7 @@ Meteor.methods({
 
   },
 
+  // TODO: this is probably unnecessary
   'apps/flag': function(appId) {
 
     if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Can only be executed by admin user');
@@ -297,6 +299,39 @@ Meteor.methods({
     var app = Apps.findOne(appId);
     if (!app) throw new Meteor.Error('No app matching id ' + appId);
     return Apps.update(appId, {$set: {approved: 3}});
+
+  },
+
+  'apps/addNote': function(appId, note) {
+
+    check(note, String);
+    var app = Apps.findOne(appId);
+    if (!app) throw new Meteor.Error('No app with id ' + appId);
+    if (!(Roles.userIsInRole(this.userId, 'admin') || app.author === this.userId))
+      throw new Meteor.Error('Notes can only be written by app author or admin user');
+
+    return Apps.update(appId, {$set: {note: note}});
+
+  },
+
+  'admin/submitAdminRequests': function(app) {
+
+    this.unblock();
+    if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Only an admin user can save an app that isn\'t theirs');
+
+    return Apps.update(app.replacesApp, {$set: {adminRequests: [app]}});
+
+  },
+
+  'admin/saveEdits': function(appId) {
+
+    this.unblock();
+    if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Only an admin user can save an app that isn\'t theirs');
+
+    var set = {},
+      setString = 'savedApp.' + (app.replacesApp || 'new');
+    set[setString] = app;
+    return Meteor.users.update(this.userId, {$set: set});
 
   },
 
