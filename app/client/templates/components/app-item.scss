@@ -377,7 +377,7 @@
       .text-section {
 
         height: 100%;
-        overflow-y: auto;
+        overflow-y: hidden;
 
         .app-name {
 
@@ -397,7 +397,9 @@
           font-size: $app-description-large-font-size;
           color: $app-description-text;
           clear: both;
-          overflow: ellipsis;
+          height: 12rem;
+          position: relative;
+          overflow-y: hidden;
 
         }
 

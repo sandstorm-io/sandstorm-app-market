@@ -6,133 +6,136 @@
 
       {{#if ../../updateChrome}}
 
-      {{> updateChrome}}
+        {{> updateChrome}}
 
       {{/if}}
 
       {{#if equal size "large"}}
 
-      {{#with app}}
+        {{#with app}}
 
-      <div class="image-surround">
+          <div class="image-surround">
 
-        <div class="image" style="background-image: url('{{imageUrl image}}');"></div>
+            <div class="image" style="background-image: url('{{imageUrl image}}');"></div>
 
-      </div>
-
-      <div class="text-section">
-
-        <div class="app-name">{{name}}</div>
-
-        <a href="/appMarket/author/{{author}}"><div class="app-author">{{getUsername author}}</div></a>
-
-        <div class="app-rating">{{{appRating stars}}}</div>
-
-        <div class="install-price">
-
-          {{#if installed}}
-          <div class="app-install installed">
-            INSTALLED
           </div>
+
+          <div class="text-section">
+
+            <div class="app-name">{{name}}</div>
+
+            <a href="/appMarket/author/{{author}}"><div class="app-author">{{getUsername author}}</div></a>
+
+            <div class="app-rating">{{{appRating stars}}}</div>
+
+            <div class="install-price">
+
+              {{#if installed}}
+                <div class="app-install installed">
+                  INSTALLED
+                </div>
+                {{else}}
+                <div class="app-install" data-action="install-app">
+                  INSTALL <i class="icon-arrow-install"></i>
+                </div>
+              {{/if}}
+
+              <div class="app-price {{#if free price}}free{{/if}}">
+                {{#if free price}}FREE{{else}}{{numberFormat price '$0,0.00'}}{{/if}}
+              </div>
+
+            </div>
+
+            <div class="app-description">
+              {{{htmlDescription}}}
+              <div class="fade-box"></div>
+            </div>
+
+          </div>
+
+        {{/with}}
+
+      {{else}}
+
+        {{#with app}}
+
+          <div class="image-surround large">
+
+            <div class="image" style="background-image: url('{{imageUrl image}}');"></div>
+
+          </div>
+
+          <div class="app-name">{{name}}</div>
+
+          <a href="/appMarket/author/{{author}}"><div class="app-author">{{getUsername author}}</div></a>
+
+          {{#if ../../../installPage}}
+            <div class="app-rating">
+              {{{appRating myRating}}}
+              <a class="rate-it" href="/appMarket/app/{{this._id}}">
+                {{#if myRating}}
+                YOUR RATING
+                {{else}}
+                RATE IT
+                {{/if}}
+              </a>
+            </div>
           {{else}}
-          <div class="app-install" data-action="install-app">
-            INSTALL <i class="icon-arrow-install"></i>
-          </div>
+            <div class="app-rating">
+              {{{appRating stars}}}
+            </div>
           {{/if}}
 
-          <div class="app-price {{#if free price}}free{{/if}}">
-            {{#if free price}}FREE{{else}}{{numberFormat price '$0,0.00'}}{{/if}}
-          </div>
+          {{#if ../../../installPage}}
 
-        </div>
+            <div class="installed-bar">
 
-        <div class="app-description">
-          {{prune description 300}}
-        </div>
+              <div class="installed-details">
 
-      </div>
+                <div class="install-date">
+                  <div class="installed-text">
+                    INSTALLED
+                  </div>
+                  <div class="install-date-inner">
+                    {{dateFormat installDetails.dateTime 'MMM DD'}}
+                  </div>
+                </div>
 
-      {{/with}}
+                <div class="installed-version">
+                  V {{installDetails.version.number}}
+                </div>
 
-      {{else}}
+              </div>
 
-      {{#with app}}
+              <div class="uninstall-app">
+                <i class="icon-garbage" data-action="uninstall-app-modal"></i>
+              </div>
 
-      <div class="image-surround large">
+            </div>
 
-        <div class="image" style="background-image: url('{{imageUrl image}}');"></div>
-
-      </div>
-
-      <div class="app-name">{{name}}</div>
-
-      <a href="/appMarket/author/{{author}}"><div class="app-author">{{getUsername author}}</div></a>
-
-      {{#if ../../../installPage}}
-      <div class="app-rating">
-        {{{appRating myRating}}}
-        <a class="rate-it" href="/appMarket/app/{{this._id}}">
-          {{#if myRating}}
-          YOUR RATING
           {{else}}
-          RATE IT
+
+            <div class="install-price">
+
+              {{#if installed}}
+              <div class="app-install installed">
+                INSTALLED
+              </div>
+              {{else}}
+              <div class="app-install" data-action="install-app">
+                INSTALL <i class="icon-arrow-install"></i>
+              </div>
+              {{/if}}
+
+              <div class="app-price {{#if free price}}free{{/if}}">
+                {{#if free price}}FREE{{else}}{{numberFormat price '$0,0.00'}}{{/if}}
+              </div>
+
+            </div>
+
           {{/if}}
-        </a>
-      </div>
-      {{else}}
-      <div class="app-rating">
-        {{{appRating stars}}}
-      </div>
-      {{/if}}
 
-      {{#if ../../../installPage}}
-
-      <div class="installed-bar">
-
-        <div class="installed-details">
-
-          <div class="install-date">
-            <div class="installed-text">
-              INSTALLED
-            </div>
-            <div class="install-date-inner">
-              {{dateFormat installDetails.dateTime 'MMM DD'}}
-            </div>
-          </div>
-
-          <div class="installed-version">
-            V {{installDetails.version.number}}
-          </div>
-
-        </div>
-
-        <div class="uninstall-app">
-          <i class="icon-garbage" data-action="uninstall-app-modal"></i>
-        </div>
-
-      </div>
-
-      {{else}}
-      <div class="install-price">
-
-        {{#if installed}}
-        <div class="app-install installed">
-          INSTALLED
-        </div>
-        {{else}}
-        <div class="app-install" data-action="install-app">
-          INSTALL <i class="icon-arrow-install"></i>
-        </div>
-        {{/if}}
-
-        <div class="app-price {{#if free price}}free{{/if}}">
-          {{#if free price}}FREE{{else}}{{numberFormat price '$0,0.00'}}{{/if}}
-        </div>
-
-      </div>
-      {{/if}}
-
-      {{/with}}
+        {{/with}}
 
       {{/if}}
 
