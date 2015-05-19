@@ -60,14 +60,14 @@ Meteor.publish('apps by me', function () {
   return Genres.findIn('Apps By Me', {}, {fields: appUnpublishedFields}, this);
 });
 
-Meteor.publish('apps all', function() {
+Meteor.publish('apps all', function(skip, limit) {
 
   if (Roles.userIsInRole(this.userId, 'admin')) {
 
-    var appsC = Apps.find({}, {fields: {notes: 0}}),
+    var appsC = Apps.find({}, {skip: skip, limit: limit}),
         userIds = _.uniq(appsC.map(function(app) { return app.author; }));
     return [
-      Apps.find({}, {fields: appUnpublishedFields}),
+      Genres.findIn('All', {}, {fields: appUnpublishedFields, skip: skip, limit: limit}),
       Meteor.users.find({_id: {$in: userIds}})
     ];
 
