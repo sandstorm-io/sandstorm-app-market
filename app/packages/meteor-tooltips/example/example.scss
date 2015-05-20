@@ -1,0 +1,83 @@
+@import 'tooltip';
+
+$sans: 'Helvetica Neue', Helvetica, sans-serif;
+$headings: 'Playfair Display', $sans;
+
+html {
+  font-family: $sans;
+  line-height: 1.5;
+  width: 90%;
+  max-width: 40rem;
+  margin: 0 auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, .subhead {
+  font-family: $headings;
+  text-align: center;
+}
+
+h1 {
+  font-size: 4em;
+  margin: 1em auto .2em;
+}
+
+.subhead {
+  font-style: italic;
+  margin-bottom: 3em;
+  font-size: 1.3rem;
+}
+
+a {
+  color: #C0392B;
+}
+
+pre, code {
+  font-family: Menlo, Monaco, Courier, monospace;
+}
+
+pre, p {
+  margin: 0 0 1.5rem;
+}
+
+pre {
+  font-size: .9em;
+  background-color: #eee;
+  border-radius: 3px;
+  white-space: pre-wrap;
+  color: #444;
+  padding: 2rem 2rem;
+  margin-left: -1rem;
+  margin-right: -1rem;
+}
+
+p code {
+  background-color: #eee;
+  padding: 1px 4px;
+  border-radius: 3px;
+  color: #333;
+  font-size: .9em;
+}
+
+dd {
+  font-size: .9em;
+  margin: .5rem 0 3rem;
+  padding: 0 1rem;
+  color: #888;
+}
+
+.links {
+  display: flex;
+  list-style: none;
+  padding: 0;
+
+  li {
+
+    &:not(:last-child)::after {
+      content: '·';
+      display: inline-block;
+      padding: 0 5px 0 2px;
+      color: #aaa;
+    }
+  }
+}

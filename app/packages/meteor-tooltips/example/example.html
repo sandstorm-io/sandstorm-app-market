@@ -1,0 +1,132 @@
+<head>
+  <title>Lookback Tooltips for Meteor</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href='https://fonts.googleapis.com/css?family=Playfair+Display:400,900,400italic' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body>
+  <h1>Tooltips for Meteor</h1>
+
+  <p class="subhead">
+    Demonstrating Meteor tooltips, by <a href="https://github.com/lookback">Lookback</a>.
+  </p>
+
+  <ul class="links">
+    <li>
+      <a href="http://github.com/lookback/meteor-tooltips">GitHub</a>
+    </li>
+    <li>
+      <a href="https://atmospherejs.com/lookback/tooltips">Atmosphere</a>
+    </li>
+    <li>
+      <a href="https://github.com/lookback/meteor-tooltips/tree/master/example">Source for this demo</a>
+    </li>
+  </ul>
+
+  <p>
+    Simply embed the <code>tooltips</code> template in your master template/layout and attach tooltips with adding the <code>data-tooltip</code> attribute with the tooltip text.
+  </p>
+
+  <dl>
+    <dt>
+      <button data-tooltip="I'm a tooltip!">A tooltip trigger</button>
+    </dt>
+
+    <dd>
+      <p>Default tooltip.</p>
+      <pre><code>&lt;button data-tooltip="I'm a tooltip!"&gt;A tooltip trigger&lt;/button&gt;</code></pre>
+    </dd>
+
+    <dt>
+      <button data-tooltip="I'm a tooltip!" data-tooltip-direction="w">A tooltip trigger</button>
+    </dt>
+
+    <dd>
+      <p>Tooltip to the left (west). Data attribute values:</p>
+
+      <ul>
+        <li><code>n</code> - Top <em>(default)</em>.</li>
+        <li><code>s</code> - Bottom.</li>
+        <li><code>e</code> - Right.</li>
+        <li><code>w</code> - Left.</li>
+      </ul>
+      <pre><code>&lt;button data-tooltip="I'm a tooltip!" data-tooltip-direction="w"&gt;A tooltip trigger&lt;/button&gt;</code></pre>
+    </dd>
+
+    <dt>
+      <button data-tooltip="I'm a tooltip!" data-tooltip-top="50">A tooltip trigger</button><br />
+      <button data-tooltip="I'm a tooltip!" data-tooltip-top="-50">A tooltip trigger</button><br />
+      <button data-tooltip="I'm a tooltip!" data-tooltip-direction="w" data-tooltip-left="50">A tooltip trigger</button><br />
+      <button data-tooltip="I'm a tooltip!" data-tooltip-direction="e" data-tooltip-left="50">A tooltip trigger</button>
+    </dt>
+
+    <dd>
+      <p>Offset tooltip by specifying the <code>data-tooltip-top</code> and <code>data-tooltip-left</code> attributes. Both attributes take plain numbers (negative and positive), counted in pixels.</p>
+
+      <p>
+        The end result of this also depends on <code>data-tooltip-direction</code>.
+      </p>
+
+      <pre><code>&lt;button data-tooltip="I'm a tooltip!" data-tooltip-top="50"&gt;A tooltip trigger&lt;/button&gt;
+
+&lt;button data-tooltip="I'm a tooltip!" data-tooltip-top="-50"&gt;A tooltip trigger&lt;/button&gt;
+
+&lt;button data-tooltip="I'm a tooltip!" data-tooltip-direction="w" data-tooltip-left="50"&gt;A tooltip trigger&lt;/button&gt;
+
+&lt;button data-tooltip="I'm a tooltip!" data-tooltip-direction="e" data-tooltip-left="50"&gt;A tooltip trigger&lt;/button&gt;
+</code></pre>
+    </dd>
+
+    <dt>
+      <button data-tooltip="I'm visible below 600px!" data-tooltip-disable="(min-width: 600px)">Resize your window!</button>
+    </dt>
+
+    <dd>
+      <p>It's possible to completely disable the tooltips, or just for a certain viewport. By setting the <code>Tooltips.disable</code> option (defaults to <code>false</code>), you can pass in <code>true</code> to disable all tooltips, or a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia">matchMedia</a> string which disables all tooltips for that viewport.</p>
+
+      <pre><code># Disable for all
+Tooltips.disable = true
+
+# Disable for devices/browsers over 500 px in width
+Tooltips.disable = '(min-width: 500px)'
+
+# Disable for devices/browser below 400 px in width
+Tooltips.disable = '(max-width: 400px)'</code></pre>
+
+      <p>You can also disable individual tooltips directly from the markup, by setting the <code>data-tooltip-disable</code> attribute:</p>
+
+      <pre><code>&lt;!-- Disables *this* tooltip for browsers below 400px in width. --&gt;
+
+&lt;button data-tooltip="I'm a tooltip!" data-tooltip-disable="(max-width: 400px)"&gt;A tooltip trigger&lt;/button&gt;</code></pre>
+    </dd>
+
+    <dt><span data-tooltip="Top-level text"><strong>Nested element</strong></span></dt>
+
+    <dd>
+      <p>
+        Tooltips should work as expected when attaching them to a parent element.
+      </p>
+
+      <pre><code>&lt;span data-tooltip="Top-level text"&gt;&lt;strong&gt;Nested element&lt;/strong&gt;&lt;/span&gt;</code></pre>
+    </dd>
+
+    <dt>
+      {{#tooltip}}
+        {{#if show}}
+          <button data-toggle data-tooltip="This should be removed">Remove</button>
+        {{/if}}
+      {{/tooltip}}
+    </dt>
+
+    <dd>
+      <p>
+        Tooltips should be removed when the attached element is removed.
+      </p>
+    </dd>
+  </dl>
+
+  {{ > tooltips }}
+</body>
