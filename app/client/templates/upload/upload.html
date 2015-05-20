@@ -17,6 +17,11 @@
 
       <div class="button-block">
 
+        {{#if lastEdit}}
+          <div class="message">
+            <i class="green icon-approved_dark"></i>SAVED AT {{dateFormat lastEdit 'hh:mm, DD MMM YYYY'}}
+          </div>
+        {{/if}}
         {{#if submitted}}
           <div class="message">
             <a href="/appsByMe">SUBMITTED ON <span class="date">{{dateFormat submitted 'DD MMM YYYY'}}</span></a>
@@ -30,6 +35,7 @@
           SAVE DRAFT
         </div>
         <i class="icon-garbage" data-action="delete-app"></i>
+
       </div>
 
     </div>

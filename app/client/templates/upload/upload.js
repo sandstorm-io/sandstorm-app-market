@@ -213,6 +213,10 @@ Template.Upload.events({
 
     Meteor.call('user/save-app', tmp.app.all(), function(err) {
       if (err) console.log(err);
+      else {
+        window.scrollTo(0, 0);
+        tmp.app.set(Meteor.user().savedApp.new);
+      }
     });
 
   },

@@ -208,16 +208,18 @@
 
   > .message {
 
+    text-transform: uppercase;
+
     a {
-
       color: #222222;
-
     }
 
     .date {
-
       color: #783189;
+    }
 
+    .green {
+      color: #4b9441;
     }
 
   }
