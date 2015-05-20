@@ -457,11 +457,14 @@ Template.screenshotPicker.events({
         if (err)
           console.error('Error uploading', err);
         else {
-          var screenshots = tmp.get('app').get('screenshots');
+          var screenshots = tmp.get('app').get('screenshots'),
+              screenshotObj = {};
           downloadUrl = encodeURI(downloadUrl);
-          if (!('screenshotInd' in tmp) || tmp.screenshotInd < 0) screenshots.push({url: downloadUrl});
+          screenshotObj.url = downloadUrl;
+          if (FlowRouter.current().route.name === 'admin-review') screenshotObj.admin = true;
+          if (!('screenshotInd' in tmp) || tmp.screenshotInd < 0) screenshots.push(screenshotObj);
           else {
-            screenshots[tmp.screenshotInd] = {url: downloadUrl};
+            screenshots[tmp.screenshotInd] = screenshotObj;
             delete tmp.screenshotInd;
           }
           tmp.get('app').set('screenshots', screenshots);

@@ -160,7 +160,26 @@
         <div class="identicon-instructions">
           <div>For the best results, we suggest the icon be:</div>
           <div><strong>600px</strong> wide by <strong>600px</strong> high (minimum) in PNG or JPEG format.</div>
+
+          {{#unless equal image parentApp.image}}
+            <div class="identicon-container small">
+              <div class="identicon" style="background-image: url('{{imageUrl parentApp.image}}')" data-field="icon-image">#
+              </div>
+            </div>
+          {{/unless}}
+
         </div>
+
+        {{#unless equal image parentApp.image}}
+        <div class="clearfix icon-captions">
+          <div class="left">
+            NEW ICON
+          </div>
+          <div class="right">
+            CURRENT ICON
+          </div>
+        </div>
+        {{/unless}}
 
       </div>
 
@@ -208,7 +227,7 @@
         <div><strong>800px</strong> wide by <strong>450px</strong> high (minimum) in PNG or JPEG format.</div>
       </div>
 
-      {{> screenshotPicker}}
+      {{> screenshotPicker screenshots=screenshots comments='user'}}
 
       <h3 class="title">Description</h3>
 

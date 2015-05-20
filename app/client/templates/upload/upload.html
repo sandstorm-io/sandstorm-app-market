@@ -277,9 +277,11 @@
 
   <div class="screenshot-outer">
       <div class="screenshot-container">
-        <div class="screenshot" style="background-image: url('{{imageUrl this.url}}')" data-action="change-screenshot"></div>
+        <div class="screenshot" style="background-image: url('{{imageUrl this.url}}')" data-action="change-screenshot">
+          {{#if this.admin}}<div class="admin-tint"></div>{{/if}}
+        </div>
         <div class="remove" data-action="remove-screenshot"><i class="icon-rejected_dark"></i></div>
-        {{#if ../comments}}<div class="comment" data-action="open-comment-box"><i class="fa fa-comment-o"></i></div>{{/if}}
+        {{#if equal ../comments 'admin'}}<div class="comment" data-action="open-comment-box"><i class="fa fa-comment-o"></i></div>{{/if}}
       </div>
       {{#if this.comment}}
         {{#if equal ../comments 'admin'}}
