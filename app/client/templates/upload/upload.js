@@ -20,6 +20,7 @@ Template.Upload.onCreated(function() {
   tmp.imageUrl = new ReactiveVar(false);
   tmp.screenshotsVis = new ReactiveVar(3);
   tmp.suggestNewGenre = new ReactiveVar(false);
+  tmp.submitted = new ReactiveVar();
 
   var resetScreenshotsVis = function() {
     tmp.screenshotsVis.set(Math.min(Math.ceil(($(window).width() - 300) / 600), 3));
@@ -154,6 +155,12 @@ Template.Upload.helpers({
 
     return Template.instance().app.all();
 
+  },
+
+  submitted: function() {
+
+    return Template.instance().submitted.get();
+
   }
 
 });
@@ -194,7 +201,10 @@ Template.Upload.events({
 
     Meteor.call('user/submit-app', tmp.app.all(), function(err, res) {
       if (err) console.log(err);
-      else if (res) FlowRouter.go('appsByMe');
+      else {
+        window.scrollTo(0, 0);
+        tmp.submitted.set(new Date());
+      }
     });
 
   },

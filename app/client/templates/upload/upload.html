@@ -16,9 +16,16 @@
     <div class="right-float on-top">
 
       <div class="button-block">
-        <div class="sandstorm-button neutral" data-action="submit-app">
-          SUBMIT APP FOR REVIEW
-        </div>
+
+        {{#if submitted}}
+          <div class="message">
+            <a href="/appsByMe">SUBMITTED ON <span class="date">{{dateFormat submitted 'DD MMM YYYY'}}</span></a>
+          </div>
+        {{else}}
+          <div class="sandstorm-button neutral" data-action="submit-app">
+            SUBMIT APP FOR REVIEW
+          </div>
+        {{/if}}
         <div class="sandstorm-button neutral" data-action="save-app">
           SAVE DRAFT
         </div>
