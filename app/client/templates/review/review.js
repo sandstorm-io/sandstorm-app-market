@@ -446,7 +446,7 @@ Template.descriptionEditor.onCreated(function() {
   tmp.autorun(function(c) {
     if (FlowRouter.subsReady()) {
       Tracker.afterFlush(function() {
-        tmp.original.set(tmp.data.initial);
+        tmp.original.set(tmp.data.original || tmp.data.initial);
         tmp.current.set(tmp.data.initial);
         c.stop();
       });

@@ -87,7 +87,8 @@ var appsBaseSchema = {
   versions: {
     type: [Object],
     defaultValue: [],
-    blackbox: true
+    blackbox: true,
+    minCount: 1
   },
   replacesApp: {
     type: String,
@@ -233,7 +234,9 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
   // so we need to add these keys again.
   categories: {
     type: [String],
-    index: true
+    index: true,
+    defaultValue: [],
+    minCount: 1
   },
   screenshots: {
     type: [Object],
@@ -251,7 +254,8 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
   versions: {
     type: [Object],
     defaultValue: [],
-    blackbox: true
+    blackbox: true,
+    minCount: 1
   },
   flags: {
     type: Object,
