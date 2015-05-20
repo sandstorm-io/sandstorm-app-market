@@ -23,6 +23,7 @@ Template.Edit.onCreated(function() {
   tmp.editingFields = new ReactiveVar({});
   tmp.newVersion = new ReactiveVar(false);
   tmp.submitted = new ReactiveVar();
+  tmp.changedOriginal = new ReactiveVar(false);
   tmp.validator = Schemas.AppsBase.namedContext();
 
   tmp.validate = function() {
@@ -132,9 +133,17 @@ Template.Edit.onCreated(function() {
       var categories = Categories.find().fetch();
       tmp.categories.set(categories);
 
-      // And load either the saved version or the actual app,
-      if (Meteor.user() && Meteor.user().savedApp && Meteor.user().savedApp[FlowRouter.current().params.appId]) {
-        tmp.app.set(Meteor.user().savedApp[FlowRouter.current().params.appId]);
+      // And load the most recent of the user saved version and admin suggested version, or the actual app
+      var appDoc = Apps.findOne(FlowRouter.current().params.appId),
+          savedApp = Meteor.user() && Meteor.user().savedApp && Meteor.user().savedApp[FlowRouter.current().params.appId];
+      if (appDoc && appDoc.adminRequests.length && appDoc.lastUpdatedAdmin && (!savedApp || !savedApp.lastEdit || savedApp.lastEdit < appDoc.lastUpdatedAdmin)) {
+        // Admin has submitted changes more recently than user has saved
+        tmp.app.set(appDoc.adminRequests[0]);
+        tmp.changedOriginal.set(true);
+      } else if (savedApp) {
+        // User has saved most recently
+        tmp.app.set(savedApp);
+        tmp.changedOriginal.set(true);
       } else {
         var newVersion = Apps.findOne(FlowRouter.current().params.appId),
             lastVersionNumber = newVersion.latestVersion();
@@ -182,6 +191,25 @@ Template.Edit.helpers({
 
   },
 
+  parentApp: function() {
+
+    return Apps.findOne(FlowRouter.current().params.appId);
+
+  },
+
+  changedOriginal: function() {
+
+    return Template.instance().get('changedOriginal').get();
+
+  },
+
+  adminRequest: function() {
+
+    var app = Apps.findOne(FlowRouter.current().params.appId);
+    return app && app.adminRequests && app.adminRequests.length && app.adminRequests[0];
+
+  },
+
   fieldEdit: function(field) {
 
     return (field in Template.instance().editingFields.get());
@@ -214,6 +242,17 @@ Template.Edit.events({
 
     var $el = $(evt.currentTarget);
     tmp.app.set($el.data('field'), $el.val());
+
+  },
+
+  'blur [data-field], keyup [data-field]': function(evt, tmp) {
+
+    if (evt.keyCode && evt.keyCode !== 13) return false;
+    var $el = $(evt.currentTarget);
+    var editingFields = tmp.editingFields.get(),
+        field = $el.data('field');
+    delete editingFields[field];
+    tmp.editingFields.set(editingFields);
 
   },
 
