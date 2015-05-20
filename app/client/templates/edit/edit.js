@@ -120,8 +120,8 @@ Template.Edit.onCreated(function() {
       tmp.categories.set(categories);
 
       // And load either the saved version or the actual app,
-      if (Meteor.user() && Meteor.user().savedApp && Meteor.user().savedApp[FlowRouter.getParam('appId')]) {
-        tmp.app.set(Meteor.user().savedApp[FlowRouter.getParam('appId')]);
+      if (Meteor.user() && Meteor.user().savedApp && Meteor.user().savedApp[FlowRouter.current().params.appId]) {
+        tmp.app.set(Meteor.user().savedApp[FlowRouter.current().params.appId]);
       } else {
         var newVersion = Apps.findOne(FlowRouter.current().params.appId),
             lastVersionNumber = newVersion.latestVersion();

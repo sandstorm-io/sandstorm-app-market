@@ -21,7 +21,7 @@ Template.SingleApp.onCreated(function() {
   // Load existing review of this app (if it exists)
   tmp.autorun(function(c) {
     if (FlowRouter.subsReady()) {
-      var appId = FlowRouter.getParam('appId'),
+      var appId = FlowRouter.current().params.appId,
           user = Meteor.user(),
           app = Apps.findOne(appId);
       if (!app || !app.screenshots.length) tmp.readMore.set(true);
@@ -64,7 +64,7 @@ Template.SingleApp.helpers({
 
   app: function() {
 
-    return Apps.findOne(FlowRouter.getParam('appId'));
+    return Apps.findOne(FlowRouter.current().params.appId);
 
   },
 
@@ -176,7 +176,7 @@ Template.SingleApp.events({
   'click [data-action="confirm-chip"]': function(evt, tmp) {
 
     var amount = parseFloat(tmp.$('[data-field="chip-amount"]').val(), 10);
-    Meteor.call('user/chip-in', FlowRouter.getParam('appId'), amount, function(err) {
+    Meteor.call('user/chip-in', FlowRouter.current().params.appId, amount, function(err) {
       if (err) console.log(err);
       tmp.chipIn.set(false);
     });
@@ -207,7 +207,7 @@ Template.SingleApp.events({
       additional: additional
     };
 
-    Meteor.call('user/flag-app', FlowRouter.getParam('appId'), flag, function(err) {
+    Meteor.call('user/flag-app', FlowRouter.current().params.appId, flag, function(err) {
       if (err) console.log(err);
       tmp.flagApp.set(false);
     });
@@ -261,7 +261,7 @@ Template.SingleApp.events({
   'click [data-action="submit-review"]': function(evt, tmp) {
 
     if (tmp.reviewValid.get()) {
-      Meteor.call('user/review-app', FlowRouter.getParam('appId'), tmp.myReview.get(), function(err) {
+      Meteor.call('user/review-app', FlowRouter.current().params.appId, tmp.myReview.get(), function(err) {
         if (err) console.log(err);
         tmp.writeReview.set(false);
       });

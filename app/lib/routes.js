@@ -77,7 +77,7 @@ FlowRouter.route('/appMarket/genres/:genre', {
       FlowRouter.setParams({genre: s.capitalize(params.genre)});
 
     if (params.genre === 'Popular') FlowLayout.render('MasterLayout', {mainSection: 'Popular'});
-    else FlowLayout.render('MasterLayout', {mainSection: 'Genre', genre: FlowRouter.getParam('genre')});
+    else FlowLayout.render('MasterLayout', {mainSection: 'Genre', genre: FlowRouter.current().params.genre});
   }
 });
 
