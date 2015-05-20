@@ -143,16 +143,15 @@ Template.SingleApp.helpers({
   versionChanges: function() {
 
     var count = 0;
-    return _.reduceRight(this.versions, function(str, version) {
+    return Spacebars.SafeString(_.reduceRight(this.versions, function(str, version) {
       if (count < 2 && version.changes) {
         if (count > 0) str += '<br>';
         str += '<strong>' + version.number + '</strong><br>';
         str += version.changes + '<br>';
         count += 1;
-        console.log(count);
       }
       return str;
-    }, '');
+    }, ''));
 
   }
 
