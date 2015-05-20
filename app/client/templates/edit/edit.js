@@ -22,6 +22,7 @@ Template.Edit.onCreated(function() {
   tmp.suggestNewGenre = new ReactiveVar(false);
   tmp.editingFields = new ReactiveVar({});
   tmp.newVersion = new ReactiveVar(false);
+  tmp.submitted = new ReactiveVar();
 
   var resetScreenshotsVis = function() {
     tmp.screenshotsVis.set(Math.min(Math.ceil(($(window).width() - 300) / 600), 3));
@@ -166,6 +167,12 @@ Template.Edit.helpers({
 
   },
 
+  submitted: function() {
+
+    return Template.instance().submitted.get();
+
+  },
+
   fieldEdit: function(field) {
 
     return (field in Template.instance().editingFields.get());
@@ -241,7 +248,10 @@ Template.Edit.events({
     if (tmp.app.get('versions').length > 0) {
       Meteor.call('user/submit-update', tmp.app.all(), function(err, res) {
         if (err) console.log(err);
-        else if (res) FlowRouter.go('appsByMe');
+        else if (res) {
+          window.scrollTo(0, 0);
+          tmp.submitted.set(new Date());
+        }
       });
     } else {
       console.log('No new version specified');
@@ -253,26 +263,38 @@ Template.Edit.events({
 
     Meteor.call('user/save-app', tmp.app.all(), function(err) {
       if (err) console.log(err);
+      else {
+        window.scrollTo(0, 0);
+        tmp.app.set(Meteor.user().savedApp[FlowRouter.current().params.appId]);
+      }
     });
 
   },
 
   'click [data-action="discard-edits"]': function(evt, tmp) {
 
-    Meteor.call('user/delete-saved-app', tmp.app.get('replacesApp'), function(err, res) {
-      if (err) {
-        console.log(err);
+    AntiModals.overlay('nukeModal', {data: {
+      topMessage: 'Are you sure you want to discard your edits?',
+      bottomMessage: 'This can\'t be undone.',
+      actionText: 'Yes, discard',
+      actionFunction: function(cb) {
+        Meteor.call('user/delete-saved-app', tmp.app.get('replacesApp'), function(err, res) {
+          if (err) {
+            console.log(err);
+          }
+          else {
+            tmp.clearApp();
+            var newVersion = Apps.findOne(FlowRouter.current().params.appId);
+            newVersion.replacesApp = newVersion._id;
+            newVersion.versions = [];
+            Schemas.AppsBase.clean(newVersion);
+            tmp.app.set(newVersion);
+            tmp.setCategories(tmp.app.get('categories'));
+            cb();
+          }
+        });
       }
-      else {
-        tmp.clearApp();
-        var newVersion = Apps.findOne(FlowRouter.current().params.appId);
-        newVersion.replacesApp = newVersion._id;
-        newVersion.versions = [];
-        Schemas.AppsBase.clean(newVersion);
-        tmp.app.set(newVersion);
-        tmp.setCategories(tmp.app.get('categories'));
-      }
-    });
+    }});
 
   },
 
