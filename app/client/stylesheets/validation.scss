@@ -6,4 +6,10 @@
 
   }
 
+  [data-invalid=true][data-valid=true] {
+
+    color: initial !important;
+
+  }
+
 }

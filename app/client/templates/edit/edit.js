@@ -23,6 +23,15 @@ Template.Edit.onCreated(function() {
   tmp.editingFields = new ReactiveVar({});
   tmp.newVersion = new ReactiveVar(false);
   tmp.submitted = new ReactiveVar();
+  tmp.validator = Schemas.AppsBase.namedContext();
+
+  tmp.validate = function() {
+    tmp.validator.validate(tmp.app.all());
+    if (tmp.app.get('versions').length === 0) tmp.validator.addInvalidKeys([{
+      name: 'version',
+      type: 'new version required'
+    }]);
+  };
 
   var resetScreenshotsVis = function() {
     tmp.screenshotsVis.set(Math.min(Math.ceil(($(window).width() - 300) / 600), 3));
@@ -245,6 +254,7 @@ Template.Edit.events({
 
   'click [data-action="submit-app"]': function(evt, tmp) {
 
+    tmp.validate();
     if (tmp.app.get('versions').length > 0) {
       Meteor.call('user/submit-update', tmp.app.all(), function(err, res) {
         if (err) console.log(err);
@@ -261,6 +271,7 @@ Template.Edit.events({
 
   'click [data-action="save-app"]': function(evt, tmp) {
 
+    tmp.validate();
     Meteor.call('user/save-app', tmp.app.all(), function(err) {
       if (err) console.log(err);
       else {
