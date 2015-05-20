@@ -23,6 +23,7 @@ Template.Review.onCreated(function() {
   tmp.editingFields = new ReactiveVar({});
   tmp.editedFields = new ReactiveVar({});
   tmp.newVersion = new ReactiveVar(false);
+  tmp.submitted = new ReactiveVar();
 
   var resetScreenshotsVis = function() {
     tmp.screenshotsVis.set(Math.min(Math.ceil(($(window).width() - 300) / 600), 3));
@@ -206,6 +207,12 @@ Template.Review.helpers({
 
   },
 
+  submitted: function() {
+
+    return Template.instance().submitted.get();
+
+  },
+
   originalApp: function() {
 
     return Template.instance().get('originalApp');
@@ -326,7 +333,10 @@ Template.Review.events({
 
     Meteor.call('admin/submitAdminRequests', tmp.app.all(), function(err, res) {
       if (err) console.log(err);
-      else if (res) FlowRouter.go('admin');
+      else if (res) {
+        window.scrollTo(0, 0);
+        tmp.submitted.set(new Date());
+      }
     });
 
   },
@@ -335,6 +345,10 @@ Template.Review.events({
 
     Meteor.call('user/save-app', tmp.app.all(), function(err) {
       if (err) console.log(err);
+      else {
+        window.scrollTo(0, 0);
+        tmp.app.set(Meteor.user().savedApp[FlowRouter.current().params.appId]);
+      }
     });
 
   },

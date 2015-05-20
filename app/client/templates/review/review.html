@@ -19,6 +19,17 @@
 
         <div class="button-block">
 
+          {{#if submitted}}
+            <div class="message">
+              <a href="/appsByMe">SUBMITTED ON <span class="date">{{dateFormat submitted 'DD MMM YYYY'}}</span></a>
+            </div>
+          {{else}}
+            {{#if lastEdit}}
+              <div class="message">
+                <i class="green icon-approved_dark"></i>SAVED AT {{dateFormat lastEdit 'hh:mm, DD MMM YYYY'}}
+              </div>
+            {{/if}}
+          {{/if}}
           <div class="sandstorm-button color green {{#if equal parentApp.approved 0}}active{{/if}}" data-action="approve">
             <i class="icon-approved_light"></i>
             <div class="text">Approve</div>
