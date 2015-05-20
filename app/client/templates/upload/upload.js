@@ -45,6 +45,9 @@ Template.Upload.onCreated(function() {
         selected: true
       });
     });
+    _.each(allCategories, function(cat) {
+      if (categories.indexOf(cat.name) < 0) cat.selected = false;
+    });
 
     tmp.categories.set(allCategories);
     // tmp.app.set('categories', allCategories);
