@@ -180,3 +180,54 @@ html {
   display: inline-block;
 
 }
+
+.tooltip {
+  z-index: 1001;
+  pointer-events: none;
+  transition: opacity .1s ease-out;
+  opacity: 0;
+  background: #e7e4ea;
+  padding: 1rem;
+  font-size: 1.3rem;
+  font-family: $main-font;
+  box-sizing: border-box;
+  position: relative;
+
+  &.tooltip--top:after {
+    width: 0;
+    height: 0;
+    border-left: 1.5rem solid transparent;
+    border-right: 1.5rem solid transparent;
+    border-top: 1.5rem solid #e7e4ea;
+    bottom: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 99;
+  }
+
+  &.tooltip--bottom:after {
+    width: 0;
+    height: 0;
+    border-left: 1.5rem solid transparent;
+    border-right: 1.5rem solid transparent;
+    border-bottom: 1.5rem solid #e7e4ea;
+    top: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 99;
+  }
+
+  &.hide {
+    opacity: 0;
+  }
+
+  &.show {
+    opacity: 1;
+  }
+}

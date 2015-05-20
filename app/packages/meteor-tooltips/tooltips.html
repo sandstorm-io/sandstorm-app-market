@@ -1,0 +1,13 @@
+<template name="tooltips">
+	<div class="tooltip {{direction}} {{display}}" style="{{position}}">
+		{{#if content}}
+			<div class="inner">{{{content}}}</div>
+		{{/if}}
+	</div>
+</template>
+
+<template name="tooltip">
+	<span data-tooltip-wrapper>
+		{{ > UI.contentBlock }}
+	</span>
+</template>

@@ -54,7 +54,7 @@ adminFilters = {
     actions: {
       'request-revision': true,
       flagged: false,
-      approved: false,
+      approved: true,
       rejected: false
     }
   },

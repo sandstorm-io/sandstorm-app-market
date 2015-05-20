@@ -33,6 +33,7 @@ var appsBaseSchema = {
   },
   screenshots: {
     type: [Object],
+    blackbox: true,
     defaultValue: []
   },
   'screenshots.$.url': {
@@ -79,8 +80,9 @@ var appsBaseSchema = {
     optional: true
   },
   versions: {
-    type: [String],
-    defaultValue: []
+    type: [Object],
+    defaultValue: [],
+    blackbox: true
   },
   replacesApp: {
     type: String,
@@ -229,9 +231,17 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
     index: true
   },
   screenshots: {
-    type: [String],
-    regEx: SimpleSchema.RegEx.Url,
+    type: [Object],
+    blackbox: true,
     defaultValue: []
+  },
+  'screenshots.$.url': {
+    type: String,
+    regEx: SimpleSchema.RegEx.Url
+  },
+  'screenshots.$.comment': {
+    type: String,
+    optional: true
   },
   versions: {
     type: [Object],

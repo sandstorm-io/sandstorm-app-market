@@ -163,7 +163,6 @@ Meteor.methods({
     });
 
     Apps.insert(app, function(err, res) {
-      console.log(err, res);
       if (err) throw new Meteor.Error(err.message);
       else fut.return(res);
     });
@@ -268,10 +267,20 @@ Meteor.methods({
     if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Can only be executed by admin user');
     var app = Apps.findOne(appId);
     if (!app) throw new Meteor.Error('No app matching id ' + appId);
-    // NOTE: admin requests object is removed here, as it is assumed that any
-    // requested amendments have been made satisfactorily for the app to have
-    // been approved.
-    return Apps.update(appId, {$set: {approved: 0, adminRequests: []}});
+    // If there's an existing approved version, REPLACE that and remove the update
+    var replacesApp = Apps.findOne(app.replacesApp);
+    if (replacesApp) {
+      var newVersion = app.versions[0];
+      Schemas.AppsBase.clean(app);
+      delete app.versions;
+      Apps.update(replacesApp, {$set: app, $push: {versions: newVersion}});
+      Apps.remove(appId);
+    } else {
+      // NOTE: admin requests object is removed here, as it is assumed that any
+      // requested amendments have been made satisfactorily for the app to have
+      // been approved.
+      return Apps.update(appId, {$set: {approved: 0, adminRequests: []}});
+    }
 
   },
 
