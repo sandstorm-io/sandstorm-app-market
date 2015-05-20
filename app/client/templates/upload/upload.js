@@ -70,6 +70,19 @@ Template.Upload.onCreated(function() {
 
   };
 
+  tmp.unsetCategories = function() {
+
+    var allCategories = tmp.categories.get();
+
+    _.each(allCategories, function(cat) {
+      cat.selected = false;
+    });
+
+    tmp.categories.set(allCategories);
+    tmp.categories.dep.changed();
+
+  };
+
   tmp.clearApp = function() {
 
     var newApp = appProto(),
@@ -78,6 +91,7 @@ Template.Upload.onCreated(function() {
     _.each(oldApp, function(val, key) {
       tmp.app.set(key, newApp[key]);
     });
+    tmp.unsetCategories();
     Meteor.call('user/delete-saved-app', function(err) {
       if (err) console.log(err);
     });
@@ -198,7 +212,7 @@ Template.Upload.events({
       actionText: 'Yes, nuke',
       actionFunction: function(cb) {
         tmp.clearApp();
-        cb && cb.apply(tmp);
+        cb();
       }
     }});
 
@@ -492,6 +506,24 @@ Template.screenshotPicker.events({
 
     screenshots[screenshotInd].comment = $(evt.currentTarget).val();
     tmp.get('app').set('screenshots', screenshots);
+
+  }
+
+});
+
+Template.nukeModal.events({
+
+  'click [data-action="close-modal"]': function() {
+
+    AntiModals.dismissAll();
+
+  },
+
+  'click [data-action="perform-action"]': function() {
+
+    this.actionFunction && this.actionFunction.call(this, function() {
+      AntiModals.dismissAll();
+    });
 
   }
 
