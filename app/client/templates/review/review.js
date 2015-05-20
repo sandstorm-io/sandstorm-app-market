@@ -24,6 +24,11 @@ Template.Review.onCreated(function() {
   tmp.editedFields = new ReactiveVar({});
   tmp.newVersion = new ReactiveVar(false);
   tmp.submitted = new ReactiveVar();
+  tmp.validator = Schemas.AppsBase.namedContext();
+
+  tmp.validate = function() {
+    tmp.validator.validate(tmp.app.all());
+  };
 
   var resetScreenshotsVis = function() {
     tmp.screenshotsVis.set(Math.min(Math.ceil(($(window).width() - 300) / 600), 3));
@@ -331,6 +336,7 @@ Template.Review.events({
 
   'click [data-action="submit-admin-requests"]': function(evt, tmp) {
 
+    tmp.validate();
     Meteor.call('admin/submitAdminRequests', tmp.app.all(), function(err, res) {
       if (err) console.log(err);
       else if (res) {
@@ -343,6 +349,7 @@ Template.Review.events({
 
   'click [data-action="save-admin-requests"]': function(evt, tmp) {
 
+    tmp.validate();
     Meteor.call('user/save-app', tmp.app.all(), function(err) {
       if (err) console.log(err);
       else {
