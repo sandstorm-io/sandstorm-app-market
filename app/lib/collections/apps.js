@@ -19,7 +19,8 @@ var appsBaseSchema = {
   categories: {
     type: [String],
     index: true,
-    defaultValue: []
+    defaultValue: [],
+    minCount: 1
   },
   description: {
     type: String,
