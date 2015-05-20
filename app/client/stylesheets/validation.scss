@@ -1,0 +1,15 @@
+.validation {
+
+  [data-invalid] {
+
+    color: #800000 !important;
+
+  }
+
+  [data-invalid=true][data-valid=true] {
+
+    color: initial !important;
+
+  }
+
+}

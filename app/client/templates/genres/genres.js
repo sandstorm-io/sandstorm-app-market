@@ -2,13 +2,13 @@ Template.Genre.helpers({
 
   genre: function() {
 
-    return FlowRouter.getParam('authorId') ? 'Apps by Author' : FlowRouter.getParam('genre');
+    return FlowRouter.current().params.authorId ? 'Apps by Author' : FlowRouter.current().params.authorId;
 
   },
 
   authorId: function() {
 
-    return FlowRouter.getParam('authorId');
+    return FlowRouter.current().params.authorId;
 
   }
 

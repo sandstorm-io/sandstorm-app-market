@@ -67,11 +67,28 @@ var helpers = {
 
   },
 
+  // VALIDATION HELPERS
+
+  validate: function(field) {
+
+    var tmp = Template.instance(),
+        validator = tmp.get('validator');
+
+    return !!_.findWhere(validator.invalidKeys(), {name: field});
+
+  },
+
   // UTILITY HELPERS
 
   equal: function(a, b) {
 
     return a === b;
+
+  },
+
+  notEqual: function(a, b) {
+
+    return a !== b;
 
   },
 

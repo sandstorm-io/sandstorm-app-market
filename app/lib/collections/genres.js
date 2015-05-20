@@ -65,7 +65,7 @@ var extraGenres = [
       sort: {installCountThisWeek: -1}
     },
     priority: 0,
-    showSummary: true
+    showSummary: false
   },
 
   {
@@ -142,7 +142,7 @@ var extraGenres = [
     name: 'Apps by Author',
     selector: function() {
       return {
-        author: this.authorId || FlowRouter.getParam('authorId')
+        author: this.authorId || FlowRouter.current().params.authorId
       };
     },
     priority: 0,

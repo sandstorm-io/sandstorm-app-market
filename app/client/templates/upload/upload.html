@@ -11,25 +11,38 @@
   </div>
 
   {{#with app}}
-  <form class="upload-box">
+  <form class="upload-box validation">
 
     <div class="right-float on-top">
 
       <div class="button-block">
-        <div class="sandstorm-button neutral" data-action="submit-app">
-          SUBMIT APP FOR REVIEW
-        </div>
+
+        {{#if lastEdit}}
+          <div class="message">
+            <i class="green icon-approved_dark"></i>SAVED AT {{dateFormat lastEdit 'hh:mm, DD MMM YYYY'}}
+          </div>
+        {{/if}}
+        {{#if submitted}}
+          <div class="message">
+            <a href="/appsByMe">SUBMITTED ON <span class="date">{{dateFormat submitted 'DD MMM YYYY'}}</span></a>
+          </div>
+        {{else}}
+          <div class="sandstorm-button neutral" data-action="submit-app">
+            SUBMIT APP FOR REVIEW
+          </div>
+        {{/if}}
         <div class="sandstorm-button neutral" data-action="save-app">
           SAVE DRAFT
         </div>
         <i class="icon-garbage" data-action="delete-app"></i>
+
       </div>
 
     </div>
 
     <div class="section clearfix">
 
-      <h3 class="title">Application File</h3>
+      <h3 class="title" data-invalid={{validate 'spkLink'}}>Application File</h3>
 
       <div class="half-col">
 
@@ -39,7 +52,7 @@
 
       <div class="half-col">
 
-        <h3 class="title">Title</h3>
+        <h3 class="title" data-invalid={{validate 'name'}}>Title</h3>
         <input type="text" data-field="name" value="{{name}}" required />
 
         <h3 class="title">Author</h3>
@@ -58,20 +71,20 @@
         <h4 class="mini-title">Ported by</h4>
         <div class="read-only">{{getUsername author}}</div>
 
-        <h4 class="mini-title">Code URL</h4>
+        <h4 class="mini-title" data-invalid={{validate 'codeLink'}}>Code URL</h4>
         <input type="text" data-field="codeLink" value="{{codeLink}}" pattern="https?://.+" />
 
-        <h4 class="mini-title">License</h4>
+        <h4 class="mini-title" data-invalid={{validate 'license'}}>License</h4>
         <input type="text" data-field="license" value="{{license}}" />
 
-        <h4 class="mini-title">Version</h4>
+        <h4 class="mini-title" data-invalid={{validate 'versions'}}>Version</h4>
         <input type="text" data-action="update-version" value="{{latestVersion}}" />
 
       </div>
 
       <div class="half-col">
 
-        <h4 class="mini-title">Website</h4>
+        <h4 class="mini-title" data-invalid={{validate 'webLink'}}>Website</h4>
         <input type="text" data-field="webLink" value="{{webLink}}" />
 
         {{> connectButton service="github"}}
@@ -79,7 +92,7 @@
 
       </div>
 
-      <h3 class="title">Genre</h3>
+      <h3 class="title" data-invalid={{validate 'categories'}}>Genre</h3>
 
       {{> genreGrid}}
 
@@ -91,7 +104,7 @@
 
       <div class="half-col">
 
-        <h3 class="title">Icon</h3>
+        <h3 class="title" data-invalid={{validate 'image'}}>Icon</h3>
 
         {{> iconPicker}}
 
@@ -159,9 +172,11 @@
     <div class="right-float on-top">
 
       <div class="button-block">
+        {{#unless submitted}}
         <div class="sandstorm-button neutral" data-action="submit-app">
           SUBMIT APP FOR REVIEW
         </div>
+        {{/unless}}
         <div class="sandstorm-button neutral" data-action="save-app">
           SAVE DRAFT
         </div>
@@ -295,5 +310,37 @@
   {{/each}}
 
   <input type="file" class="file-picker" data-action="file-picker" data-for="screenshot" accept="image/*" />
+
+</template>
+
+<template name="nukeModal">
+
+  <div class="anti-modal-box nuke-modal clearfix">
+
+    <div class="message">
+      {{topMessage}}
+    </div>
+
+    <img class="nuke-pic" src="/images/nuke-image.png" />
+
+    <div class="message">
+      {{bottomMessage}}
+    </div>
+
+    <div class="spacer">
+    </div>
+
+    <div class="button-block big-gap">
+
+      <div class="sandstorm-button neutral" data-action="close-modal">
+        Cancel
+      </div>
+      <div class="sandstorm-button neutral" data-action="perform-action">
+        {{actionText}}
+      </div>
+
+    </div>
+
+  </div>
 
 </template>

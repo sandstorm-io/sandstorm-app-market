@@ -22,6 +22,16 @@ Template.Edit.onCreated(function() {
   tmp.suggestNewGenre = new ReactiveVar(false);
   tmp.editingFields = new ReactiveVar({});
   tmp.newVersion = new ReactiveVar(false);
+  tmp.submitted = new ReactiveVar();
+  tmp.validator = Schemas.AppsBase.namedContext();
+
+  tmp.validate = function() {
+    tmp.validator.validate(tmp.app.all());
+    if (tmp.app.get('versions').length === 0) tmp.validator.addInvalidKeys([{
+      name: 'version',
+      type: 'new version required'
+    }]);
+  };
 
   var resetScreenshotsVis = function() {
     tmp.screenshotsVis.set(Math.min(Math.ceil(($(window).width() - 300) / 600), 3));
@@ -46,6 +56,9 @@ Template.Edit.onCreated(function() {
         new: true,
         selected: true
       });
+    });
+    _.each(allCategories, function(cat) {
+      if (categories.indexOf(cat.name) < 0) cat.selected = false;
     });
 
     tmp.categories.set(allCategories);
@@ -72,6 +85,19 @@ Template.Edit.onCreated(function() {
 
   };
 
+  tmp.unsetCategories = function() {
+
+    var allCategories = tmp.categories.get();
+
+    _.each(allCategories, function(cat) {
+      cat.selected = false;
+    });
+
+    tmp.categories.set(allCategories);
+    tmp.categories.dep.changed();
+
+  };
+
   tmp.clearApp = function() {
 
     var newApp = appProto(),
@@ -80,6 +106,7 @@ Template.Edit.onCreated(function() {
     _.each(oldApp, function(val, key) {
       tmp.app.set(key, newApp[key]);
     });
+    tmp.unsetCategories();
     Meteor.call('user/delete-saved-app', function(err) {
       if (err) console.log(err);
     });
@@ -106,8 +133,8 @@ Template.Edit.onCreated(function() {
       tmp.categories.set(categories);
 
       // And load either the saved version or the actual app,
-      if (Meteor.user() && Meteor.user().savedApp && Meteor.user().savedApp[FlowRouter.getParam('appId')]) {
-        tmp.app.set(Meteor.user().savedApp[FlowRouter.getParam('appId')]);
+      if (Meteor.user() && Meteor.user().savedApp && Meteor.user().savedApp[FlowRouter.current().params.appId]) {
+        tmp.app.set(Meteor.user().savedApp[FlowRouter.current().params.appId]);
       } else {
         var newVersion = Apps.findOne(FlowRouter.current().params.appId),
             lastVersionNumber = newVersion.latestVersion();
@@ -146,6 +173,12 @@ Template.Edit.helpers({
   app: function() {
 
     return Template.instance().app.all();
+
+  },
+
+  submitted: function() {
+
+    return Template.instance().submitted.get();
 
   },
 
@@ -221,10 +254,14 @@ Template.Edit.events({
 
   'click [data-action="submit-app"]': function(evt, tmp) {
 
+    tmp.validate();
     if (tmp.app.get('versions').length > 0) {
       Meteor.call('user/submit-update', tmp.app.all(), function(err, res) {
         if (err) console.log(err);
-        else if (res) FlowRouter.go('appsByMe');
+        else if (res) {
+          window.scrollTo(0, 0);
+          tmp.submitted.set(new Date());
+        }
       });
     } else {
       console.log('No new version specified');
@@ -234,40 +271,60 @@ Template.Edit.events({
 
   'click [data-action="save-app"]': function(evt, tmp) {
 
+    tmp.validate();
     Meteor.call('user/save-app', tmp.app.all(), function(err) {
       if (err) console.log(err);
+      else {
+        window.scrollTo(0, 0);
+        tmp.app.set(Meteor.user().savedApp[FlowRouter.current().params.appId]);
+      }
     });
 
   },
 
   'click [data-action="discard-edits"]': function(evt, tmp) {
 
-    Meteor.call('user/delete-saved-app', tmp.app.get('replacesApp'), function(err, res) {
-      if (err) {
-        console.log(err);
+    AntiModals.overlay('nukeModal', {data: {
+      topMessage: 'Are you sure you want to discard your edits?',
+      bottomMessage: 'This can\'t be undone.',
+      actionText: 'Yes, discard',
+      actionFunction: function(cb) {
+        Meteor.call('user/delete-saved-app', tmp.app.get('replacesApp'), function(err, res) {
+          if (err) {
+            console.log(err);
+          }
+          else {
+            tmp.clearApp();
+            var newVersion = Apps.findOne(FlowRouter.current().params.appId);
+            newVersion.replacesApp = newVersion._id;
+            newVersion.versions = [];
+            Schemas.AppsBase.clean(newVersion);
+            tmp.app.set(newVersion);
+            tmp.setCategories(tmp.app.get('categories'));
+            cb();
+          }
+        });
       }
-      else {
-        tmp.clearApp();
-        var newVersion = Apps.findOne(FlowRouter.current().params.appId);
-        newVersion.replacesApp = newVersion._id;
-        newVersion.versions = [];
-        Schemas.AppsBase.clean(newVersion);
-        tmp.app.set(newVersion);
-        tmp.setCategories(tmp.app.get('categories'));
-      }
-    });
+    }});
 
   },
 
   'click [data-action="delete-app"]': function(evt, tmp) {
 
-    // TODO: Add modal confirm
-    Meteor.call('user/delete-app', tmp.app.get('replacesApp'), function(err, res) {
-      if (err) console.log(err);
-      else {
-        tmp.clearApp();
+    AntiModals.overlay('nukeModal', {data: {
+      topMessage: 'Are you sure you want to nuke this app?',
+      bottomMessage: 'This can\'t be undone.',
+      actionText: 'Yes, nuke',
+      actionFunction: function(cb) {
+        Meteor.call('user/delete-app', tmp.app.get('replacesApp'), function(err, res) {
+          if (err) console.log(err);
+          else {
+            tmp.clearApp();
+            cb();
+          }
+        });
       }
-    });
+    }});
 
   },
 

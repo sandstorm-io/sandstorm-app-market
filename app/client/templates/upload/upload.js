@@ -20,6 +20,12 @@ Template.Upload.onCreated(function() {
   tmp.imageUrl = new ReactiveVar(false);
   tmp.screenshotsVis = new ReactiveVar(3);
   tmp.suggestNewGenre = new ReactiveVar(false);
+  tmp.submitted = new ReactiveVar();
+  tmp.validator = Schemas.AppsBase.namedContext();
+
+  tmp.validate = function() {
+    tmp.validator.validate(tmp.app.all());
+  };
 
   var resetScreenshotsVis = function() {
     tmp.screenshotsVis.set(Math.min(Math.ceil(($(window).width() - 300) / 600), 3));
@@ -44,6 +50,9 @@ Template.Upload.onCreated(function() {
         new: true,
         selected: true
       });
+    });
+    _.each(allCategories, function(cat) {
+      if (categories.indexOf(cat.name) < 0) cat.selected = false;
     });
 
     tmp.categories.set(allCategories);
@@ -70,6 +79,19 @@ Template.Upload.onCreated(function() {
 
   };
 
+  tmp.unsetCategories = function() {
+
+    var allCategories = tmp.categories.get();
+
+    _.each(allCategories, function(cat) {
+      cat.selected = false;
+    });
+
+    tmp.categories.set(allCategories);
+    tmp.categories.dep.changed();
+
+  };
+
   tmp.clearApp = function() {
 
     var newApp = appProto(),
@@ -78,6 +100,7 @@ Template.Upload.onCreated(function() {
     _.each(oldApp, function(val, key) {
       tmp.app.set(key, newApp[key]);
     });
+    tmp.unsetCategories();
     Meteor.call('user/delete-saved-app', function(err) {
       if (err) console.log(err);
     });
@@ -137,6 +160,12 @@ Template.Upload.helpers({
 
     return Template.instance().app.all();
 
+  },
+
+  submitted: function() {
+
+    return Template.instance().submitted.get();
+
   }
 
 });
@@ -175,25 +204,41 @@ Template.Upload.events({
 
   'click [data-action="submit-app"]': function(evt, tmp) {
 
+    tmp.validate();
     Meteor.call('user/submit-app', tmp.app.all(), function(err, res) {
       if (err) console.log(err);
-      else if (res) FlowRouter.go('appsByMe');
+      else {
+        window.scrollTo(0, 0);
+        tmp.submitted.set(new Date());
+      }
     });
 
   },
 
   'click [data-action="save-app"]': function(evt, tmp) {
 
+    tmp.validate();
     Meteor.call('user/save-app', tmp.app.all(), function(err) {
       if (err) console.log(err);
+      else {
+        window.scrollTo(0, 0);
+        tmp.app.set(Meteor.user().savedApp.new);
+      }
     });
 
   },
 
   'click [data-action="delete-app"]': function(evt, tmp) {
 
-    // TODO: Add modal confirm
-    tmp.clearApp();
+    AntiModals.overlay('nukeModal', {data: {
+      topMessage: 'Are you sure you want to nuke this app?',
+      bottomMessage: 'This can\'t be undone.',
+      actionText: 'Yes, nuke',
+      actionFunction: function(cb) {
+        tmp.clearApp();
+        cb();
+      }
+    }});
 
   },
 
@@ -485,6 +530,24 @@ Template.screenshotPicker.events({
 
     screenshots[screenshotInd].comment = $(evt.currentTarget).val();
     tmp.get('app').set('screenshots', screenshots);
+
+  }
+
+});
+
+Template.nukeModal.events({
+
+  'click [data-action="close-modal"]': function() {
+
+    AntiModals.dismissAll();
+
+  },
+
+  'click [data-action="perform-action"]': function() {
+
+    this.actionFunction && this.actionFunction.call(this, function() {
+      AntiModals.dismissAll();
+    });
 
   }
 

@@ -11,7 +11,7 @@
   </div>
 
   {{#with app}}
-  <form class="edit-box clearfix">
+  <form class="edit-box clearfix validation">
 
     <div class="section">
 
@@ -19,6 +19,17 @@
 
         <div class="button-block">
 
+          {{#if submitted}}
+            <div class="message">
+              <a href="/appsByMe">SUBMITTED ON <span class="date">{{dateFormat submitted 'DD MMM YYYY'}}</span></a>
+            </div>
+          {{else}}
+            {{#if lastEdit}}
+              <div class="message">
+                <i class="green icon-approved_dark"></i>SAVED AT {{dateFormat lastEdit 'hh:mm, DD MMM YYYY'}}
+              </div>
+            {{/if}}
+          {{/if}}
           <div class="sandstorm-button color green {{#if equal parentApp.approved 0}}active{{/if}}" data-action="approve">
             <i class="icon-approved_light"></i>
             <div class="text">Approve</div>
@@ -55,13 +66,13 @@
       <div class="right-float on-top">
 
         <div class="button-block">
-          <div class="sandstorm-button neutral" data-action="">
+          <!-- <div class="sandstorm-button neutral" data-action="">
             SAVE
-          </div>
+          </div> -->
           <div class="sandstorm-button neutral" data-action="submit-note">
             SUBMIT
           </div>
-          <i class="icon-garbage" data-action=""></i>
+          <!-- <i class="icon-garbage" data-action=""></i> -->
         </div>
 
       </div>
@@ -82,7 +93,7 @@
 
       <div class="half-col">
 
-        <h3 class="title">Title</h3>
+        <h3 class="title" data-invalid={{validate 'name'}}>Title</h3>
         {{#if fieldEdit 'name'}}
           <input type="text" data-field="name" value="{{name}}" required />
         {{else}}
@@ -105,21 +116,21 @@
         <h4 class="mini-title">Ported by</h4>
         <div class="read-only">{{getUsername author}}</div>
 
-        <h4 class="mini-title">Code URL</h4>
+        <h4 class="mini-title" data-invalid={{validate 'codeLink'}}>Code URL</h4>
         {{#if fieldEdit 'codeLink'}}
           <input type="text" data-field="codeLink" value="{{codeLink}}" pattern="https?://.+" />
         {{else}}
           <div class="{{#if edited 'codeLink'}}highlight{{/if}}" data-alt-field="codeLink">{{verboseNone codeLink}}</div>
         {{/if}}
 
-        <h4 class="mini-title">License</h4>
+        <h4 class="mini-title" data-invalid={{validate 'license'}}>License</h4>
         {{#if fieldEdit 'license'}}
           <input type="text" data-field="license" value="{{license}}" />
         {{else}}
           <div class="{{#if edited 'license'}}highlight{{/if}}" data-alt-field="license">{{verboseNone license}}</div>
         {{/if}}
 
-        <h4 class="mini-title">Version</h4>
+        <h4 class="mini-title" data-invalid={{validate 'versions'}}>Version</h4>
         {{#if fieldEdit 'latestVersion'}}
           <input type="text" data-action="update-version" data-version-field="number" value="{{latestVersion}}" />
         {{else}}
@@ -130,7 +141,7 @@
 
       <div class="half-col">
 
-        <h4 class="mini-title">Website</h4>
+        <h4 class="mini-title" data-invalid={{validate 'webLink'}}>Website</h4>
         {{#if fieldEdit 'webLink'}}
           <input type="text" data-field="webLink" value="{{webLink}}" />
         {{else}}
@@ -162,7 +173,7 @@
 
       <div class="half-col">
 
-        <h3 class="title">Icon</h3>
+        <h3 class="title" data-invalid={{validate 'image'}}>Icon</h3>
 
         {{> iconPicker}}
 

@@ -613,3 +613,32 @@
   }
 
 }
+
+.nuke-modal {
+
+  border: 1px solid #222222;
+  background-color: #ffffff;
+  font-size: 1.6rem;
+  line-height: 2.3rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  text-align: center;
+  width: 42rem;
+
+  .message {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .spacer {
+    display: block;
+    height: 2rem;
+  }
+
+  .nuke-pic {
+    width: 30rem;
+  }
+
+}
