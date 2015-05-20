@@ -72,6 +72,19 @@ Template.Edit.onCreated(function() {
 
   };
 
+  tmp.unsetCategories = function() {
+
+    var allCategories = tmp.categories.get();
+
+    _.each(allCategories, function(cat) {
+      cat.selected = false;
+    });
+
+    tmp.categories.set(allCategories);
+    tmp.categories.dep.changed();
+
+  };
+
   tmp.clearApp = function() {
 
     var newApp = appProto(),
@@ -80,6 +93,7 @@ Template.Edit.onCreated(function() {
     _.each(oldApp, function(val, key) {
       tmp.app.set(key, newApp[key]);
     });
+    tmp.unsetCategories();
     Meteor.call('user/delete-saved-app', function(err) {
       if (err) console.log(err);
     });
@@ -261,13 +275,20 @@ Template.Edit.events({
 
   'click [data-action="delete-app"]': function(evt, tmp) {
 
-    // TODO: Add modal confirm
-    Meteor.call('user/delete-app', tmp.app.get('replacesApp'), function(err, res) {
-      if (err) console.log(err);
-      else {
-        tmp.clearApp();
+    AntiModals.overlay('nukeModal', {data: {
+      topMessage: 'Are you sure you want to nuke this app?',
+      bottomMessage: 'This can\'t be undone.',
+      actionText: 'Yes, nuke',
+      actionFunction: function(cb) {
+        Meteor.call('user/delete-app', tmp.app.get('replacesApp'), function(err, res) {
+          if (err) console.log(err);
+          else {
+            tmp.clearApp();
+            cb();
+          }
+        });
       }
-    });
+    }});
 
   },
 
