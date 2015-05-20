@@ -183,37 +183,6 @@ Template.SingleApp.events({
 
   },
 
-  'click [data-action="flag-app"]': function(evt, tmp) {
-
-    if (Meteor.userId()) tmp.flagApp.set(!tmp.flagApp.get());
-    else {
-      App.loginRedirect = FlowRouter.current().path;
-      FlowRouter.go('login');
-    }
-
-  },
-
-  'click [data-action="submit-flag-app"]': function(evt, tmp) {
-
-    var cat = tmp.$('input[name="flag-reason"]:checked').data('category'),
-        additional = tmp.$('[data-field="additional-info"]').text(),
-        flag;
-
-    if (!cat) return;
-    else if (cat === 'other') cat = tmp.$('[data-field="flag-other"]').val() || cat;
-
-    flag = {
-      cat: cat,
-      additional: additional
-    };
-
-    Meteor.call('user/flag-app', FlowRouter.current().params.appId, flag, function(err) {
-      if (err) console.log(err);
-      tmp.flagApp.set(false);
-    });
-
-  },
-
   'click [data-action="read-more"]': function(evt, tmp) {
 
     tmp.readMore.set(!tmp.readMore.get());
@@ -364,5 +333,41 @@ Template.reviewFrame.events({
     tmp.$('.owl-carousel').trigger('next.owl.carousel');
 
   }
+
+});
+
+Template.flagBox.events({
+
+
+    'click [data-action="flag-app"]': function(evt, tmp) {
+
+      if (Meteor.userId()) tmp.get('flagApp').set(!tmp.get('flagApp').get());
+      else {
+        App.loginRedirect = FlowRouter.current().path;
+        FlowRouter.go('login');
+      }
+
+    },
+
+    'click [data-action="submit-flag-app"]': function(evt, tmp) {
+
+      var cat = tmp.$('input[name="flag-reason"]:checked').data('category'),
+          additional = tmp.$('[data-field="additional-info"]').text(),
+          flag;
+
+      if (!cat) return;
+      else if (cat === 'other') cat = tmp.$('[data-field="flag-other"]').val() || cat;
+
+      flag = {
+        cat: cat,
+        additional: additional
+      };
+
+      Meteor.call('user/flag-app', FlowRouter.current().params.appId, flag, function(err) {
+        if (err) console.log(err);
+        tmp.get('flagApp').set(false);
+      });
+
+    }
 
 });

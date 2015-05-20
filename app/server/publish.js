@@ -67,7 +67,7 @@ Meteor.publish('apps all', function(skip, limit) {
     var appsC = Apps.find({}, {skip: skip, limit: limit}),
         userIds = _.uniq(appsC.map(function(app) { return app.author; }));
     return [
-      Genres.findIn('All', {}, {fields: appUnpublishedFields, skip: skip, limit: limit}),
+      Genres.findIn('All', {}, {skip: skip, limit: limit}),
       Meteor.users.find({_id: {$in: userIds}})
     ];
 

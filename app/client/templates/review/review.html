@@ -11,11 +11,11 @@
   </div>
 
   {{#with app}}
-  <form class="edit-box clearfix validation">
+  <form class="review-box clearfix validation">
 
     <div class="section">
 
-      <div class="right-float on-top">
+      <div class="right-float on-top-top">
 
         <div class="button-block">
 
@@ -48,6 +48,10 @@
           </div>
 
         </div>
+
+        {{#if flagApp}}
+          {{> flagBox flagDetails}}
+        {{/if}}
 
       </div>
 
