@@ -297,3 +297,35 @@
   <input type="file" class="file-picker" data-action="file-picker" data-for="screenshot" accept="image/*" />
 
 </template>
+
+<template name="nukeModal">
+
+  <div class="anti-modal-box nuke-modal clearfix">
+
+    <div class="message">
+      {{topMessage}}
+    </div>
+
+    <img class="nuke-pic" src="/images/nuke-image.png" />
+
+    <div class="message">
+      {{bottomMessage}}
+    </div>
+
+    <div class="spacer">
+    </div>
+
+    <div class="button-block big-gap">
+
+      <div class="sandstorm-button neutral" data-action="close-modal">
+        Cancel
+      </div>
+      <div class="sandstorm-button neutral" data-action="perform-action">
+        {{actionText}}
+      </div>
+
+    </div>
+
+  </div>
+
+</template>

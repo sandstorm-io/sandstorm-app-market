@@ -65,7 +65,7 @@ var extraGenres = [
       sort: {installCountThisWeek: -1}
     },
     priority: 0,
-    showSummary: true
+    showSummary: false
   },
 
   {

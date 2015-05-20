@@ -206,6 +206,16 @@
 
   }
 
+  &.big-gap {
+    > * {
+      margin-right: 3rem;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
 }
 
 .sandstorm-input {

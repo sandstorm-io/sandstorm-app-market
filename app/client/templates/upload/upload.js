@@ -192,8 +192,15 @@ Template.Upload.events({
 
   'click [data-action="delete-app"]': function(evt, tmp) {
 
-    // TODO: Add modal confirm
-    tmp.clearApp();
+    AntiModals.overlay('nukeModal', {data: {
+      topMessage: 'Are you sure you want to nuke this app?',
+      bottomMessage: 'This can\'t be undone.',
+      actionText: 'Yes, nuke',
+      actionFunction: function(cb) {
+        tmp.clearApp();
+        cb && cb.apply(tmp);
+      }
+    }});
 
   },
 
