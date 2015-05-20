@@ -11,6 +11,12 @@ Template.appAdminItem.helpers({
     var filterObj = Template.instance().get('filterObj').get();
     return (filterObj && filterObj.actions[action]) ? '' : 'hidden';
 
+  },
+
+  isFlagged: function() {
+
+    return !_.isEmpty(this.flags);
+
   }
 
 });

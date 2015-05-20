@@ -1,5 +1,17 @@
 @import "../../stylesheets/variables";
 
+.review-box {
+
+  #flag-box {
+
+    position: absolute;
+    right: 0;
+    z-index: 3;
+
+  }
+
+}
+
 .note-entry {
 
   width: 100%;

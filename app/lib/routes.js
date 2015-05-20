@@ -156,6 +156,8 @@ FlowRouter.route('/admin/review/:appId', {
       Meteor.subscribe('saved apps'));
     this.register('this app',
       Meteor.subscribe('apps by id', params.appId, true));
+    this.register('user flags',
+      Meteor.subscribe('user flags'));
   },
   action: function() {
     if (!Roles.userIsInRole(Meteor.userId(), 'admin')) FlowRouter.go('appMarket');

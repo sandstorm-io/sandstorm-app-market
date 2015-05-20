@@ -25,6 +25,7 @@ Template.Review.onCreated(function() {
   tmp.newVersion = new ReactiveVar(false);
   tmp.submitted = new ReactiveVar();
   tmp.validator = Schemas.AppsBase.namedContext();
+  tmp.flagApp = new ReactiveVar();
 
   tmp.validate = function() {
     tmp.validator.validate(tmp.app.all());
@@ -253,7 +254,27 @@ Template.Review.helpers({
 
     ][originalApp && originalApp.approved];
 
+  },
+
+  flagApp: function() {
+
+    return Template.instance().flagApp.get();
+
+  },
+
+  flagged: function() {
+
+    return Meteor.user() && Meteor.user().flags && (this._id in Meteor.user().flags);
+
+  },
+
+  flagDetails: function() {
+
+    var originalApp = Apps.findOne(FlowRouter.current().params.appId);
+    return Meteor.user() && Meteor.user().flags && Meteor.user().flags[originalApp._id];
+
   }
+
 
 });
 
@@ -422,10 +443,11 @@ Template.Review.events({
       if (err) throw new Meteor.Error(err.message);
     });
   },
-  'click [data-action="flag"]': function() {
-    Meteor.call('apps/flag', FlowRouter.current().params.appId, function(err) {
-      if (err) throw new Meteor.Error(err.message);
-    });
+  'click [data-action="flag"]': function(evt, tmp) {
+    tmp.flagApp.set(!tmp.flagApp.get());
+    // Meteor.call('apps/flag', FlowRouter.current().params.appId, function(err) {
+    //   if (err) throw new Meteor.Error(err.message);
+    // });
   },
   'click [data-action="reject"]': function() {
     Meteor.call('apps/reject', FlowRouter.current().params.appId, function(err) {
