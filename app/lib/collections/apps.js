@@ -66,7 +66,11 @@ var appsBaseSchema = {
   price: {
     type: Number,
     min: 0,
-    defaultValue: 0,
+    // Autovalue only in place whilst payment methods are suppressed
+    // defaultValue: 0,
+    autoValue: function() {
+      return 0;
+    },
     decimal: true,
     index: true
   },
