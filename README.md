@@ -22,24 +22,6 @@ meteor run
 
 The app will be served at `localhost:3000`.
 
-## Project dependencies to install
-
-  - Meteor
-  - pkg-config
-  - giflib
-
-if `meteor run` throws errors you may need to install `pkg-config` if you don't already have it on your system. Install with these [instructions](https://github.com/Automattic/node-canvas/wiki/installation---osx). You will have to add two paths to a shell ENV so add this to your .bashrc or .zshrc file
-
-```
-export PKG_CONFIG_PATH="/usr/local/bin/pkg-config:/opt/X11/lib/pkgconfig"
-```
-
-Finally make sure you have `giflib` installed with a simple
-
-```
-brew install giflib
-```
-
 ## How to deploy the app
 
 TODO
