@@ -1,5 +1,3 @@
-var retricon = Meteor.npmRequire('retricon');
-
 // SyncedCron.add({
 //   name: 'Generate fake apps',
 //   schedule: function(parser) {
@@ -106,7 +104,7 @@ App.fakeApp = function() {
         name: faker.company.bs(),
         categories: _.sample(categories, _.sample([1, 2, 3])),
         description: faker.lorem.paragraph(),
-        image: retricon(Random.id(), 50, 0).toDataURL(),
+        image: 'http://icons.iconarchive.com/icons/hopstarter/sleek-xp-software/256/Yahoo-Messenger-icon.png',
         approved: 1,
         author: _.sample(users),
         versions: [{

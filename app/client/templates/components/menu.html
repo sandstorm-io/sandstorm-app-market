@@ -17,13 +17,13 @@
       <div class="menu-text">Apps by Me</div>
     </a>
 
-    <a class="menu-link {{routeRoot '/upload'}}" href="{{getPath 'upload'}}">
+    <a class="menu-link {{routeRoot '/upload'}} hide-for-phone" href="{{getPath 'upload'}}">
       <i class="icon-upload"></i>
       <div class="menu-text">Upload an App</div>
     </a>
 
     {{#if isAdmin}}
-    <a class="menu-link {{routeRoot '/admin'}}" href="{{getPath 'admin'}}">
+    <a class="menu-link {{routeRoot '/admin'}} hide-for-phone" href="{{getPath 'admin'}}">
       <i class="icon-admin"></i>
       <div class="menu-text">Admin</div>
     </a>
