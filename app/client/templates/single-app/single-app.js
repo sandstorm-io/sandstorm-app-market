@@ -7,7 +7,7 @@ Template.SingleApp.onCreated(function() {
 
   tmp.chipIn = new ReactiveVar(false);
   tmp.readMore = new ReactiveVar(false);
-  tmp.flagApp = new ReactiveVar(false);
+  tmp.flagApp = new ReactiveVar(!!FlowRouter.current().queryParams.flag);
   tmp.writeReview = new ReactiveVar(false);
   tmp.myReview = new ReactiveVar({
     stars: 0,
@@ -41,22 +41,23 @@ Template.SingleApp.onRendered(function() {
 
   var tmp = this;
 
-  this.autorun(function(c) {
-    if (FlowRouter.subsReady()) {
-      Tracker.afterFlush(function() {
-        tmp.$('.slider').noUiSlider({
-          orientation: 'horizontal',
-          range: {
-            min: 0,
-            max: 40
-          },
-          start: 0
-        });
-        $('.slider').Link('lower').to($('[data-field="chip-amount"]'));
-      });
-      c.stop();
-    }
-  });
+  // DISABLE SLIDER INIT UNTIL PAYMENTS ARE ENABLED
+  // this.autorun(function(c) {
+  //   if (FlowRouter.subsReady()) {
+  //     Tracker.afterFlush(function() {
+  //       tmp.$('.slider').noUiSlider({
+  //         orientation: 'horizontal',
+  //         range: {
+  //           min: 0,
+  //           max: 40
+  //         },
+  //         start: 0
+  //       });
+  //       $('.slider').Link('lower').to($('[data-field="chip-amount"]'));
+  //     });
+  //     c.stop();
+  //   }
+  // });
 
 });
 
@@ -236,7 +237,17 @@ Template.SingleApp.events({
       });
     }
 
-  }
+  },
+
+  'click [data-action="flag-app"]': function(evt, tmp) {
+
+    if (Meteor.userId()) tmp.get('flagApp').set(!tmp.get('flagApp').get());
+    else {
+      App.loginRedirect = FlowRouter.current().path;
+      FlowRouter.go('login');
+    }
+
+  },
 
 });
 
@@ -337,7 +348,6 @@ Template.reviewFrame.events({
 });
 
 Template.flagBox.events({
-
 
     'click [data-action="flag-app"]': function(evt, tmp) {
 

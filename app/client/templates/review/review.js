@@ -25,7 +25,7 @@ Template.Review.onCreated(function() {
   tmp.newVersion = new ReactiveVar(false);
   tmp.submitted = new ReactiveVar();
   tmp.validator = Schemas.AppsBase.namedContext();
-  tmp.flagApp = new ReactiveVar();
+  tmp.flagApp = new ReactiveVar(!!FlowRouter.current().queryParams.flag);
 
   tmp.validate = function() {
     tmp.validator.validate(tmp.app.all());
