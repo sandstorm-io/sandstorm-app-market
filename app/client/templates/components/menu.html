@@ -29,7 +29,7 @@
     </a>
     {{/if}}
 
-    <a class="menu-link" href="/login">
+    <a class="menu-link {{routeRoot '/login'}}" href="/login">
       <i class="icon-my"></i>
       <div class="menu-text">{{#if currentUser}}{{currentUser.username}}{{else}}Log In{{/if}}</div>
     </a>
