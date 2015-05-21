@@ -573,6 +573,20 @@
 
   }
 
+  @media (max-width: $small-tablet) {
+
+    margin-left: -2rem;
+    margin-right: -2rem;
+
+    .prev-button, .next-button {
+      display: none;
+    }
+
+    .owl-carousel {
+      width: 100%;
+    }
+  }
+
 }
 
 .app-item-inner.reviews-section {
