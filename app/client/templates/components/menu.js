@@ -3,7 +3,7 @@ Template.Menu.events({
   'click .menu-link.active': function(evt, tmp) {
 
     tmp.$('.menu-container').toggleClass('open');
-    evt.preventDefault();
+    if (Meteor.Device.isPhone()) evt.preventDefault();
 
   },
 
