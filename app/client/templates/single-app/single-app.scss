@@ -195,6 +195,18 @@
 
     .app-item-inner {
 
+      padding-left: 2.3rem;
+      padding-right: 2.3rem;
+
+      .image-section {
+        margin-right: 0;
+        width: 100%;
+
+        .image-surround-full-width {
+          width: 100%;
+        }
+      }
+
       .text-section {
           overflow-y: initial;
 
@@ -574,9 +586,6 @@
   }
 
   @media (max-width: $small-tablet) {
-
-    margin-left: -2rem;
-    margin-right: -2rem;
 
     .prev-button, .next-button {
       display: none;
