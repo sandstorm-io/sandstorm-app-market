@@ -276,6 +276,7 @@ Meteor.methods({
       var newVersion = app.versions[0];
       Schemas.AppsBase.clean(app);
       delete app.versions;
+      app.approved = 0;
       Apps.update(replacesApp, {$set: app, $push: {versions: newVersion}});
       Apps.remove(appId);
     } else {
@@ -331,7 +332,7 @@ Meteor.methods({
     this.unblock();
     if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Only an admin user can save an app that isn\'t theirs');
 
-    return Apps.update(app.replacesApp, {$set: {adminRequests: [app]}});
+    return Apps.update(app.replacesApp, {$set: {adminRequests: [app], approved: 2}});
 
   },
 
