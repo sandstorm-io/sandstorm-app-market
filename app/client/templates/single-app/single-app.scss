@@ -191,6 +191,36 @@
 
   }
 
+  @media (max-width: $small-tablet) {
+
+    .app-item-inner {
+
+      .text-section {
+          overflow-y: initial;
+
+          .half-col {
+            display: block;
+            width: 100%;
+            margin-bottom: 1rem;
+          }
+      }
+
+      [data-action="flag-app"], [data-action="write-review"] {
+        display: none;
+      }
+
+      .description {
+        .text.padded {
+          >*:first-child {
+            margin-top: 0;
+          }
+        }
+      }
+
+    }
+
+  }
+
 }
 
 .ratings-bar {
@@ -612,6 +642,10 @@
       box-sizing: border-box;
       height: 15rem;
       overflow: hidden;
+
+      @media (max-width: $small-tablet) {
+        padding: 1.9rem 0;
+      }
 
       .username {
         font-size: 1.8rem;

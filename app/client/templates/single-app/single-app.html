@@ -263,21 +263,29 @@
 
 <template name="reviewFrame">
 
-  <div class="review-frame">
-    <div class="prev-button {{#unless extraReviews}}disabled{{/unless}}" data-action="reviews-prev"><i class="fa fa-angle-left"></i></div>
-    <div class="reviews">
-      <div class="owl-carousel">
-        {{#each reviewGroups}}
-          <div class="review-group">
-            {{#each this}}
-              {{> reviewBox this}}
-            {{/each}}
-          </div>
-        {{/each}}
+  {{#unless isPhone}}
+    <div class="review-frame">
+      <div class="prev-button {{#unless extraReviews}}disabled{{/unless}}" data-action="reviews-prev"><i class="fa fa-angle-left"></i></div>
+      <div class="reviews">
+        <div class="owl-carousel">
+          {{#each reviewGroups}}
+            <div class="review-group">
+              {{#each this}}
+                {{> reviewBox this}}
+              {{/each}}
+            </div>
+          {{/each}}
+        </div>
       </div>
+      <div class="next-button {{#unless extraReviews}}disabled{{/unless}}" data-action="reviews-next"><i class="fa fa-angle-right"></i></div>
     </div>
-    <div class="next-button {{#unless extraReviews}}disabled{{/unless}}" data-action="reviews-next"><i class="fa fa-angle-right"></i></div>
+  {{else}}
+  <div class="reviews">
+    {{#each reviews}}
+      {{> reviewBox}}
+    {{/each}}
   </div>
+  {{/unless}}
 
 </template>
 

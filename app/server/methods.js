@@ -388,6 +388,37 @@ Meteor.methods({
       approved: 1
     }});
 
+  },
+
+  'admin/createFakeUsers': function(n) {
+
+    if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Can only be executed by admin user');
+    _.each(_.range(n), function() {
+      Accounts.createUser({
+        email: faker.internet.email(),
+        password: faker.internet.password()
+      });
+    });
+    return true;
+
+  },
+
+  'admin/fakeReview': function(appId, n) {
+
+    if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Can only be executed by admin user');
+      var query = [], _this = this;
+      query['appReviews.' + appId] = {$exists: false};
+    _.each(_.range(n), function() {
+      user = Meteor.users.findOne(query);
+      if (user) {
+        _this.setUserId(user._id);
+        Meteor.call('user/review-app', appId, {
+          stars: _.sample(_.range(1,6)),
+          text: faker.lorem.paragraph()
+        });
+      }
+    });
+
   }
 
 });
