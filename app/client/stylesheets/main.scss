@@ -140,6 +140,12 @@ html {
 .left-float {
   float: left;
   clear: none;
+
+  &.block-phone {
+    @media (max-width: $small-tablet) {
+      float: none;
+    }
+  }
 }
 
 .right-float {
@@ -148,6 +154,12 @@ html {
 
   & +.right-float {
     margin-right: 2rem;
+  }
+
+  &.block-phone {
+    @media (max-width: $small-tablet) {
+      float: none;
+    }
   }
 }
 

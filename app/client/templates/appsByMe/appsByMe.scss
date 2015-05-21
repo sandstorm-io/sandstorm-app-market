@@ -134,4 +134,21 @@
   @extend .menu-spacer;
   @extend .pad-right;
 
+  .apps-by-me-bar {
+
+    .block-phone {
+
+      @media (max-width: $small-tablet) {
+        margin-bottom: 1rem;
+        text-align: center;
+
+        .button-block > * {
+          margin-bottom: 0.5rem;
+        }
+      }
+
+    }
+
+  }
+
 }
