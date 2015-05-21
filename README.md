@@ -32,7 +32,8 @@ if `meteor run` throws errors you may need to install `pkg-config` if you don't 
 
 ```
 export PKG_CONFIG_PATH="/usr/local/bin/pkg-config:/opt/X11/lib/pkgconfig"
-``` 
+```
+
 Finally make sure you have `giflib` installed with a simple
 
 ```
