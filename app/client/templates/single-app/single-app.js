@@ -7,7 +7,7 @@ Template.SingleApp.onCreated(function() {
 
   tmp.chipIn = new ReactiveVar(false);
   tmp.readMore = new ReactiveVar(false);
-  tmp.flagApp = new ReactiveVar(false);
+  tmp.flagApp = new ReactiveVar(!!FlowRouter.current().queryParams.flag);
   tmp.writeReview = new ReactiveVar(false);
   tmp.myReview = new ReactiveVar({
     stars: 0,
