@@ -11,6 +11,11 @@ FlowRouter.subscriptions = function() {
 function onlyLoggedIn(route) {
   if (!Meteor.userId()) FlowRouter.go(route || 'appMarket');
 }
+// Utility function to redirect (either to App Market home or a given route)
+// if the device is not a desktop
+function redirectOnSmallDevice(route) {
+  if (!Meteor.Device.isDesktop()) FlowRouter.go(route || 'appMarket');
+}
 
 // Reroute root URI to app market
 FlowRouter.route('/', {
@@ -130,6 +135,7 @@ FlowRouter.route('/upload/edit/:appId', {
       Meteor.subscribe('apps by id', params.appId));
   },
   action: function() {
+    redirectOnSmallDevice();
     FlowLayout.render('MasterLayout', {mainSection: 'Edit'});
   }
 });
@@ -143,6 +149,7 @@ FlowRouter.route('/upload', {
       Meteor.subscribe('saved apps'));
   },
   action: function() {
+    redirectOnSmallDevice();
     FlowLayout.render('MasterLayout', {mainSection: 'Upload'});
   }
 });
@@ -161,6 +168,7 @@ FlowRouter.route('/admin/review/:appId', {
   },
   action: function() {
     if (!Roles.userIsInRole(Meteor.userId(), 'admin')) FlowRouter.go('appMarket');
+    redirectOnSmallDevice();
     FlowLayout.render('MasterLayout', {mainSection: 'Review'});
   }
 });
@@ -177,6 +185,7 @@ FlowRouter.route('/admin', {
   },
   action: function() {
     if (!Roles.userIsInRole(Meteor.userId(), 'admin')) FlowRouter.go('appMarket');
+    redirectOnSmallDevice();
     FlowLayout.render('MasterLayout', {mainSection: 'Admin'});
   }
 });
