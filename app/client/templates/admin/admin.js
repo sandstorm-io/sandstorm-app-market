@@ -10,7 +10,7 @@ adminFilters = {
       replacesApp: {$exists: false}
     },
     filterFunc: function(app) {
-      return (app.approved === 1 && !('replacesApp' in app));
+      return (app.approved === Apps.approval.pending && !('replacesApp' in app));
     },
     actions: {
       'request-revision': true,
@@ -29,7 +29,7 @@ adminFilters = {
       approved: 2
     },
     filterFunc: function(app) {
-      return app.approved === 2;
+      return app.approved === Apps.approval.revisionRequested;
     },
     actions: {
       'request-revision': true,
@@ -49,7 +49,7 @@ adminFilters = {
       replacesApp: {$exists: true}
     },
     filterFunc: function(app) {
-      return (app.approved === 1 && ('replacesApp' in app));
+      return (app.approved === Apps.approval.pending && ('replacesApp' in app));
     },
     actions: {
       'request-revision': true,
@@ -87,7 +87,7 @@ adminFilters = {
       approved: 0
     },
     filterFunc: function(app) {
-      return app.approved === 0;
+      return app.approved === Apps.approval.approved;
     },
     actions: {
       'request-revision': true,
@@ -106,7 +106,7 @@ adminFilters = {
       approved: 3
     },
     filterFunc: function(app) {
-      return app.approved === 3;
+      return app.approved === Apps.approval.rejected;
     },
     actions: {
       'request-revision': true,

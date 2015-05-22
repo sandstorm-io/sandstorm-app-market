@@ -30,15 +30,15 @@
               </div>
             {{/if}}
           {{/if}}
-          <div class="sandstorm-button color green {{#if equal parentApp.approved 0}}active{{/if}}" data-action="approve">
+          <div class="sandstorm-button color green {{#if equal parentApp.approved approval.approved}}active{{/if}}" data-action="approve">
             <i class="icon-approved_light"></i>
             <div class="text">Approve</div>
           </div>
-          <div class="sandstorm-button color purple {{#if equal parentApp.approved 2}}active{{/if}}" data-action="request-revision">
+          <div class="sandstorm-button color purple {{#if equal parentApp.approved approval.revisionRequested}}active{{/if}}" data-action="request-revision">
             <i class="icon-revisions"></i>
             <div class="text">Request Revision</div>
           </div>
-          <div class="sandstorm-button color black {{#if equal parentApp.approved 3}}active{{/if}}" data-action="reject">
+          <div class="sandstorm-button color black {{#if equal parentApp.approved approval.rejected}}active{{/if}}" data-action="reject">
             <i class="icon-rejected_light"></i>
             <div class="text">Reject</div>
           </div>
