@@ -108,6 +108,12 @@
         display: inline-block;
       }
 
+      &.hide-for-phone {
+        @media (max-width: $small-tablet) {
+          display: none;
+        }
+      }
+
     }
 
     @media (max-width: $large-tablet) {

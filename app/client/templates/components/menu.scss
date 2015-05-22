@@ -112,7 +112,19 @@
 
       }
 
+      .menu-link.active {
+
+        i:before {
+
+          font-family: FontAwesome;
+          content: '\f0c9';
+
+        }
+
+      }
+
     }
+
 
   }
 
