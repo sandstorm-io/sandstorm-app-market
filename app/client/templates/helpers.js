@@ -46,6 +46,8 @@ var helpers = {
 
   },
 
+  approval: Apps.approval,
+
   // ROUTER/SUB HELPERS
 
   routerSubsReady: function(name) {
