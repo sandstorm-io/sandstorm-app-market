@@ -3,6 +3,13 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
   return app;
 }});
 
+Apps.approval = {
+  approved: 0,
+  pending: 1,
+  revisionRequested: 2,
+  rejected: 3
+};
+
 var converter = new Showdown.converter();
 
 // TODO Update InstallCountThisWeek daily
