@@ -19,11 +19,11 @@ var helpers = {
 
   // APP HELPERS
 
-  appRating: function(stars) {
+  appRating: function(rating) {
 
-    stars = stars || 0;
-    return _.reduce(_.range(5), function(html, ind) {
-      if (stars >= ind + 0.5) html += '<i class="icon-star dark" data-index="' + ind + '"></i>';
+    rating = rating || 0;
+    return _.reduce(_.range(4), function(html, ind) {
+      if (rating >= ind) html += '<i class="icon-star dark" data-index="' + ind + '"></i>';
       else html += '<i class="icon-star light" data-index="' + ind + '"></i>';
       return html;
     }, '');

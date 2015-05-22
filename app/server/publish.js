@@ -112,7 +112,7 @@ Meteor.publish('users reviewed', function(appId) {
 
   var fields = {username: 1},
       query = {},
-      reviewPath = 'appReviews.' + appId,
+      reviewPath = 'reviews.' + appId,
       _this = this;
 
   fields[reviewPath] = 1;
@@ -122,7 +122,7 @@ Meteor.publish('users reviewed', function(appId) {
 
     _this.added('reviews', Random.id(), {
       username: user.username,
-      review: user.appReviews[appId]
+      review: user.reviews[appId]
     });
 
   });

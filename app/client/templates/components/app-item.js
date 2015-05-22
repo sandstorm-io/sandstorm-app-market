@@ -22,7 +22,7 @@ Template.appItem.helpers({
     app = app || this;
 
     if (!user) return;
-    else return user.appReviews && user.appReviews[app._id] && user.appReviews[app._id].stars;
+    else return user.reviews && user.reviews[app._id] && user.reviews[app._id].rating;
 
   },
 
@@ -136,16 +136,16 @@ Template.updateChrome.events({
 
 Template.appItemFullWidth.helpers({
 
-  appRating: function(stars) {
-
-    stars = stars || 0;
-    return _.reduce(_.range(5), function(html, ind) {
-      if (stars >= ind + 0.5) html += '<i class="icon-star dark"></i>';
-      else html += '<i class="icon-star light"></i>';
-      return html;
-    }, '');
-
-  },
+  // appRating: function(stars) {
+  //
+  //   stars = stars || 0;
+  //   return _.reduce(_.range(5), function(html, ind) {
+  //     if (stars >= ind + 0.5) html += '<i class="icon-star dark"></i>';
+  //     else html += '<i class="icon-star light"></i>';
+  //     return html;
+  //   }, '');
+  //
+  // },
 
   free: function(price) {
 

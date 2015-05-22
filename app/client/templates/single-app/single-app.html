@@ -58,7 +58,7 @@
 
                   <div class="left-float">
                     <div class="app-rating">
-                      {{{appRating stars}}}
+                      {{{appRating rating}}}
                     </div>
                     <span>( {{ratingsCount}} )</span>
                   </div>
@@ -141,7 +141,7 @@
             <div class="review-bar">
               <div class="rating left-float">
                 <div class="app-rating monochrome">
-                  {{{appRating stars}}}
+                  {{{appRating rating}}}
                 </div>
                 <span>( {{ratingsCount}} )</span>
               </div>
@@ -154,7 +154,7 @@
                 <div class="right-float">
                   <div class="rating">
                     <div class="app-rating" data-action="rate-app">
-                      {{{appRating myReview.stars}}}
+                      {{{appRating myReview.rating}}}
                     </div>
                   </div>
                 </div>
@@ -288,14 +288,14 @@
 <template name="reviewBox">
   <div class="review-box">
     <div class="username">{{username}}</div>
-    {{#if review.stars}}
+    {{#if rating}}
     <div class="rating">
       <div class="app-rating">
-        {{{appRating review.stars}}}
+        {{{appRating rating}}}
       </div>
     </div>
     {{/if}}
-    <div class="date">{{dateFormat review.createdAt 'MMMM D YYYY'}}</div>
-    <div class="review">{{review.text}}</div>
+    <div class="date">{{dateFormat createdAt 'MMMM D YYYY'}}</div>
+    <div class="review">{{text}}</div>
   </div>
 </template>

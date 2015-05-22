@@ -53,6 +53,7 @@ logging@1.0.7
 london:body-class@2.1.0
 lookback:tooltips@0.3.1
 markdown@1.0.4
+matb33:collection-hooks@0.7.13
 meteor@1.1.6
 meteor-platform@1.2.2
 meteorhacks:async@1.0.0

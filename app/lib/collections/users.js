@@ -60,7 +60,7 @@ Schemas.Users = new SimpleSchema({
     type: Boolean,
     optional: true
   },
-  appReviews: {
+  reviews: {
     type: Object,
     blackbox: true,
     defaultValue: {}

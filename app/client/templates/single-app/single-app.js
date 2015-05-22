@@ -10,7 +10,8 @@ Template.SingleApp.onCreated(function() {
   tmp.flagApp = new ReactiveVar(!!FlowRouter.current().queryParams.flag);
   tmp.writeReview = new ReactiveVar(false);
   tmp.myReview = new ReactiveVar({
-    stars: 0,
+    appId: FlowRouter.current().params.appId,
+    rating: 0,
     text: ''
   });
   tmp.reviewValid = new ReactiveVar(false);
@@ -25,11 +26,8 @@ Template.SingleApp.onCreated(function() {
           user = Meteor.user(),
           app = Apps.findOne(appId);
       if (!app || !app.screenshots.length) tmp.readMore.set(true);
-      if (user && user.appReviews && appId in user.appReviews) {
-        tmp.myReview.set({
-          stars: user.appReviews[appId].stars,
-          text: user.appReviews[appId].text
-        });
+      if (user && user.reviews && appId in user.reviews) {
+        tmp.myReview.set(user.reviews[appId]);
       }
       c.stop();
     }
@@ -137,7 +135,7 @@ Template.SingleApp.helpers({
 
   reviews: function() {
 
-    return Reviews.find().fetch();
+    return _.values(this.reviews);
 
   },
 
@@ -203,7 +201,7 @@ Template.SingleApp.events({
   'click [data-action="rate-app"] [data-index]': function(evt, tmp) {
 
     var review = tmp.myReview.get();
-    review.stars = parseInt($(evt.currentTarget).data('index')) + 1;
+    review.rating = parseInt($(evt.currentTarget).data('index'));
     tmp.myReview.set(review);
     tmp.validateReview();
 
@@ -221,7 +219,8 @@ Template.SingleApp.events({
   'click [data-action="discard-review"]': function(evt, tmp) {
 
     tmp.myReview.set({
-      stars: 0,
+      appId: FlowRouter.current().params.appId,
+      rating: 0,
       text: ''
     });
     tmp.writeReview.set(false);
@@ -231,7 +230,7 @@ Template.SingleApp.events({
   'click [data-action="submit-review"]': function(evt, tmp) {
 
     if (tmp.reviewValid.get()) {
-      Meteor.call('user/review-app', FlowRouter.current().params.appId, tmp.myReview.get(), function(err) {
+      Meteor.call('user/review-app', tmp.myReview.get(), function(err) {
         if (err) console.log(err);
         tmp.writeReview.set(false);
       });

@@ -138,6 +138,11 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
     defaultValue: 1,
     index: true
   },
+  reviews: {
+    type: Object,
+    blackbox: true,
+    defaultValue: {}
+  },
   note: {
     type: String,
     optional: true
