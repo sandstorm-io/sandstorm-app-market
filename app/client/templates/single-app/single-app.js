@@ -267,7 +267,7 @@ Template.flagBox.onRendered(function() {
 Template.carousel.onRendered(function() {
 
   this.$(".owl-carousel").owlCarousel({
-    items: 2,
+    items: Meteor.Device.isPhone() ? 1 : 2,
     loop: true,
     mouseDrag: false,
     nav: false,

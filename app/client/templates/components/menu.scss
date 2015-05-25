@@ -94,6 +94,12 @@
 
   @media screen and (max-width: $small-tablet) {
 
+    .menu-link.hide-for-phone {
+
+      display: none;
+
+    }
+
     position: relative;
     width: 100%;
 
@@ -106,7 +112,19 @@
 
       }
 
+      .menu-link.active {
+
+        i:before {
+
+          font-family: FontAwesome;
+          content: '\f0c9';
+
+        }
+
+      }
+
     }
+
 
   }
 
@@ -118,7 +136,8 @@
 
   @media screen and (max-width: $small-tablet) {
 
-    margin-left: 0;
+    margin-left: 1rem;
+    margin-right: 1rem;
 
   }
 

@@ -17,11 +17,13 @@ function redirectOnSmallDevice(route) {
   if (!Meteor.Device.isDesktop()) FlowRouter.go(route || 'appMarket');
 }
 
+
 // We have to do this in each route at present, as Flow Router doesn't
 // pass query params to middleware (yet)
 function getSandstormServer(queryParams) {
   if (queryParams.host) amplify.store('sandstormHost', queryParams.host);
 }
+
 // Reroute root URI to app market
 FlowRouter.route('/', {
   action: function(params, queryParams) {
@@ -148,8 +150,13 @@ FlowRouter.route('/upload/edit/:appId', {
     this.register('this app',
       Meteor.subscribe('apps by id', params.appId));
   },
+<<<<<<< HEAD
   action: function(params, queryParams) {
     getSandstormServer(queryParams);
+=======
+  action: function() {
+    redirectOnSmallDevice();
+>>>>>>> master
     FlowLayout.render('MasterLayout', {mainSection: 'Edit'});
   }
 });
@@ -162,8 +169,13 @@ FlowRouter.route('/upload', {
     this.register('saved apps',
       Meteor.subscribe('saved apps'));
   },
+<<<<<<< HEAD
   action: function(params, queryParams) {
     getSandstormServer(queryParams);
+=======
+  action: function() {
+    redirectOnSmallDevice();
+>>>>>>> master
     FlowLayout.render('MasterLayout', {mainSection: 'Upload'});
   }
 });

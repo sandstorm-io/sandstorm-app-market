@@ -150,6 +150,12 @@
     display: none !important;
   }
 
+  &.hide-for-phone {
+    @media (max-width: $small-tablet) {
+      display: none;
+    }
+  }
+
   &.active {
     @extend .sandstorm-button.secondary;
     z-index: 1;

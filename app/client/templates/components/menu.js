@@ -3,14 +3,13 @@ Template.Menu.events({
   'click .menu-link.active': function(evt, tmp) {
 
     tmp.$('.menu-container').toggleClass('open');
+    if (Meteor.Device.isPhone()) evt.preventDefault();
 
   },
 
   'click .menu-link:not(.active)': function(evt, tmp) {
 
     tmp.$('.menu-container').removeClass('open');
-
-    // TODO: redirect to appropriate page
 
   },
 

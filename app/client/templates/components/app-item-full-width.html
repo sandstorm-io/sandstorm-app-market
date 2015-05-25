@@ -34,7 +34,7 @@
 
           <div class="right-float">
 
-            <div class="edit-button">
+            <div class="edit-button hide-for-phone">
               <a class="sandstorm-button neutral small" href="/upload/edit/{{_id}}">
                 <i class="icon-edit"></i>
                 <span class="text">EDIT</span>
@@ -58,7 +58,7 @@
 
         <div class="bottom-section clearfix">
 
-          <div class="left-float details-block">
+          <div class="left-float block-phone details-block">
 
             <div class="date">{{dateFormat createdAt 'MMMM DD, YYYY'}}</div>
             <div class="genre">{{category}}</div>
@@ -76,9 +76,8 @@
 
             <div class="app-description">
               {{{htmlDescription}}}
+              <div class="fade-box"></div>
             </div>
-
-            <div class="fade-box"></div>
 
           </div>
 

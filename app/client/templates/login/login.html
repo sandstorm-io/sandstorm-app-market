@@ -11,34 +11,16 @@
           <div class="user-info">
             Logged in as <span class="username">{{currentUser.username}}</span>
           </div>
-          <div class="sandstorm-button active" data-action="logout">
-            <span class="text">Logout</span>
+
+          <div class="button-block">
+
+            <div class="sandstorm-button active" data-action="logout">
+              <span class="text">Logout</span>
+            </div>
+
           </div>
 
         {{else}}
-
-          <input class="search-box" type="email" placeholder="Email" />
-          <input class="search-box" type="password" placeholder="Password" />
-
-          {{#if createAccount}}
-          <div class="sandstorm-button active" data-action="create-account">
-            <span class="text">Create Account</span>
-          </div>
-          {{else}}
-          <div class="sandstorm-button active" data-action="login-with-email">
-            <span class="text">Login with Email</span>
-          </div>
-          {{/if}}
-
-          {{#if error}}
-            <div class="error">
-              {{error}}
-            </div>
-          {{/if}}
-
-          <div class="or">
-            or
-          </div>
 
           <div class="button-block oauth-buttons">
 
@@ -54,13 +36,25 @@
 
           </div>
 
-          <div class="create-account-or-login" data-action="toggle-create-account">
-            {{#if createAccount}}
-              Login with Email
-            {{else}}
-              Create Account
-            {{/if}}
+          <input class="search-box" type="email" placeholder="Email" />
+          <input class="search-box" type="password" placeholder="Password" />
+
+          <div class="button-block">
+
+            <div class="sandstorm-button secondary" data-action="create-account">
+              <span class="text">Create Account</span>
+            </div>
+            <div class="sandstorm-button primary" data-action="login-with-email">
+              <span class="text">Login with Email</span>
+            </div>
+
           </div>
+
+          {{#if error}}
+            <div class="error">
+              {{error}}
+            </div>
+          {{/if}}
 
         {{/if}}
 

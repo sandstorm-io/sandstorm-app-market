@@ -202,4 +202,56 @@
 
   }
 
+  @media (max-width: $small-tablet) {
+
+    .app-item-inner {
+
+      height: auto;
+
+      .image-section {
+
+        width: 100%;
+        height: $app-container-height;
+        max-width: initial;
+        display: block;
+        float: none;
+
+        .image-surround-full-width {
+          width: 100%;
+        }
+
+      }
+
+      .text-section {
+        margin-top: 1rem;
+
+        .description-holder {
+          height: auto;
+          max-height: 25rem;
+
+          .app-description {
+            position: relative;
+
+            .fade-box {
+              top: 21.5rem;
+              bottom: initial;
+            }
+          }
+
+        }
+
+      }
+
+      .hide-for-phone {
+        display: none;
+      }
+
+    }
+
+    .state-bar {
+      display: none;
+    }
+
+  }
+
 }

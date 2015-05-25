@@ -387,8 +387,11 @@ Meteor.methods({
     return Categories.update({name: genre}, {$set: {
       approved: 1
     }});
+
   },
 
+<<<<<<< HEAD
+=======
   'admin/createFakeUsers': function(n) {
 
     if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Can only be executed by admin user');
@@ -419,5 +422,6 @@ Meteor.methods({
     });
 
   }
+>>>>>>> master
 
 });
