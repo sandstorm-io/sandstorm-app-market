@@ -387,6 +387,7 @@ Meteor.methods({
       approved: 1
     }});
 
-  }
+  },
+
 
 });

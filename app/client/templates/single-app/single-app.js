@@ -71,7 +71,8 @@ Template.SingleApp.helpers({
 
   installed: function() {
 
-    return (Meteor.user() && this._id in Meteor.user().installedApps);
+    return false;
+    // return (Meteor.user() && this._id in Meteor.user().installedApps);
 
   },
 

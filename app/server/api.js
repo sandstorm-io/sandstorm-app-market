@@ -1,13 +1,3 @@
-Meteor.publish('updates', function (blob) {
-  console.log('hello', blob);
-
-});
-
-// , {
-//   url: "api/checkupdates/:0 ",
-//   httpMethod: "post"
-// });
-
 Meteor.method('updates', function (data) {
   if (data) {
 
