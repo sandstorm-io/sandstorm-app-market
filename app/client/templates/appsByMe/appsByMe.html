@@ -47,15 +47,15 @@
 
     </div>
 
-    <div class="action-buttons">
+    <div class="clearfix action-buttons">
 
-      <div class="container">
+      <div class="container hide-for-phone">
         <a class="primary large-button" href="/upload">
           <i class="icon-myapps"></i>
           UPLOAD YOUR FIRST APP
         </a>
       </div>
-      <div class="container">
+      <div class="container hide-for-phone">
         <div class="or">
           OR
         </div>
@@ -68,6 +68,9 @@
       </div>
 
     </div>
+
+    <div class="clearfix margin-bottom-phone"></div>
+
   </div>
 
 </template>
@@ -78,10 +81,10 @@
 
     <div class="apps-by-me-bar">
 
-      <div class="left-float">
+      <div class="left-float block-phone">
 
         <div class="button-block">
-          <a class="sandstorm-button primary" href="/upload">
+          <a class="sandstorm-button primary hide-for-phone" href="/upload">
             <i class="icon-myapps"></i>
             <span class="text">UPLOAD NEW APP</span>
           </a>
@@ -92,13 +95,13 @@
         </div>
 
       </div>
-      <div class="right-float">
+      <div class="right-float block-phone">
 
         <div class="button-block">
-          <div class="sandstorm-button neutral" data-action="open-sort-menu">
+          <!-- <div class="sandstorm-button neutral" data-action="open-sort-menu">
             SORT
             <i class="fa fa-caret-down"></i>
-          </div>
+          </div> -->
           <div class="sandstorm-input">
             <div class="input">
               <input type="text" data-field="search-by" />

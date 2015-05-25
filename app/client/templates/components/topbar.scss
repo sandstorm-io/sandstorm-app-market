@@ -46,11 +46,15 @@
     a {
 
       display: inline-block;
-      
+
       &.hide-above-small-phone {
         @media (min-width: ($medium-phone + 1px)) {
             display: none;
         }
+      }
+
+      &:first-child .genre-box {
+        margin-left: 0;
       }
 
     }
@@ -60,7 +64,7 @@
       display: inline-block;
       vertical-align: middle;
       background-color: $topbar-item-bg;
-      margin-right: $topbar-item-margin-right;
+      margin-left: $topbar-item-margin-right;
       padding-left: $topbar-item-padding-lr;
       padding-right: $topbar-item-padding-lr;
       padding-top: $topbar-item-padding-tb;
@@ -105,6 +109,11 @@
 
           a {
             display: inline;
+          }
+
+          @media (max-width: $small-tablet) {
+            left: auto;
+            right: 0;
           }
 
         }
@@ -168,7 +177,7 @@
   @media (max-width: $small-tablet) {
 
     left: initial;
-    right: $topbar-logo-margin-left;
+    right: 2.33rem;
     text-align: right;
 
   }

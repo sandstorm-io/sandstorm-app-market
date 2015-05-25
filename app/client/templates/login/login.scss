@@ -2,10 +2,15 @@
 
 .login-form {
 
-  padding-top: 3rem;
-  padding-bottom: 3rem;
   font-size: $login-form-font-size;
   color: $login-form-text;
+  padding-top: 4rem;
+
+  > * {
+    display: block;
+    box-sizing: border-box;
+    padding-bottom: 4rem;
+  }
 
   .user-info {
 
@@ -37,6 +42,7 @@
     padding-right: $topbar-item-padding-lr;
     padding-top: $topbar-item-padding-tb;
     padding-bottom: $topbar-item-padding-tb;
+    margin-bottom: 2rem;
     &:focus {
       outline: none;
       border: 1px solid $topbar-item-active-bg;
@@ -74,6 +80,22 @@
 
     vertical-align: middle;
 
+  }
+
+  @media (max-width: $small-tablet) {
+
+    padding-top: 4rem;
+    text-align: center;
+
+    > * {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    input {
+      margin-bottom: 2rem;
+    }
   }
 
 }

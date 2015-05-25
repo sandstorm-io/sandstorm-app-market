@@ -401,6 +401,32 @@
           position: relative;
           overflow-y: hidden;
 
+          >*:first-child {
+            margin-top: 0;
+          }
+
+        }
+
+      }
+
+    }
+
+    @media (max-width: $small-tablet) {
+
+      .app-item-inner {
+
+        height: 2 * $app-container-height;
+
+        .image-surround {
+          width: 100%;
+          height: 50%;
+          max-width: initial;
+          display: block;
+          float: none;
+        }
+
+        .text-section {
+          margin-top: 1rem;
         }
 
       }
@@ -417,6 +443,10 @@
 
     }
 
+  }
+
+  @media (max-width: $small-tablet) {
+    max-width: 50%;
   }
 
 }
