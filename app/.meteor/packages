@@ -49,3 +49,6 @@ mystor:device-detection
 npm-container
 simple:rest
 amplify
+cfs:standard-packages
+cfs:filesystem
+cfs:s3

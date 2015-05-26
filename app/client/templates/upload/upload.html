@@ -227,7 +227,7 @@
 
     {{/if}}
 
-    {{#if equal uploaderStatus 'transferring'}}
+    {{#if isNumber progress}}
       <div class="progress-bar"><div class="fill" style="width: {{progress}}%;"></div></div>
     {{/if}}
     {{#if uploaded}}

@@ -100,6 +100,12 @@ var helpers = {
 
   },
 
+  isNumber: function(x) {
+
+    return _.isNumber(x);
+
+  },
+
   prune: function(string, length) {
 
     return s.prune(string, length);

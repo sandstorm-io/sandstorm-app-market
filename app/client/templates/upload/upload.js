@@ -246,7 +246,25 @@ Template.Upload.events({
 
 Template.fileBox.onCreated(function() {
 
-  this.uploaded = new ReactiveVar();
+  var tmp = this;
+  tmp.uploaded = new ReactiveVar();
+  tmp.progress = new ReactiveVar();
+  tmp.fileId = new ReactiveVar();
+
+  tmp.autorun(function(c) {
+
+    var fileId = tmp.fileId.get();
+    tmp.subscribe('spks', fileId);
+    var fileObj = Spks.findOne(fileId);
+    if (fileObj) {
+      tmp.progress.set(Math.round(fileObj.chunkCount * 100 / fileObj.chunkSum));
+      if (fileObj.uploadedAt) {
+        tmp.uploaded.set(fileObj.original.name);
+        tmp.progress.set(null);
+      }
+    }
+
+  });
 
 });
 
@@ -267,7 +285,7 @@ Template.fileBox.helpers({
 
   progress: function () {
 
-    return Math.round(App.spkUploader.progress() * 100);
+    return Template.instance().get('progress').get();
 
   },
 
@@ -296,17 +314,12 @@ Template.fileBox.events({
 
   'click [data-action="upload-spk"]': function(evt, tmp) {
 
-    var file = tmp.get('file').get();
+    var file = tmp.get('file').get(),
+        fileId;
 
-    if (file) App.spkUploader.send(file, function(err, downloadUrl) {
-
-      if (err)
-        console.error('Error uploading', err);
-      else {
-        tmp.get('app').set('spkLink', encodeURI(downloadUrl));
-        tmp.get('uploaded').set(file.name);
-      }
-
+    if (file) Spks.insert(file, function(err, fileObj) {
+      if (err) console.log(err);
+      else tmp.get('fileId').set(fileObj._id);
     });
 
     else tmp.$('[data-action="file-picker"][data-for="spk"]').click();
