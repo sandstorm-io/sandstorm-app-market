@@ -12,8 +12,6 @@ Apps.approval = {
 
 var converter = new Showdown.converter();
 
-// TODO Update InstallCountThisWeek daily
-
 // appsBaseSchema contains the keys that are required for a valid app object,
 // but NOT anything which will be autoValued or receive a default value only
 // when the app is added to the DB.
@@ -165,6 +163,21 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
     type: Number,
     min: 0,
     defaultValue: 0
+  },
+  installLink: {
+    type: String,
+    optional: true,
+    autoValue: function(doc) {
+      var versions = this.field('versions');
+      if (versions) {
+        var latest = _.last(versions.value),
+            spk = Spks.findOne({'meta.packageId': latest.packageId});
+        if (spk && spk.copies.spkS3) return '/install/' + spk.meta.packageId + '?url=https://s3-' +
+             Meteor.settings.AWSRegion + '.amazonaws.com/' +
+             Meteor.settings.spkBucket + '/' + spk.copies.spkS3.key;
+        // need to wait for spkS3 to populate - TODO: is there a better way of doing this?
+      }
+    }
   },
   // Approval state
   // 0 - Approved

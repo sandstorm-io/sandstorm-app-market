@@ -1,7 +1,19 @@
 // FS.debug = true;
 
+var spkS3 = new FS.Store.S3('spkS3', {
+  region: 'eu-west-1', //optional in most cases
+  accessKeyId: Meteor.isServer && Meteor.settings.AWSAccessKeyId, //required if environment variables are not set
+  secretAccessKey: Meteor.isServer && Meteor.settings.AWSSecretAccessKey, //required if environment variables are not set
+  bucket: Meteor.isServer && Meteor.settings.spkBucket, //required
+  ACL: 'public-read', //optional, default is 'private', but you can allow public or secure access routed through your app URL
+});
+
+
 Spks = new FS.Collection('spks', {
-  stores: [new FS.Store.FileSystem('spks', {path: 'uploads/spks'})],
+  stores: [
+    new FS.Store.FileSystem('spkFS', {path: 'uploads/spks'}),
+    spkS3
+    ],
   filter: {
     maxSize: 500 * 1024 * 1024, // in bytes
     allow: {
@@ -10,9 +22,6 @@ Spks = new FS.Collection('spks', {
     onInvalid: function (message) {
       console.log(message);
     }
-  },
-  uploaded: function() {
-    console.log(this, arguments);
   }
 });
 
@@ -37,14 +46,15 @@ if (Meteor.isServer) {
     return Spks.find(fileId);
   });
 
-  Spks.find().observe({
-    changed: function(doc) {
-      if (doc.copies && doc.copies.spks) {
+  Spks.find().observeChanges({
+    changed: function(id, fields) {
+      if (fields.copies && fields.copies.spkFS) {
         try {
-          var packageMeta = App.spkVerify('uploads/spks/' + doc.copies.spks.key);
-          Spks.update(doc._id, {$set: {meta: packageMeta}});
+          var packageMeta = App.spkVerify('uploads/spks/' + fields.copies.spkFS.key);
+          Spks.update(id, {$set: {meta: packageMeta}});
         } catch(e) {
-          Spks.update(doc._id, {$set: {error: 'BAD_SPK'}});
+          console.log(e);
+          Spks.update(id, {$set: {error: 'BAD_SPK'}});
         }
       }
     }

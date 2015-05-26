@@ -272,7 +272,7 @@ Template.fileBox.onCreated(function() {
       // now copy metadata, if available, up to parent object
       var app = tmp.get('app');
       if (fileObj && fileObj.meta) {
-        if (app._id && fileObj.meta.appid !== app._id) {
+        if (app._id && fileObj.meta.appId !== app._id) {
           tmp.error.set('The .spk ' + fileObj.original.name +
                         ' does not appear to be for this app.');
         } else {
