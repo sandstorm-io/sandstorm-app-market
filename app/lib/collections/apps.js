@@ -17,6 +17,37 @@ var converter = new Showdown.converter();
 // appsBaseSchema contains the keys that are required for a valid app object,
 // but NOT anything which will be autoValued or receive a default value only
 // when the app is added to the DB.
+var VersionSchema = new SimpleSchema({
+  number: {
+    type: String,
+    max: 20,
+  },
+  packageId: {
+    type: String,
+  },
+  spkId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id
+  },
+  createdAt: {
+    type: Date,
+    autoValue: function() {
+      if (this.isInsert) {
+        return new Date();
+      } else if (this.isUpsert) {
+        return {$setOnInsert: new Date()};
+      } else {
+        this.unset();
+      }
+    }
+  },
+  changes: {
+    type: String,
+    max: 200,
+    optional: true
+  }
+});
+
 var appsBaseSchema = {
   name: {
     type: String,
@@ -70,6 +101,7 @@ var appsBaseSchema = {
   spkLink: {
     type: String,
     regEx: SimpleSchema.RegEx.Url,
+    optional: true
   },
   price: {
     type: Number,
@@ -92,9 +124,8 @@ var appsBaseSchema = {
     optional: true
   },
   versions: {
-    type: [Object],
+    type: [VersionSchema],
     defaultValue: [],
-    blackbox: true,
     minCount: 1
   },
   replacesApp: {

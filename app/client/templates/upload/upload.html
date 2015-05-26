@@ -77,8 +77,8 @@
         <h4 class="mini-title" data-invalid={{validate 'license'}}>License</h4>
         <input type="text" data-field="license" value="{{license}}" />
 
-        <h4 class="mini-title" data-invalid={{validate 'versions'}}>Version</h4>
-        <input type="text" data-action="update-version" value="{{latestVersion}}" />
+        <h4 class="mini-title">Version</h4>
+        <div class="read-only">{{verboseNone versions.[0].number}}</div>
 
       </div>
 
@@ -232,6 +232,11 @@
     {{/if}}
     {{#if uploaded}}
       <div class="upload-confirm">{{uploaded}} uploaded</div>
+    {{/if}}
+    {{#if error}}
+      <div class="upload-error">
+        {{error}}
+      </div>
     {{/if}}
 
   </div>

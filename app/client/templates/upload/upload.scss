@@ -272,8 +272,12 @@
       }
     }
 
-    .upload-confirm {
+    .upload-confirm, .upload-error {
       margin-top: 1.5rem;
+    }
+
+    .upload-error {
+      color: #800000;
     }
 
   }

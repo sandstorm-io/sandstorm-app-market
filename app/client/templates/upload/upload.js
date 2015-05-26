@@ -184,7 +184,6 @@ Template.Upload.events({
     var versions = tmp.app.get('versions'),
         $el = $(evt.currentTarget);
     tmp.app.set('versions', [{
-      dateTime: new Date(),
       number: $el.val()
     }]);
 
@@ -248,6 +247,7 @@ Template.fileBox.onCreated(function() {
 
   var tmp = this;
   tmp.uploaded = new ReactiveVar();
+  tmp.error = new ReactiveVar();
   tmp.progress = new ReactiveVar();
   tmp.fileId = new ReactiveVar();
 
@@ -257,10 +257,33 @@ Template.fileBox.onCreated(function() {
     tmp.subscribe('spks', fileId);
     var fileObj = Spks.findOne(fileId);
     if (fileObj) {
+      tmp.error.set(null);
       tmp.progress.set(Math.round(fileObj.chunkCount * 100 / fileObj.chunkSum));
       if (fileObj.uploadedAt) {
         tmp.uploaded.set(fileObj.original.name);
         tmp.progress.set(null);
+      }
+      if (fileObj.error) {
+        tmp.uploaded.set(null);
+        tmp.error.set('Upload failed - ' + fileObj.original.name +
+                      ' does not appear to be a valid .spk');
+      }
+
+      // now copy metadata, if available, up to parent object
+      var app = tmp.get('app');
+      if (fileObj && fileObj.meta) {
+        if (app._id && fileObj.meta.appid !== app._id) {
+          tmp.error.set('The .spk ' + fileObj.original.name +
+                        ' does not appear to be for this app.');
+        } else {
+          app._id = fileObj.meta.appId;
+          app.versions = [{
+            number: fileObj.meta.version,
+            packageId: fileObj.meta.packageId,
+            spkId: fileId
+          }];
+          tmp.get('app').set(app);
+        }
       }
     }
 
@@ -292,6 +315,12 @@ Template.fileBox.helpers({
   uploaded: function() {
 
     return Template.instance().uploaded.get();
+
+  },
+
+  error: function() {
+
+    return Template.instance().error.get();
 
   }
 
