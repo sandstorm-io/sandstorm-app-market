@@ -211,7 +211,7 @@ html {
   font-family: $main-font;
   box-sizing: border-box;
   position: relative;
-  box-shadow: 0 0 1px $border-color;
+  border: 0.1rem solid $border-color;
 
   .arrow {
   	background: $background-color;
@@ -236,8 +236,8 @@ html {
   .arrow:before {
   	border-color: rgba(0,0,0,0);
   	border-top-color: $border-color;
-  	border-width: 1rem;
-  	margin-left: -1rem;
+  	border-width: 1.1rem;
+  	margin-left: -1.1rem;
   }
 
   &.tooltip--bottom {
