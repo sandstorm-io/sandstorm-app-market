@@ -75,15 +75,6 @@ body.admin {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 
-  // THIS IS THE TOOLTIP
-  &.simptip-position-top:after {
-    background-color: #ffffff;
-    color: #5b5b5b;
-  }
-  &.simptip-position-top:before {
-    border-top-color: #ffffff;
-  }
-
   &:last-child {
     margin-right: 0;
   }

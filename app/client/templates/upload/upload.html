@@ -53,7 +53,7 @@
       <div class="half-col">
 
         <h3 class="title" data-invalid={{validate 'name'}}>Title</h3>
-        <input type="text" data-field="name" value="{{name}}" required />
+        <div class="read-only">{{verboseNone name}}</div>
 
         <h3 class="title">Author</h3>
         <div class="read-only">{{getUsername author}}</div>
@@ -129,20 +129,6 @@
             PRIVATE
           </div>
         </div>
-
-        <!-- <h3 class="title">Suggested Donation
-          <span class="simptip-position-bottom simptip-smooth simptip-fade" data-tooltip="Opt out of app market contributions"><i class="fa fa-caret-down" data-action="make-free" ></i></span>
-        </h3>
-
-        <div class="donation-box">
-          <i class="fa fa-dollar"></i>
-          <input type="number" data-field="price" min="0" step="0.01" value="{{price}}" />
-        </div>
-
-        <div class="donation-instructions">
-          Users&nbsp;can&nbsp;chip&nbsp;in&nbsp;any&nbsp;amount,
-          but&nbsp;authors&nbsp;set&nbsp;the&nbsp;default&nbsp;position&nbsp;of&nbsp;the&nbsp;slider.
-        </div> -->
 
       </div>
 
@@ -344,6 +330,33 @@
       </div>
       <div class="sandstorm-button neutral" data-action="perform-action">
         {{actionText}}
+      </div>
+
+    </div>
+
+  </div>
+
+</template>
+
+<template name="messageModal">
+
+  <div class="anti-modal-box nuke-modal clearfix">
+
+    <h2 class="header">
+      {{header}}
+    </h2>
+
+    <div class="message">
+      {{{message}}}
+    </div>
+
+    <div class="spacer">
+    </div>
+
+    <div class="button-block big-gap">
+
+      <div class="sandstorm-button neutral" data-action="close-modal">
+        Close
       </div>
 
     </div>

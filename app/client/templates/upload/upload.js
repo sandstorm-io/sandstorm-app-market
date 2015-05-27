@@ -205,7 +205,17 @@ Template.Upload.events({
 
     tmp.validate();
     Meteor.call('user/submit-app', tmp.app.all(), function(err, res) {
-      if (err) console.log(err);
+      if (err) {
+        console.log(err);
+        if (err.details && err.details.code === 11000) {
+          AntiModals.overlay('messageModal', {data: {
+            header: 'Duplicate App',
+            message: 'There\'s already an app associated with that <em>.spk</em> on the App Store. ' +
+                     'If you\'d like to update it with a new version, you can find it in ' +
+                     '<strong>Apps By Me</strong>, from which you can choose <strong>Edit</strong>.'
+          }});
+        }
+      }
       else {
         window.scrollTo(0, 0);
         tmp.submitted.set(new Date());
@@ -277,6 +287,7 @@ Template.fileBox.onCreated(function() {
                         ' does not appear to be for this app.');
         } else {
           app._id = fileObj.meta.appId;
+          app.name = fileObj.meta.title;
           app.versions = [{
             number: fileObj.meta.version,
             packageId: fileObj.meta.packageId,
@@ -593,6 +604,16 @@ Template.nukeModal.events({
     this.actionFunction && this.actionFunction.call(this, function() {
       AntiModals.dismissAll();
     });
+
+  }
+
+});
+
+Template.messageModal.events({
+
+  'click [data-action="close-modal"]': function() {
+
+    AntiModals.dismissAll();
 
   }
 

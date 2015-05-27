@@ -69,6 +69,12 @@ var helpers = {
 
   },
 
+  sandstormHost: function() {
+
+    return amplify.store('sandstormHost');
+
+  },
+
   // VALIDATION HELPERS
 
   validate: function(field) {

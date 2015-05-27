@@ -32,12 +32,12 @@
 
               {{#if installed}}
                 <div class="app-install installed">
-                  INSTALLED
+                  INSTALL+  <i class="icon-arrow-install"></i>
                 </div>
                 {{else}}
-                <div class="app-install" data-action="install-app">
+                <a href="{{#if installLink}}{{sandstormHost}}{{installLink}}{{/if}}" target="_blank" class="app-install" data-action="install-app">
                   INSTALL <i class="icon-arrow-install"></i>
-                </div>
+                </a>
               {{/if}}
 
               <div class="app-price {{#if free price}}free{{/if}}">
@@ -118,13 +118,15 @@
             <div class="install-price">
 
               {{#if installed}}
-              <div class="app-install installed">
-                INSTALLED
-              </div>
-              {{else}}
-              <div class="app-install" data-action="install-app">
-                INSTALL <i class="icon-arrow-install"></i>
-              </div>
+                <div class="app-install installed">
+                  INSTALL+  <i class="icon-arrow-install"></i>
+                </div>
+                {{else}}
+                <a href="{{#if installLink}}{{sandstormHost}}{{installLink}}{{/if}}"
+                   target="_blank" class="app-install" data-tooltip="{{#if sandstormHost}}Install on {{sandstormHost}}{{/if}}"
+                   data-action="install-app">
+                  INSTALL <i class="icon-arrow-install"></i>
+                </a>
               {{/if}}
 
               <div class="app-price {{#if free price}}free{{/if}}">

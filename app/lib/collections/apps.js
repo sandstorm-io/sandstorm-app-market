@@ -1,5 +1,26 @@
 Apps = new Mongo.Collection('apps', {transform: function(app) {
+
   app.latestVersion = function() {return _.last(this.versions);};
+
+  // it's actually slightly difficult to know when an app's ultimate install
+  // link will be available due to the unknown length of time it will take the
+  // .spk to get to S3.  So, we construct the install link on demand, and then
+  // cache it if it turns out to be available.
+  app.makeInstallLink = function() {
+    if (this.installLink) return this.installLink;
+    else if (Meteor.isClient) return Meteor.call('apps/updateInstallLink', this._id);
+    var latest = this.latestVersion(),
+        spk = Spks.findOne({'meta.packageId': latest && latest.packageId}),
+        installLink;
+    if (spk && spk.copies.spkS3) {
+      installLink = 'install/' + spk.meta.packageId + '?url=https://s3-' +
+         Meteor.settings.public.AWSRegion + '.amazonaws.com/' +
+         Meteor.settings.public.spkBucket + '/' + spk.copies.spkS3.key;
+      Apps.update(this._id, {$set: {installLink: installLink}});
+      return installLink;
+    }
+  };
+
   return app;
 }});
 
@@ -167,17 +188,17 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
   installLink: {
     type: String,
     optional: true,
-    autoValue: function(doc) {
-      var versions = this.field('versions');
-      if (versions) {
-        var latest = _.last(versions.value),
-            spk = Spks.findOne({'meta.packageId': latest.packageId});
-        if (spk && spk.copies.spkS3) return '/install/' + spk.meta.packageId + '?url=https://s3-' +
-             Meteor.settings.AWSRegion + '.amazonaws.com/' +
-             Meteor.settings.spkBucket + '/' + spk.copies.spkS3.key;
-        // need to wait for spkS3 to populate - TODO: is there a better way of doing this?
-      }
-    }
+    // autoValue: function(doc) {
+    //   var versions = this.field('versions');
+    //   if (versions) {
+    //     var latest = _.last(versions.value),
+    //         spk = Spks.findOne({'meta.packageId': latest.packageId});
+    //     if (spk && spk.copies.spkS3) return '/install/' + spk.meta.packageId + '?url=https://s3-' +
+    //          Meteor.settings.AWSRegion + '.amazonaws.com/' +
+    //          Meteor.settings.spkBucket + '/' + spk.copies.spkS3.key;
+    //     // need to wait for spkS3 to populate - TODO: is there a better way of doing this?
+    //   }
+    // }
   },
   // Approval state
   // 0 - Approved

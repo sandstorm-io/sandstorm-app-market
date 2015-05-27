@@ -1,10 +1,10 @@
 // FS.debug = true;
 
 var spkS3 = new FS.Store.S3('spkS3', {
-  region: 'eu-west-1', //optional in most cases
+  region: Meteor.settings.public.AWSRegion, //optional in most cases
   accessKeyId: Meteor.isServer && Meteor.settings.AWSAccessKeyId, //required if environment variables are not set
   secretAccessKey: Meteor.isServer && Meteor.settings.AWSSecretAccessKey, //required if environment variables are not set
-  bucket: Meteor.isServer && Meteor.settings.spkBucket, //required
+  bucket: Meteor.settings.public.spkBucket, //required
   ACL: 'public-read', //optional, default is 'private', but you can allow public or secure access routed through your app URL
 });
 

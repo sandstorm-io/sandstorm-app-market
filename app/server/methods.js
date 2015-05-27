@@ -140,7 +140,8 @@ Meteor.methods({
 
     Apps.insert(app, function(err, res) {
       console.log(err, res);
-      if (err) throw new Meteor.Error(err.message);
+      if (err) console.log(err.code);
+      if (err) fut.throw(new Meteor.Error(err.name, err.message, {code: err.code}));
       else fut.return(res);
     });
 
@@ -325,6 +326,11 @@ Meteor.methods({
 
     return Apps.update(appId, {$set: {note: note}});
 
+  },
+
+  'apps/updateInstallLink': function(appId) {
+    var app = Apps.findOne(appId);
+    if (app) return app.makeInstallLink();
   },
 
   'admin/submitAdminRequests': function(app) {

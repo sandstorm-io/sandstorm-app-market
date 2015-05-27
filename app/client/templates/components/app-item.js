@@ -17,6 +17,12 @@ Template.appItem.helpers({
 
   },
 
+  makeInstallLink: function() {
+
+    return this.installLink();
+
+  },
+
   myRating: function(app) {
 
     var user = Meteor.user();
