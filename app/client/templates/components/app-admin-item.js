@@ -44,7 +44,7 @@ Template.appAdminItem.events({
   'click [data-action="request-revision"]': function(evt, tmp) {
     var note = tmp.$('[data-field="admin-notes"]').val();
     if (!s.isBlank(note)) Meteor.call('apps/addNote', this._id, note, logErr);
-    Meteor.call('apps/request-revision', this._id, logErr);
+    Meteor.call('apps/requestRevision', this._id, logErr);
     tmp.$('[data-field="admin-notes"]').val('');
   },
   'click [data-action="flag"]': function(evt, tmp) {

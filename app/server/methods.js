@@ -146,11 +146,11 @@ Meteor.methods({
 
     app.appId = fileObj.meta.appId;
     app.name = fileObj.meta.title;
-    app.versions = [{
+    _.extend(app.versions[0], {
       number: fileObj.meta.marketingVersion,
       version: fileObj.meta.version,
       packageId: fileObj.meta.packageId,
-    }];
+    });
 
     // Then insert the new app
     Apps.insert(app, function(err, res) {
@@ -181,6 +181,22 @@ Meteor.methods({
       });
     });
 
+    // Here we need to make sure the app metadata is still as per the spk in case
+    // a user has manually overwritten it before submitting.
+    var fileObj = Spks.findOne(app.versions[0].spkId),
+        currentApp = Apps.findOne(app.replacesApp);
+
+    if (!fileObj) throw new Meteor.Error('Bad .spk id in latest version data');
+    if (!currentApp || fileObj.meta.appId !== currentApp.appId) throw new Meteor.Error('New .spk appId does not match existing appId');
+
+    app.appId = fileObj.meta.appId;
+    app.name = fileObj.meta.title;
+    _.extend(app.versions[0], {
+      number: fileObj.meta.marketingVersion,
+      version: fileObj.meta.version,
+      packageId: fileObj.meta.packageId,
+    });
+
     console.log(app);
     Apps.insert(app, function(err, res) {
       if (err) throw new Meteor.Error(err.message);
@@ -205,7 +221,7 @@ Meteor.methods({
 
   },
 
-  'user/chip-in': function(appId, amount) {
+  'user/chipIn': function(appId, amount) {
 
     this.unblock();
 
@@ -305,7 +321,7 @@ Meteor.methods({
 
   },
 
-  'apps/request-revision': function(appId) {
+  'apps/requestRevision': function(appId) {
 
     if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Can only be executed by admin user');
     var app = Apps.findOne(appId);

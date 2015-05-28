@@ -73,11 +73,9 @@
 
                 <div class="action-buttons force-height clearfix">
 
-                  {{#if installed}}
-                    <div class="installed button">INSTALLED</div>
-                  {{else}}
-                    <div class="install button" data-action="install-app">INSTALL <i class="icon-arrow-install"></i></div>
-                  {{/if}}
+                  <a href="{{fullInstallLink}}" target="_blank" class="{{#if installed}}installed{{else}}install{{/if}} button" data-action="install-app">
+                    INSTALL{{#if installed}}+{{/if}} <i class="icon-arrow-install"></i>
+                  </a>
 
                   <!-- <div class="chip-in-section {{#unless chipIn}}hidden{{/unless}}">
                     <div class="slider-section">

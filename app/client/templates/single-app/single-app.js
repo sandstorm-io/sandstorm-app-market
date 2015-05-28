@@ -178,7 +178,7 @@ Template.SingleApp.events({
   'click [data-action="confirm-chip"]': function(evt, tmp) {
 
     var amount = parseFloat(tmp.$('[data-field="chip-amount"]').val(), 10);
-    Meteor.call('user/chip-in', FlowRouter.current().params.appId, amount, function(err) {
+    Meteor.call('user/chipIn', FlowRouter.current().params.appId, amount, function(err) {
       if (err) console.log(err);
       tmp.chipIn.set(false);
     });

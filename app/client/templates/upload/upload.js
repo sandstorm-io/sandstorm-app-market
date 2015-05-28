@@ -289,8 +289,7 @@ Template.fileBox.onCreated(function() {
     var fileObj = tmp.spk.get();
     if (fileObj) {
       tmp.error.set(null);
-      tmp.progress.set(Math.round(fileObj.chunkCount * 100 / fileObj.chunkSum));
-      if (fileObj.uploadedAt && tmp.progress.get()) {
+      if (fileObj.uploadedAt && tmp.progress.curValue) {
         tmp.uploaded.set(fileObj.original.name);
         tmp.progress.set(null);
       }
@@ -299,11 +298,12 @@ Template.fileBox.onCreated(function() {
         tmp.error.set(Spks.error[fileObj.error] && Spks.error[fileObj.error].call(fileObj));
         return;
       }
+      tmp.progress.set(Math.round(fileObj.chunkCount * 100 / fileObj.chunkSum));
 
       // now copy metadata, if available, up to parent object
-      var app = tmp.get('app').all();
+      var app = tmp.get('app').allNonReactive();
       if (fileObj && fileObj.meta) {
-        if (app._id && fileObj.meta.appId !== app._id) {
+        if (app.appId && fileObj.meta.appId !== app.appId) {
           tmp.error.set('The .spk ' + fileObj.original.name +
                         ' does not appear to be for this app.');
         } else {

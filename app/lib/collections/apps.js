@@ -67,7 +67,8 @@ var VersionSchema = new SimpleSchema({
       } else {
         this.unset();
       }
-    }
+    },
+    optional: true
   },
   changes: {
     type: String,
@@ -183,7 +184,8 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
       } else {
         this.unset();
       }
-    }
+    },
+    optional: true
   },
   stars: {
     type: Number,

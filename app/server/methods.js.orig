@@ -188,7 +188,7 @@ Meteor.methods({
 
   },
 
-  'user/chip-in': function(appId, amount) {
+  'user/chipIn': function(appId, amount) {
 
     this.unblock();
 
