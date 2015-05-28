@@ -235,6 +235,8 @@
 
       float: left;
       width: 70%;
+      height: 2.8rem;
+      line-height: 2.8rem;
       box-shadow: none;
       background: #ffffff;
       border: none;
@@ -243,6 +245,8 @@
       font-weight: 300;
       cursor: pointer;
       margin-right: 0.5rem;
+      padding-left: 1.1rem;
+      padding-right: 1.1rem;
 
       &:focus {
         outline: none;
@@ -251,7 +255,7 @@
       &.existing {
         background-color: #e5d7ee;
         color: #553f74;
-        border: 2px solid #ffffff;
+        box-shadow: inset 0 0 0 2px #ffffff;
       }
 
     }

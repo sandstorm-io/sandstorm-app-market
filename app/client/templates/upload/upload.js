@@ -260,39 +260,62 @@ Template.fileBox.onCreated(function() {
   tmp.error = new ReactiveVar();
   tmp.progress = new ReactiveVar();
   tmp.fileId = new ReactiveVar();
+  tmp.origFileId = new ReactiveVar();
+  tmp.spk = new ReactiveVar();
+  tmp.origSpk = new ReactiveVar();
+
+  // pull out relevant .spk details as soon as app is available
+  tmp.autorun(function(c) {
+    var app = Apps.findOne(FlowRouter.current().params.appId);
+    if (app) {
+      var latest = app.latestVersion();
+      tmp.fileId.set(latest.spkId);
+      tmp.origFileId.set(latest.spkId);
+      c.stop();
+    }
+  });
+
+  // subscribe to original spk details separately to avoid rerunning query
+  tmp.autorun(function(c) {
+    var origFileId = tmp.origFileId.get();
+    tmp.subscribe('spks', origFileId);
+    tmp.origSpk.set(Spks.findOne(origFileId));
+  });
 
   tmp.autorun(function(c) {
-
     var fileId = tmp.fileId.get();
     tmp.subscribe('spks', fileId);
-    var fileObj = Spks.findOne(fileId);
+    tmp.spk.set(Spks.findOne(fileId));
+    var fileObj = tmp.spk.get();
     if (fileObj) {
       tmp.error.set(null);
       tmp.progress.set(Math.round(fileObj.chunkCount * 100 / fileObj.chunkSum));
-      if (fileObj.uploadedAt) {
+      if (fileObj.uploadedAt && tmp.progress.get()) {
         tmp.uploaded.set(fileObj.original.name);
         tmp.progress.set(null);
       }
       if (fileObj.error) {
         tmp.uploaded.set(null);
-        tmp.error.set('Upload failed - ' + fileObj.original.name +
-                      ' does not appear to be a valid .spk');
+        tmp.error.set(Spks.error[fileObj.error] && Spks.error[fileObj.error].call(fileObj));
+        return;
       }
 
       // now copy metadata, if available, up to parent object
-      var app = tmp.get('app');
+      var app = tmp.get('app').all();
       if (fileObj && fileObj.meta) {
         if (app._id && fileObj.meta.appId !== app._id) {
           tmp.error.set('The .spk ' + fileObj.original.name +
                         ' does not appear to be for this app.');
         } else {
-          app._id = fileObj.meta.appId;
+          app.appId = fileObj.meta.appId;
           app.name = fileObj.meta.title;
           app.versions = [{
             number: fileObj.meta.version,
             packageId: fileObj.meta.packageId,
             spkId: fileId
           }];
+          if (tmp.origFileId.get() !== tmp.fileId.get() && tmp.get('newVersion')) tmp.get('newVersion').set(true);
+          tmp.origFileId.set(tmp.fileId.get());
           tmp.get('app').set(app);
         }
       }
@@ -332,6 +355,18 @@ Template.fileBox.helpers({
   error: function() {
 
     return Template.instance().error.get();
+
+  },
+
+  spk: function() {
+
+    return Template.instance().get('spk').get();
+
+  },
+
+  origSpk: function() {
+
+    return Template.instance().get('origSpk').get();
 
   }
 

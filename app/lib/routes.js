@@ -147,6 +147,8 @@ FlowRouter.route('/upload/edit/:appId', {
       Meteor.subscribe('saved apps'));
     this.register('this app',
       Meteor.subscribe('apps by id', params.appId));
+    this.register('this app',
+      Meteor.subscribe('apps by id', params.appId));
   },
   action: function(params, queryParams) {
     getSandstormServer(queryParams);

@@ -2,6 +2,11 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
 
   app.latestVersion = function() {return _.last(this.versions);};
 
+  app.spk = function() {
+    var latest = this.latestVersion();
+    return Spks.findOne({'meta.packageId': latest && latest.packageId});
+  };
+
   // it's actually slightly difficult to know when an app's ultimate install
   // link will be available due to the unknown length of time it will take the
   // .spk to get to S3.  So, we construct the install link on demand, and then
@@ -150,6 +155,10 @@ var appsBaseSchema = {
   replacesApp: {
     type: String,
     regEx: SimpleSchema.RegEx.Id,
+    optional: true
+  },
+  appId: {
+    type: String,
     optional: true
   }
 

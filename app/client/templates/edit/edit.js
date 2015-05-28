@@ -30,7 +30,7 @@ Template.Edit.onCreated(function() {
     tmp.validator.validate(tmp.app.all());
     if (tmp.app.get('versions').length === 0) tmp.validator.addInvalidKeys([{
       name: 'version',
-      type: 'new version required'
+      type: 'version number required'
     }]);
   };
 

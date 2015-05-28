@@ -187,8 +187,8 @@
 
     <div class="spacer clearfix"></div>
 
-    <input type="text" placeholder="Browse" readonly="true" data-field="filename" class="filename existing" data-action="choose-file" data-name="spk" value="{{stripFilename ../spkLink}}" />
-    <a class="square-button dark rem-space-float" href="{{spkLink}}"><i class="fa fa-download"></i></a>
+    <div class="filename existing">{{verboseNone origSpk.original.name}}</div>
+    <a class="square-button dark rem-space-float" href="{{#with spk}}{{this.url store='spkS3' download=true}}{{/with}}" target="_blank"><i class="fa fa-download"></i></a>
 
     <div class="spacer clearfix"></div>
 
@@ -213,7 +213,7 @@
 
     {{/if}}
 
-    {{#if isNumber progress}}
+    {{#if progress}}
       <div class="progress-bar"><div class="fill" style="width: {{progress}}%;"></div></div>
     {{/if}}
     {{#if uploaded}}

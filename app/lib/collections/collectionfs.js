@@ -40,17 +40,30 @@ Spks.allow({
   }
 });
 
+Spks.error = {
+  'BAD_SPK': function() {
+    return 'Upload failed - ' + this.original.name + ' does not appear to be a valid .spk';
+  },
+  'DUPLICATE_SPK': function() {
+    return 'That .spk corresponds to a version which has already been uploaded to the App Store';
+  }
+};
+
 if (Meteor.isServer) {
 
   Meteor.publish('spks', function(fileId) {
-    return Spks.find(fileId);
+    return Spks.find({$or: [{_id: fileId}, {'meta.appId': fileId}]});
   });
 
   Spks.find().observeChanges({
     changed: function(id, fields) {
       if (fields.copies && fields.copies.spkFS) {
+        if (Spks.findOne(id).meta) return;
         try {
-          var packageMeta = App.spkVerify('uploads/spks/' + fields.copies.spkFS.key);
+          var packageMeta = App.spkVerify('uploads/spks/' + fields.copies.spkFS.key),
+              existing = Apps.findOne({'versions.packageId': packageMeta.packageId});
+          if (existing)
+            Spks.update(id, {$set: {error: 'DUPLICATE_SPK'}});
           Spks.update(id, {$set: {meta: packageMeta}});
         } catch(e) {
           console.log(e);

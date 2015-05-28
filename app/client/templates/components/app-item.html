@@ -35,7 +35,7 @@
                   INSTALL+  <i class="icon-arrow-install"></i>
                 </div>
                 {{else}}
-                <a href="{{#if installLink}}{{sandstormHost}}{{installLink}}{{/if}}" target="_blank" class="app-install" data-action="install-app">
+                <a href="{{fullInstallLink}}" target="_blank" class="app-install" data-action="install-app">
                   INSTALL <i class="icon-arrow-install"></i>
                 </a>
               {{/if}}
@@ -122,7 +122,7 @@
                   INSTALL+  <i class="icon-arrow-install"></i>
                 </div>
                 {{else}}
-                <a href="{{#if installLink}}{{sandstormHost}}{{installLink}}{{/if}}"
+                <a href="{{fullInstallLink}}"
                    target="_blank" class="app-install" data-tooltip="{{#if sandstormHost}}Install on {{sandstormHost}}{{/if}}"
                    data-action="install-app">
                   INSTALL <i class="icon-arrow-install"></i>

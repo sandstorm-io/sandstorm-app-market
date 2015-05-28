@@ -166,7 +166,9 @@ Meteor.methods({
       });
     });
 
+    console.log(app);
     Apps.insert(app, function(err, res) {
+      console.log('these bits', err, res);
       if (err) throw new Meteor.Error(err.message);
       else fut.return(res);
     });
