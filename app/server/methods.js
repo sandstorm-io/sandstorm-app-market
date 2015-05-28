@@ -138,6 +138,21 @@ Meteor.methods({
       });
     });
 
+    // Here we need to make sure the app metadata is still as per the spk in case
+    // a user has manually overwritten it before submitting.
+    var fileObj = Spks.findOne(app.versions[0].spkId);
+
+    if (!fileObj) throw new Meteor.Error('Bad .spk id in latest version data');
+
+    app.appId = fileObj.meta.appId;
+    app.name = fileObj.meta.title;
+    app.versions = [{
+      number: fileObj.meta.marketingVersion,
+      version: fileObj.meta.version,
+      packageId: fileObj.meta.packageId,
+    }];
+
+    // Then insert the new app
     Apps.insert(app, function(err, res) {
       console.log(err, res);
       if (err) console.log(err.code);

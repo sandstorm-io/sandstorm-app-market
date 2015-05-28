@@ -108,7 +108,7 @@ Template.Edit.onCreated(function() {
       tmp.app.set(key, newApp[key]);
     });
     tmp.unsetCategories();
-    Meteor.call('user/delete-saved-app', function(err) {
+    Meteor.call('user/deleteSavedApp', function(err) {
       if (err) console.log(err);
     });
 
@@ -295,7 +295,7 @@ Template.Edit.events({
 
     tmp.validate();
     if (tmp.app.get('versions').length > 0) {
-      Meteor.call('user/submit-update', tmp.app.all(), function(err, res) {
+      Meteor.call('user/submitUpdate', tmp.app.all(), function(err, res) {
         if (err) console.log(err);
         else if (res) {
           window.scrollTo(0, 0);
@@ -311,7 +311,7 @@ Template.Edit.events({
   'click [data-action="save-app"]': function(evt, tmp) {
 
     tmp.validate();
-    Meteor.call('user/save-app', tmp.app.all(), function(err) {
+    Meteor.call('user/saveApp', tmp.app.all(), function(err) {
       if (err) console.log(err);
       else {
         window.scrollTo(0, 0);
@@ -328,7 +328,7 @@ Template.Edit.events({
       bottomMessage: 'This can\'t be undone.',
       actionText: 'Yes, discard',
       actionFunction: function(cb) {
-        Meteor.call('user/delete-saved-app', tmp.app.get('replacesApp'), function(err, res) {
+        Meteor.call('user/deleteSavedApp', tmp.app.get('replacesApp'), function(err, res) {
           if (err) {
             console.log(err);
           }
@@ -355,7 +355,7 @@ Template.Edit.events({
       bottomMessage: 'This can\'t be undone.',
       actionText: 'Yes, nuke',
       actionFunction: function(cb) {
-        Meteor.call('user/delete-app', tmp.app.get('replacesApp'), function(err, res) {
+        Meteor.call('user/deleteApp', tmp.app.get('replacesApp'), function(err, res) {
           if (err) console.log(err);
           else {
             tmp.clearApp();

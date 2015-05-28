@@ -6,10 +6,10 @@ Meteor.method('updates', function (data) {
         var appObj = Apps.findOne({appId: app.id});
         if (appObj) {
           var latest = appObj.latestVersion();
-          if (appObj.latestVersion().number !== app.version) list.push({
+          if (appObj.latestVersion().version !== app.version) list.push({
             id: app.appId,
             packageId: app.packageId,
-            version: latest.number,
+            version: latest.version,
             url: app.makeInstallLink()
           });
         }

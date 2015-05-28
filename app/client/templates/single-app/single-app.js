@@ -232,7 +232,7 @@ Template.SingleApp.events({
   'click [data-action="submit-review"]': function(evt, tmp) {
 
     if (tmp.reviewValid.get()) {
-      Meteor.call('user/review-app', FlowRouter.current().params.appId, tmp.myReview.get(), function(err) {
+      Meteor.call('user/reviewApp', FlowRouter.current().params.appId, tmp.myReview.get(), function(err) {
         if (err) console.log(err);
         tmp.writeReview.set(false);
       });
@@ -374,7 +374,7 @@ Template.flagBox.events({
         additional: additional
       };
 
-      Meteor.call('user/flag-app', FlowRouter.current().params.appId, flag, function(err) {
+      Meteor.call('user/flagApp', FlowRouter.current().params.appId, flag, function(err) {
         if (err) console.log(err);
         tmp.get('flagApp').set(false);
       });

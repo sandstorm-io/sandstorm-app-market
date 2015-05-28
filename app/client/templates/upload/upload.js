@@ -101,7 +101,7 @@ Template.Upload.onCreated(function() {
       tmp.app.set(key, newApp[key]);
     });
     tmp.unsetCategories();
-    Meteor.call('user/delete-saved-app', function(err) {
+    Meteor.call('user/deleteSavedApp', function(err) {
       if (err) console.log(err);
     });
 
@@ -204,7 +204,7 @@ Template.Upload.events({
   'click [data-action="submit-app"]': function(evt, tmp) {
 
     tmp.validate();
-    Meteor.call('user/submit-app', tmp.app.all(), function(err, res) {
+    Meteor.call('user/submitApp', tmp.app.all(), function(err, res) {
       if (err) {
         console.log(err);
         if (err.details && err.details.code === 11000) {
@@ -227,7 +227,7 @@ Template.Upload.events({
   'click [data-action="save-app"]': function(evt, tmp) {
 
     tmp.validate();
-    Meteor.call('user/save-app', tmp.app.all(), function(err) {
+    Meteor.call('user/saveApp', tmp.app.all(), function(err) {
       if (err) console.log(err);
       else {
         window.scrollTo(0, 0);
@@ -310,7 +310,8 @@ Template.fileBox.onCreated(function() {
           app.appId = fileObj.meta.appId;
           app.name = fileObj.meta.title;
           app.versions = [{
-            number: fileObj.meta.version,
+            number: fileObj.meta.marketingVersion,
+            version: fileObj.meta.version,
             packageId: fileObj.meta.packageId,
             spkId: fileId
           }];

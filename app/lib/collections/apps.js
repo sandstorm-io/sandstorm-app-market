@@ -1,6 +1,10 @@
 Apps = new Mongo.Collection('apps', {transform: function(app) {
 
-  app.latestVersion = function() {return _.last(this.versions);};
+  app.latestVersion = function() {
+    return _.sortBy(this.versions, function(entry) {
+      return -entry.version;
+    })[0];
+  };
 
   app.spk = function() {
     var latest = this.latestVersion();

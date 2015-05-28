@@ -46,6 +46,10 @@ Spks.error = {
   },
   'DUPLICATE_SPK': function() {
     return 'That .spk corresponds to a version which has already been uploaded to the App Store';
+  },
+  'NON_LATEST_VERSION': function() {
+    return 'That .spk corresponds to version ' + this.meta.version + ', and a more recent version already ' +
+           'exists in the App Store';
   }
 };
 
@@ -61,9 +65,10 @@ if (Meteor.isServer) {
         if (Spks.findOne(id).meta) return;
         try {
           var packageMeta = App.spkVerify('uploads/spks/' + fields.copies.spkFS.key),
-              existing = Apps.findOne({'versions.packageId': packageMeta.packageId});
-          if (existing)
-            Spks.update(id, {$set: {error: 'DUPLICATE_SPK'}});
+              existing = Apps.findOne({'versions.packageId': packageMeta.packageId}),
+              latest = Spks.findOne({'meta.appId': packageMeta.appId}, {sort: {'meta.version': -1}});
+          if (existing) Spks.update(id, {$set: {error: 'DUPLICATE_SPK'}});
+          if (latest && latest.meta.version > packageMeta.version) Spks.update(id, {$set: {error: 'NON_LATEST_VERSION'}});
           Spks.update(id, {$set: {meta: packageMeta}});
         } catch(e) {
           console.log(e);
