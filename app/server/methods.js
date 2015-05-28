@@ -95,7 +95,7 @@ Meteor.methods({
 
   },
 
-  'user/save-app': function(app) {
+  'user/saveApp': function(app) {
 
     this.unblock();
     if (!this.userId) return false;
@@ -111,7 +111,7 @@ Meteor.methods({
 
   },
 
-  'user/delete-saved-app': function(appId) {
+  'user/deleteSavedApp': function(appId) {
 
     this.unblock();
     if (!this.userId) return false;
@@ -123,7 +123,7 @@ Meteor.methods({
 
   },
 
-  'user/submit-app': function(app) {
+  'user/submitApp': function(app) {
 
     var fut = new Future();
 
@@ -164,7 +164,7 @@ Meteor.methods({
 
   },
 
-  'user/submit-update': function(app) {
+  'user/submitUpdate': function(app) {
 
     var fut = new Future();
 
@@ -183,7 +183,6 @@ Meteor.methods({
 
     console.log(app);
     Apps.insert(app, function(err, res) {
-      console.log('these bits', err, res);
       if (err) throw new Meteor.Error(err.message);
       else fut.return(res);
     });
@@ -192,7 +191,7 @@ Meteor.methods({
 
   },
 
-  'user/delete-app': function(appId) {
+  'user/deleteApp': function(appId) {
 
     var fut = new Future(),
         app = Apps.findOne(appId);
@@ -226,7 +225,7 @@ Meteor.methods({
 
   },
 
-  'user/flag-app': function(appId, flag) {
+  'user/flagApp': function(appId, flag) {
 
     this.unblock();
     if (!this.userId) return false;
@@ -246,7 +245,7 @@ Meteor.methods({
 
   },
 
-  'user/review-app': function(appId, review) {
+  'user/reviewApp': function(appId, review) {
 
     this.unblock();
     if (!this.userId) return false;
@@ -434,7 +433,7 @@ Meteor.methods({
       user = Meteor.users.findOne(query);
       if (user) {
         _this.setUserId(user._id);
-        Meteor.call('user/review-app', appId, {
+        Meteor.call('user/reviewApp', appId, {
           stars: _.sample(_.range(1,6)),
           text: faker.lorem.paragraph()
         });
