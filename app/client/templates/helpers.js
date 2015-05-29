@@ -30,10 +30,10 @@ var helpers = {
 
   },
 
-  getLatestVersion: function() {
+  latestVersionNumber: function(app) {
 
-    var version = _.last(this.versions);
-    return version && version.number;
+    app = app || this;
+    return app.latestVersion().number;
 
   },
 

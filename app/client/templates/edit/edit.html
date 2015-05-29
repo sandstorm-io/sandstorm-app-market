@@ -111,9 +111,9 @@
 
         <h4 class="mini-title" data-invalid={{validate 'version'}}>Version</h4>
         {{#if fieldEdit 'latestVersion'}}
-          <input type="text" data-action="update-version" data-version-field="number" value="{{lastVersionNumber.number}}" />
+          <input type="text" data-action="update-version" data-version-field="number" value="{{versions.[0].number}}" />
         {{else}}
-          <div data-alt-field="latestVersion" data-action="update-version">{{verboseNone lastVersionNumber.number}}</div>
+          <div data-alt-field="latestVersion" data-action="update-version">{{latestVersionNumber parentApp}}</div>
         {{/if}}
 
       </div>

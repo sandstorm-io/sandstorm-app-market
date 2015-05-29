@@ -286,42 +286,55 @@ Template.fileBox.onCreated(function() {
     var fileId = tmp.fileId.get();
     tmp.subscribe('spks', fileId);
     tmp.spk.set(Spks.findOne(fileId));
-    var fileObj = tmp.spk.get();
-    if (fileObj) {
-      tmp.error.set(null);
-      if (fileObj.uploadedAt && tmp.progress.curValue) {
-        tmp.uploaded.set(fileObj.original.name);
-        tmp.progress.set(null);
-      }
-      if (fileObj.error) {
-        tmp.uploaded.set(null);
-        tmp.error.set(Spks.error[fileObj.error] && Spks.error[fileObj.error].call(fileObj));
-        return;
-      }
-      if (fileObj.chunkCount) tmp.progress.set(Math.round(fileObj.chunkCount * 100 / fileObj.chunkSum));
+  });
 
-      // now copy metadata, if available, up to parent object
-      var app = tmp.get('app').allNonReactive();
-      if (fileObj && fileObj.meta) {
-        if (app.appId && fileObj.meta.appId !== app.appId) {
-          tmp.error.set('The .spk ' + fileObj.original.name +
-                        ' does not appear to be for this app.');
-        } else {
-          app.appId = fileObj.meta.appId;
-          app.name = fileObj.meta.title;
-          app.versions = [{
-            number: fileObj.meta.marketingVersion,
-            version: fileObj.meta.version,
-            packageId: fileObj.meta.packageId,
-            spkId: fileId
-          }];
-          if (tmp.origFileId.get() !== tmp.fileId.get() && tmp.get('newVersion')) tmp.get('newVersion').set(true);
-          tmp.origFileId.set(tmp.fileId.get());
-          tmp.get('app').set(app);
+  tmp.autorun(function(c) {
+    Spks.find(tmp.fileId.get()).observeChanges({
+      changed: function(id, fields) {
+        var fileObj;
+        if ('uploadedAt' in fields) {
+          tmp.error.set(null);
+          fileObj = Spks.findOne(id);
+          tmp.uploaded.set(fileObj.original.name);
+          tmp.progress.set(null);
+        }
+        if ('error' in fields) {
+          fileObj = Spks.findOne(id);
+          tmp.uploaded.set(null);
+          tmp.error.set(Spks.error[fields.error] && Spks.error[fields.error].call(fileObj));
+          return;
+        }
+        if ('chunkCount' in fields) {
+          tmp.error.set(null);
+          fileObj = Spks.findOne(id);
+          tmp.progress.set(Math.round(fileObj.chunkCount * 100 / fileObj.chunkSum));
+        }
+
+        // now copy metadata, if available, up to parent object
+        if ('meta' in fields) {
+          tmp.error.set(null);
+          fileObj = Spks.findOne(id);
+          var app = tmp.get('app').allNonReactive();
+          if (app.appId && fileObj.meta.appId !== app.appId) {
+            tmp.uploaded.set(null);
+            tmp.error.set('The .spk ' + fileObj.original.name +
+                          ' does not appear to be for this app.');
+          } else {
+            app.appId = fileObj.meta.appId;
+            app.name = fileObj.meta.title;
+            app.versions = [{
+              number: fileObj.meta.marketingVersion,
+              version: fileObj.meta.version,
+              packageId: fileObj.meta.packageId,
+              spkId: fileObj._id
+            }];
+            if (tmp.origFileId.get() !== tmp.fileId.get() && tmp.get('newVersion')) tmp.get('newVersion').set(true);
+            tmp.origFileId.set(tmp.fileId.get());
+            tmp.get('app').set(app);
+          }
         }
       }
-    }
-
+    });
   });
 
 });

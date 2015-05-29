@@ -259,6 +259,8 @@ Template.Edit.events({
   'click [data-action="update-version"]': function(evt, tmp) {
 
     tmp.newVersion.set(true);
+    var lastVersion = Apps.findOne(FlowRouter.current().params.appId).latestVersion();
+    tmp.app.set('versions', [lastVersion]);
     if (evt.currentTarget.nodeName === 'INPUT') {
       Tracker.afterFlush(function() {
         $('[data-version-field="number" ]').focus();
@@ -269,13 +271,12 @@ Template.Edit.events({
 
   'change [data-action="update-version"]': function(evt, tmp) {
 
-    var versions = tmp.app.get('versions'),
-        newVersion = {
-          dateTime: new Date(),
+    var lastVersion = tmp.app.get('versions')[0];
+        _.extend(lastVersion, {
           number: tmp.$('[data-version-field="number"]').val(),
           changes: tmp.$('[data-version-field="changes"]').val()
-        };
-    tmp.app.set('versions', [newVersion]);
+        });
+    tmp.app.set('versions', [lastVersion]);
 
   },
 
