@@ -148,6 +148,7 @@ Meteor.methods({
     _.extend(app.versions[0], {
       version: fileObj.meta.version,
       packageId: fileObj.meta.packageId,
+      // dateTime: new Date()
     });
 
     // Then insert the new app
@@ -184,7 +185,6 @@ Meteor.methods({
     var fileObj = Spks.findOne(app.versions[0].spkId),
         currentApp = Apps.findOne(app.replacesApp);
 
-    console.log(app.versions);
     if (!fileObj) throw new Meteor.Error('Bad .spk id in latest version data');
     if (!currentApp || fileObj.meta.appId !== currentApp.appId) throw new Meteor.Error('New .spk appId does not match existing appId');
 
@@ -192,9 +192,9 @@ Meteor.methods({
     _.extend(app.versions[0], {
       version: fileObj.meta.version,
       packageId: fileObj.meta.packageId,
+      // dateTime: new Date()
     });
 
-    console.log(app);
     Apps.insert(app, function(err, res) {
       if (err) throw new Meteor.Error(err.message);
       else fut.return(res);

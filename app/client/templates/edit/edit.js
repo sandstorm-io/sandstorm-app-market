@@ -256,11 +256,11 @@ Template.Edit.events({
 
   },
 
-  'click [data-action="update-version"]': function(evt, tmp) {
+  'click [data-alt-field="latestVersion"]': function(evt, tmp) {
 
     tmp.newVersion.set(true);
     var lastVersion = Apps.findOne(FlowRouter.current().params.appId).latestVersion();
-    tmp.app.set('versions', [lastVersion]);
+    if (tmp.app.get('versions').length === 0) tmp.app.set('versions', [lastVersion]);
     if (evt.currentTarget.nodeName === 'INPUT') {
       Tracker.afterFlush(function() {
         $('[data-version-field="number" ]').focus();

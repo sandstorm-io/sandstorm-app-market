@@ -5,12 +5,13 @@ Meteor.method('updates', function (data) {
       updates: _.reduce(data.apps, function(list, app) {
         var appObj = Apps.findOne({appId: app.id});
         if (appObj) {
-          var latest = appObj.latestVersion();
-          if (appObj.latestVersion().version !== app.version) list.push({
-            id: app.appId,
-            packageId: app.packageId,
+          var latest = appObj.latestVersion(),
+              spk = Spks.findOne(latest.spkId);
+          if (latest.version !== app.version) list.push({
+            id: appObj.appId,
+            packageId: latest.packageId,
             version: latest.version,
-            url: app.makeInstallLink()
+            url: S3Url(spk)
           });
         }
         return list;
@@ -21,3 +22,11 @@ Meteor.method('updates', function (data) {
 }, {
   url: "api/checkupdates"
 });
+
+function S3Url(file) {
+
+  var urlHost = 'https://s3-' + spkS3.region + '.amazonaws.com';
+  var urlPath = path.join('/', spkS3.bucket, file.copies.spkS3.key);
+  return urlHost + urlPath;
+
+}

@@ -2,7 +2,7 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
 
   app.latestVersion = function() {
     return _.sortBy(this.versions, function(entry) {
-      return -entry.version;
+      return -entry.createdAt;
     })[0];
   };
 
@@ -50,6 +50,10 @@ var VersionSchema = new SimpleSchema({
     type: String,
     max: 20,
   },
+  version: {
+    type: Number,
+    optional: true
+  },
   packageId: {
     type: String,
   },
@@ -59,17 +63,21 @@ var VersionSchema = new SimpleSchema({
   },
   createdAt: {
     type: Date,
-    autoValue: function() {
-      if (this.isInsert) {
-        return new Date();
-      } else if (this.isUpsert) {
-        return {$setOnInsert: new Date()};
-      } else {
-        this.unset();
-      }
+    autoValue: function(doc) {
+      if (!this.isSet || this.operator !== '$push') return new Date();
+      // if (this.isInsert) {
+      //   return new Date();
+      // } else if (this.isUpsert) {
+      //   return {$setOnInsert: new Date()};
+      // } else {
+      //   this.unset();
+      // }
     },
-    optional: true
+    // optional: true
   },
+  // dateTime: {
+  //   type: Date
+  // },
   changes: {
     type: String,
     max: 200,

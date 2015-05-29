@@ -411,6 +411,7 @@ Template.fileBox.events({
       Spks.insert(file, function(err, fileObj) {
         if (err) console.log(err);
         else tmp.get('fileId').set(fileObj._id);
+        console.log(fileObj);
       });
     }
 

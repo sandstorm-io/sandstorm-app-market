@@ -1,6 +1,6 @@
 // FS.debug = true;
 
-var spkS3 = new FS.Store.S3('spkS3', {
+spkS3 = new FS.Store.S3('spkS3', {
   region: Meteor.settings.public.AWSRegion, //optional in most cases
   accessKeyId: Meteor.isServer && Meteor.settings.AWSAccessKeyId, //required if environment variables are not set
   secretAccessKey: Meteor.isServer && Meteor.settings.AWSSecretAccessKey, //required if environment variables are not set
