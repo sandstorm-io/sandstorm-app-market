@@ -34,5 +34,4 @@ Template.Home.helpers({
 /* Home: Lifecycle Hooks */
 /*****************************************************************************/
 Template.Home.onCreated(function () {
-  this.subscribe('categories');
 });

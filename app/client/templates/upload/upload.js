@@ -298,7 +298,7 @@ Template.fileBox.onCreated(function() {
         tmp.error.set(Spks.error[fileObj.error] && Spks.error[fileObj.error].call(fileObj));
         return;
       }
-      tmp.progress.set(Math.round(fileObj.chunkCount * 100 / fileObj.chunkSum));
+      if (fileObj.chunkCount) tmp.progress.set(Math.round(fileObj.chunkCount * 100 / fileObj.chunkSum));
 
       // now copy metadata, if available, up to parent object
       var app = tmp.get('app').allNonReactive();
@@ -393,10 +393,13 @@ Template.fileBox.events({
     var file = tmp.get('file').get(),
         fileId;
 
-    if (file) Spks.insert(file, function(err, fileObj) {
-      if (err) console.log(err);
-      else tmp.get('fileId').set(fileObj._id);
-    });
+    if (file) {
+      tmp.progress.set(1);
+      Spks.insert(file, function(err, fileObj) {
+        if (err) console.log(err);
+        else tmp.get('fileId').set(fileObj._id);
+      });
+    }
 
     else tmp.$('[data-action="file-picker"][data-for="spk"]').click();
 
