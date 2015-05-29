@@ -53,7 +53,7 @@
       <div class="half-col">
 
         <h3 class="title" data-invalid={{validate 'name'}}>Title</h3>
-        <div class="read-only">{{verboseNone name}}</div>
+        <input type="text" data-field="name" value="{{name}}" required />
 
         <h3 class="title">Author</h3>
         <div class="read-only">{{getUsername author}}</div>
@@ -77,8 +77,8 @@
         <h4 class="mini-title" data-invalid={{validate 'license'}}>License</h4>
         <input type="text" data-field="license" value="{{license}}" />
 
-        <h4 class="mini-title">Version</h4>
-        <div class="read-only">{{verboseNone versions.[0].number}}</div>
+        <h4 class="mini-title" data-invalid={{validate 'versions'}}>Version</h4>
+        <input type="text" data-action="update-version" value="{{versions.[0].number}}" />
 
       </div>
 

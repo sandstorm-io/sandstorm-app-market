@@ -183,9 +183,9 @@ Template.Upload.events({
 
     var versions = tmp.app.get('versions'),
         $el = $(evt.currentTarget);
-    tmp.app.set('versions', [{
-      number: $el.val()
-    }]);
+
+    versions[0].number = $el.val();
+    tmp.app.set('versions', versions);
 
   },
 
