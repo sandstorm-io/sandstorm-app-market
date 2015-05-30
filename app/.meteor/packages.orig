@@ -39,9 +39,17 @@ rcy:nouislider
 
 
 npm-container
-<<<<<<< HEAD
+numeral:numeral
 aldeed:template-extension
 aldeed:collection2
+markdown
+lookback:tooltips
+<<<<<<< HEAD
+
+
+npm-container
+simple:rest
+amplify
 =======
-numeral:numeral
+mystor:device-detection
 >>>>>>> master

@@ -198,45 +198,61 @@ html {
 }
 
 .tooltip {
+  $background-color: #e7e4ea;
+  $border-color: #a694b2;
+
   z-index: 1001;
   pointer-events: none;
   transition: opacity .1s ease-out;
   opacity: 0;
-  background: #e7e4ea;
+  background: $background-color;
   padding: 1rem;
   font-size: 1.3rem;
   font-family: $main-font;
   box-sizing: border-box;
   position: relative;
+  border: 0.1rem solid $border-color;
 
-  &.tooltip--top:after {
-    width: 0;
-    height: 0;
-    border-left: 1.5rem solid transparent;
-    border-right: 1.5rem solid transparent;
-    border-top: 1.5rem solid #e7e4ea;
-    bottom: -1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    content: "";
-    display: block;
-    position: absolute;
-    z-index: 99;
+  .arrow {
+  	background: $background-color;
+  }
+  .arrow:after, .arrow:before {
+  	top: 100%;
+  	left: 50%;
+  	border: solid transparent;
+  	content: " ";
+  	height: 0;
+  	width: 0;
+  	position: absolute;
+  	pointer-events: none;
   }
 
-  &.tooltip--bottom:after {
-    width: 0;
-    height: 0;
-    border-left: 1.5rem solid transparent;
-    border-right: 1.5rem solid transparent;
-    border-bottom: 1.5rem solid #e7e4ea;
-    top: -1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    content: "";
-    display: block;
-    position: absolute;
-    z-index: 99;
+  .arrow:after {
+    border-color: rgba(0,0,0,0);
+  	border-top-color: $background-color;
+  	border-width: 1rem;
+  	margin-left: -1rem;
+  }
+  .arrow:before {
+  	border-color: rgba(0,0,0,0);
+  	border-top-color: $border-color;
+  	border-width: 1.1rem;
+  	margin-left: -1.1rem;
+  }
+
+  &.tooltip--bottom {
+    .arrow:after, .arrow:before {
+      bottom: 100%;
+      top: initial;
+    }
+    .arrow:after {
+      border-color: rgba(0,0,0,0);
+      border-bottom-color: $background-color;
+    }
+    .arrow:before {
+      border-color: rgba(0,0,0,0);
+      border-bottom-color: $border-color;
+    }
   }
 
   &.hide {

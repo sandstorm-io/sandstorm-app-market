@@ -1,5 +1,35 @@
 Apps = new Mongo.Collection('apps', {transform: function(app) {
-  app.latestVersion = function() {return _.last(this.versions);};
+
+  app.latestVersion = function() {
+    return _.sortBy(this.versions, function(entry) {
+      return -entry.createdAt;
+    })[0];
+  };
+
+  app.spk = function() {
+    var latest = this.latestVersion();
+    return Spks.findOne({'meta.packageId': latest && latest.packageId});
+  };
+
+  // it's actually slightly difficult to know when an app's ultimate install
+  // link will be available due to the unknown length of time it will take the
+  // .spk to get to S3.  So, we construct the install link on demand, and then
+  // cache it if it turns out to be available.
+  app.makeInstallLink = function() {
+    if (this.installLink) return this.installLink;
+    else if (Meteor.isClient) return Meteor.call('apps/updateInstallLink', this._id);
+    var latest = this.latestVersion(),
+        spk = Spks.findOne({'meta.packageId': latest && latest.packageId}),
+        installLink;
+    if (spk && spk.copies.spkS3) {
+      installLink = 'install/' + spk.meta.packageId + '?url=https://s3-' +
+         Meteor.settings.public.AWSRegion + '.amazonaws.com/' +
+         Meteor.settings.public.spkBucket + '/' + spk.copies.spkS3.key;
+      Apps.update(this._id, {$set: {installLink: installLink}});
+      return installLink;
+    }
+  };
+
   return app;
 }});
 
@@ -12,11 +42,49 @@ Apps.approval = {
 
 var converter = new Showdown.converter();
 
-// TODO Update InstallCountThisWeek daily
-
 // appsBaseSchema contains the keys that are required for a valid app object,
 // but NOT anything which will be autoValued or receive a default value only
 // when the app is added to the DB.
+var VersionSchema = new SimpleSchema({
+  number: {
+    type: String,
+    max: 20,
+  },
+  version: {
+    type: Number,
+    optional: true
+  },
+  packageId: {
+    type: String,
+  },
+  spkId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id
+  },
+  createdAt: {
+    type: Date,
+    autoValue: function(doc) {
+      if (!this.isSet || this.operator !== '$push') return new Date();
+      // if (this.isInsert) {
+      //   return new Date();
+      // } else if (this.isUpsert) {
+      //   return {$setOnInsert: new Date()};
+      // } else {
+      //   this.unset();
+      // }
+    },
+    // optional: true
+  },
+  // dateTime: {
+  //   type: Date
+  // },
+  changes: {
+    type: String,
+    max: 200,
+    optional: true
+  }
+});
+
 var appsBaseSchema = {
   name: {
     type: String,
@@ -70,6 +138,7 @@ var appsBaseSchema = {
   spkLink: {
     type: String,
     regEx: SimpleSchema.RegEx.Url,
+    optional: true
   },
   price: {
     type: Number,
@@ -92,14 +161,17 @@ var appsBaseSchema = {
     optional: true
   },
   versions: {
-    type: [Object],
+    type: [VersionSchema],
     defaultValue: [],
-    blackbox: true,
     minCount: 1
   },
   replacesApp: {
     type: String,
     regEx: SimpleSchema.RegEx.Id,
+    optional: true
+  },
+  appId: {
+    type: String,
     optional: true
   }
 
@@ -120,7 +192,8 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
       } else {
         this.unset();
       }
-    }
+    },
+    optional: true
   },
   stars: {
     type: Number,
@@ -134,6 +207,21 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
     type: Number,
     min: 0,
     defaultValue: 0
+  },
+  installLink: {
+    type: String,
+    optional: true,
+    // autoValue: function(doc) {
+    //   var versions = this.field('versions');
+    //   if (versions) {
+    //     var latest = _.last(versions.value),
+    //         spk = Spks.findOne({'meta.packageId': latest.packageId});
+    //     if (spk && spk.copies.spkS3) return '/install/' + spk.meta.packageId + '?url=https://s3-' +
+    //          Meteor.settings.AWSRegion + '.amazonaws.com/' +
+    //          Meteor.settings.spkBucket + '/' + spk.copies.spkS3.key;
+    //     // need to wait for spkS3 to populate - TODO: is there a better way of doing this?
+    //   }
+    // }
   },
   // Approval state
   // 0 - Approved

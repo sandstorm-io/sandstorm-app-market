@@ -30,10 +30,10 @@ var helpers = {
 
   },
 
-  getLatestVersion: function() {
+  latestVersionNumber: function(app) {
 
-    var version = this.latestVersion();
-    return version && version.number;
+    app = app || this;
+    return app.latestVersion().number;
 
   },
 
@@ -43,6 +43,13 @@ var helpers = {
     if (!url) return 'No link';
     else if (url.search('github.com') > -1) return '<a href="' + url + '">On Github</a>';
     else return '<a href="' + url + '">' + url + '</a>';
+
+  },
+
+  s3Link: function(path) {
+
+    return 'https://s3-' + Meteor.settings.public.AWSRegion + '.amazonaws.com/' +
+           Meteor.settings.public.spkBucket + '/' + path;
 
   },
 
@@ -66,6 +73,19 @@ var helpers = {
   getPath: function(routeName, params, queryParams) {
 
     return FlowRouter.path(routeName, params, queryParams);
+
+  },
+
+  sandstormHost: function() {
+
+    return amplify.store('sandstormHost');
+
+  },
+
+  fullInstallLink: function() {
+
+    this.makeInstallLink();
+    if (amplify.store('sandstormHost')) return amplify.store('sandstormHost') + this.makeInstallLink();
 
   },
 
@@ -97,6 +117,12 @@ var helpers = {
   and: function(a, b) {
 
     return a && b;
+
+  },
+
+  isNumber: function(x) {
+
+    return _.isNumber(x);
 
   },
 

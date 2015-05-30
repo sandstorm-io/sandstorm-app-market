@@ -71,7 +71,8 @@ Template.SingleApp.helpers({
 
   installed: function() {
 
-    return (Meteor.user() && this._id in Meteor.user().installedApps);
+    return false;
+    // return (Meteor.user() && this._id in Meteor.user().installedApps);
 
   },
 
@@ -177,7 +178,7 @@ Template.SingleApp.events({
   'click [data-action="confirm-chip"]': function(evt, tmp) {
 
     var amount = parseFloat(tmp.$('[data-field="chip-amount"]').val(), 10);
-    Meteor.call('user/chip-in', FlowRouter.current().params.appId, amount, function(err) {
+    Meteor.call('user/chipIn', FlowRouter.current().params.appId, amount, function(err) {
       if (err) console.log(err);
       tmp.chipIn.set(false);
     });
@@ -231,7 +232,7 @@ Template.SingleApp.events({
   'click [data-action="submit-review"]': function(evt, tmp) {
 
     if (tmp.reviewValid.get()) {
-      Meteor.call('user/review-app', FlowRouter.current().params.appId, tmp.myReview.get(), function(err) {
+      Meteor.call('user/reviewApp', FlowRouter.current().params.appId, tmp.myReview.get(), function(err) {
         if (err) console.log(err);
         tmp.writeReview.set(false);
       });
@@ -373,7 +374,7 @@ Template.flagBox.events({
         additional: additional
       };
 
-      Meteor.call('user/flag-app', FlowRouter.current().params.appId, flag, function(err) {
+      Meteor.call('user/flagApp', FlowRouter.current().params.appId, flag, function(err) {
         if (err) console.log(err);
         tmp.get('flagApp').set(false);
       });

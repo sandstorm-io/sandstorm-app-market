@@ -8,11 +8,18 @@ Template.appItem.helpers({
 
   installed: function(app) {
 
-    var user = Meteor.users.findOne(Meteor.userId(), {fields: {installedApps: 1}});
-    app = app || this;
+    return false;
+    // var user = Meteor.users.findOne(Meteor.userId(), {fields: {installedApps: 1}});
+    // app = app || this;
+    //
+    // if (!user) return;
+    // else if (user.installedApps[app._id] !== undefined) return true;
 
-    if (!user) return;
-    else if (user.installedApps[app._id] !== undefined) return true;
+  },
+
+  makeInstallLink: function() {
+
+    return this.installLink();
 
   },
 

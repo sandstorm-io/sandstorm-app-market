@@ -38,7 +38,7 @@ Meteor.methods({
 
   },
 
-  'user/review-app': function(appId, review) {
+  'user/reviewApp': function(appId, review) {
 
     if (!Meteor.userId()) return false;
 
