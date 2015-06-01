@@ -81,7 +81,7 @@ FlowRouter.route('/author/:authorId', {
   }
 });
 
-FlowRouter.route('/genres/:genre', {
+FlowRouter.route('/genre/:genre', {
   name: 'appMarketGenre',
   subscriptions: function(params) {
     this.register('currentGenre',
