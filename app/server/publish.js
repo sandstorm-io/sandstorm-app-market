@@ -30,7 +30,7 @@ Meteor.publish('suggested categories', function() {
 });
 
 Meteor.publish('apps by genre', function (name) {
-  var apps = Genres.findIn(name, {public: true, approved: 0}, {fields: appUnpublishedFields}, this);
+  var apps = Genres.findIn(name, {public: true, approved: Apps.approval.approved}, {fields: appUnpublishedFields}, this);
   return [
     apps,
     Meteor.users.find({_id: {$in: _.uniq(apps.map(function(app) {
