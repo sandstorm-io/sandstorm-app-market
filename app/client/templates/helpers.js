@@ -73,15 +73,16 @@ var helpers = {
   routeCategory: function(routeName) {
 
     routeName = cleanArgs(routeName);
-    return FlowRouter.routeCategories[routeName];
+    return FlowRouter.routeCategories[routeName || FlowRouter.getRouteName()];
 
   },
 
   inRouteCategory: function(category, routeName) {
 
     routeName = cleanArgs(routeName);
-    return FlowRouter.routeCategories[routeName] === category;
-
+    return FlowRouter.routeCategories[routeName || FlowRouter.getRouteName()] === category ?
+           'active' :
+           '';
   },
 
   getPath: function(routeName, params, queryParams) {

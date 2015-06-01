@@ -224,7 +224,7 @@ FlowRouter.routeCategories = {
   'appMarketAuthor': 'appMarket',
   'appMarketGenre': 'appMarket',
   'appSearch': 'appMarket',
-  'installedApps': 'installed',
+  'installedApps': 'installedApps',
   'appsByMe': 'appsByMe',
   'edit': 'upload',
   'upload': 'upload',
