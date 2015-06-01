@@ -128,6 +128,7 @@ FlowRouter.route('/installedApps', {
 
 FlowRouter.route('/appsByMe', {
   name: 'appsByMe',
+  foo: 'bar',
   subscriptions: function() {
     this.register('appsByMe',
       Meteor.subscribe('apps by me'));
