@@ -39,7 +39,7 @@
         {{/if}}
         {{#if submitted}}
           <div class="message">
-            <a href="/appsByMe">SUBMITTED ON <span class="date">{{dateFormat submitted 'DD MMM YYYY'}}</span></a>
+            <a href="{{getPath 'appsByMe'}}">SUBMITTED ON <span class="date">{{dateFormat submitted 'DD MMM YYYY'}}</span></a>
           </div>
         {{else}}
           <div class="sandstorm-button neutral" data-action="submit-app">

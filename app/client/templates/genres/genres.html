@@ -42,7 +42,7 @@
   {{#if routerSubsReady}}
   {{#if countApps genre}}
 
-    <div class="genre-name"><a href="/appMarket/genres/{{uriEncode genre}}">{{genre}} <i class="icon-chevron-right"></i></a></div>
+    <div class="genre-name"><a href="{{getZippedPath 'appMarketGenre' 'genre' genre}}">{{genre}} <i class="icon-chevron-right"></i></a></div>
 
     {{> appTable}}
 

@@ -17,7 +17,9 @@ var approvalStateMatrix = [
     message: 'PLEASE REVISE',
     fullMessage: function() {
       var app = Template.parentData();
-      return 'This app requires your revision before it can be approved. <a href="/upload/edit/' + (app && app._id) + '">Edit</a> to view the Admin\'s comments';
+      return 'This app requires your revision before it can be approved. <a href="' +
+             FlowRouter.path('edit', {appId: app && app._id}) +
+             '">Edit</a> to view the Admin\'s comments';
     }
   },
   {
@@ -26,7 +28,9 @@ var approvalStateMatrix = [
     message: 'REJECTED',
     fullMessage: function() {
       var app = Template.parentData();
-      return 'This app has been rejected. <a href="/upload/edit/' + (app && app._id) + '">Edit</a> to view the Admin\'s comments';
+      return 'This app has been rejected. <a href="' +
+             FlowRouter.path('edit', {appId: app && app._id}) +
+             '">Edit</a> to view the Admin\'s comments';
     }
   }
 ];

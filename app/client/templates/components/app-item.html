@@ -24,7 +24,7 @@
 
             <div class="app-name">{{name}}</div>
 
-            <a href="/appMarket/author/{{author}}"><div class="app-author">{{getUsername author}}</div></a>
+            <a href="{{getZippedPath 'appMarketAuthor' 'author' author}}"><div class="app-author">{{getUsername author}}</div></a>
 
             <div class="app-rating">{{{appRating stars}}}</div>
 
@@ -61,12 +61,12 @@
 
           <div class="app-name">{{name}}</div>
 
-          <a href="/appMarket/author/{{author}}"><div class="app-author">{{getUsername author}}</div></a>
+          <a href="{{getZippedPath 'appMarketAuthor' 'author' author}}"><div class="app-author">{{getUsername author}}</div></a>
 
           {{#if ../../../installPage}}
             <div class="app-rating">
               {{{appRating myRating}}}
-              <a class="rate-it" href="/appMarket/app/{{this._id}}">
+              <a class="rate-it" href="{{getZippedPath 'singleApp' 'appId' this._id}}">
                 {{#if myRating}}
                 YOUR RATING
                 {{else}}
@@ -155,7 +155,7 @@
           {{latestVersion.changes}}
         </div>
 
-        <a class="read-more" href="/appMarket/app/{{../_id}}">
+        <a class="read-more" href="{{getZippedPath 'singleApp' 'appId' this._id}}">
           Read More >
         </a>
 
