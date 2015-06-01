@@ -360,6 +360,7 @@ Template.Edit.events({
           if (err) console.log(err);
           else {
             tmp.clearApp();
+            FlowRouter.go('appsByMe');
             cb();
           }
         });

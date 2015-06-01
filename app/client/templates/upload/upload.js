@@ -245,6 +245,7 @@ Template.Upload.events({
       actionText: 'Yes, nuke',
       actionFunction: function(cb) {
         tmp.clearApp();
+        FlowRouter.go('appsByMe');
         cb();
       }
     }});
