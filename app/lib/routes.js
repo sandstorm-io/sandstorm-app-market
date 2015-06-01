@@ -23,12 +23,12 @@ function getSandstormServer(queryParams) {
   if (queryParams.host) amplify.store('sandstormHost', queryParams.host);
 }
 // Reroute root URI to app market
-FlowRouter.route('/', {
-  action: function(params, queryParams) {
-    getSandstormServer(queryParams);
-    FlowRouter.go('appMarket');
-  }
-});
+// FlowRouter.route('/', {
+//   action: function(params, queryParams) {
+//     getSandstormServer(queryParams);
+//     FlowRouter.go('appMarket');
+//   }
+// });
 
 FlowRouter.route('/login', {
   name: 'login',
@@ -38,7 +38,7 @@ FlowRouter.route('/login', {
   }
 });
 
-FlowRouter.route('/appMarket/app/:appId', {
+FlowRouter.route('/app/:appId', {
   name: 'singleApp',
   subscriptions: function(params) {
     var route = this;
@@ -60,7 +60,7 @@ FlowRouter.route('/appMarket/app/:appId', {
   }
 });
 
-FlowRouter.route('/appMarket', {
+FlowRouter.route('/', {
   name: 'appMarket',
   action: function(params, queryParams) {
     getSandstormServer(queryParams);
@@ -68,7 +68,7 @@ FlowRouter.route('/appMarket', {
   }
 });
 
-FlowRouter.route('/appMarket/author/:authorId', {
+FlowRouter.route('/author/:authorId', {
   name: 'appMarketAuthor',
   subscriptions: function(params) {
     this.register('authorGenre',
@@ -81,7 +81,7 @@ FlowRouter.route('/appMarket/author/:authorId', {
   }
 });
 
-FlowRouter.route('/appMarket/genres/:genre', {
+FlowRouter.route('/genres/:genre', {
   name: 'appMarketGenre',
   subscriptions: function(params) {
     this.register('currentGenre',
@@ -97,7 +97,7 @@ FlowRouter.route('/appMarket/genres/:genre', {
   }
 });
 
-FlowRouter.route('/appMarket/search', {
+FlowRouter.route('/search', {
   name: 'appSearch',
   subscriptions: function(params, queryParams) {
     this.register('appSearchName',
@@ -111,7 +111,7 @@ FlowRouter.route('/appMarket/search', {
   }
 });
 
-FlowRouter.route('/installedApps', {
+FlowRouter.route('/installed', {
   name: 'installedApps',
   subscriptions: function() {
     this.register('installedApps',
@@ -126,7 +126,7 @@ FlowRouter.route('/installedApps', {
   }
 });
 
-FlowRouter.route('/appsByMe', {
+FlowRouter.route('/apps-by-me', {
   name: 'appsByMe',
   foo: 'bar',
   subscriptions: function() {
@@ -139,7 +139,7 @@ FlowRouter.route('/appsByMe', {
   }
 });
 
-FlowRouter.route('/upload/edit/:appId', {
+FlowRouter.route('/edit/:appId', {
   name: 'edit',
   subscriptions: function(params) {
     this.register('all categories',
@@ -171,8 +171,8 @@ FlowRouter.route('/upload', {
   }
 });
 
-FlowRouter.route('/admin/review/:appId', {
-  name: 'admin-review',
+FlowRouter.route('/review/:appId', {
+  name: 'review',
   subscriptions: function(params) {
     this.register('all categories',
       Meteor.subscribe('all categories'));
@@ -209,9 +209,27 @@ FlowRouter.route('/admin', {
   }
 });
 
-FlowRouter.route('/serviceConfigure', {
+FlowRouter.route('/service-configure', {
   name: 'serviceConfiguration',
   action: function() {
     FlowLayout.render('loginButtons');
   }
 });
+
+FlowRouter.routeCategories = {
+
+  'login': 'login',
+  'singleApp': 'appMarket',
+  'appMarket': 'appMarket',
+  'appMarketAuthor': 'appMarket',
+  'appMarketGenre': 'appMarket',
+  'appSearch': 'appMarket',
+  'installedApps': 'installed',
+  'appsByMe': 'appsByMe',
+  'edit': 'upload',
+  'upload': 'upload',
+  'review': 'admin',
+  'admin': 'admin',
+  'serviceConfiguration': 'serviceConfig'
+
+};

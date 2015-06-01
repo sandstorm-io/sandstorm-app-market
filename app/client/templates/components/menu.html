@@ -2,34 +2,34 @@
 
   <nav class="menu-container">
 
-    <a class="menu-link {{routeRoot '/appMarket'}}" href="{{getPath 'appMarket'}}">
+    <a class="menu-link {{inRouteCategory 'appMarket'}}" href="{{getPath 'appMarket'}}">
       <i class="icon-market"></i>
       <div class="menu-text">App Market</div>
     </a>
 
-    <a class="menu-link {{routeRoot '/installedApps'}} {{#unless currentUser}}disabled{{/unless}}" href="{{#if currentUser}}{{getPath 'installedApps'}}{{/if}}">
+    <a class="menu-link {{inRouteCategory 'installedApps'}} {{#unless currentUser}}disabled{{/unless}}" href="{{#if currentUser}}{{getPath 'installedApps'}}{{/if}}">
       <i class="icon-apps"></i>
       <div class="menu-text">Installed Apps</div>
     </a>
 
-    <a class="menu-link {{routeRoot '/appsByMe'}} {{#unless currentUser}}disabled{{/unless}}" href="{{#if currentUser}}{{getPath 'appsByMe'}}{{/if}}">
+    <a class="menu-link {{inRouteCategory 'appsByMe'}} {{#unless currentUser}}disabled{{/unless}}" href="{{#if currentUser}}{{getPath 'appsByMe'}}{{/if}}">
       <i class="icon-my"></i>
       <div class="menu-text">Apps by Me</div>
     </a>
 
-    <a class="menu-link {{routeRoot '/upload'}} hide-for-phone" href="{{getPath 'upload'}}">
+    <a class="menu-link {{inRouteCategory 'upload'}} hide-for-phone" href="{{getPath 'upload'}}">
       <i class="icon-upload"></i>
       <div class="menu-text">Upload an App</div>
     </a>
 
     {{#if isAdmin}}
-    <a class="menu-link {{routeRoot '/admin'}} hide-for-phone" href="{{getPath 'admin'}}">
+    <a class="menu-link {{inRouteCategory 'admin'}} hide-for-phone" href="{{getPath 'admin'}}">
       <i class="icon-admin"></i>
       <div class="menu-text">Admin</div>
     </a>
     {{/if}}
 
-    <a class="menu-link {{routeRoot '/login'}}" href="/login">
+    <a class="menu-link {{inRouteCategory 'login'}}" href="{{getPath 'login'}}">
       <i class="icon-my"></i>
       <div class="menu-text">{{#if currentUser}}{{currentUser.username}}{{else}}Log In{{/if}}</div>
     </a>
