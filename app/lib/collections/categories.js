@@ -32,6 +32,12 @@ Schemas.Categories = new SimpleSchema({
     label: "A suggested genre which has been approved (0) or rejected (1)",
     index: true,
     optional: true
+  },
+  populated: {
+    type: Boolean,
+    label: "One of more apps exist in this category",
+    defaultValue: false,
+    index: true
   }
 });
 
@@ -63,6 +69,7 @@ if (Meteor.isServer) {
       return true;
     }
   });
+
 }
 
 Categories.attachSchema(Schemas.Categories);

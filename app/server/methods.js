@@ -362,6 +362,11 @@ Meteor.methods({
     if (app) return app.makeInstallLink();
   },
 
+  'genres/getPopulated': function() {
+    this.unblock();
+    return App.populatedGenres;
+  },
+
   'admin/submitAdminRequests': function(app) {
 
     this.unblock();
