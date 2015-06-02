@@ -248,6 +248,10 @@ Meteor.methods({
     var userFlag = {},
         appFlag = {};
 
+    flag.dateTime = new Date();
+    flag.userId = this.userId;
+    flag.authorName = Meteor.users.findOne(this.userId).username;
+
     appFlag['flags.' + this.userId] = flag;
     userFlag['flags.' + appId] = flag;
 

@@ -257,13 +257,20 @@
 
   <div class="app-notes">
 
-  {{#each sorted notes}}
+  {{#each sorted notesAndFlags}}
 
     <div class="note">
 
+      {{#if text}}
+        On {{dateFormat dateTime 'YYYY-MM-DD'}}, {{#if authorName}}{{authorName}}{{else}}unknown user{{/if}}
+        {{#if admin}} (admin){{/if}} wrote{{#unless byAuthor}} to the author{{/unless}}:<br>
+        {{text}}
+
+      {{else}}
       On {{dateFormat dateTime 'YYYY-MM-DD'}}, {{#if authorName}}{{authorName}}{{else}}unknown user{{/if}}
-      {{#if admin}} (admin){{/if}} wrote{{#unless byAuthor}} to the author{{/unless}}:<br>
-      {{text}}
+      flagged this app as <strong>{{cat}}</strong>{{#if additional}} with the message: {{additional}}{{else}}.{{/if}}
+
+      {{/if}}
 
     </div>
 

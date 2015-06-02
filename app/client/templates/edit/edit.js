@@ -373,6 +373,13 @@ Template.Edit.events({
 
 Template.appNotesBox.helpers({
 
+  notesAndFlags: function() {
+
+    var flags = this.flags;
+    return (this.notes || []).concat(_.values(flags || {}));
+
+  },
+
   sorted: function(notes) {
 
     return Array.isArray(notes) && notes.sort(function(a, b) {return b.dateTime - a.dateTime;});
