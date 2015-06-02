@@ -55,6 +55,12 @@ var helpers = {
 
   approval: Apps.approval,
 
+  appState: function(state) {
+
+    return this.approved === Apps.approval[state];
+
+  },
+
   // ROUTER/SUB HELPERS
 
   routerSubsReady: function(name) {
