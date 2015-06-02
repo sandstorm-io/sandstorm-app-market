@@ -33,7 +33,7 @@ var helpers = {
   latestVersionNumber: function(app) {
 
     app = app || this;
-    return app.latestVersion().number;
+    return app && app.latestVersion && app.latestVersion().number;
 
   },
 
