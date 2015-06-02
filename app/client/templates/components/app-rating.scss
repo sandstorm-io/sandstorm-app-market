@@ -1,0 +1,37 @@
+.app-rating-container {
+
+  display: inline-block;
+  vertical-align: middle;
+
+  .text {
+    display: block;
+    color: #3d9145;
+    font-size: 1.3rem;
+    line-height: 1.8rem;
+  }
+
+  .bar {
+    display: block;
+    width: 8rem;
+    position: relative;
+
+    .background {
+      background-color: #ede9ee;
+      height: 0.75rem;
+      width: 100%;
+      position: relative;
+
+      &.light {
+        background-color: #ffffff;
+      }
+    }
+    .fill {
+      background-color: #3d9145;
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+    }
+  }
+
+}

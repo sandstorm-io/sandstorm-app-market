@@ -30,6 +30,14 @@ var helpers = {
 
   },
 
+  percentageRating: function(app) {
+
+    app = app || this;
+    if (!app) return 0;
+    else return 57;
+
+  },
+
   latestVersionNumber: function(app) {
 
     app = app || this;

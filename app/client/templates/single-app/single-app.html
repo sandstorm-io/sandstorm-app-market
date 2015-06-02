@@ -57,10 +57,11 @@
                 <div class="ratings-bar">
 
                   <div class="left-float">
-                    <div class="app-rating">
+                    {{> appRating rating=percentageRating backgroundCol='light'}}
+                    <!-- <div class="app-rating">
                       {{{appRating rating}}}
                     </div>
-                    <span>( {{ratingsCount}} )</span>
+                    <span>( {{ratingsCount}} )</span> -->
                   </div>
 
                   <div class="right-float social">
@@ -144,7 +145,7 @@
                 <span>( {{ratingsCount}} )</span>
               </div>
 
-              <div class="right-float option" data-action="write-review">
+              <div class="right-float option">
                 <div class="write-review">
                   {{#if writeReview}}
                     <div class="rating">
@@ -153,8 +154,10 @@
                       </div>
                     </div>
                   {{/if}}
-                  Write a review
-                  <i class="fa {{#if writeReview}}fa-caret-up{{else}}fa-caret-down{{/if}}"></i>
+                  <span data-action="write-review">
+                    Write a review
+                    <i class="fa {{#if writeReview}}fa-caret-up{{else}}fa-caret-down{{/if}}"></i>
+                  </span>
                 </div>
               </div>
 
