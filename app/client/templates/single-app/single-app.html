@@ -145,18 +145,18 @@
               </div>
 
               <div class="right-float option" data-action="write-review">
-                Write a review
-                <i class="fa {{#if writeReview}}fa-caret-up{{else}}fa-caret-down{{/if}}"></i>
-              </div>
-              {{#if writeReview}}
-                <div class="right-float">
-                  <div class="rating">
-                    <div class="app-rating" data-action="rate-app">
-                      {{{appRating myReview.rating}}}
+                <div class="write-review">
+                  {{#if writeReview}}
+                    <div class="rating">
+                      <div class="app-rating" data-action="rate-app">
+                        {{{appRating myReview.rating}}}
+                      </div>
                     </div>
-                  </div>
+                  {{/if}}
+                  Write a review
+                  <i class="fa {{#if writeReview}}fa-caret-up{{else}}fa-caret-down{{/if}}"></i>
                 </div>
-              {{/if}}
+              </div>
 
             </div>
 

@@ -602,6 +602,26 @@
 
   padding-bottom: 4.6rem;
 
+  .review-bar {
+
+    .write-review {
+      display: inline-block;
+      height: 4rem;
+      line-height: 4rem;
+      padding-top: 0.8rem;
+      margin-bottom: -0.8rem;
+
+      .rating {
+        display: inline-block;
+      }
+    }
+
+    i.fa-caret-down, i.fa-caret-up {
+      font-size: 1.5em;
+      vertical-align: sub;
+    }
+  }
+
   .review-entry {
     width: 100%;
     outline: none;
@@ -622,6 +642,7 @@
   }
 
   .rating {
+
     .app-rating, span, i {
 
       font-size: 1.7rem;
