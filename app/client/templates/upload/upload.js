@@ -217,6 +217,9 @@ Template.Upload.events({
         }
       }
       else {
+        var newApp = appProto();
+        Schemas.AppsBase.clean(newApp);
+        tmp.get('app').set(newApp);
         window.scrollTo(0, 0);
         tmp.submitted.set(new Date());
       }
