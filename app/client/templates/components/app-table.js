@@ -31,25 +31,26 @@ Template.appTable.helpers({
   appList: function() {
 
     var options = {
-      skip: 0,
-      reactive: !!this.reactive
-    };
-    if (this.sortAsc) options.sort[this.sortAsc] = 1;
-    else if (this.sortDesc) options.sort[this.sortDesc] = -1;
+          skip: 0,
+          reactive: !!this.reactive
+        },
+        data = _.extend({}, Template.parentData(1), this);
+    if (data.sortAsc) options.sort[data.sortAsc] = 1;
+    else if (data.sortDesc) options.sort[data.sortDesc] = -1;
     else options.sort = {installCount: -1};
-    if (this.bigLeader) options.skip += 1;
-    if (this.skipLines) {
-      options.skip += (App.lineCapacity.get() * this.skipLines);
-      if (this.afterBigLeader) options.skip -= 2;
+    if (data.bigLeader) options.skip += 1;
+    if (data.skipLines) {
+      options.skip += (App.lineCapacity.get() * data.skipLines);
+      if (data.afterBigLeader) options.skip -= 2;
       options.skip = Math.max(options.skip, 1);
     }
-    if (this.singleLine) {
+    if (data.singleLine) {
       options.limit = App.lineCapacity.get();
-      if (this.bigLeader) options.limit -= 3;
+      if (data.bigLeader) options.limit -= 3;
       options.limit = Math.max(options.limit, 0);
     }
 
-    return (options.limit === 0) ? [] : Genres.findIn(this.genre, {}, options);
+    return (options.limit === 0) ? [] : Genres.findIn(data.genre, {}, options);
 
   }
 

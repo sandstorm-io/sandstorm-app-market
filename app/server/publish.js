@@ -29,8 +29,8 @@ Meteor.publish('suggested categories', function() {
 
 });
 
-Meteor.publish('apps by genre', function (name) {
-  var apps = Genres.findIn(name, {public: true, approved: Apps.approval.approved}, {fields: appUnpublishedFields}, this);
+Meteor.publish('apps by genre', function (name, limit) {
+  var apps = Genres.findIn(name, {public: true, approved: Apps.approval.approved}, {fields: appUnpublishedFields, limit: limit}, this);
   return [
     apps,
     Meteor.users.find({_id: {$in: _.uniq(apps.map(function(app) {
