@@ -21,7 +21,7 @@
 
           {{#if submitted}}
             <div class="message">
-              <a href="/appsByMe">SUBMITTED ON <span class="date">{{dateFormat submitted 'DD MMM YYYY'}}</span></a>
+              <a href="{{getPath 'appsByMe'}}">SUBMITTED ON <span class="date">{{dateFormat submitted 'DD MMM YYYY'}}</span></a>
             </div>
           {{else}}
             {{#if lastEdit}}
@@ -63,7 +63,7 @@
 
       <div class="spacer clearfix"></div>
 
-      {{> appNotesBox notes=parentApp.notes}}
+      {{> appNotesBox notes=parentApp.notes flags=parentApp.flags}}
 
       <div class="spacer clearfix"></div>
 
@@ -156,14 +156,6 @@
         {{> connectButton service="google"}}
 
       </div>
-
-      {{#if newVersion}}
-        <h4 class="mini-title left-float">Version Changes</h4>
-
-        <div class="version-changes">
-          <textarea placeholder="What's new in this version?" data-action="update-version" data-version-field="changes"></textarea>
-        </div>
-      {{/if}}
 
       <h3 class="title">Genre</h3>
 

@@ -30,10 +30,10 @@ var helpers = {
 
   },
 
-  getLatestVersion: function() {
+  latestVersionNumber: function(app) {
 
-    var version = this.latestVersion();
-    return version && version.number;
+    app = app || this;
+    return app && app.latestVersion && app.latestVersion().number;
 
   },
 
@@ -46,7 +46,20 @@ var helpers = {
 
   },
 
+  s3Link: function(path) {
+
+    return 'https://s3-' + Meteor.settings.public.AWSRegion + '.amazonaws.com/' +
+           Meteor.settings.public.spkBucket + '/' + path;
+
+  },
+
   approval: Apps.approval,
+
+  appState: function(state) {
+
+    return this.approved === Apps.approval[state];
+
+  },
 
   // ROUTER/SUB HELPERS
 
@@ -63,9 +76,51 @@ var helpers = {
 
   },
 
+  routeCategory: function(routeName) {
+
+    routeName = cleanArgs(routeName);
+    return FlowRouter.routeCategories[routeName || FlowRouter.getRouteName()];
+
+  },
+
+  inRouteCategory: function(category, routeName) {
+
+    routeName = cleanArgs(routeName);
+    return FlowRouter.routeCategories[routeName || FlowRouter.getRouteName()] === category ?
+           'active' :
+           '';
+  },
+
   getPath: function(routeName, params, queryParams) {
 
+    params = cleanArgs(params);
+    queryParams = cleanArgs(queryParams);
     return FlowRouter.path(routeName, params, queryParams);
+
+  },
+
+  getZippedPath: function(routeName, paramKeys, paramVals, queryParamKeys, queryParamVals) {
+
+    paramKeys = cleanArgs(paramKeys);
+    paramVals = cleanArgs(paramVals);
+    queryParamKeys = cleanArgs(queryParamKeys);
+    queryParamVals = cleanArgs(queryParamVals);
+    params = _.object([].concat(paramKeys), [].concat(paramVals));
+    queryParams = _.object([].concat(queryParamKeys), [].concat(queryParamVals));
+    return FlowRouter.path(routeName, params, queryParams);
+
+  },
+
+  sandstormHost: function() {
+
+    return amplify.store('sandstormHost');
+
+  },
+
+  fullInstallLink: function() {
+
+    this.makeInstallLink();
+    if (amplify.store('sandstormHost')) return amplify.store('sandstormHost') + this.makeInstallLink();
 
   },
 
@@ -97,6 +152,12 @@ var helpers = {
   and: function(a, b) {
 
     return a && b;
+
+  },
+
+  isNumber: function(x) {
+
+    return _.isNumber(x);
 
   },
 
@@ -245,3 +306,24 @@ var helpers = {
 _.forEach(helpers, function(val, key) {
   Template.registerHelper(key, val);
 });
+
+// Unspecified arguments passed to Spacebars helpers are not 'undefined', they're
+// instances of Spacebars.kw, so we need a function to convert them back into
+// what we'd normally expect of a JS argument.
+// Plus, we parse JSON passed as a string
+function cleanArgs() {
+
+  var args = Array.prototype.slice.call(arguments, 0),
+      cleanedArgs = _.map(args, function(arg) {
+        if (arg instanceof Spacebars.kw) return undefined;
+        else if (typeof arg === 'string')
+          try {
+            return JSON.parge(arg);
+          } catch(e) {
+            return arg;
+          }
+        else return arg;
+      });
+  return cleanedArgs.length && cleanedArgs.length === 1 ? cleanedArgs[0] : cleanedArgs;
+
+}

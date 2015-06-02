@@ -17,30 +17,30 @@ function redirectOnSmallDevice(route) {
   if (!Meteor.Device.isDesktop()) FlowRouter.go(route || 'appMarket');
 }
 
+
 // We have to do this in each route at present, as Flow Router doesn't
 // pass query params to middleware (yet)
 function getSandstormServer(queryParams) {
   if (queryParams.host) amplify.store('sandstormHost', queryParams.host);
 }
 
-//
-function getPopulatedGenres() {
-  Meteor.call('genres/getPopulated', function(err, res) {
-    if (err) throw new Meteor.Error(err);
-    else App.populatedGenres.set(res);
-  });
-}
+// Reroute root URI to app market
+FlowRouter.route('/', {
+  action: function(params, queryParams) {
+    getSandstormServer(queryParams);
+    FlowRouter.go('appMarket');
+  }
+});
 
 FlowRouter.route('/login', {
   name: 'login',
   action: function(params, queryParams) {
     getSandstormServer(queryParams);
-    getPopulatedGenres();
     FlowLayout.render('MasterLayout', {mainSection: 'Login'});
   }
 });
 
-FlowRouter.route('/app/:appId', {
+FlowRouter.route('/appMarket/app/:appId', {
   name: 'singleApp',
   subscriptions: function(params) {
     var route = this;
@@ -58,21 +58,19 @@ FlowRouter.route('/app/:appId', {
   },
   action: function(params, queryParams) {
     getSandstormServer(queryParams);
-    getPopulatedGenres();
     FlowLayout.render('MasterLayout', {mainSection: 'SingleApp'});
   }
 });
 
-FlowRouter.route('/', {
+FlowRouter.route('/appMarket', {
   name: 'appMarket',
   action: function(params, queryParams) {
     getSandstormServer(queryParams);
-    getPopulatedGenres();
     FlowLayout.render('MasterLayout', {mainSection: 'Home'});
   }
 });
 
-FlowRouter.route('/author/:authorId', {
+FlowRouter.route('/appMarket/author/:authorId', {
   name: 'appMarketAuthor',
   subscriptions: function(params) {
     this.register('authorGenre',
@@ -81,12 +79,11 @@ FlowRouter.route('/author/:authorId', {
   },
   action: function(params, queryParams) {
     getSandstormServer(queryParams);
-    getPopulatedGenres();
     FlowLayout.render('MasterLayout', {mainSection: 'Genre'});
   }
 });
 
-FlowRouter.route('/genre/:genre', {
+FlowRouter.route('/appMarket/genres/:genre', {
   name: 'appMarketGenre',
   subscriptions: function(params) {
     this.register('currentGenre',
@@ -94,7 +91,6 @@ FlowRouter.route('/genre/:genre', {
   },
   action: function(params, queryParams) {
     getSandstormServer(queryParams);
-    getPopulatedGenres();
     if (params.genre !== s.capitalize(params.genre))
       FlowRouter.setParams({genre: s.capitalize(params.genre)});
 
@@ -103,7 +99,7 @@ FlowRouter.route('/genre/:genre', {
   }
 });
 
-FlowRouter.route('/search', {
+FlowRouter.route('/appMarket/search', {
   name: 'appSearch',
   subscriptions: function(params, queryParams) {
     this.register('appSearchName',
@@ -113,12 +109,11 @@ FlowRouter.route('/search', {
   },
   action: function(params, queryParams) {
     getSandstormServer(queryParams);
-    getPopulatedGenres();
     FlowLayout.render('MasterLayout', {mainSection: 'Search'});
   }
 });
 
-FlowRouter.route('/installed', {
+FlowRouter.route('/installedApps', {
   name: 'installedApps',
   subscriptions: function() {
     this.register('installedApps',
@@ -126,7 +121,6 @@ FlowRouter.route('/installed', {
   },
   action: function(params, queryParams) {
     getSandstormServer(queryParams);
-    getPopulatedGenres();
     onlyLoggedIn();
     var user = Meteor.users.findOne(Meteor.userId());
     FlowRouter.current().firstVisit = (typeof(user && user.autoupdateApps) === 'undefined');
@@ -134,21 +128,19 @@ FlowRouter.route('/installed', {
   }
 });
 
-FlowRouter.route('/apps-by-me', {
+FlowRouter.route('/appsByMe', {
   name: 'appsByMe',
-  foo: 'bar',
   subscriptions: function() {
     this.register('appsByMe',
       Meteor.subscribe('apps by me'));
   },
   action: function(params, queryParams) {
     getSandstormServer(queryParams);
-    getPopulatedGenres();
     FlowLayout.render('MasterLayout', {mainSection: 'AppsByMe'});
   }
 });
 
-FlowRouter.route('/edit/:appId', {
+FlowRouter.route('/upload/edit/:appId', {
   name: 'edit',
   subscriptions: function(params) {
     this.register('all categories',
@@ -157,12 +149,14 @@ FlowRouter.route('/edit/:appId', {
       Meteor.subscribe('saved apps'));
     this.register('this app',
       Meteor.subscribe('apps by id', params.appId));
-    this.register('this app',
-      Meteor.subscribe('apps by id', params.appId));
   },
+<<<<<<< HEAD
   action: function(params, queryParams) {
     getSandstormServer(queryParams);
-    getPopulatedGenres();
+=======
+  action: function() {
+    redirectOnSmallDevice();
+>>>>>>> master
     FlowLayout.render('MasterLayout', {mainSection: 'Edit'});
   }
 });
@@ -175,15 +169,19 @@ FlowRouter.route('/upload', {
     this.register('saved apps',
       Meteor.subscribe('saved apps'));
   },
+<<<<<<< HEAD
   action: function(params, queryParams) {
     getSandstormServer(queryParams);
-    getPopulatedGenres();
+=======
+  action: function() {
+    redirectOnSmallDevice();
+>>>>>>> master
     FlowLayout.render('MasterLayout', {mainSection: 'Upload'});
   }
 });
 
-FlowRouter.route('/review/:appId', {
-  name: 'review',
+FlowRouter.route('/admin/review/:appId', {
+  name: 'admin-review',
   subscriptions: function(params) {
     this.register('all categories',
       Meteor.subscribe('all categories'));
@@ -196,7 +194,6 @@ FlowRouter.route('/review/:appId', {
   },
   action: function(params, queryParams) {
     getSandstormServer(queryParams);
-    getPopulatedGenres();
     if (!Roles.userIsInRole(Meteor.userId(), 'admin')) FlowRouter.go('appMarket');
     redirectOnSmallDevice();
     FlowLayout.render('MasterLayout', {mainSection: 'Review'});
@@ -215,34 +212,15 @@ FlowRouter.route('/admin', {
   },
   action: function(params, queryParams) {
     getSandstormServer(queryParams);
-    getPopulatedGenres();
     if (!Roles.userIsInRole(Meteor.userId(), 'admin')) FlowRouter.go('appMarket');
     redirectOnSmallDevice();
     FlowLayout.render('MasterLayout', {mainSection: 'Admin'});
   }
 });
 
-FlowRouter.route('/service-configure', {
+FlowRouter.route('/serviceConfigure', {
   name: 'serviceConfiguration',
   action: function() {
     FlowLayout.render('loginButtons');
   }
 });
-
-FlowRouter.routeCategories = {
-
-  'login': 'login',
-  'singleApp': 'appMarket',
-  'appMarket': 'appMarket',
-  'appMarketAuthor': 'appMarket',
-  'appMarketGenre': 'appMarket',
-  'appSearch': 'appMarket',
-  'installedApps': 'installedApps',
-  'appsByMe': 'appsByMe',
-  'edit': 'upload',
-  'upload': 'upload',
-  'review': 'admin',
-  'admin': 'admin',
-  'serviceConfiguration': 'serviceConfig'
-
-};

@@ -8,11 +8,18 @@ Template.appItem.helpers({
 
   installed: function(app) {
 
-    var user = Meteor.users.findOne(Meteor.userId(), {fields: {installedApps: 1}});
-    app = app || this;
+    return false;
+    // var user = Meteor.users.findOne(Meteor.userId(), {fields: {installedApps: 1}});
+    // app = app || this;
+    //
+    // if (!user) return;
+    // else if (user.installedApps[app._id] !== undefined) return true;
 
-    if (!user) return;
-    else if (user.installedApps[app._id] !== undefined) return true;
+  },
+
+  makeInstallLink: function() {
+
+    return this.installLink();
 
   },
 
@@ -58,7 +65,7 @@ Template.appItem.events({
 
   'click [data-link="single-app"]': function() {
 
-    FlowRouter.go('/appMarket/app/' + this.app._id);
+    FlowRouter.go('singleApp', {appId: this.app._id});
 
   }
 
@@ -159,8 +166,8 @@ Template.appItemTiny.events({
 
   'click [data-action="admin-review"]': function() {
 
-    FlowRouter.go('/admin/review/' + this.app._id);
+    FlowRouter.go('review', {appId: this.app._id});
 
   }
 
-})
+});

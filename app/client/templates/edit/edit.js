@@ -30,7 +30,7 @@ Template.Edit.onCreated(function() {
     tmp.validator.validate(tmp.app.all());
     if (tmp.app.get('versions').length === 0) tmp.validator.addInvalidKeys([{
       name: 'version',
-      type: 'new version required'
+      type: 'version number required'
     }]);
   };
 
@@ -108,7 +108,7 @@ Template.Edit.onCreated(function() {
       tmp.app.set(key, newApp[key]);
     });
     tmp.unsetCategories();
-    Meteor.call('user/delete-saved-app', function(err) {
+    Meteor.call('user/deleteSavedApp', function(err) {
       if (err) console.log(err);
     });
 
@@ -256,9 +256,11 @@ Template.Edit.events({
 
   },
 
-  'click [data-action="update-version"]': function(evt, tmp) {
+  'click [data-alt-field="latestVersion"]': function(evt, tmp) {
 
     tmp.newVersion.set(true);
+    var lastVersion = Apps.findOne(FlowRouter.current().params.appId).latestVersion();
+    if (tmp.app.get('versions').length === 0) tmp.app.set('versions', [lastVersion]);
     if (evt.currentTarget.nodeName === 'INPUT') {
       Tracker.afterFlush(function() {
         $('[data-version-field="number" ]').focus();
@@ -269,13 +271,12 @@ Template.Edit.events({
 
   'change [data-action="update-version"]': function(evt, tmp) {
 
-    var versions = tmp.app.get('versions'),
-        newVersion = {
-          dateTime: new Date(),
+    var lastVersion = tmp.app.get('versions')[0];
+        _.extend(lastVersion, {
           number: tmp.$('[data-version-field="number"]').val(),
           changes: tmp.$('[data-version-field="changes"]').val()
-        };
-    tmp.app.set('versions', [newVersion]);
+        });
+    tmp.app.set('versions', [lastVersion]);
 
   },
 
@@ -295,7 +296,7 @@ Template.Edit.events({
 
     tmp.validate();
     if (tmp.app.get('versions').length > 0) {
-      Meteor.call('user/submit-update', tmp.app.all(), function(err, res) {
+      Meteor.call('user/submitUpdate', tmp.app.all(), function(err, res) {
         if (err) console.log(err);
         else if (res) {
           window.scrollTo(0, 0);
@@ -311,7 +312,7 @@ Template.Edit.events({
   'click [data-action="save-app"]': function(evt, tmp) {
 
     tmp.validate();
-    Meteor.call('user/save-app', tmp.app.all(), function(err) {
+    Meteor.call('user/saveApp', tmp.app.all(), function(err) {
       if (err) console.log(err);
       else {
         window.scrollTo(0, 0);
@@ -328,7 +329,7 @@ Template.Edit.events({
       bottomMessage: 'This can\'t be undone.',
       actionText: 'Yes, discard',
       actionFunction: function(cb) {
-        Meteor.call('user/delete-saved-app', tmp.app.get('replacesApp'), function(err, res) {
+        Meteor.call('user/deleteSavedApp', tmp.app.get('replacesApp'), function(err, res) {
           if (err) {
             console.log(err);
           }
@@ -355,10 +356,11 @@ Template.Edit.events({
       bottomMessage: 'This can\'t be undone.',
       actionText: 'Yes, nuke',
       actionFunction: function(cb) {
-        Meteor.call('user/delete-app', tmp.app.get('replacesApp'), function(err, res) {
+        Meteor.call('user/deleteApp', tmp.app.get('replacesApp'), function(err, res) {
           if (err) console.log(err);
           else {
             tmp.clearApp();
+            FlowRouter.go('appsByMe');
             cb();
           }
         });
@@ -370,6 +372,13 @@ Template.Edit.events({
 });
 
 Template.appNotesBox.helpers({
+
+  notesAndFlags: function() {
+
+    var flags = this.flags;
+    return (this.notes || []).concat(_.values(flags || {}));
+
+  },
 
   sorted: function(notes) {
 

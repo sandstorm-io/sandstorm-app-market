@@ -35,7 +35,7 @@ Template.Topbar.onCreated(function() {
 Template.Topbar.helpers({
   genres: function() {
 
-    var genres = Genres.getAll({where: {showSummary: true}}),
+    var genres = _.where(App.populatedGenres.get(), {showSummary: true}),
         template = Template.instance();
 
     return genres.slice(0, template.genreCount.get());
@@ -44,7 +44,7 @@ Template.Topbar.helpers({
 
   extraGenres: function() {
 
-    var genres = Genres.getAll({where: {showSummary: true}}),
+    var genres = _.where(App.populatedGenres.get(), {showSummary: true}),
         template = Template.instance();
 
     return genres.slice(template.genreCount.get());

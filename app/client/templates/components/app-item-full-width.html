@@ -1,6 +1,6 @@
 <template name="appItemFullWidth">
 
-  <div class="app-item-container full-width">
+  <div class="app-item-container full-width approved-{{app.approved}}">
 
     <div class="app-item-inner">
 
@@ -35,7 +35,7 @@
           <div class="right-float">
 
             <div class="edit-button hide-for-phone">
-              <a class="sandstorm-button neutral small" href="/upload/edit/{{_id}}">
+              <a class="sandstorm-button neutral small" href={{getZippedPath 'edit' 'appId' _id}}>
                 <i class="icon-edit"></i>
                 <span class="text">EDIT</span>
               </a>
@@ -68,7 +68,7 @@
             <div class="key">Ported by:</div><div class="value">{{getUsername author}}&nbsp;</div>
             <div class="key">License:</div><div class="value">{{verboseNone license}}&nbsp;</div>
             <div class="key">Code:</div><div class="value">{{verboseNone codeLink}}&nbsp;</div>
-            <div class="key">Version:</div><div class="value">{{verboseNone getLatestVersion}}&nbsp;</div>
+            <div class="key">Version:</div><div class="value">{{verboseNone latestVersionNumber}}&nbsp;</div>
 
           </div>
 

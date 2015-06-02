@@ -30,7 +30,7 @@
 
                   <div class="header">{{name}}</div>
 
-                  <div class="app-author-full-width"><a href="/appMarket/author/{{author}}">{{getUsername author}}</a></div>
+                  <div class="app-author-full-width"><a href="{{getZippedPath 'appMarketAuthor' 'author' author}}">{{getUsername author}}</a></div>
 
                 </div>
 
@@ -41,7 +41,7 @@
                 <div class="half-col">
 
                   <div class="date">{{dateFormat createdAt 'MMMM DD, YYYY'}}</div>
-                  <div class="genre"><a href="/appMarket/genres/{{category}}">{{category}}</a></div>
+                  <div class="genre"><a href="{{getZippedPath 'appMarketGenre' 'genre' category}}">{{category}}</a></div>
 
                 </div>
 
@@ -50,7 +50,7 @@
                   <div class="key">Ported by:</div><div class="value">{{getUsername author}}&nbsp;</div>
                   <div class="key">License:</div><div class="value">{{verboseNone license}}&nbsp;</div>
                   <div class="key">Code:</div><div class="value">{{{codeFormat codeLink}}}&nbsp;</div>
-                  <div class="key">Version:</div><div class="value" data-tooltip={{versionChanges}} data-tooltip-direction="s">{{verboseNone getLatestVersion}}&nbsp;</div>
+                  <div class="key">Version:</div><div class="value" data-tooltip={{versionChanges}} data-tooltip-direction="s">{{verboseNone latestVersionNumber}}&nbsp;</div>
 
                 </div>
 
@@ -73,11 +73,9 @@
 
                 <div class="action-buttons force-height clearfix">
 
-                  {{#if installed}}
-                    <div class="installed button">INSTALLED</div>
-                  {{else}}
-                    <div class="install button" data-action="install-app">INSTALL <i class="icon-arrow-install"></i></div>
-                  {{/if}}
+                  <a href="{{fullInstallLink}}" target="_blank" class="{{#if installed}}installed{{else}}install{{/if}} button" data-action="install-app">
+                    INSTALL{{#if installed}}+{{/if}} <i class="icon-arrow-install"></i>
+                  </a>
 
                   <!-- <div class="chip-in-section {{#unless chipIn}}hidden{{/unless}}">
                     <div class="slider-section">
@@ -197,8 +195,6 @@
     {{/if}}
 
     </div>
-
-  {{ > tooltips }}
 
 </template>
 

@@ -24,10 +24,12 @@
   .genre-holder {
 
     margin-left: $menu-width + $app-section-padding-left;
+    margin-right: 32rem;
 
     @media (max-width: $small-tablet) {
 
       margin-left: $app-section-padding-left;
+      margin-right: 0;
 
     }
 
@@ -128,6 +130,22 @@
 
     }
 
+    @media (max-width: $small-tablet) {
+
+      left: initial;
+      right: 2.33rem;
+      text-align: right;
+
+    }
+
+  }
+
+  .search-section {
+
+    position: absolute;
+    right: $app-section-padding-right;
+    bottom: $topbar-padding-bottom;
+
     .search-box {
       display: inline-block;
       vertical-align: middle;
@@ -135,14 +153,15 @@
       background: none;
       font-family: $main-font;
       font-size: $topbar-item-font-size;
-      border: 1px solid $topbar-item-bg;
+      box-shadow: inset 0 0 0 1px $topbar-item-bg;
+      border: none;
       padding-left: $topbar-item-padding-lr;
       padding-right: $topbar-item-padding-lr;
       padding-top: $topbar-item-padding-tb;
       padding-bottom: $topbar-item-padding-tb;
       &:focus {
         outline: none;
-        border: 1px solid $topbar-item-active-bg;
+        box-shadow: inset 0 0 0 1px $topbar-item-active-bg;
       }
 
       @media (max-width: $medium-phone) {
@@ -173,14 +192,6 @@
         display: none;
       }
     }
-
-  @media (max-width: $small-tablet) {
-
-    left: initial;
-    right: 2.33rem;
-    text-align: right;
-
-  }
 
   }
 

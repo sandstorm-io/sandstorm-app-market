@@ -262,7 +262,11 @@ Meteor.methods({
 
   },
 
+<<<<<<< HEAD
+  'user/review-app': function(review) {
+=======
   'user/reviewApp': function(appId, review) {
+>>>>>>> master
 
     this.unblock();
     if (!this.userId) return false;
@@ -429,7 +433,6 @@ Meteor.methods({
     return Categories.update({name: genre}, {$set: {
       approved: 1
     }});
-
   },
 
   'admin/createFakeUsers': function(n) {
@@ -453,10 +456,16 @@ Meteor.methods({
     _.each(_.range(n), function() {
       user = Meteor.users.findOne(query);
       if (user) {
+<<<<<<< HEAD
         Reviews.insert({
           appId: appId,
           userId: user._id,
           rating: _.sample(_.range(0, 4)),
+=======
+        _this.setUserId(user._id);
+        Meteor.call('user/reviewApp', appId, {
+          stars: _.sample(_.range(1,6)),
+>>>>>>> master
           text: faker.lorem.paragraph()
         });
       }

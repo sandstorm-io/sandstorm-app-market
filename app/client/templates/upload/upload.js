@@ -101,7 +101,7 @@ Template.Upload.onCreated(function() {
       tmp.app.set(key, newApp[key]);
     });
     tmp.unsetCategories();
-    Meteor.call('user/delete-saved-app', function(err) {
+    Meteor.call('user/deleteSavedApp', function(err) {
       if (err) console.log(err);
     });
 
@@ -183,10 +183,9 @@ Template.Upload.events({
 
     var versions = tmp.app.get('versions'),
         $el = $(evt.currentTarget);
-    tmp.app.set('versions', [{
-      dateTime: new Date(),
-      number: $el.val()
-    }]);
+
+    versions[0].number = $el.val();
+    tmp.app.set('versions', versions);
 
   },
 
@@ -205,8 +204,18 @@ Template.Upload.events({
   'click [data-action="submit-app"]': function(evt, tmp) {
 
     tmp.validate();
-    Meteor.call('user/submit-app', tmp.app.all(), function(err, res) {
-      if (err) console.log(err);
+    Meteor.call('user/submitApp', tmp.app.all(), function(err, res) {
+      if (err) {
+        console.log(err);
+        if (err.details && err.details.code === 11000) {
+          AntiModals.overlay('messageModal', {data: {
+            header: 'Duplicate App',
+            message: 'There\'s already an app associated with that <em>.spk</em> on the App Store. ' +
+                     'If you\'d like to update it with a new version, you can find it in ' +
+                     '<strong>Apps By Me</strong>, from which you can choose <strong>Edit</strong>.'
+          }});
+        }
+      }
       else {
         window.scrollTo(0, 0);
         tmp.submitted.set(new Date());
@@ -218,7 +227,7 @@ Template.Upload.events({
   'click [data-action="save-app"]': function(evt, tmp) {
 
     tmp.validate();
-    Meteor.call('user/save-app', tmp.app.all(), function(err) {
+    Meteor.call('user/saveApp', tmp.app.all(), function(err) {
       if (err) console.log(err);
       else {
         window.scrollTo(0, 0);
@@ -236,6 +245,7 @@ Template.Upload.events({
       actionText: 'Yes, nuke',
       actionFunction: function(cb) {
         tmp.clearApp();
+        FlowRouter.go('appsByMe');
         cb();
       }
     }});
@@ -246,7 +256,87 @@ Template.Upload.events({
 
 Template.fileBox.onCreated(function() {
 
-  this.uploaded = new ReactiveVar();
+  var tmp = this;
+  tmp.uploaded = new ReactiveVar();
+  tmp.error = new ReactiveVar();
+  tmp.progress = new ReactiveVar();
+  tmp.fileId = new ReactiveVar();
+  tmp.origFileId = new ReactiveVar();
+  tmp.spk = new ReactiveVar();
+  tmp.origSpk = new ReactiveVar();
+
+  // pull out relevant .spk details as soon as app is available
+  tmp.autorun(function(c) {
+    var app = Apps.findOne(FlowRouter.current().params.appId);
+    if (app) {
+      var latest = app.latestVersion();
+      tmp.fileId.set(latest.spkId);
+      tmp.origFileId.set(latest.spkId);
+      c.stop();
+    }
+  });
+
+  // subscribe to original spk details separately to avoid rerunning query
+  tmp.autorun(function(c) {
+    var origFileId = tmp.origFileId.get();
+    tmp.subscribe('spks', origFileId);
+    tmp.origSpk.set(Spks.findOne(origFileId));
+  });
+
+  tmp.autorun(function(c) {
+    var fileId = tmp.fileId.get();
+    tmp.subscribe('spks', fileId);
+    tmp.spk.set(Spks.findOne(fileId));
+  });
+
+  tmp.autorun(function(c) {
+    Spks.find(tmp.fileId.get()).observeChanges({
+      changed: function(id, fields) {
+        var fileObj;
+        if ('uploadedAt' in fields) {
+          tmp.error.set(null);
+          fileObj = Spks.findOne(id);
+          tmp.uploaded.set(fileObj.original.name);
+          tmp.progress.set(null);
+        }
+        if ('error' in fields) {
+          fileObj = Spks.findOne(id);
+          tmp.uploaded.set(null);
+          tmp.error.set(Spks.error[fields.error] && Spks.error[fields.error].call(fileObj));
+          return;
+        }
+        if ('chunkCount' in fields) {
+          tmp.error.set(null);
+          fileObj = Spks.findOne(id);
+          tmp.progress.set(Math.round(fileObj.chunkCount * 100 / fileObj.chunkSum));
+        }
+
+        // now copy metadata, if available, up to parent object
+        if ('meta' in fields) {
+          tmp.error.set(null);
+          fileObj = Spks.findOne(id);
+          var app = tmp.get('app').allNonReactive();
+          if (app.appId && fileObj.meta.appId !== app.appId) {
+            tmp.uploaded.set(null);
+            tmp.error.set('The .spk ' + fileObj.original.name +
+                          ' does not appear to be for this app.');
+          } else {
+            app.appId = fileObj.meta.appId;
+            app.name = fileObj.meta.title;
+            app.versions = [{
+              number: fileObj.meta.marketingVersion,
+              version: fileObj.meta.version,
+              packageId: fileObj.meta.packageId,
+              spkId: fileObj._id
+            }];
+            if (tmp.origFileId.get() !== tmp.fileId.get() && tmp.get('newVersion')) tmp.get('newVersion').set(true);
+            tmp.origFileId.set(tmp.fileId.get());
+            tmp.get('app').set(app);
+          }
+        }
+      }
+    });
+  });
 
 });
 
@@ -267,13 +357,31 @@ Template.fileBox.helpers({
 
   progress: function () {
 
-    return Math.round(App.spkUploader.progress() * 100);
+    return Template.instance().get('progress').get();
 
   },
 
   uploaded: function() {
 
     return Template.instance().uploaded.get();
+
+  },
+
+  error: function() {
+
+    return Template.instance().error.get();
+
+  },
+
+  spk: function() {
+
+    return Template.instance().get('spk').get();
+
+  },
+
+  origSpk: function() {
+
+    return Template.instance().get('origSpk').get();
 
   }
 
@@ -296,18 +404,17 @@ Template.fileBox.events({
 
   'click [data-action="upload-spk"]': function(evt, tmp) {
 
-    var file = tmp.get('file').get();
+    var file = tmp.get('file').get(),
+        fileId;
 
-    if (file) App.spkUploader.send(file, function(err, downloadUrl) {
-
-      if (err)
-        console.error('Error uploading', err);
-      else {
-        tmp.get('app').set('spkLink', encodeURI(downloadUrl));
-        tmp.get('uploaded').set(file.name);
-      }
-
-    });
+    if (file) {
+      tmp.progress.set(1);
+      Spks.insert(file, function(err, fileObj) {
+        if (err) console.log(err);
+        else tmp.get('fileId').set(fileObj._id);
+        console.log(fileObj);
+      });
+    }
 
     else tmp.$('[data-action="file-picker"][data-for="spk"]').click();
 
@@ -551,6 +658,16 @@ Template.nukeModal.events({
     this.actionFunction && this.actionFunction.call(this, function() {
       AntiModals.dismissAll();
     });
+
+  }
+
+});
+
+Template.messageModal.events({
+
+  'click [data-action="close-modal"]': function() {
+
+    AntiModals.dismissAll();
 
   }
 

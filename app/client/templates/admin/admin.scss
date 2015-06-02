@@ -6,7 +6,7 @@ body.admin {
   // At present, there is no responsive styling for the admin console
   // It is designed to be viewed on an HD laptop, and will cover > 100%
   // of the screen width if viewed on a smaller screen.
-  min-width: 175rem;
+  // min-width: 155rem;
 
 }
 
@@ -74,15 +74,6 @@ body.admin {
   margin-right: 1rem;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
-
-  // THIS IS THE TOOLTIP
-  &.simptip-position-top:after {
-    background-color: #ffffff;
-    color: #5b5b5b;
-  }
-  &.simptip-position-top:before {
-    border-top-color: #ffffff;
-  }
 
   &:last-child {
     margin-right: 0;

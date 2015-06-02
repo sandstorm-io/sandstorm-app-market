@@ -2,7 +2,7 @@ Template.Genre.helpers({
 
   genre: function() {
 
-    return FlowRouter.current().params.authorId ? 'Apps by Author' : FlowRouter.reactiveCurrent().params.genre;
+    return FlowRouter.current().params.authorId ? 'Apps By Author' : FlowRouter.reactiveCurrent().params.genre;
 
   },
 

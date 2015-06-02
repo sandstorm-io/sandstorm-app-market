@@ -202,7 +202,7 @@ Template.SingleApp.events({
   'click [data-action="rate-app"] [data-index]': function(evt, tmp) {
 
     var review = tmp.myReview.get();
-    review.stars = parseInt($(evt.currentTarget).data('index')) + 1;
+    review.rating = parseInt($(evt.currentTarget).data('index'));
     tmp.myReview.set(review);
     tmp.validateReview();
 
@@ -231,7 +231,11 @@ Template.SingleApp.events({
   'click [data-action="submit-review"]': function(evt, tmp) {
 
     if (tmp.reviewValid.get()) {
+<<<<<<< HEAD
+      Meteor.call('user/review-app', tmp.myReview.get(), function(err) {
+=======
       Meteor.call('user/reviewApp', FlowRouter.current().params.appId, tmp.myReview.get(), function(err) {
+>>>>>>> master
         if (err) console.log(err);
         tmp.writeReview.set(false);
       });

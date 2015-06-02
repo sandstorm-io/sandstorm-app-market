@@ -139,10 +139,10 @@ var extraGenres = [
   },
 
   {
-    name: 'Apps by Author',
+    name: 'Apps By Author',
     selector: function() {
       return {
-        author: this.authorId || FlowRouter.current().params.authorId
+        author: this.authorId || (FlowRouter.getParam && FlowRouter.getParam(authorId))
       };
     },
     priority: 0,
@@ -223,6 +223,13 @@ Genres = {
 
 };
 
+// Cache populated genres (more efficient than checking every time a user subscribes)
+if (Meteor.isServer) {
+    Meteor.setInterval(function() {
+      App.populatedGenres = Genres.getPopulated();
+    }, 10000);
+}
+
 // UTILITY FUNCTIONS
 
 function invokeGenreFunctions(extraGenre, origSelector, origOptions, context) {
@@ -241,10 +248,9 @@ function invokeGenreFunctions(extraGenre, origSelector, origOptions, context) {
 
 function getUser(userId) {
 
-  return Meteor.users.findOne(
-        userId ||
-        this.userId ||
-        (Meteor.userId && Meteor.userId())
-      );
+  userId = userId || this.userId;
+  if (Meteor.isClient) userId = userId || Meteor.userId();
+
+  return Meteor.users.findOne(userId);
 
 }

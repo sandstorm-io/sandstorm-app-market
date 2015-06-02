@@ -24,7 +24,7 @@
         {{/if}}
         {{#if submitted}}
           <div class="message">
-            <a href="/appsByMe">SUBMITTED ON <span class="date">{{dateFormat submitted 'DD MMM YYYY'}}</span></a>
+            <a href="{{getPath 'appsByMe'}}">SUBMITTED ON <span class="date">{{dateFormat submitted 'DD MMM YYYY'}}</span></a>
           </div>
         {{else}}
           <div class="sandstorm-button neutral" data-action="submit-app">
@@ -78,7 +78,7 @@
         <input type="text" data-field="license" value="{{license}}" />
 
         <h4 class="mini-title" data-invalid={{validate 'versions'}}>Version</h4>
-        <input type="text" data-action="update-version" value="{{latestVersion}}" />
+        <input type="text" data-action="update-version" value="{{versions.[0].number}}" />
 
       </div>
 
@@ -129,20 +129,6 @@
             PRIVATE
           </div>
         </div>
-
-        <!-- <h3 class="title">Suggested Donation
-          <span class="simptip-position-bottom simptip-smooth simptip-fade" data-tooltip="Opt out of app market contributions"><i class="fa fa-caret-down" data-action="make-free" ></i></span>
-        </h3>
-
-        <div class="donation-box">
-          <i class="fa fa-dollar"></i>
-          <input type="number" data-field="price" min="0" step="0.01" value="{{price}}" />
-        </div>
-
-        <div class="donation-instructions">
-          Users&nbsp;can&nbsp;chip&nbsp;in&nbsp;any&nbsp;amount,
-          but&nbsp;authors&nbsp;set&nbsp;the&nbsp;default&nbsp;position&nbsp;of&nbsp;the&nbsp;slider.
-        </div> -->
 
       </div>
 
@@ -201,8 +187,8 @@
 
     <div class="spacer clearfix"></div>
 
-    <input type="text" placeholder="Browse" readonly="true" data-field="filename" class="filename existing" data-action="choose-file" data-name="spk" value="{{stripFilename ../spkLink}}" />
-    <a class="square-button dark rem-space-float" href="{{spkLink}}"><i class="fa fa-download"></i></a>
+    <div class="filename existing">{{verboseNone origSpk.original.name}}</div>
+    <a class="square-button dark rem-space-float" href="{{#with spk}}{{this.url store='spkS3' download=true}}{{/with}}" target="_blank"><i class="fa fa-download"></i></a>
 
     <div class="spacer clearfix"></div>
 
@@ -227,11 +213,16 @@
 
     {{/if}}
 
-    {{#if equal uploaderStatus 'transferring'}}
+    {{#if progress}}
       <div class="progress-bar"><div class="fill" style="width: {{progress}}%;"></div></div>
     {{/if}}
     {{#if uploaded}}
       <div class="upload-confirm">{{uploaded}} uploaded</div>
+    {{/if}}
+    {{#if error}}
+      <div class="upload-error">
+        {{error}}
+      </div>
     {{/if}}
 
   </div>
@@ -339,6 +330,33 @@
       </div>
       <div class="sandstorm-button neutral" data-action="perform-action">
         {{actionText}}
+      </div>
+
+    </div>
+
+  </div>
+
+</template>
+
+<template name="messageModal">
+
+  <div class="anti-modal-box nuke-modal clearfix">
+
+    <h2 class="header">
+      {{header}}
+    </h2>
+
+    <div class="message">
+      {{{message}}}
+    </div>
+
+    <div class="spacer">
+    </div>
+
+    <div class="button-block big-gap">
+
+      <div class="sandstorm-button neutral" data-action="close-modal">
+        Close
       </div>
 
     </div>

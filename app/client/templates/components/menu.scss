@@ -130,6 +130,46 @@
 
 }
 
+body.admin {
+  .menu-container {
+
+    width: 8.5rem;
+
+    .menu-link {
+
+      .menu-text {
+        display: none;
+      }
+
+    }
+  }
+
+  .menu-spacer {
+
+    margin-left: 12.5rem;
+
+    @media screen and (max-width: $small-tablet) {
+
+      margin-left: 1rem;
+      margin-right: 1rem;
+
+    }
+
+  }
+
+  .pad-right {
+
+    padding-right: 4rem;
+
+    @media screen and (max-width: $small-tablet) {
+
+      padding-right: 0;
+
+    }
+
+  }
+}
+
 .menu-spacer {
 
   margin-left: $menu-width + $app-section-padding-left;

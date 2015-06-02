@@ -30,7 +30,6 @@ percolate:synced-cron
 splendido:accounts-meld
 london:body-class
 reactive-dict
-agnito:simptip
 meteorhacks:npm
 
 
@@ -38,10 +37,21 @@ richsilv:owl-carousel
 rcy:nouislider
 
 
-npm-container
-<<<<<<< HEAD
+numeral:numeral
 aldeed:template-extension
 aldeed:collection2
+markdown
+lookback:tooltips
+
+
+mystor:device-detection
+<<<<<<< HEAD
+matb33:collection-hooks
 =======
-numeral:numeral
+npm-container
+simple:rest
+amplify
+cfs:standard-packages
+cfs:filesystem
+cfs:s3
 >>>>>>> master

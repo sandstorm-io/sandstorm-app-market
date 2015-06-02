@@ -94,7 +94,7 @@ Template.Review.onCreated(function() {
     _.each(oldApp, function(val, key) {
       tmp.app.set(key, newApp[key]);
     });
-    Meteor.call('user/delete-saved-app', function(err) {
+    Meteor.call('user/deleteSavedApp', function(err) {
       if (err) console.log(err);
     });
 
@@ -371,7 +371,7 @@ Template.Review.events({
   'click [data-action="save-admin-requests"]': function(evt, tmp) {
 
     tmp.validate();
-    Meteor.call('user/save-app', tmp.app.all(), function(err) {
+    Meteor.call('user/saveApp', tmp.app.all(), function(err) {
       if (err) console.log(err);
       else {
         window.scrollTo(0, 0);
@@ -388,7 +388,7 @@ Template.Review.events({
       bottomMessage: 'This can\'t be undone.',
       actionText: 'Yes, nuke',
       actionFunction: function(cb) {
-        Meteor.call('user/delete-saved-app', tmp.app.get('replacesApp'), function(err, res) {
+        Meteor.call('user/deleteSavedApp', tmp.app.get('replacesApp'), function(err, res) {
           if (err) {
             console.log(err);
           }
@@ -415,7 +415,7 @@ Template.Review.events({
       bottomMessage: 'This will delete the app itself, not just your version, and it can\'t be undone.',
       actionText: 'Yes, nuke',
       actionFunction: function(cb) {
-        Meteor.call('user/delete-app', tmp.app.get('replacesApp'), function(err, res) {
+        Meteor.call('user/deleteApp', tmp.app.get('replacesApp'), function(err, res) {
           if (err) console.log(err);
           else {
             tmp.clearApp();

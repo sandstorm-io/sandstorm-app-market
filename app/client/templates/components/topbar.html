@@ -2,7 +2,7 @@
 
   <div class="topbar-container">
 
-    <a class="logo-box" href="/appMarket">
+    <a class="logo-box" href="{{getPath 'appMarket'}}">
 
       <i class="icon-logo show-above-phone"></i>
       <i class="icon-logo-image hide-above-phone"></i>
@@ -15,7 +15,7 @@
 
         {{#each genres}}
 
-          <a href="/appMarket/genres/{{name}}" data-action="close-more-menu"><div class="genre-box {{#if active}}active{{/if}}">{{name}}</div></a>
+          <a href="{{getZippedPath 'appMarketGenre' 'genre' name}}" data-action="close-more-menu"><div class="genre-box {{#if active}}active{{/if}}">{{name}}</div></a>
 
         {{/each}}
 
@@ -24,16 +24,18 @@
           <a class="more hide-above-small-phone">Genres</a>
           <ul class="extra-genres-list {{#if moreOpen}}open{{/if}}">
             {{#each extraGenres}}
-              <a href="/appMarket/genres/{{name}}" data-action="close-more-menu"><li class="genre-box {{#if active}}active{{/if}}">{{name}}</li></a>
+              <a href="{{getZippedPath 'appMarketGenre' 'genre' name}}" data-action="close-more-menu"><li class="genre-box {{#if active}}active{{/if}}">{{name}}</li></a>
             {{/each}}
           </ul>
         </div>
 
-        <input class="search-box" type="text" data-field="search-term" />
-        <button class="search-button" data-action="search-apps"><i class="icon-search"></i></button>
-
       </div>
 
+    </div>
+
+    <div class="search-section">
+      <input class="search-box" type="text" data-field="search-term" />
+      <button class="search-button" data-action="search-apps"><i class="icon-search"></i></button>      
     </div>
 
   </div>

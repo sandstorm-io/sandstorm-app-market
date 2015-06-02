@@ -39,7 +39,7 @@
         {{/if}}
         {{#if submitted}}
           <div class="message">
-            <a href="/appsByMe">SUBMITTED ON <span class="date">{{dateFormat submitted 'DD MMM YYYY'}}</span></a>
+            <a href="{{getPath 'appsByMe'}}">SUBMITTED ON <span class="date">{{dateFormat submitted 'DD MMM YYYY'}}</span></a>
           </div>
         {{else}}
           <div class="sandstorm-button neutral" data-action="submit-app">
@@ -111,9 +111,9 @@
 
         <h4 class="mini-title" data-invalid={{validate 'version'}}>Version</h4>
         {{#if fieldEdit 'latestVersion'}}
-          <input type="text" data-action="update-version" data-version-field="number" value="{{lastVersionNumber.number}}" />
+          <input type="text" data-action="update-version" data-version-field="number" value="{{versions.[0].number}}" />
         {{else}}
-          <div data-alt-field="latestVersion" data-action="update-version">{{verboseNone lastVersionNumber.number}}</div>
+          <div data-alt-field="latestVersion" data-action="update-version">{{latestVersionNumber parentApp}}</div>
         {{/if}}
 
       </div>
@@ -198,20 +198,6 @@
           </div>
         </div>
 
-        <!-- <h3 class="title">Suggested Donation
-          <span class="simptip-position-bottom simptip-smooth simptip-fade" data-tooltip="Opt out of app market contributions"><i class="fa fa-caret-down" data-action="make-free" ></i></span>
-        </h3>
-
-        <div class="donation-box">
-          <i class="fa fa-dollar"></i>
-          <input type="number" data-field="price" min="0" step="0.01" value="{{price}}" />
-        </div>
-
-        <div class="donation-instructions">
-          Users&nbsp;can&nbsp;chip&nbsp;in&nbsp;any&nbsp;amount,
-          but&nbsp;authors&nbsp;set&nbsp;the&nbsp;default&nbsp;position&nbsp;of&nbsp;the&nbsp;slider.
-        </div> -->
-
       </div>
 
     </div>
@@ -271,13 +257,20 @@
 
   <div class="app-notes">
 
-  {{#each sorted notes}}
+  {{#each sorted notesAndFlags}}
 
     <div class="note">
 
+      {{#if text}}
+        On {{dateFormat dateTime 'YYYY-MM-DD'}}, {{#if authorName}}{{authorName}}{{else}}unknown user{{/if}}
+        {{#if admin}} (admin){{/if}} wrote{{#unless byAuthor}} to the author{{/unless}}:<br>
+        {{text}}
+
+      {{else}}
       On {{dateFormat dateTime 'YYYY-MM-DD'}}, {{#if authorName}}{{authorName}}{{else}}unknown user{{/if}}
-      {{#if admin}} (admin){{/if}} wrote{{#unless byAuthor}} to the author{{/unless}}:<br>
-      {{text}}
+      flagged this app as <strong>{{cat}}</strong>{{#if additional}} with the message: {{additional}}{{else}}.{{/if}}
+
+      {{/if}}
 
     </div>
 
