@@ -34,7 +34,8 @@ var helpers = {
 
     app = app || this;
     if (!app) return 0;
-    else return 57;
+    if (!app.ratingsCount) return 50;
+    else return (app.ratingsPos / app.ratingsCount) * 100;
 
   },
 
@@ -62,6 +63,8 @@ var helpers = {
   },
 
   approval: Apps.approval,
+
+  appRatings: Reviews.rating,
 
   appState: function(state) {
 
@@ -154,6 +157,12 @@ var helpers = {
   notEqual: function(a, b) {
 
     return a !== b;
+
+  },
+
+  greaterThan: function(a, b) {
+
+    return a > b;
 
   },
 

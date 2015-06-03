@@ -139,10 +139,11 @@
 
             <div class="review-bar">
               <div class="rating left-float">
-                <div class="app-rating monochrome">
+                {{> appRating rating=percentageRating}}
+                <!-- <div class="app-rating monochrome">
                   {{{appRating rating}}}
-                </div>
-                <span>( {{ratingsCount}} )</span>
+                </div> -->
+                <span class="ratings-count"> ( {{ratingsCount}} )</span>
               </div>
 
               <div class="right-float option">
@@ -287,10 +288,14 @@
 <template name="reviewBox">
   <div class="review-box">
     <div class="username">{{username}}</div>
-    {{#if rating}}
+    {{#if isNumber rating}}
     <div class="rating">
       <div class="app-rating">
-        {{{appRating rating}}}
+        {{#if greaterThan rating appRatings.didntLike}}
+          <i class="fa fa-thumbs-up"></i>
+        {{else}}
+          <i class="fa fa-thumbs-down"></i>
+        {{/if}}
       </div>
     </div>
     {{/if}}

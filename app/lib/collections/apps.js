@@ -199,8 +199,8 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
     type: String,
     autoValue: function() {
       if (this.isInsert) {
-        var userId = this.fields('author').value,
-            user = Meteor.users(userId);
+        var userId = this.field('author').value,
+            user = Meteor.users.findOne(userId);
         return user && user.username;
       }
     }
@@ -437,18 +437,33 @@ function updateInstallCountThisWeek() {
 
 }
 
-Apps.before.update(function(userId, doc, fieldNames, modifier) {
+// Apps.before.update(function(userId, doc, fieldNames, modifier) {
+//
+//   modifier = modifier || {};
+//   modifier.$set = modifier.$set || {};
+//   if (fieldNames.indexOf('reviews') > -1) {
+//     _.extend(modifier.$set, _.reduce(modifier.$set, function(counts, val, key) {
+//       if (key.slice(0, 7) === 'reviews') {
+//         counts.ratingsCount += 1;
+//         if (val.rating > 1) counts.ratingsPos += 1;
+//       }
+//       return counts;
+//     }, {ratingsCount: 0, ratingsPos: 0}));
+//   }
+//
+// }, {fetchPrevious: false});
 
-  modifier = modifier || {};
-  modifier.$set = modifier.$set || {};
+Apps.after.update(function(userId, doc, fieldNames) {
+
+  console.log(userId, doc, fieldNames);
   if (fieldNames.indexOf('reviews') > -1) {
-    _.extend(modifier.$set, _.reduce(modifier.$set, function(counts, val, key) {
-      if (key.slice(0, 7) === 'reviews') {
-        counts.ratingsCount += 1;
-        if (val.rating > 1) counts.ratingsPos += 1;
-      }
-      return counts;
-    }, {ratingsCount: 0, ratingsPos: 0}));
+    Apps.update(doc._id, {
+      $set: _.reduce(doc.reviews, function(counts, review) {
+          if ('rating' in review) counts.ratingsCount += 1;
+          if (review.rating > 1) counts.ratingsPos += 1;
+          return counts;
+        }, {ratingsCount: 0, ratingsPos: 0})
+    });
   }
 
 }, {fetchPrevious: false});

@@ -604,6 +604,10 @@
 
   .review-bar {
 
+    .ratings-count {
+      margin-left: 1rem;
+    }
+
     .write-review {
       display: inline-block;
       height: 4rem;
@@ -649,6 +653,7 @@
       display: inline;
       line-height: 3.5rem;
       height: 3.5rem;
+      color: $star-col-dark;
 
     }
 
