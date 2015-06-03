@@ -42,9 +42,8 @@ aldeed:template-extension
 aldeed:collection2
 markdown
 lookback:tooltips
-
-
 mystor:device-detection
+matb33:collection-hooks
 npm-container
 simple:rest
 amplify

@@ -15,5 +15,5 @@ Template.Genre.helpers({
 });
 
 Template.genreTable.onCreated(function() {
-  this.subscribe('apps by genre', this.data.genre);
+  this.subscribe('apps by genre', this.data.genre, App.lineCapacity.get());
 });

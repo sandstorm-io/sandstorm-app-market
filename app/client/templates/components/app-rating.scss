@@ -1,0 +1,56 @@
+.app-rating-container {
+
+  display: inline-block;
+  vertical-align: top;
+  line-height: auto;
+
+  .text {
+    display: block;
+    color: #3d9145;
+    font-size: 1.8rem;
+    line-height: 2.4rem;
+  }
+
+  .bar {
+    display: block;
+    width: 10rem;
+    position: relative;
+    z-index: 0;
+
+    .background {
+      background-color: #ede9ee;
+      height: 0.75rem;
+      width: 100%;
+      position: relative;
+
+      &.light {
+        background-color: #ffffff;
+      }
+    }
+    .fill {
+      background-color: #3d9145;
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+    }
+  }
+
+}
+
+.app-item-container {
+
+  .app-rating-container {
+
+    .text {
+      font-size: 1.4rem;
+      line-height: 1.8rem;
+    }
+
+    .bar {
+      width: 9rem;
+    }
+
+  }
+
+}

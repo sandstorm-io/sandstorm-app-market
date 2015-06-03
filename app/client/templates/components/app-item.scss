@@ -111,6 +111,9 @@
         padding-left: $app-install-padding-lr;
         padding-right: $app-install-padding-lr;
         color: $app-installed-text;
+        width: 9rem;
+        box-sizing: border-box;
+        text-align: center;
 
         i {
 

@@ -267,23 +267,20 @@ Meteor.methods({
     this.unblock();
     if (!this.userId) return false;
 
-    if (review.stars) {
-      check(review.stars, Match.Integer);
-      check(review.stars, Match.Where(function(stars) {return (0 <= stars) && (5 >= stars);}));
+    if (review.rating) {
+      check(review.rating, Match.Integer);
+      check(review.rating, Match.Where(function(rating) {return (0 <= rating) && (3 >= rating);}));
     }
     check(review.text, String);
     check(review.text, Match.Where(function(text) {return text.length > 0;}));
 
-    if (!Apps.findOne(appId)) throw new Meteor.Error('no matching app', 'Cannot submit a review for an app which is not in the database');
+    if (!Apps.findOne(review.appId)) throw new Meteor.Error('no matching app', 'Cannot submit a review for an app which is not in the database');
 
-    var userReviewObj = {};
+    review.userId = this.userId;
 
-    review.createdAt = new Date();
-    userReviewObj['appReviews.' + appId] = review;
-
-    Meteor.users.update(this.userId, {$set: userReviewObj});
-
-    return true;
+    if (Reviews.findOne(_.pick(review, ['appId', 'userId'])))
+      Reviews.update(_.pick(review, ['appId', 'userId']), {$set: review});
+    else Reviews.insert(review);
 
   },
 
@@ -310,6 +307,7 @@ Meteor.methods({
       var newVersion = app.versions[0];
       Schemas.AppsBase.clean(app);
       delete app.versions;
+      delete app.replacesApp;
       app.approved = 0;
       Apps.update(replacesApp, {$set: app, $push: {versions: newVersion}});
       Apps.remove(appId);
@@ -431,6 +429,7 @@ Meteor.methods({
     return Categories.update({name: genre}, {$set: {
       approved: 1
     }});
+
   },
 
   'admin/createFakeUsers': function(n) {
@@ -446,20 +445,22 @@ Meteor.methods({
 
   },
 
-  'admin/fakeReview': function(appId, n) {
+  'admin/createFakeReviews': function(appId, n) {
 
     if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Can only be executed by admin user');
-      var query = [], _this = this;
-      query['appReviews.' + appId] = {$exists: false};
-    _.each(_.range(n), function() {
-      user = Meteor.users.findOne(query);
-      if (user) {
-        _this.setUserId(user._id);
-        Meteor.call('user/reviewApp', appId, {
-          stars: _.sample(_.range(1,6)),
-          text: faker.lorem.paragraph()
-        });
-      }
+    var query = {},
+        _this = this;
+
+    query['reviews.' + appId] = {$exists: false};
+    var users = Meteor.users.find(query, {fields: {_id: 1}}).fetch().slice(0, n);
+
+    _.each(users, function(user) {
+      Reviews.insert({
+        appId: appId,
+        userId: user._id,
+        rating: _.sample(_.range(0, 4)),
+        text: faker.lorem.paragraph()
+      });
     });
 
   }

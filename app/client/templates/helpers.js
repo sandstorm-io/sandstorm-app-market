@@ -19,14 +19,23 @@ var helpers = {
 
   // APP HELPERS
 
-  appRating: function(stars) {
+  appRating: function(rating) {
 
-    stars = stars || 0;
-    return _.reduce(_.range(5), function(html, ind) {
-      if (stars >= ind + 0.5) html += '<i class="icon-star dark" data-index="' + ind + '"></i>';
+    rating = rating || 0;
+    return _.reduce(_.range(4), function(html, ind) {
+      if (rating >= ind) html += '<i class="icon-star dark" data-index="' + ind + '"></i>';
       else html += '<i class="icon-star light" data-index="' + ind + '"></i>';
       return html;
     }, '');
+
+  },
+
+  percentageRating: function(app) {
+
+    app = app || this;
+    if (!app) return 0;
+    if (!app.ratingsCount) return 50;
+    else return (app.ratingsPos / app.ratingsCount) * 100;
 
   },
 
@@ -54,6 +63,8 @@ var helpers = {
   },
 
   approval: Apps.approval,
+
+  appRatings: Reviews.rating,
 
   appState: function(state) {
 
@@ -149,6 +160,12 @@ var helpers = {
 
   },
 
+  greaterThan: function(a, b) {
+
+    return a > b;
+
+  },
+
   and: function(a, b) {
 
     return a && b;
@@ -204,7 +221,7 @@ var helpers = {
 
   numberFormat: function(number, format) {
 
-    if (typeof number !== 'number') return '#NAN';
+    if (!_.isNumber(number) || !format) return '#NAN';
     else return numeral(number).format(format);
 
   },
@@ -256,7 +273,8 @@ var helpers = {
 
   imageUrl: function(image) {
 
-    return (!image || image.substr(0, 4) === 'data' || image.substr(0, 20) === 'http://cdn.filter.to') ?
+    return (!image || image.substr(0, 4) === 'data' || image.substr(0, 20) === 'http://cdn.filter.to' ||
+            image.substr(0, 23) === 'http://www.gravatar.com') ?
       image :
       'http://cdn.filter.to/250x250/' + image.substr(8);
 

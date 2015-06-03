@@ -30,7 +30,7 @@
 
                   <div class="header">{{name}}</div>
 
-                  <div class="app-author-full-width"><a href="{{getZippedPath 'appMarketAuthor' 'author' author}}">{{getUsername author}}</a></div>
+                  <div class="app-author-full-width"><a href="{{getZippedPath 'appMarketAuthor' 'author' author}}">{{authorName}}</a></div>
 
                 </div>
 
@@ -47,7 +47,7 @@
 
                 <div class="half-col">
 
-                  <div class="key">Ported by:</div><div class="value">{{getUsername author}}&nbsp;</div>
+                  <div class="key">Ported by:</div><div class="value">{{authorName}}&nbsp;</div>
                   <div class="key">License:</div><div class="value">{{verboseNone license}}&nbsp;</div>
                   <div class="key">Code:</div><div class="value">{{{codeFormat codeLink}}}&nbsp;</div>
                   <div class="key">Version:</div><div class="value" data-tooltip={{versionChanges}} data-tooltip-direction="s">{{verboseNone latestVersionNumber}}&nbsp;</div>
@@ -57,10 +57,7 @@
                 <div class="ratings-bar">
 
                   <div class="left-float">
-                    <div class="app-rating">
-                      {{{appRating stars}}}
-                    </div>
-                    <span>( {{ratingsCount}} )</span>
+                    {{> appRating ratings=ratings backgroundCol='light'}}
                   </div>
 
                   <div class="right-float social">
@@ -138,25 +135,21 @@
 
             <div class="review-bar">
               <div class="rating left-float">
-                <div class="app-rating monochrome">
-                  {{{appRating stars}}}
-                </div>
-                <span>( {{ratingsCount}} )</span>
+                {{> appRating ratings=ratings}}
+                <span class="ratings-count"> ( {{ratingsCount}} )</span>
               </div>
 
-              <div class="right-float option" data-action="write-review">
-                Write a review
-                <i class="fa {{#if writeReview}}fa-caret-up{{else}}fa-caret-down{{/if}}"></i>
-              </div>
-              {{#if writeReview}}
-                <div class="right-float">
-                  <div class="rating">
-                    <div class="app-rating" data-action="rate-app">
-                      {{{appRating myReview.stars}}}
-                    </div>
-                  </div>
+              <div class="right-float option">
+                <div class="write-review">
+                  {{#if writeReview}}
+                    {{> myRatingBox rating=myReview.rating}}
+                  {{/if}}
+                  <span data-action="write-review">
+                    Write a review
+                    <i class="fa {{#if writeReview}}fa-caret-up{{else}}fa-caret-down{{/if}}"></i>
+                  </span>
                 </div>
-              {{/if}}
+              </div>
 
             </div>
 
@@ -284,14 +277,48 @@
 <template name="reviewBox">
   <div class="review-box">
     <div class="username">{{username}}</div>
-    {{#if review.stars}}
+    {{#if isNumber rating}}
     <div class="rating">
       <div class="app-rating">
-        {{{appRating review.stars}}}
+        {{#if greaterThan rating appRatings.didntLike}}
+          <i class="fa fa-thumbs-up"></i>
+        {{else}}
+          <i class="fa fa-thumbs-down"></i>
+        {{/if}}
       </div>
     </div>
     {{/if}}
-    <div class="date">{{dateFormat review.createdAt 'MMMM D YYYY'}}</div>
-    <div class="review">{{review.text}}</div>
+    <div class="date">{{dateFormat createdAt 'MMMM D YYYY'}}</div>
+    <div class="review">{{text}}</div>
   </div>
+</template>
+
+<template name="myRatingBox">
+
+  <div class="my-rating-box">
+    {{#if equal buttonState -1}}
+      <div class="sandstorm-button {{#if equal rating 0}}primary{{else}}neutral{{/if}}" data-rating=0 data-action="bug-modal">
+        It's broken
+      </div>
+      <div class="sandstorm-button {{#if equal rating 1}}primary{{else}}neutral{{/if}}" data-rating=1>
+        I didn't like it
+      </div>
+    {{else}}{{#if equal buttonState 1}}
+      <div class="sandstorm-button {{#if equal rating 2}}primary{{else}}neutral{{/if}}" data-rating=2>
+        It gets the job done
+      </div>
+      <div class="sandstorm-button {{#if equal rating 3}}primary{{else}}neutral{{/if}}" data-rating=3>
+        It's amazing!
+      </div>
+    {{else}}
+      <div class="sandstorm-button secondary" data-button-state=-1 data-rating=1>
+        <i class="fa fa-thumbs-down"></i>
+      </div>
+      <div class="sandstorm-button secondary" data-button-state=1 data-rating=2>
+        <i class="fa fa-thumbs-up"></i>
+      </div>
+    {{/if}}{{/if}}
+  </div>
+
+
 </template>

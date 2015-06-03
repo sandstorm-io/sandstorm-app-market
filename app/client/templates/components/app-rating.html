@@ -1,0 +1,13 @@
+<template name="appRating">
+
+  <div class="app-rating-container">
+    <div class="text">
+      {{numberFormat percentage '0.00'}}% like it
+    </div>
+    <div class="bar">
+      <div class="background {{backgroundCol}}"></div>
+      <div class="fill" style="width: {{percentage}}%;"></div>
+    </div>
+  </div>
+
+</template>
