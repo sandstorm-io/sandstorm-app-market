@@ -4,99 +4,25 @@
 
     <div class="contents">
 
-      <div class="apps-title large">INSTALLED APPS</div>
+      <div class="apps-title large">INSTALL HISTORY</div>
 
     </div>
 
   </div>
 
-  {{#if firstVisit}}
+  <div class="genre-other-section">
 
-    <div class="genre-other-section">
+    <div class="contents">
 
-      <div class="contents">
+      <div class="genre-other">
 
-        <div class="update-selector clearfix">
-
-          <div class="float-right">
-
-            {{> updateSelector}}
-
-          </div>
-
-        </div>
-
-        <div class="genre-other">
-
-          {{> appTable genre='Installed' installPage=true reactive="true"}}
-
-        </div>
+        {{> appTable genre='Installed' reactive=true}}
 
       </div>
 
     </div>
 
-  {{else}}
-
-    <div class="genre-popular-section">
-
-      <div class="contents">
-
-        <div class="update-selector">
-
-          <div class="float-right with-header">
-
-            {{> updateSelector}}
-
-          </div>
-
-        </div>
-
-        <div class="genre-popular">
-
-          <div class="contents">
-
-            {{#if autoupdateApps}}
-              <div class="title">RECENTLY UPDATED</div>
-            {{else}}
-              {{#if updates}}
-              <div class="title">PENDING UPDATES</div>
-              <div class="button-container">
-                <div class="sandstorm-button secondary" data-action="update-all-apps">
-                  <i class="fa fa-magic"></i>
-                  UPDATE ALL
-                </div>
-              </div>
-              {{else}}
-                <div class="force-height"></div>
-              {{/if}}
-            {{/if}}
-
-            {{> appTable genre='Updates Available' singleLine=true updateChrome=true installPage=true reactive=true}}
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="genre-other-section">
-
-      <div class="contents">
-
-        <div class="genre-other">
-
-          {{> appTable genre='No Updates' installPage=true reactive=true}}
-
-        </div>
-
-      </div>
-
-    </div>
-
-  {{/if}}
+  </div>
 
 </template>
 
@@ -126,7 +52,7 @@
   <div class="anti-modal-box uninstall-box">
 
     <div class="header">
-      UNINSTALL THIS APP?
+      REMOVE THIS APP FROM INSTALL HISTORY?
     </div>
 
     <div class="divider">
@@ -134,10 +60,7 @@
 
     <div class="blurb">
       <p>
-        The grains (instances or documents) associated with this app may or may not be able to be opened with other apps.
-      </p>
-      <p>
-        You can always re-install the newest available version of this app, but you won't be able to re-install older versions.
+        This won't actually remove the app from any Sandstorm server, just remove it from your history.
       </p>
     </div>
 
