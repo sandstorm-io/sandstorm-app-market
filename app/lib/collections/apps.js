@@ -18,7 +18,7 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
   app.installed = function() {
 
     if (typeof window !== 'undefined') {
-      var appIds = window.amplify.store('installedApps');
+      var appIds = window.amplify.store('sandstormInstalledApps');
       if (appids.indexOf(this._id) > -1) return true;
     }
     var userId = this.userId || Meteor.userId(),

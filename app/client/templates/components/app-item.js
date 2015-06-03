@@ -59,6 +59,14 @@ Template.appItem.events({
     evt.stopPropagation();
     Meteor.call('user/installApp', this._id, function(err) {
       if (err) console.log(err);
+      else {
+        var installedLocally = amplify.store('sandstormInstalledApps');
+        if (!installedLocally) amplify.store('sandstormInstalledApps', [this._id]);
+        if (installedLocally.indexOf(this._id) === -1) {
+          installedLocally.push(this._id);
+          amplify.store('sandstormInstalledApps', installedLocally);
+        }
+      }
     });
 
   },
