@@ -26,7 +26,7 @@
 
             <a href="{{getZippedPath 'appMarketAuthor' 'author' author}}"><div class="app-author">{{authorName}}</div></a>
 
-            <div class="app-rating">{{> appRating positive=ratingsPos total=ratingsCount}}</div>
+            <div class="app-rating">{{> appRating ratings=ratings}}</div>
 
             <div class="install-price">
 
@@ -76,7 +76,7 @@
             </div>
           {{else}}
             <div class="app-rating">
-              {{> appRating positive=ratingsPos total=ratingsCount}}
+              {{> appRating ratings=ratings}}
             </div>
           {{/if}}
 

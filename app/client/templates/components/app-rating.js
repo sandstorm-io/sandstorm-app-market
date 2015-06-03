@@ -1,12 +1,12 @@
 Template.appRating.helpers({
 
-  rating: function() {
+  percentage: function() {
 
-    if (_.isNumber(this.total)) {
-      return 100 * this.positive / this.total;
-    }
-    else return this.rating;
+    var num = this.ratings.jobDone + this.ratings.amazing,
+        denom = this.ratings.broken + this.ratings.didntLike +
+                this.ratings.jobDone + this.ratings.amazing;
 
+    return denom ? (num * 100 / denom) : 50;
   }
 
 });

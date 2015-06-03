@@ -68,7 +68,7 @@
       cursor: pointer;
       margin-top: -1rem;
 
-      i {
+      *:not(.sandstorm-button) > i {
         font-size: 3.8rem;
         color: #c9add0;
       }
@@ -617,6 +617,12 @@
 
       .rating {
         display: inline-block;
+      }
+
+      .my-rating-box {
+        display: inline;
+        position: relative;
+        bottom: 0.5rem;
       }
     }
 

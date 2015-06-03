@@ -448,18 +448,19 @@ Meteor.methods({
   'admin/createFakeReviews': function(appId, n) {
 
     if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Can only be executed by admin user');
-      var query = [], _this = this;
-      query['reviews.' + appId] = {$exists: false};
-    _.each(_.range(n), function() {
-      user = Meteor.users.findOne(query);
-      if (user) {
-        Reviews.insert({
-          appId: appId,
-          userId: user._id,
-          rating: _.sample(_.range(0, 4)),
-          text: faker.lorem.paragraph()
-        });
-      }
+    var query = {},
+        _this = this;
+
+    query['reviews.' + appId] = {$exists: false};
+    var users = Meteor.users.find(query, {fields: {_id: 1}}).fetch().slice(0, n);
+
+    _.each(users, function(user) {
+      Reviews.insert({
+        appId: appId,
+        userId: user._id,
+        rating: _.sample(_.range(0, 4)),
+        text: faker.lorem.paragraph()
+      });
     });
 
   }

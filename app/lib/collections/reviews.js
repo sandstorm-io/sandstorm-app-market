@@ -6,6 +6,7 @@ Reviews.rating = {
   jobDone: 2,
   amazing: 3
 };
+Reviews.invertedRating = _.invert(Reviews.rating);
 
 Schemas.Reviews = new SimpleSchema({
   appId: {
@@ -45,7 +46,6 @@ function propagateReview(userId, review) {
       user = Meteor.users.findOne(review.userId);
   updateUser['reviews.' + review.appId] = review;
   Meteor.users.update(review.userId, {$set: updateUser});
-  console.log(review.userId, updateUser);
   if (user) review.username = user.username;
   updateApp['reviews.' + review.userId] = review;
   Apps.update(review.appId, {$set: updateApp});

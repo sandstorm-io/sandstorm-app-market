@@ -6,6 +6,10 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
     })[0];
   };
 
+  app.onGithub = function() {
+    return this.codeLink && this.codeLink.indexOf('github.com') > -1;
+  };
+
   app.spk = function() {
     var latest = this.latestVersion();
     return Spks.findOne({'meta.packageId': latest && latest.packageId});
@@ -210,10 +214,15 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
     min: 0,
     defaultValue: 0
   },
-  ratingsPos: {
-    type: Number,
-    min: 0,
-    defaultValue: 0
+  ratings: {
+    type: Object,
+    defaultValue: {
+      broken: 0,
+      didntLike: 0,
+      jobDone: 0,
+      amazing: 0
+    },
+    blackbox: true
   },
   installLink: {
     type: String,
@@ -455,14 +464,23 @@ function updateInstallCountThisWeek() {
 
 Apps.after.update(function(userId, doc, fieldNames) {
 
-  console.log(userId, doc, fieldNames);
   if (fieldNames.indexOf('reviews') > -1) {
     Apps.update(doc._id, {
       $set: _.reduce(doc.reviews, function(counts, review) {
-          if ('rating' in review) counts.ratingsCount += 1;
-          if (review.rating > 1) counts.ratingsPos += 1;
+          if ('rating' in review) {
+            counts.ratingsCount += 1;
+            counts.ratings[Reviews.invertedRating[review.rating]] += 1;
+          }
           return counts;
-        }, {ratingsCount: 0, ratingsPos: 0})
+        }, {
+          ratingsCount: 0,
+          ratings: {
+            broken: 0,
+            didntLike: 0,
+            jobDone: 0,
+            amazing: 0
+          }
+        })
     });
   }
 

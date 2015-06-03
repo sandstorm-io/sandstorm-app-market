@@ -11,7 +11,6 @@ Template.SingleApp.onCreated(function() {
   tmp.writeReview = new ReactiveVar(false);
   tmp.myReview = new ReactiveVar({
     appId: FlowRouter.current().params.appId,
-    rating: 0,
     text: ''
   });
   tmp.reviewValid = new ReactiveVar(false);
@@ -199,15 +198,6 @@ Template.SingleApp.events({
 
   },
 
-  'click [data-action="rate-app"] [data-index]': function(evt, tmp) {
-
-    var review = tmp.myReview.get();
-    review.stars = parseInt($(evt.currentTarget).data('index')) + 1;
-    tmp.myReview.set(review);
-    tmp.validateReview();
-
-  },
-
   'input [data-field="review-text"]': function(evt, tmp) {
 
     var review = tmp.myReview.get();
@@ -221,7 +211,6 @@ Template.SingleApp.events({
 
     tmp.myReview.set({
       appId: FlowRouter.current().params.appId,
-      rating: 0,
       text: ''
     });
     tmp.writeReview.set(false);
@@ -379,5 +368,51 @@ Template.flagBox.events({
       });
 
     }
+
+});
+
+Template.myRatingBox.onCreated(function() {
+
+  this.buttonState = new ReactiveVar(0);
+  var myReview = this.get('myReview').get();
+  if (_.isNumber(myReview.rating))
+    this.buttonState.set(myReview.rating > 1 ? 1 : -1);
+
+});
+
+Template.myRatingBox.helpers({
+
+  buttonState: function() { return Template.instance().buttonState.get(); }
+
+});
+
+Template.myRatingBox.events({
+
+  'click [data-rating]': function(evt, tmp) {
+
+    var myReview = tmp.get('myReview').get();
+    myReview.rating = parseInt($(evt.currentTarget).data('rating'), 10);
+    tmp.get('myReview').set(myReview);
+
+  },
+
+  'click [data-button-state]': function(evt, tmp) {
+
+    tmp.buttonState.set(parseInt($(evt.currentTarget).data('button-state'), 10));
+
+  },
+
+  'click [data-action="bug-modal"]': function(evt, tmp) {
+
+    var app = Template.parentData();
+    if (app.onGithub()) {
+      AntiModals.overlay('messageModal', {data: {
+        header: 'Oh Snap!',
+        message: 'Would you like to <a href="' + app.codeLink + '/issues/new">file a bug report</a> to ' +
+                 'let the author know it\'s broken? '
+      }});
+    }
+
+  }
 
 });

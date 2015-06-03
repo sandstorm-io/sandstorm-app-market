@@ -221,7 +221,7 @@ var helpers = {
 
   numberFormat: function(number, format) {
 
-    if (typeof number !== 'number') return '#NAN';
+    if (!_.isNumber(number) || !format) return '#NAN';
     else return numeral(number).format(format);
 
   },
