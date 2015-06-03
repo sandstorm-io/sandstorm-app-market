@@ -6,9 +6,10 @@ Template.Genre.helpers({
 
   },
 
-  authorId: function() {
+  author: function() {
 
-    return FlowRouter.current().params.authorId;
+    var authorId = FlowRouter.current().params.authorId;
+    return Meteor.users.findOne(authorId);
 
   }
 

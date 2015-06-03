@@ -25,7 +25,7 @@ Template.InstalledApps.events({
 });
 
 Template.InstalledApps.onCreated(function() {
-  this.subscribe('apps by genre', 'Installed');
+  this.subscribe('installed apps', amplify.store('sandstormInstalledApps'));
 });
 
 Template.updateSelector.helpers({

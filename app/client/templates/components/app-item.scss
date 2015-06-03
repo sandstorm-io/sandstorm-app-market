@@ -110,22 +110,16 @@
         padding-bottom: $app-install-padding-tb;
         padding-left: $app-install-padding-lr;
         padding-right: $app-install-padding-lr;
-        color: $app-installed-text;
-        width: 9rem;
+        min-width: 9rem;
         box-sizing: border-box;
         text-align: center;
+        color: $app-install-text;
+        background-color: $app-install-bg;
+        cursor: pointer;
 
         i {
 
           color: $app-install-icon-col;
-
-        }
-
-        &:not(.installed) {
-
-          color: $app-install-text;
-          background-color: $app-install-bg;
-          cursor: pointer;
 
         }
 
