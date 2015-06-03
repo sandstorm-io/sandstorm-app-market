@@ -195,15 +195,22 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
     },
     optional: true
   },
-  stars: {
-    type: Number,
-    decimal: true,
-    min: 0,
-    max: 5,
-    defaultValue: 2.5,
-    index: true
+  authorName: {
+    type: String,
+    autoValue: function() {
+      if (this.isInsert) {
+        var userId = this.fields('author').value,
+            user = Meteor.users(userId);
+        return user && user.username;
+      }
+    }
   },
   ratingsCount: {
+    type: Number,
+    min: 0,
+    defaultValue: 0
+  },
+  ratingsPos: {
     type: Number,
     min: 0,
     defaultValue: 0
@@ -429,3 +436,19 @@ function updateInstallCountThisWeek() {
   });
 
 }
+
+Apps.before.update(function(userId, doc, fieldNames, modifier) {
+
+  modifier = modifier || {};
+  modifier.$set = modifier.$set || {};
+  if (fieldNames.indexOf('reviews') > -1) {
+    _.extend(modifier.$set, _.reduce(modifier.$set, function(counts, val, key) {
+      if (key.slice(0, 7) === 'reviews') {
+        counts.ratingsCount += 1;
+        if (val.rating > 1) counts.ratingsPos += 1;
+      }
+      return counts;
+    }, {ratingsCount: 0, ratingsPos: 0}));
+  }
+
+}, {fetchPrevious: false});

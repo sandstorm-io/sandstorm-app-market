@@ -62,5 +62,5 @@ function removeReview(userId, review) {
 }
 
 Reviews.after.insert(propagateReview);
-Reviews.after.update(propagateReview);
+Reviews.after.update(propagateReview, {fetchPrevious: false});
 Reviews.after.remove(removeReview);

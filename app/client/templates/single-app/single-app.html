@@ -30,7 +30,7 @@
 
                   <div class="header">{{name}}</div>
 
-                  <div class="app-author-full-width"><a href="{{getZippedPath 'appMarketAuthor' 'author' author}}">{{getUsername author}}</a></div>
+                  <div class="app-author-full-width"><a href="{{getZippedPath 'appMarketAuthor' 'author' author}}">{{authorName}}</a></div>
 
                 </div>
 
@@ -47,7 +47,7 @@
 
                 <div class="half-col">
 
-                  <div class="key">Ported by:</div><div class="value">{{getUsername author}}&nbsp;</div>
+                  <div class="key">Ported by:</div><div class="value">{{authorName}}&nbsp;</div>
                   <div class="key">License:</div><div class="value">{{verboseNone license}}&nbsp;</div>
                   <div class="key">Code:</div><div class="value">{{{codeFormat codeLink}}}&nbsp;</div>
                   <div class="key">Version:</div><div class="value" data-tooltip={{versionChanges}} data-tooltip-direction="s">{{verboseNone latestVersionNumber}}&nbsp;</div>

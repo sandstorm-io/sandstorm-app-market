@@ -56,7 +56,7 @@
         <input type="text" data-field="name" value="{{name}}" required />
 
         <h3 class="title">Author</h3>
-        <div class="read-only">{{getUsername author}}</div>
+        <div class="read-only">{{authorName}}</div>
 
       </div>
 
@@ -69,7 +69,7 @@
       <div class="half-col">
 
         <h4 class="mini-title">Ported by</h4>
-        <div class="read-only">{{getUsername author}}</div>
+        <div class="read-only">{{authorName}}</div>
 
         <h4 class="mini-title" data-invalid={{validate 'codeLink'}}>Code URL</h4>
         <input type="text" data-field="codeLink" value="{{codeLink}}" pattern="https?://.+" />

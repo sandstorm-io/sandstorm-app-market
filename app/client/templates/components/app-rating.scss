@@ -1,18 +1,19 @@
 .app-rating-container {
 
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: top;
+  line-height: auto;
 
   .text {
     display: block;
     color: #3d9145;
-    font-size: 1.3rem;
-    line-height: 1.8rem;
+    font-size: 1.8rem;
+    line-height: 2.4rem;
   }
 
   .bar {
     display: block;
-    width: 8rem;
+    width: 10rem;
     position: relative;
 
     .background {
