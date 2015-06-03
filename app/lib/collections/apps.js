@@ -15,6 +15,20 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
     return Spks.findOne({'meta.packageId': latest && latest.packageId});
   };
 
+  app.installed = function() {
+
+    if (typeof window !== 'undefined') {
+      var appIds = window.amplify.store('installedApps');
+      if (appids.indexOf(this._id) > -1) return true;
+    }
+    var userId = this.userId || Meteor.userId(),
+        user = Meteor.users.findOne(userId);
+    if (user && this._id in user.installedApps) return true;
+
+    return false;
+
+  };
+
   // it's actually slightly difficult to know when an app's ultimate install
   // link will be available due to the unknown length of time it will take the
   // .spk to get to S3.  So, we construct the install link on demand, and then
