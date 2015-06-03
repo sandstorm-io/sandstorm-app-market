@@ -31,12 +31,14 @@ Meteor.publish('suggested categories', function() {
 
 Meteor.publish('apps by genre', function (name, limit) {
   var apps = Genres.findIn(name, {public: true, approved: Apps.approval.approved}, {fields: appUnpublishedFields, limit: limit}, this);
-  return [
-    apps,
-    Meteor.users.find({_id: {$in: _.uniq(apps.map(function(app) {
-      return app.author;
-    }))}})
-  ];
+  return apps;
+});
+
+Meteor.publish('installed apps', function(localApps) {
+  var allInstalledApps = localApps || [],
+      user = Meteor.users.findOne(this.userId);
+  if (user) allInstalledApps = allInstalledApps.concat(_.keys(user.installedApps));
+  return Apps.find({_id: {$in: allInstalledApps}});
 });
 
 Meteor.publish('apps by id', function (ids, flags) {
@@ -46,14 +48,9 @@ Meteor.publish('apps by id', function (ids, flags) {
 
   var apps = Array.isArray(ids) ?
         Apps.find({_id: {$in: ids}}, {fields: fields}) :
-        Apps.find(ids, {fields: fields}),
-      authorIds = _.unique(_.pluck(apps.fetch(), 'author')),
-      authors = Meteor.users.find({_id: {$in: authorIds}}, {fields: {username: 1}});
+        Apps.find(ids, {fields: fields});
 
-  return [
-    apps,
-    authors
-  ];
+  return apps;
 });
 
 Meteor.publish('apps by me', function () {

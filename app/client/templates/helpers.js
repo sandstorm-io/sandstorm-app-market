@@ -269,6 +269,13 @@ var helpers = {
 
   },
 
+  invoke: function(action) {
+
+    var args = Array.prototype.slice.call(arguments, 1);
+    return this[action] && this[action].call(this, args);
+
+  },
+
   // IMAGE HELPERS
 
   imageUrl: function(image) {

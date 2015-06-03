@@ -25,7 +25,7 @@ Template.InstalledApps.events({
 });
 
 Template.InstalledApps.onCreated(function() {
-  this.subscribe('apps by genre', 'Installed');
+  this.subscribe('installed apps', amplify.store('sandstormInstalledApps'));
 });
 
 Template.updateSelector.helpers({
@@ -75,6 +75,12 @@ Template.uninstallApp.events({
     AntiModals.dismissAll();
     Meteor.call('user/uninstallApp', this._id, function(err) {
       if (err) console.log(err);
+      else {
+        var installedLocally = amplify.store('sandstormInstalledApps');
+        if (installedLocally && installedLocally.indexOf(this._id) > -1) {
+          amplify.store('sandstormInstalledApps', _.without(installedLocally, this._id));
+        }
+      }
     });
 
   }

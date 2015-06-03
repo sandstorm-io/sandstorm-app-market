@@ -71,8 +71,13 @@ var extraGenres = [
   {
     name: 'Installed',
     selector: function(userId) {
-      var user = getUser.call(this, userId);
-      return user && {_id: {$in: _.keys(user.installedApps)}};
+      var user = getUser.call(this, userId),
+          allInstalledApps = [];
+      if (typeof window !== 'undefined')
+        allInstalledApps = allInstalledApps.concat(amplify.store('sandstormInstalledApps'));
+      if (user)
+        allInstalledApps = allInstalledApps.concat(_.keys(user.installedApps));
+      return {_id: {$in: allInstalledApps}};
     },
     options: {},
     priority: 2,
@@ -142,7 +147,7 @@ var extraGenres = [
     name: 'Apps By Author',
     selector: function() {
       return {
-        author: this.authorId || (FlowRouter.getParam && FlowRouter.getParam(authorId))
+        author: this.authorId || (FlowRouter.getParam && FlowRouter.getParam('authorId'))
       };
     },
     priority: 0,

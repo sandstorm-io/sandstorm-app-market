@@ -68,9 +68,10 @@ FlowRouter.route('/', {
 FlowRouter.route('/author/:authorId', {
   name: 'appMarketAuthor',
   subscriptions: function(params) {
-    this.register('authorGenre',
+    this.register('apps by author',
       Meteor.subscribe('apps by author', params.authorId));
-      Meteor.subscribe('user basic');
+    this.register('user basic',
+      Meteor.subscribe('user basic', params.authorId));
   },
   action: function(params, queryParams) {
     getSandstormServer(queryParams);
@@ -113,14 +114,9 @@ FlowRouter.route('/search', {
 
 FlowRouter.route('/installed', {
   name: 'installedApps',
-  subscriptions: function() {
-    this.register('installedApps',
-      Meteor.subscribe('installed apps'));
-  },
   action: function(params, queryParams) {
     getSandstormServer(queryParams);
     getPopulatedGenres();
-    onlyLoggedIn();
     var user = Meteor.users.findOne(Meteor.userId());
     FlowRouter.current().firstVisit = (typeof(user && user.autoupdateApps) === 'undefined');
     FlowLayout.render('MasterLayout', {mainSection: 'InstalledApps'});

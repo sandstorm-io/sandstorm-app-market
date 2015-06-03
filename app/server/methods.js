@@ -21,7 +21,6 @@ Meteor.methods({
   'user/uninstallApp': function(appId) {
 
     this.unblock();
-    if (!this.userId) return false;
 
     var unset = {};
 
@@ -36,7 +35,6 @@ Meteor.methods({
 
     // TODO: actually install the app!
     this.unblock();
-    if (!this.userId) return false;
     var app = Apps.findOne(appId);
     if (!app) return false;
 

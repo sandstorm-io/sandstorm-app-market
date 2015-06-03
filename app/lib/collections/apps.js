@@ -15,6 +15,36 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
     return Spks.findOne({'meta.packageId': latest && latest.packageId});
   };
 
+  if (Meteor.isClient)
+    app.install = function() {
+      var _this = this;
+      Meteor.call('user/installApp', _this._id, function(err) {
+        if (err) console.log(err);
+        else {
+          var installedLocally = amplify.store('sandstormInstalledApps');
+          if (!installedLocally) amplify.store('sandstormInstalledApps', [_this._id]);
+          if (installedLocally.indexOf(_this._id) === -1) {
+            installedLocally.push(_this._id);
+            amplify.store('sandstormInstalledApps', installedLocally);
+          }
+        }
+      });
+    };
+
+  app.installed = function() {
+
+    if (typeof window !== 'undefined') {
+      var appIds = window.amplify.store('sandstormInstalledApps');
+      if (appIds.indexOf(this._id) > -1) return true;
+    }
+    var userId = this.userId || Meteor.userId(),
+        user = Meteor.users.findOne(userId);
+    if (user && this._id in user.installedApps) return true;
+
+    return false;
+
+  };
+
   // it's actually slightly difficult to know when an app's ultimate install
   // link will be available due to the unknown length of time it will take the
   // .spk to get to S3.  So, we construct the install link on demand, and then

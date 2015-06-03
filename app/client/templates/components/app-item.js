@@ -57,9 +57,7 @@ Template.appItem.events({
   'click [data-action="install-app"]': function(evt) {
 
     evt.stopPropagation();
-    Meteor.call('user/installApp', this._id, function(err) {
-      if (err) console.log(err);
-    });
+    this.install();
 
   },
 

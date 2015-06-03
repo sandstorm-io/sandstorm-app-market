@@ -7,9 +7,9 @@
       <div class="menu-text">App Market</div>
     </a>
 
-    <a class="menu-link {{inRouteCategory 'installedApps'}} {{#unless currentUser}}disabled{{/unless}}" href="{{#if currentUser}}{{getPath 'installedApps'}}{{/if}}">
+    <a class="menu-link {{inRouteCategory 'installedApps'}}" href="{{getPath 'installedApps'}}">
       <i class="icon-apps"></i>
-      <div class="menu-text">Installed Apps</div>
+      <div class="menu-text">Install History</div>
     </a>
 
     <a class="menu-link {{inRouteCategory 'appsByMe'}} {{#unless currentUser}}disabled{{/unless}}" href="{{#if currentUser}}{{getPath 'appsByMe'}}{{/if}}">
