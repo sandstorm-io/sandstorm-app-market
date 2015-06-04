@@ -23,7 +23,7 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
         else {
           var installedLocally = amplify.store('sandstormInstalledApps');
           if (!installedLocally) amplify.store('sandstormInstalledApps', [_this._id]);
-          if (installedLocally.indexOf(_this._id) === -1) {
+          else if (installedLocally.indexOf(_this._id) === -1) {
             installedLocally.push(_this._id);
             amplify.store('sandstormInstalledApps', installedLocally);
           }
