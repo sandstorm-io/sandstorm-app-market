@@ -353,6 +353,10 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
     min: 0,
     defaultValue: 0
   },
+  installDates: {
+    type: [Date],
+    defaultValue: []
+  },
   htmlDescription: {
     type: String,
     optional: true,

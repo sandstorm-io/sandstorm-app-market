@@ -44,7 +44,11 @@
 
       <div class="title">THIS WEEK</div>
 
-      {{> appTable bigLeader=true singleLine=true genre='This Week'}}
+      {{#if Template.subscriptionsReady}}
+
+        {{> appTable bigLeader=true singleLine=true genre='This Week' reactive=true}}
+
+      {{/if}}
 
     </div>
 
