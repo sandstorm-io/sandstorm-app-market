@@ -11,6 +11,8 @@ _.extend(App, {
 
   },
 
+  defaultAppLimit: new ReactiveVar(18),
+
   spkUploader: new Slingshot.Upload('spkUploader'),
 
   imageUploader: new Slingshot.Upload('imageUploader'),

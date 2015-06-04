@@ -10,7 +10,7 @@
 
   </div>
 
-  {{#if routerSubsReady}}
+  {{#if getReactive 'subReady'}}
 
   <div class="genre-popular-section">
 
@@ -82,8 +82,11 @@
 
   <div class="genre-other">
 
-    {{> appTable skipLines=1 afterBigLeader=true genre=genre}}
+    {{> appTable skipLines=1 afterBigLeader=true genre=genre reactive=true}}
 
+  </div>
+
+  <div class="load-more">
   </div>
 
   {{/if}}

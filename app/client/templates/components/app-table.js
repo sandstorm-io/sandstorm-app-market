@@ -73,6 +73,7 @@ function recalcLineCapacity() {
   var lineCapacity = Math.floor(tableWidth / (rem * appItemWidth));
   if (Meteor.Device.isPhone()) lineCapacity = Math.max(lineCapacity, 2);
   App.lineCapacity.set(lineCapacity);
+  App.defaultAppLimit.set((lineCapacity * 4) - 2);
 
 }
 
