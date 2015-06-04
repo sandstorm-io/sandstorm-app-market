@@ -1,7 +1,6 @@
 Template.Genre.onCreated(function() {
 
   var tmp = this;
-  window.template = tmp;
 
   tmp.subLimit = new ReactiveVar(App.defaultAppLimit.get());
   tmp.subReady = new ReactiveVar(false);
@@ -30,7 +29,7 @@ Template.Genre.onCreated(function() {
   });
 
   $(window).on('scroll.genre', _.debounce(function() {
-    if (tmp.$('.load-more').visible(false)) tmp.addApps();
+    if (tmp.$('.load-more').visible(true)) tmp.addApps();
   }, 500));
 
 });
