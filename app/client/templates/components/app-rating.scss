@@ -101,7 +101,7 @@
 
 }
 
-.app-item-container {
+.app-item-container:not(.large) {
 
   .app-rating-container {
     display: block;
