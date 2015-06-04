@@ -23,12 +23,25 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
         else {
           var installedLocally = amplify.store('sandstormInstalledApps');
           if (!installedLocally) amplify.store('sandstormInstalledApps', [_this._id]);
-          if (installedLocally.indexOf(_this._id) === -1) {
+          else if (installedLocally.indexOf(_this._id) === -1) {
             installedLocally.push(_this._id);
             amplify.store('sandstormInstalledApps', installedLocally);
           }
         }
       });
+    };
+
+  if (Meteor.isServer)
+    app.updateInstallCountThisWeek = function() {
+      var lastWeek = new moment().subtract(7, 'days').toDate(),
+          recentInstalls = _.filter(this.installDates, function(date) {
+            return date > lastWeek;
+          });
+
+      Apps.update(this._id, {$set: {
+        installCountThisWeek: recentInstalls.length,
+        installDates: recentInstalls
+      }});
     };
 
   app.installed = function() {
@@ -353,6 +366,10 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
     min: 0,
     defaultValue: 0
   },
+  installDates: {
+    type: [Date],
+    defaultValue: []
+  },
   htmlDescription: {
     type: String,
     optional: true,
@@ -444,22 +461,7 @@ if (Meteor.isServer) {
   });
 }
 
-// Update installed counts
-function updateInstallCount() {
-
-  Apps.find().forEach(function(app) {
-
-    var query = {};
-    query['installedApps.' + app._id] = {$exists: true};
-
-    Apps.update(app._id, {$set: {
-      installCount: Meteor.users.find(query).count()
-    }});
-
-  });
-
-}
-
+// Update installedThisWeek counts
 function updateInstallCountThisWeek() {
 
   Apps.find().forEach(function(app) {
@@ -475,22 +477,6 @@ function updateInstallCountThisWeek() {
   });
 
 }
-
-// Apps.before.update(function(userId, doc, fieldNames, modifier) {
-//
-//   modifier = modifier || {};
-//   modifier.$set = modifier.$set || {};
-//   if (fieldNames.indexOf('reviews') > -1) {
-//     _.extend(modifier.$set, _.reduce(modifier.$set, function(counts, val, key) {
-//       if (key.slice(0, 7) === 'reviews') {
-//         counts.ratingsCount += 1;
-//         if (val.rating > 1) counts.ratingsPos += 1;
-//       }
-//       return counts;
-//     }, {ratingsCount: 0, ratingsPos: 0}));
-//   }
-//
-// }, {fetchPrevious: false});
 
 Apps.after.update(function(userId, doc, fieldNames) {
 
@@ -513,5 +499,8 @@ Apps.after.update(function(userId, doc, fieldNames) {
         })
     });
   }
+
+  if (fieldNames.indexOf('installCount') > -1)
+    this.transform().updateInstallCountThisWeek();
 
 }, {fetchPrevious: false});

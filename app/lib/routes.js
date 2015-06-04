@@ -82,10 +82,6 @@ FlowRouter.route('/author/:authorId', {
 
 FlowRouter.route('/genre/:genre', {
   name: 'appMarketGenre',
-  subscriptions: function(params) {
-    this.register('currentGenre',
-      Meteor.subscribe('apps by genre', s.capitalize(params.genre)));
-  },
   action: function(params, queryParams) {
     getSandstormServer(queryParams);
     getPopulatedGenres();
