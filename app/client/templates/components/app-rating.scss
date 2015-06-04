@@ -104,14 +104,18 @@
 .app-item-container {
 
   .app-rating-container {
+    display: block;
 
-    .text {
-      font-size: 1.4rem;
-      line-height: 1.8rem;
+    > i {
+      display: none;
     }
 
-    .bar {
-      width: 9rem;
+    .ratings {
+      width: 100%;
+
+      .bar {
+        width: 100%;
+      }
     }
 
   }
