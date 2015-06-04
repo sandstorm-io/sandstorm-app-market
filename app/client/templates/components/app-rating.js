@@ -2,11 +2,20 @@ Template.appRating.helpers({
 
   percentage: function() {
 
-    var num = this.ratings.jobDone + this.ratings.amazing,
-        denom = this.ratings.broken + this.ratings.didntLike +
+    var denom = this.ratings.broken + this.ratings.didntLike +
                 this.ratings.jobDone + this.ratings.amazing;
 
-    return denom ? (num * 100 / denom) : 50;
+    return denom ? {
+      broken: this.ratings.broken * 100 / denom,
+      didntLike: this.ratings.didntLike * 100 / denom,
+      jobDone: this.ratings.jobDone * 100 / denom,
+      amazing: this.ratings.amazing * 100 / denom
+    } : {
+      broken: 25,
+      didntLike: 25,
+      jobDone: 25,
+      amazing: 25
+    };
   }
 
 });

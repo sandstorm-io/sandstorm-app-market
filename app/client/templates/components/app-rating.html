@@ -1,13 +1,27 @@
 <template name="appRating">
 
   <div class="app-rating-container">
-    <div class="text">
-      {{numberFormat percentage '0.00'}}% like it
+    <i class="fa fa-thumbs-o-up"></i>
+    <div class="ratings">
+      <div class="text">
+        <div class="labels">
+          <div class="amazing" style="width: {{percentage.amazing}}%;">{{numberFormat percentage.amazing '0'}}%</div>
+          <div class="job-done" style="width: {{percentage.jobDone}}%;">{{numberFormat percentage.jobDone '0'}}%</div>
+          <div class="didnt-like" style="width: {{percentage.didntLike}}%;">{{numberFormat percentage.didntLike '0'}}%</div>
+          <div class="broken" style="width: {{percentage.broken}}%;">{{numberFormat percentage.broken '0'}}%</div>
+        </div>
+      </div>
+      <div class="bar">
+        <div class="background {{backgroundCol}}"></div>
+        <div class="fill">
+          <div class="amazing" style="width: {{percentage.amazing}}%;"></div>
+          <div class="job-done" style="width: {{percentage.jobDone}}%;"></div>
+          <div class="didnt-like" style="width: {{percentage.didntLike}}%;"></div>
+          <div class="broken" style="width: {{percentage.broken}}%;"></div>
+        </div>
+      </div>
     </div>
-    <div class="bar">
-      <div class="background {{backgroundCol}}"></div>
-      <div class="fill" style="width: {{percentage}}%;"></div>
-    </div>
+    <i class="fa fa-thumbs-o-down"></i>
   </div>
 
 </template>
