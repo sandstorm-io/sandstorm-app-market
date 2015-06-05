@@ -33,7 +33,6 @@ Meteor.methods({
 
   'user/installApp': function(appId) {
 
-    // TODO: actually install the app!
     this.unblock();
     var app = Apps.findOne(appId);
     if (!app) return false;
@@ -44,6 +43,7 @@ Meteor.methods({
       version: _.last(app.versions),
       dateTime: new Date()
     };
+    Apps.update(appId, {$inc: {installCount: 1}, $push: {installDates: new Date()}});
     return Meteor.users.update(this.userId, {
       $set: set
     });

@@ -10,7 +10,7 @@
 
   </div>
 
-  {{#if routerSubsReady}}
+  {{#if getReactive 'subReady'}}
 
   <div class="genre-popular-section">
 
@@ -39,12 +39,12 @@
 
 <template name="genreTable">
 
-  {{#if routerSubsReady}}
+  {{#if Template.subscriptionsReady}}
   {{#if countApps genre}}
 
     <div class="genre-name"><a href="{{getZippedPath 'appMarketGenre' 'genre' genre}}">{{genre}} <i class="icon-chevron-right"></i></a></div>
 
-    {{> appTable genre=genre reactive=true}}
+    {{> appTable genre=genre reactive=true bigLeader=bigLeader}}
 
   {{/if}}
   {{/if}}
@@ -82,9 +82,11 @@
 
   <div class="genre-other">
 
-    {{> appTable skipLines=1 afterBigLeader=true genre=genre}}
+    {{> appTable skipLines=1 afterBigLeader=true genre=genre reactive=true}}
 
   </div>
+
+  <div class="load-more"></div>
 
   {{/if}}
   {{/if}}
