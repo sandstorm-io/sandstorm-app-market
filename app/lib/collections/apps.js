@@ -282,14 +282,28 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
     //   }
     // }
   },
-  // Approval state
-  // 0 - Approved
-  // 1 - Pending
-  // 2 - Revision Requested
-  // 3 - Rejected
+  location: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Url,
+    optional: true,
+    autoValue: function() {
+      var versions = this.field('versions');
+      if (versions) {
+        var latest = _.sortBy(versions.value, function(v) { return -v.version; })[0],
+            spk = Spks.findOne({'meta.packageId': latest.packageId});
+        if (spk) {
+          var location = Spks.getLocation(spk._id);
+          Spks.remove(spk._id);
+          return location;
+        }
+      } else {
+        this.unset();
+      }
+    }
+  },
   approved: {
     type: Number,
-    defaultValue: 1,
+    defaultValue: Apps.approval.pending,
     index: true
   },
   reviews: {
