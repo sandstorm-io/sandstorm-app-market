@@ -10,11 +10,11 @@
     vertical-align: middle;
     font-size: 3rem !important;
 
-    &.fa-thumbs-o-up {
-        color: #005e1b !important;
+    &.fa-thumbs-up {
+        color: #d8d8d8 !important;
     }
-    &.fa-thumbs-o-down {
-        color: #db1a00 !important;
+    &.fa-thumbs-down {
+        color: #d8d8d8 !important;
     }
   }
 
@@ -46,9 +46,17 @@
             height: 100%;
             top: 0;
             display: inline-block;
+            vertical-align: middle;
             text-align: center;
             font-size: 1.1rem;
             color: #222222;
+          }
+
+          > i {
+            line-height: 0;
+            margin-left: 0.25em;
+            margin-right: 0.25em;
+            color: #888888;
           }
         }
       }
@@ -90,7 +98,7 @@
           }
 
           .broken { background-color: #db1a00; }
-          .didnt-like { background-color: #ea9126; }
+          .didnt-like { background-color: #d8d8d8; }
           .job-done { background-color: #41af00; }
           .amazing { background-color: #005e1b; }
         }
@@ -101,23 +109,23 @@
 
 }
 
-.app-item-container:not(.large) {
-
-  .app-rating-container {
-    display: block;
-
-    > i {
-      display: none;
-    }
-
-    .ratings {
-      width: 100%;
-
-      .bar {
-        width: 100%;
-      }
-    }
-
-  }
-
-}
+// .app-item-container:not(.large) {
+//
+//   .app-rating-container {
+//     display: block;
+//
+//     > i {
+//       display: none;
+//     }
+//
+//     .ratings {
+//       width: 100%;
+//
+//       .bar {
+//         width: 100%;
+//       }
+//     }
+//
+//   }
+//
+// }
