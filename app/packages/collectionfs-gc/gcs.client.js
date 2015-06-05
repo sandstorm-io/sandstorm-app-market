@@ -7,19 +7,19 @@
  * @param {Number} [options.maxTries=5] - Max times to attempt saving a file
  * @returns {undefined}
  *
- * Creates an S3 store instance on the client, which is just a shell object
+ * Creates an GCS store instance on the client, which is just a shell object
  * storing some info.
  */
-FS.Store.S3 = function(name, options) {
+FS.Store.GCS = function(name, options) {
   var self = this;
-  if (!(self instanceof FS.Store.S3))
-    throw new Error('FS.Store.S3 missing keyword "new"');
+  if (!(self instanceof FS.Store.GCS))
+    throw new Error('FS.Store.GCS missing keyword "new"');
 
   return new FS.StorageAdapter(name, options, {
-    typeName: 'storage.s3'
+    typeName: 'storage.gcs'
   });
 };
 
-FS.Store.S3.prototype.fileKey = function(fileObj) {
+FS.Store.GCS.prototype.fileKey = function(fileObj) {
   return fileObj.collectionName + '/' + fileObj._id + '-' + fileObj.name();
 };

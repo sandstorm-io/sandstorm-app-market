@@ -1,12 +1,12 @@
 Package.describe({
-  name: 'cfs:s3',
-  version: '0.1.3',
-  summary: "Amazon Web Services S3 storage adapter for CollectionFS",
-  git: "https://github.com/CollectionFS/Meteor-CollectionFS/tree/master/packages/s3"
+  name: 'richsilv:cfs-gcs',
+  version: '0.1.0',
+  summary: "Google Cloud storage adapter for CollectionFS",
+  git: "https://github.com/tableflip/TODO"
 });
 
 Npm.depends({
-  'aws-sdk': "2.0.23",
+  'gcloud': "0.14.0",
   // 'temp': '0.7.0', // used by the s3.indirect.streaming.js
   // 'through2': '0.4.1', // used by the s3.upload.stream.js
   // 'backoff': '2.3.0', // used by the s3.upload.stream.js
@@ -18,12 +18,12 @@ Package.onUse(function(api) {
 
   api.use(['cfs:base-package@0.0.30', 'cfs:storage-adapter@0.2.1']);
   api.addFiles([
-    's3.server.js',
+    'gcs.server.js',
     // 's3.indirect.streaming.js',
     // 's3.upload.stream.js',
-    's3.upload.stream2.js',
+    'gcs.upload.stream2.js',
     ], 'server');
-  api.addFiles('s3.client.js', 'client');
+  api.addFiles('gcs.client.js', 'client');
 });
 
 Package.onTest(function(api) {
