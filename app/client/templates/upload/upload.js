@@ -401,7 +401,9 @@ Template.fileBox.events({
 
   'change [data-action="file-picker"][data-for="spk"]': function(evt, tmp) {
 
-    tmp.get('file').set(evt.currentTarget.files[0]);
+    var file = evt.currentTarget.files[0];
+    tmp.get('file').set(file);
+    tmp.get('app').set('filename', file && file.name);
 
   },
 

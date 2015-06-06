@@ -49,3 +49,4 @@ simple:rest
 amplify
 cfs:standard-packages
 cfs:filesystem
+simple:json-routes

@@ -15,6 +15,10 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
     return Spks.findOne({'meta.packageId': latest && latest.packageId});
   };
 
+  app.getLocation = function() {
+    return 'http://' + Meteor.settings.public.spkBucket + '.storage.googleapis.com/' + Spks.spkFolder + this.spkKey;
+  };
+
   if (Meteor.isClient)
     app.install = function() {
       var _this = this;
@@ -220,6 +224,10 @@ var appsBaseSchema = {
   appId: {
     type: String,
     optional: true
+  },
+  filename: {
+    type: String,
+    defaultValue: 'package.spk'
   }
 
 };
@@ -282,19 +290,18 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
     //   }
     // }
   },
-  location: {
+  spkKey: {
     type: String,
-    regEx: SimpleSchema.RegEx.Url,
     optional: true,
     autoValue: function() {
       var versions = this.field('versions');
       if (versions) {
         var latest = _.sortBy(versions.value, function(v) { return -v.version; })[0],
-            spk = Spks.findOne({'meta.packageId': latest.packageId});
+            spk = Spks.findOne({'meta.packageId': latest && latest.packageId});
         if (spk) {
-          var location = Spks.getLocation(spk._id);
+          var key = Spks.getKey(spk._id);
           Spks.remove(spk._id);
-          return location;
+          return key;
         }
       } else {
         this.unset();
