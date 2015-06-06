@@ -115,7 +115,7 @@ if (Meteor.isServer) {
     if (app) {
 
       res.writeHead(200, {
-        'Content-Disposition': 'attachment; filename=download.spk',
+        'Content-Disposition': 'attachment; filename=' + app.filename,
       });
       var spkFile = gcsBucket.file(app.spkKey);
       spkFile.createReadStream().pipe(res);
