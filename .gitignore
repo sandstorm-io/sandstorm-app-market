@@ -2,3 +2,5 @@
 .meteor/meteorite
 app/settings.json
 app/npm-debug.log
+app/private/SandstormAppStore.json
+app/private/SandstormAppStore.pem

@@ -1,7 +1,13 @@
-Meteor.method('updates', function (data) {
-  if (data) {
+var http = Npm.require('http');
 
-    return {
+JsonRoutes.add('post', '/api/checkupdates', function(req, res, next) {
+
+  var data = request.body,
+      results;
+
+  if (data && data.apps) {
+
+    results = {
       updates: _.reduce(data.apps, function(list, app) {
         var appObj = Apps.findOne({appId: app.id});
         if (appObj) {
@@ -11,22 +17,19 @@ Meteor.method('updates', function (data) {
             id: appObj.appId,
             packageId: latest.packageId,
             version: latest.version,
-            url: S3Url(spk)
+            url: appObj.location
           });
         }
         return list;
       }, [])
     };
 
+    JsonRoutes.sendResult(res, 200, results);
+
+  } else {
+
+    JsonRoutes.sendResult(res, 400, 'request body in wrong format');
+
   }
-}, {
-  url: "api/checkupdates"
+
 });
-
-function S3Url(file) {
-
-  var urlHost = 'https://s3-' + spkS3.region + '.amazonaws.com';
-  var urlPath = path.join('/', spkS3.bucket, file.copies.spkS3.key);
-  return urlHost + urlPath;
-
-}

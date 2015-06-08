@@ -1,0 +1,5 @@
+.meteor/local
+.meteor/meteorite
+app/settings.json
+app/npm-debug.log
+app/private/Sandstorm App Store-0bc94ef92f40.json
