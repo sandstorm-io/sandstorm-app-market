@@ -153,12 +153,25 @@ FlowRouter.route('/edit/:appId', {
 });
 
 FlowRouter.route('/upload/:appId', {
-  name: 'upload',
+  name: 'upload draft',
   subscriptions: function(params) {
     this.register('all categories',
       Meteor.subscribe('all categories'));
     this.register('saved apps',
       Meteor.subscribe('saved apps'));
+  },
+  action: function(params, queryParams) {
+    getSandstormServer(queryParams);
+    getPopulatedGenres();
+    FlowLayout.render('MasterLayout', {mainSection: 'Upload'});
+  }
+});
+
+FlowRouter.route('/upload', {
+  name: 'upload',
+  subscriptions: function(params) {
+    this.register('all categories',
+      Meteor.subscribe('all categories'));
   },
   action: function(params, queryParams) {
     getSandstormServer(queryParams);
