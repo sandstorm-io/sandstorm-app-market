@@ -152,9 +152,9 @@ FlowRouter.route('/edit/:appId', {
   }
 });
 
-FlowRouter.route('/upload', {
+FlowRouter.route('/upload/:appId', {
   name: 'upload',
-  subscriptions: function() {
+  subscriptions: function(params) {
     this.register('all categories',
       Meteor.subscribe('all categories'));
     this.register('saved apps',

@@ -84,7 +84,8 @@ Apps.approval = {
   approved: 0,
   pending: 1,
   revisionRequested: 2,
-  rejected: 3
+  rejected: 3,
+  draft: 4
 };
 
 var converter = new Showdown.converter();

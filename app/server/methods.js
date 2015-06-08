@@ -100,12 +100,10 @@ Meteor.methods({
 
     // add TimeStamp
     app.lastEdit = new Date();
-
-    // check(app, Schemas.AppsBase);  TODO: should we be validating here? User should be able to save in place.
-    var set = {},
-      setString = 'savedApp.' + (app.replacesApp || 'new');
-    set[setString] = app;
-    return Meteor.users.update(this.userId, {$set: set});
+    app.approved = 4;
+    if (app.replacesApp && Apps.findOne({replacesApp: app.replacesApp, approved: Apps.approval.draft}))
+      return Apps.update({replacesApp: app.replacesApp, approved: Apps.approval.draft}, app);
+    else return Apps.insert(app, {validate: false});
 
   },
 

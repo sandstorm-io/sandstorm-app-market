@@ -126,10 +126,13 @@ Template.Upload.onCreated(function() {
       var categories = Categories.find().fetch();
       tmp.categories.set(categories);
 
-      // And load the saved app, if present
-      if (Meteor.user() && Meteor.user().savedApp && Meteor.user().savedApp.new) {
-        tmp.app.set(Meteor.user().savedApp.new);
-        tmp.setCategories(tmp.app.get('categories'));
+      // And load the draft if relevant
+      if (FlowRouter.current().params.appId) {
+        var draft = Apps.findOne(FlowRouter.current().params.appId),
+            oldApp = tmp.app.all();
+        _.extend(oldApp, draft);
+        tmp.app.set(oldApp);
+        tmp.setCategories(oldApp.categories);
       }
 
       c.stop();
@@ -272,7 +275,7 @@ Template.fileBox.onCreated(function() {
   // pull out relevant .spk details as soon as app is available
   tmp.autorun(function(c) {
     var app = Apps.findOne(FlowRouter.current().params.appId);
-    if (app) {
+    if (app && app.approved !== Apps.approval.draft) {
       var latest = app.latestVersion();
       tmp.fileId.set(latest.spkId);
       tmp.origFileId.set(latest.spkId);

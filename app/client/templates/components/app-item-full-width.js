@@ -32,6 +32,12 @@ var approvalStateMatrix = [
              FlowRouter.path('edit', {appId: app && app._id}) +
              '">Edit</a> to view the Admin\'s comments';
     }
+  },
+  {
+    messageClass: 'draft',
+    iconClass: 'fa fa-file-o',
+    message: 'DRAFT',
+    fullMessage: 'DRAFT'
   }
 ];
 
