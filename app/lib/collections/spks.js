@@ -107,6 +107,14 @@ if (Meteor.isServer) {
 
   };
 
+  // Spks.remove = function(id) {
+  //
+  //   if (id && id._id) id = id._id;
+  //   var spk = Spks.findOne(id);
+  //   return spk && (Spks.remove)
+  //
+  // };
+
   JsonRoutes.add('get', '/package/:packageId', function(req, res, next) {
 
     var packageId = req.params.packageId,
@@ -122,7 +130,7 @@ if (Meteor.isServer) {
 
     } else {
 
-      JsonRoutes.sendResults(res, 400, 'cannot find packageId ' + packageId);
+      JsonRoutes.sendResult(res, 400, 'cannot find packageId ' + packageId);
 
     }
 

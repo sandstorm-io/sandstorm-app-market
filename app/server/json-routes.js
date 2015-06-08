@@ -24,11 +24,11 @@ JsonRoutes.add('post', '/api/checkupdates', function(req, res, next) {
       }, [])
     };
 
-    JsonRoutes.sendResults(res, 200, results);
+    JsonRoutes.sendResult(res, 200, results);
 
   } else {
 
-    JsonRoutes.sendResults(res, 400, 'request body in wrong format');
+    JsonRoutes.sendResult(res, 400, 'request body in wrong format');
 
   }
 

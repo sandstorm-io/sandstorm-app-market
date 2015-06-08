@@ -265,8 +265,9 @@ Template.fileBox.onCreated(function() {
   tmp.progress = new ReactiveVar();
   tmp.fileId = new ReactiveVar();
   tmp.origFileId = new ReactiveVar();
-  tmp.spk = new ReactiveVar();
-  tmp.origSpk = new ReactiveVar();
+
+    // DELETE ME
+    window.getTemp = function() {return tmp;};
 
   // pull out relevant .spk details as soon as app is available
   tmp.autorun(function(c) {
@@ -283,13 +284,11 @@ Template.fileBox.onCreated(function() {
   tmp.autorun(function(c) {
     var origFileId = tmp.origFileId.get();
     tmp.subscribe('spks', origFileId);
-    tmp.origSpk.set(Spks.findOne(origFileId));
   });
 
   tmp.autorun(function(c) {
     var fileId = tmp.fileId.get();
     tmp.subscribe('spks', fileId);
-    tmp.spk.set(Spks.findOne(fileId));
   });
 
   tmp.autorun(function(c) {
@@ -376,15 +375,16 @@ Template.fileBox.helpers({
 
   },
 
-  spk: function() {
+  existingApp: function() {
 
-    return Template.instance().get('spk').get();
+    return Apps.findOne(FlowRouter.getParam('appId'));
 
   },
 
-  origSpk: function() {
+  existingPackageId: function() {
 
-    return Template.instance().get('origSpk').get();
+    var app = Apps.findOne(FlowRouter.getParam('appId'));
+    return app && app.latestVersion() && app.latestVersion().packageId;
 
   }
 
