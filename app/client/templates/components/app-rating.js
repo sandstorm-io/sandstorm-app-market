@@ -11,13 +11,7 @@ Template.appRating.helpers({
       jobDone: this.ratings.jobDone * 100 / denom,
       amazing: this.ratings.amazing * 100 / denom,
       positive: (this.ratings.jobDone + this.ratings.amazing) * 100 / denom
-    } : {
-      broken: 25,
-      didntLike: 25,
-      jobDone: 25,
-      amazing: 25,
-      positive: 50
-    };
+    } : {};
   }
 
 });

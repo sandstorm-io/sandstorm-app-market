@@ -18,6 +18,25 @@
     }
   }
 
+  .message {
+    display: inline-block;
+    color: #888888;
+    font-size: 1.3rem;
+
+    &.table {
+      display: block;
+      text-align: center;
+      > i {
+        display: inline-block;
+        width: 12%
+      }
+      > span {
+        display: inline-block;
+        width: 70%;
+      }
+    }
+  }
+
   .ratings {
 
     display: inline-block;
