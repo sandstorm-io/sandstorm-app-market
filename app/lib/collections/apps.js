@@ -35,7 +35,8 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
       });
     };
 
-  if (Meteor.isServer)
+  if (Meteor.isServer) {
+
     app.updateInstallCountThisWeek = function() {
       var lastWeek = new moment().subtract(7, 'days').toDate(),
           recentInstalls = _.filter(this.installDates, function(date) {
@@ -47,6 +48,20 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
         installDates: recentInstalls
       }});
     };
+
+    app.updateSpkDetails = function(previous) {
+      var latest = this.latestVersion(),
+          spk = Spks.findOne({'meta.packageId': latest && latest.packageId});
+      if (spk) {
+        var newKey = Spks.getKey(spk._id);
+        Apps.update(this._id, {$set: {spkKey: newKey}});
+        Spks.remove(spk._id);
+
+        if (previous && previous.spkKey && previous.spkKey !== newKey) Spks.deleteFile(previous.spkKey);
+      }
+    };
+
+  }
 
   app.installed = function() {
 
@@ -60,25 +75,6 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
 
     return false;
 
-  };
-
-  // it's actually slightly difficult to know when an app's ultimate install
-  // link will be available due to the unknown length of time it will take the
-  // .spk to get to S3.  So, we construct the install link on demand, and then
-  // cache it if it turns out to be available.
-  app.makeInstallLink = function() {
-    if (this.installLink) return this.installLink;
-    else if (Meteor.isClient) return Meteor.call('apps/updateInstallLink', this._id);
-    var latest = this.latestVersion(),
-        spk = Spks.findOne({'meta.packageId': latest && latest.packageId}),
-        installLink;
-    if (spk && spk.copies.spkS3) {
-      installLink = 'install/' + spk.meta.packageId + '?url=https://s3-' +
-         Meteor.settings.public.AWSRegion + '.amazonaws.com/' +
-         Meteor.settings.public.spkBucket + '/' + spk.copies.spkS3.key;
-      Apps.update(this._id, {$set: {installLink: installLink}});
-      return installLink;
-    }
   };
 
   return app;
@@ -292,21 +288,7 @@ var appsFullSchema = _.extend({}, appsBaseSchema, {
   },
   spkKey: {
     type: String,
-    optional: true,
-    autoValue: function() {
-      var versions = this.field('versions');
-      if (versions) {
-        var latest = _.sortBy(versions.value, function(v) { return -v.version; })[0],
-            spk = Spks.findOne({'meta.packageId': latest && latest.packageId});
-        if (spk) {
-          var key = Spks.getKey(spk._id);
-          Spks.remove(spk._id);
-          return key;
-        }
-      } else {
-        this.unset();
-      }
-    }
+    optional: true
   },
   approved: {
     type: Number,
@@ -499,6 +481,10 @@ function updateInstallCountThisWeek() {
 
 }
 
+Apps.after.insert(function() {
+  this.transform().updateSpkDetails();
+});
+
 Apps.after.update(function(userId, doc, fieldNames) {
 
   if (fieldNames.indexOf('reviews') > -1) {
@@ -524,4 +510,7 @@ Apps.after.update(function(userId, doc, fieldNames) {
   if (fieldNames.indexOf('installCount') > -1)
     this.transform().updateInstallCountThisWeek();
 
-}, {fetchPrevious: false});
+  if (fieldNames.indexOf('versions') > -1)
+    this.transform().updateSpkDetails(this.previous);
+
+});

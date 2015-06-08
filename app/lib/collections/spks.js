@@ -107,13 +107,12 @@ if (Meteor.isServer) {
 
   };
 
-  // Spks.remove = function(id) {
-  //
-  //   if (id && id._id) id = id._id;
-  //   var spk = Spks.findOne(id);
-  //   return spk && (Spks.remove)
-  //
-  // };
+  Spks.deleteFile = function(key) {
+
+    var spkFile = gcsBucket.file(key);
+    spkFile.delete(function(err) {if (err) throw err;});
+
+  };
 
   JsonRoutes.add('get', '/package/:packageId', function(req, res, next) {
 

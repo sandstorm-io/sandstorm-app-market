@@ -190,7 +190,6 @@ Meteor.methods({
     _.extend(app.versions[0], {
       version: fileObj.meta.version,
       packageId: fileObj.meta.packageId,
-      // dateTime: new Date()
     });
 
     Apps.insert(app, function(err, res) {
@@ -355,11 +354,6 @@ Meteor.methods({
 
     return Apps.update(appId, {$set: {note: note}});
 
-  },
-
-  'apps/updateInstallLink': function(appId) {
-    var app = Apps.findOne(appId);
-    if (app) return app.makeInstallLink();
   },
 
   'genres/getPopulated': function() {

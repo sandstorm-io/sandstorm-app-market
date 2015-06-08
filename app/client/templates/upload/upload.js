@@ -331,8 +331,15 @@ Template.fileBox.onCreated(function() {
               packageId: fileObj.meta.packageId,
               spkId: fileObj._id
             }];
+            // if this is an update, open up version detail boxes for editing
+            if (tmp.get('editingFields')) {
+              var fieldEd = tmp.get('editingFields').get();
+              fieldEd.latestVersion = true;
+              tmp.get('editingFields').set(fieldEd);
+            }
             if (tmp.origFileId.get() !== tmp.fileId.get() && tmp.get('newVersion')) tmp.get('newVersion').set(true);
             tmp.origFileId.set(tmp.fileId.get());
+
             tmp.get('app').set(app);
           }
         }
