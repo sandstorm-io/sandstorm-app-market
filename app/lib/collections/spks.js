@@ -114,6 +114,24 @@ if (Meteor.isServer) {
 
   };
 
+  Spks.cleanFiles = function() {
+    var procFiles = Meteor.bindEnvironment(function(err, files, nextQuery) {
+      _.each(files, function(file) {
+        if (file.name.slice(0, 5) === 'spks/' &&
+            parseInt(file.metadata.size, 10) &&
+            !Apps.findOne({spkKey: file.name})) {
+          console.log('Removing deprecated spk ' + file.name);
+          file.delete(function(e) {if (e) throw e;});
+        }
+      });
+      if (nextQuery) gcsBucket.getFiles(nextQuery, procFiles);
+    }, function(e) {if (e) throw e;});
+
+    gcsBucket.getFiles(procFiles);
+  };
+
+  Meteor.startup(Spks.cleanFiles);
+
   JsonRoutes.add('get', '/package/:packageId', function(req, res, next) {
 
     var packageId = req.params.packageId,
