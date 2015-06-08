@@ -42,6 +42,8 @@ Template.Edit.onCreated(function() {
   tmp.app = app;
   var newApp = appProto();
   Schemas.AppsBase.clean(newApp);
+  var lastVersion = Apps.findOne(FlowRouter.current().params.appId).latestVersion();
+  newApp.versions = [lastVersion];
   tmp.app.set(newApp);
 
   tmp.setCategories = function(categories) {
@@ -146,11 +148,11 @@ Template.Edit.onCreated(function() {
         tmp.changedOriginal.set(true);
       } else {
         var newVersion = Apps.findOne(FlowRouter.current().params.appId),
-            lastVersionNumber = newVersion.latestVersion();
+            latestVersion = newVersion.latestVersion();
         newVersion.replacesApp = newVersion._id;
-        newVersion.versions = [];
+        newVersion.versions = [latestVersion];
         Schemas.AppsBase.clean(newVersion);
-        newVersion.lastVersionNumber = lastVersionNumber;
+        newVersion.lastVersionNumber = latestVersion;
         tmp.app.set(newVersion);
       }
       tmp.setCategories(tmp.app.get('categories'));
@@ -259,8 +261,6 @@ Template.Edit.events({
   'click [data-alt-field="latestVersion"]': function(evt, tmp) {
 
     tmp.newVersion.set(true);
-    var lastVersion = Apps.findOne(FlowRouter.current().params.appId).latestVersion();
-    if (tmp.app.get('versions').length === 0) tmp.app.set('versions', [lastVersion]);
     if (evt.currentTarget.nodeName === 'INPUT') {
       Tracker.afterFlush(function() {
         $('[data-version-field="number" ]').focus();

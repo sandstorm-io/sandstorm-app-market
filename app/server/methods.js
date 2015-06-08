@@ -181,17 +181,26 @@ Meteor.methods({
     // Here we need to make sure the app metadata is still as per the spk in case
     // a user has manually overwritten it before submitting.
     var fileObj = Spks.findOne(app.versions[0].spkId),
-        currentApp = Apps.findOne(app.replacesApp);
+        currentApp = Apps.findOne(app.replacesApp),
+        latestVersion = currentApp && currentApp.latestVersion();
 
-    if (!fileObj) throw new Meteor.Error('Bad .spk id in latest version data');
-    if (!currentApp || fileObj.meta.appId !== currentApp.appId) throw new Meteor.Error('New .spk appId does not match existing appId');
+    // Confirm veracity of .spk, but only if there's a new packageId
+    if (latestVersion.packageId !== app.versions[0].packageId) {
+      if (!fileObj && latestVersion && latestVersion.packageId !== app.versions[0].packageId)
+        throw new Meteor.Error('Bad .spk id in latest version data');
+      if (!currentApp || fileObj.meta.appId !== currentApp.appId) throw new Meteor.Error('New .spk appId does not match existing appId');
 
-    app.appId = fileObj.meta.appId;
-    _.extend(app.versions[0], {
-      version: fileObj.meta.version,
-      packageId: fileObj.meta.packageId,
-      // dateTime: new Date()
-    });
+      app.appId = fileObj.meta.appId;
+      _.extend(app.versions[0], {
+        version: fileObj.meta.version,
+        packageId: fileObj.meta.packageId,
+      });
+    } else {
+      app.appId = latestVersion.appId;
+      _.extend(app.versions[0], {
+        version: latestVersion.version
+      });
+    }
 
     Apps.insert(app, function(err, res) {
       if (err) throw new Meteor.Error(err.message);
@@ -355,11 +364,6 @@ Meteor.methods({
 
     return Apps.update(appId, {$set: {note: note}});
 
-  },
-
-  'apps/updateInstallLink': function(appId) {
-    var app = Apps.findOne(appId);
-    if (app) return app.makeInstallLink();
   },
 
   'genres/getPopulated': function() {

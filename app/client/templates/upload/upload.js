@@ -265,8 +265,9 @@ Template.fileBox.onCreated(function() {
   tmp.progress = new ReactiveVar();
   tmp.fileId = new ReactiveVar();
   tmp.origFileId = new ReactiveVar();
-  tmp.spk = new ReactiveVar();
-  tmp.origSpk = new ReactiveVar();
+
+    // DELETE ME
+    window.getTemp = function() {return tmp;};
 
   // pull out relevant .spk details as soon as app is available
   tmp.autorun(function(c) {
@@ -283,13 +284,11 @@ Template.fileBox.onCreated(function() {
   tmp.autorun(function(c) {
     var origFileId = tmp.origFileId.get();
     tmp.subscribe('spks', origFileId);
-    tmp.origSpk.set(Spks.findOne(origFileId));
   });
 
   tmp.autorun(function(c) {
     var fileId = tmp.fileId.get();
     tmp.subscribe('spks', fileId);
-    tmp.spk.set(Spks.findOne(fileId));
   });
 
   tmp.autorun(function(c) {
@@ -332,8 +331,15 @@ Template.fileBox.onCreated(function() {
               packageId: fileObj.meta.packageId,
               spkId: fileObj._id
             }];
+            // if this is an update, open up version detail boxes for editing
+            if (tmp.get('editingFields')) {
+              var fieldEd = tmp.get('editingFields').get();
+              fieldEd.latestVersion = true;
+              tmp.get('editingFields').set(fieldEd);
+            }
             if (tmp.origFileId.get() !== tmp.fileId.get() && tmp.get('newVersion')) tmp.get('newVersion').set(true);
             tmp.origFileId.set(tmp.fileId.get());
+
             tmp.get('app').set(app);
           }
         }
@@ -376,15 +382,16 @@ Template.fileBox.helpers({
 
   },
 
-  spk: function() {
+  existingApp: function() {
 
-    return Template.instance().get('spk').get();
+    return Apps.findOne(FlowRouter.getParam('appId'));
 
   },
 
-  origSpk: function() {
+  existingPackageId: function() {
 
-    return Template.instance().get('origSpk').get();
+    var app = Apps.findOne(FlowRouter.getParam('appId'));
+    return app && app.latestVersion() && app.latestVersion().packageId;
 
   }
 
@@ -401,7 +408,9 @@ Template.fileBox.events({
 
   'change [data-action="file-picker"][data-for="spk"]': function(evt, tmp) {
 
-    tmp.get('file').set(evt.currentTarget.files[0]);
+    var file = evt.currentTarget.files[0];
+    tmp.get('file').set(file);
+    tmp.get('app').set('filename', file && file.name);
 
   },
 

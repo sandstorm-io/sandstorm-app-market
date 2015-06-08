@@ -1,18 +1,8 @@
-// FS.debug = true;
-
-spkS3 = new FS.Store.S3('spkS3', {
-  region: Meteor.settings.public.AWSRegion, //optional in most cases
-  accessKeyId: Meteor.isServer && Meteor.settings.AWSAccessKeyId, //required if environment variables are not set
-  secretAccessKey: Meteor.isServer && Meteor.settings.AWSSecretAccessKey, //required if environment variables are not set
-  bucket: Meteor.settings.public.spkBucket, //required
-  ACL: 'public-read', //optional, default is 'private', but you can allow public or secure access routed through your app URL
-});
-
+spkFS = new FS.Store.FileSystem('spkFS', {path: 'uploads/spks'});
 
 Spks = new FS.Collection('spks', {
   stores: [
-    new FS.Store.FileSystem('spkFS', {path: 'uploads/spks'}),
-    spkS3
+    spkFS
     ],
   filter: {
     maxSize: 500 * 1024 * 1024, // in bytes
@@ -24,6 +14,8 @@ Spks = new FS.Collection('spks', {
     }
   }
 });
+
+Spks.spkFolder = 'spks/';
 
 Spks.allow({
   insert: function(userId, doc) {
@@ -55,6 +47,13 @@ Spks.error = {
 
 if (Meteor.isServer) {
 
+  var gcloud = Meteor.npmRequire('gcloud'),
+      GCS = new gcloud.storage({
+        keyFilename: './assets/app/' + Meteor.settings.GCSKeyFilename,
+        projectId: Meteor.settings.GCSProjectId
+      }),
+      gcsBucket = GCS.bucket(Meteor.settings.public.spkBucket);
+
   Meteor.publish('spks', function(fileId) {
     return Spks.find({$or: [{_id: fileId}, {'meta.appId': fileId}]});
   });
@@ -62,20 +61,96 @@ if (Meteor.isServer) {
   Spks.find().observeChanges({
     changed: function(id, fields) {
       if (fields.copies && fields.copies.spkFS) {
-        if (Spks.findOne(id).meta) return;
-        try {
-          var packageMeta = App.spkVerify('uploads/spks/' + fields.copies.spkFS.key),
-              existing = Apps.findOne({'versions.packageId': packageMeta.packageId}),
-              latest = Spks.findOne({'meta.appId': packageMeta.appId}, {sort: {'meta.version': -1}});
-          if (existing) Spks.update(id, {$set: {error: 'DUPLICATE_SPK'}});
-          if (latest && latest.meta.version > packageMeta.version) Spks.update(id, {$set: {error: 'NON_LATEST_VERSION'}});
-          Spks.update(id, {$set: {meta: packageMeta}});
-        } catch(e) {
-          console.log(e);
-          Spks.update(id, {$set: {error: 'BAD_SPK'}});
+        var doc = Spks.findOne(id);
+        if (!doc.meta) {
+          try {
+            var packageMeta = App.spkVerify('uploads/spks/' + fields.copies.spkFS.key),
+                existing = Apps.findOne({'versions.packageId': packageMeta.packageId}),
+                latest = Spks.findOne({'meta.appId': packageMeta.appId}, {sort: {'meta.version': -1}}),
+                update = {meta: packageMeta};
+            if (existing) update.error = 'DUPLICATE_SPK';
+            if (latest && latest.meta.version > packageMeta.version) update.error = 'NON_LATEST_VERSION';
+            Spks.update(id, {$set: update});
+
+            if (!update.error) {
+              gcsBucket.upload(spkFS.path + '/' + doc.copies.spkFS.key, {
+                destination: Spks.spkFolder + doc.copies.spkFS.key
+              }, Meteor.bindEnvironment(function(err, file) {
+                if (err) throw err;
+                Spks.update(id, {$set: {
+                  location: Meteor.settings.public.spkBucket + '.storage.googleapis.com/' + Spks.spkFolder + doc.copies.spkFS.key
+                }});
+              }));
+            }
+          } catch(e) {
+            console.log(e);
+            Spks.update(id, {$set: {error: 'BAD_SPK'}});
+          }
         }
       }
     }
+  });
+
+  Spks.getLocation = function(id) {
+
+    if (id && id._id) id = id._id;
+    var spk = Spks.findOne(id);
+    return spk && ('http://' + Meteor.settings.public.spkBucket + '.storage.googleapis.com/' + Spks.spkFolder + spk.copies.spkFS.key);
+
+  };
+
+  Spks.getKey = function(id) {
+
+    if (id && id._id) id = id._id;
+    var spk = Spks.findOne(id);
+    return spk && (Spks.spkFolder + spk.copies.spkFS.key);
+
+  };
+
+  Spks.deleteFile = function(key) {
+
+    var spkFile = gcsBucket.file(key);
+    spkFile.delete(function(err) {if (err) throw err;});
+
+  };
+
+  Spks.cleanFiles = function() {
+    var procFiles = Meteor.bindEnvironment(function(err, files, nextQuery) {
+      _.each(files, function(file) {
+        if (file.name.slice(0, 5) === 'spks/' &&
+            parseInt(file.metadata.size, 10) &&
+            !Apps.findOne({spkKey: file.name})) {
+          console.log('Removing deprecated spk ' + file.name);
+          file.delete(function(e) {if (e) throw e;});
+        }
+      });
+      if (nextQuery) gcsBucket.getFiles(nextQuery, procFiles);
+    }, function(e) {if (e) throw e;});
+
+    gcsBucket.getFiles(procFiles);
+  };
+
+  Meteor.startup(Spks.cleanFiles);
+
+  JsonRoutes.add('get', '/package/:packageId', function(req, res, next) {
+
+    var packageId = req.params.packageId,
+        app = Apps.findOne({'versions.packageId': packageId});
+
+    if (app) {
+
+      res.writeHead(200, {
+        'Content-Disposition': 'attachment; filename=' + app.filename,
+      });
+      var spkFile = gcsBucket.file(app.spkKey);
+      spkFile.createReadStream().pipe(res);
+
+    } else {
+
+      JsonRoutes.sendResult(res, 400, 'cannot find packageId ' + packageId);
+
+    }
+
   });
 
 }

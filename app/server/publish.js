@@ -8,7 +8,8 @@ var appUnpublishedFields = {
   flags: 0,
   notes: 0,
   adminReqests: 0,
-  installDates: 0
+  installDates: 0,
+  spkKey: 0
 };
 
 Meteor.publish('categories', function () {
