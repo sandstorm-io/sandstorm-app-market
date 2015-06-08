@@ -68,7 +68,9 @@
 
                 </div>
 
-                <div class="action-buttons force-height clearfix">
+                <div class="clearfix"></div>
+
+                <div class="action-buttons force-height">
 
                   <a href="{{fullInstallLink}}" target="_blank" class="{{#if installed}}installed{{else}}install{{/if}} button" data-action="install-app">
                     INSTALL{{#if installed}}+{{/if}} <i class="icon-arrow-install"></i>
@@ -195,7 +197,7 @@
 
   <div class="carousel">
 
-    <div class="prev-button" data-action="carousel-prev"><i class="fa fa-angle-left"></i></div>
+    <div class="prev-button" data-action="carousel-prev"><i class="icon-extra-l-angle"></i></div>
     <div class="owl-carousel">
       {{#each images}}
       <div class="screenshot-container">
@@ -203,7 +205,7 @@
       </div>
       {{/each}}
     </div>
-    <div class="next-button" data-action="carousel-next"><i class="fa fa-angle-right"></i></div>
+    <div class="next-button" data-action="carousel-next"><i class="icon-extra-r-angle"></i></div>
 
   </div>
 
@@ -250,7 +252,7 @@
 
   {{#unless isPhone}}
     <div class="review-frame">
-      <div class="prev-button {{#unless extraReviews}}disabled{{/unless}}" data-action="reviews-prev"><i class="fa fa-angle-left"></i></div>
+      <div class="prev-button {{#unless extraReviews}}disabled{{/unless}}" data-action="reviews-prev"><i class="icon-extra-l-angle"></i></div>
       <div class="reviews">
         <div class="owl-carousel">
           {{#each reviewGroups}}
@@ -262,7 +264,7 @@
           {{/each}}
         </div>
       </div>
-      <div class="next-button {{#unless extraReviews}}disabled{{/unless}}" data-action="reviews-next"><i class="fa fa-angle-right"></i></div>
+      <div class="next-button {{#unless extraReviews}}disabled{{/unless}}" data-action="reviews-next"><i class="icon-extra-r-angle"></i></div>
     </div>
   {{else}}
   <div class="reviews">
