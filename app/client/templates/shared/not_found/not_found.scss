@@ -1,0 +1,42 @@
+@import "../../../stylesheets/variables";
+@import "../../../templates/components/menu";
+
+.notFound {
+
+  .contents {
+
+    @extend .menu-spacer;
+    @extend .pad-right;
+
+    .title-message {
+
+      display: block;
+      color: $genre-title-text;
+      font-size: 3.5rem;
+      font-weight: lighter;
+      padding-top: 5rem;
+      padding-bottom: 3rem;
+      white-space: nowrap;
+      vertical-align: middle;
+
+    }
+
+    .subtitle-message {
+
+      display: block;
+      color: $genre-title-text;
+      font-size: 2.2rem;
+      padding-top: 2rem;
+      padding-bottom: 1rem;
+      white-space: nowrap;
+      vertical-align: middle;
+
+      a {
+        color: #aa79c6;
+      }
+
+    }
+
+  }
+
+}
