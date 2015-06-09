@@ -143,7 +143,7 @@ Template.Edit.onCreated(function() {
       } else {
         var newVersion = Apps.findOne(FlowRouter.current().params.appId),
             latestVersion = newVersion.latestVersion();
-        newVersion.replacesApp = newVersion._id;
+        if (!newVersion.replacesApp) newVersion.replacesApp = newVersion._id;
         newVersion.versions = [latestVersion];
         Schemas.AppsBase.clean(newVersion);
         newVersion.lastVersionNumber = latestVersion;
@@ -306,11 +306,12 @@ Template.Edit.events({
   'click [data-action="save-app"]': function(evt, tmp) {
 
     tmp.validate();
-    Meteor.call('user/saveApp', tmp.app.all(), function(err) {
+    Meteor.call('user/saveApp', tmp.app.all(), function(err, res) {
       if (err) console.log(err);
       else {
         window.scrollTo(0, 0);
-        tmp.app.set(Meteor.user().savedApp[FlowRouter.current().params.appId]);
+        tmp.app.set(Apps.findOne(res));
+        FlowRouter.go('appsByMe');
       }
     });
 

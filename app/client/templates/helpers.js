@@ -55,13 +55,6 @@ var helpers = {
 
   },
 
-  s3Link: function(path) {
-
-    return 'https://s3-' + Meteor.settings.public.AWSRegion + '.amazonaws.com/' +
-           Meteor.settings.public.spkBucket + '/' + path;
-
-  },
-
   approval: Apps.approval,
 
   appRatings: Reviews.rating,

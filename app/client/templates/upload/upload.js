@@ -233,11 +233,12 @@ Template.Upload.events({
   'click [data-action="save-app"]': function(evt, tmp) {
 
     tmp.validate();
-    Meteor.call('user/saveApp', tmp.app.all(), function(err) {
+    Meteor.call('user/saveApp', tmp.app.all(), function(err, res) {
       if (err) console.log(err);
       else {
         window.scrollTo(0, 0);
-        tmp.app.set(Meteor.user().savedApp.new);
+        tmp.app.set(Apps.findOne(res));
+        FlowRouter.go('appsByMe');
       }
     });
 
@@ -357,7 +358,7 @@ Template.fileBox.helpers({
   filename: function() {
 
     var file = Template.instance().get('file').get();
-    return file && file.name;
+    return (file && file.name) || Template.instance().get('app').get('filename');
 
   },
 
@@ -427,7 +428,6 @@ Template.fileBox.events({
       Spks.insert(file, function(err, fileObj) {
         if (err) console.log(err);
         else tmp.get('fileId').set(fileObj._id);
-        console.log(fileObj);
       });
     }
 

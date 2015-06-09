@@ -101,8 +101,12 @@ Meteor.methods({
     // add TimeStamp
     app.lastEdit = new Date();
     app.approved = 4;
-    if (app.replacesApp && Apps.findOne({replacesApp: app.replacesApp, approved: Apps.approval.draft}))
-      return Apps.update({replacesApp: app.replacesApp, approved: Apps.approval.draft}, app);
+    var currentDraft = Apps.findOne({replacesApp: app.replacesApp, approved: Apps.approval.draft});
+
+    if (app.replacesApp && currentDraft) {
+      Apps.update({replacesApp: app.replacesApp, approved: Apps.approval.draft}, {$set: app});
+      return currentDraft._id;
+    }
     else return Apps.insert(app, {validate: false});
 
   },
@@ -120,8 +124,6 @@ Meteor.methods({
   },
 
   'user/submitApp': function(app) {
-
-    var fut = new Future();
 
     this.unblock();
     if (!this.userId) return false;
@@ -147,21 +149,17 @@ Meteor.methods({
       // dateTime: new Date()
     });
 
-    // Then insert the new app
-    Apps.insert(app, function(err, res) {
-      console.log(err, res);
-      if (err) console.log(err.code);
-      if (err) fut.throw(new Meteor.Error(err.name, err.message, {code: err.code}));
-      else fut.return(res);
-    });
+    app.approved = Apps.approval.pending;
 
-    return fut.wait();
+    // if there is a draft of this update, replace it with the submitted version
+    var draft = Apps.findOne({_id: app._id, approved: Apps.approval.draft});
+    if (draft) Apps.update(app._id, {$set: _.omit(app, 'id')});
+    // otherwise, just insert it as a new app pending approval
+    else Apps.insert(app);
 
   },
 
   'user/submitUpdate': function(app) {
-
-    var fut = new Future();
 
     this.unblock();
     if (!this.userId) return false;
@@ -188,24 +186,33 @@ Meteor.methods({
         throw new Meteor.Error('Bad .spk id in latest version data');
       if (!currentApp || fileObj.meta.appId !== currentApp.appId) throw new Meteor.Error('New .spk appId does not match existing appId');
 
+      // copy over latest version data
       app.appId = fileObj.meta.appId;
       _.extend(app.versions[0], {
         version: fileObj.meta.version,
         packageId: fileObj.meta.packageId,
       });
     } else {
+      // otherwise simply ensure that the most recent (internal) version number is correct
       app.appId = latestVersion.appId;
       _.extend(app.versions[0], {
         version: latestVersion.version
       });
     }
 
-    Apps.insert(app, function(err, res) {
-      if (err) throw new Meteor.Error(err.message);
-      else fut.return(res);
-    });
+    // ensure the submission is pending approval
+    app.approved = Apps.approval.pending;
 
-    return fut.wait();
+    // if there is a draft of this update, replace it with the submitted version
+    var draft = Apps.findOne({_id: app._id, approved: Apps.approval.draft});
+    if (draft) Apps.update(app._id, {$set: _.omit(app, 'id')});
+    // otherwise, just insert it as a new app pending approval
+    else Apps.insert(app);
+
+    // Remove any other drafts for this app if they exist
+    Apps.remove({replacesApp: currentApp._id, approved: Apps.approval.draft});
+
+    return true;
 
   },
 

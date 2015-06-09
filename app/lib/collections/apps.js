@@ -482,8 +482,8 @@ function updateInstallCountThisWeek() {
 
 }
 
-Apps.after.insert(function() {
-  this.transform().updateSpkDetails();
+Apps.after.insert(function(userId, doc) {
+  if (doc.approved !== Apps.approval.draft) this.transform().updateSpkDetails();
 });
 
 Apps.after.update(function(userId, doc, fieldNames) {
@@ -511,7 +511,7 @@ Apps.after.update(function(userId, doc, fieldNames) {
   if (fieldNames.indexOf('installCount') > -1)
     this.transform().updateInstallCountThisWeek();
 
-  if (fieldNames.indexOf('versions') > -1)
+  if (fieldNames.indexOf('versions') > -1 && doc.approved !== Apps.approval.draft)
     this.transform().updateSpkDetails(this.previous);
 
 });

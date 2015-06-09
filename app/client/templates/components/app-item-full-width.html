@@ -36,10 +36,17 @@
 
             <div class="edit-button hide-for-phone">
               {{#if equal approved approval.draft}}
-              <a class="sandstorm-button neutral small" href={{getZippedPath 'upload draft' 'appId' _id}}>
-                <i class="icon-edit"></i>
-                <span class="text">CONTINUE</span>
-              </a>
+                {{#if replacesApp}}
+                <a class="sandstorm-button neutral small" href={{getZippedPath 'edit' 'appId' _id}}>
+                  <i class="icon-edit"></i>
+                  <span class="text">CONTINUE</span>
+                </a>
+                {{else}}
+                <a class="sandstorm-button neutral small" href={{getZippedPath 'upload draft' 'appId' _id}}>
+                  <i class="icon-edit"></i>
+                  <span class="text">CONTINUE</span>
+                </a>
+                {{/if}}
               {{else}}
               <a class="sandstorm-button neutral small" href={{getZippedPath 'edit' 'appId' _id}}>
                 <i class="icon-edit"></i>

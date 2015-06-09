@@ -65,7 +65,7 @@
 
           {{#if ../../../installPage}}
             <div class="app-rating">
-              {{{appRating myRating}}}
+              {{> appRating ratings=ratings simple=true}}
               <a class="rate-it" href="{{getZippedPath 'singleApp' 'appId' this._id}}">
                 {{#if myRating}}
                 YOUR RATING
