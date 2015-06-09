@@ -491,7 +491,7 @@ Template.genreGrid.events({
   },
 
   'keyup [data-field="new-genre-name"]': function (evt, tmp) {
-  
+
     if (evt.keyCode !== 13) {
 
       this.name = s.titleize(tmp.$('[data-field="new-genre-name"]').val());
