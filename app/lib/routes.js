@@ -23,7 +23,12 @@ function getSandstormServer(queryParams) {
   if (queryParams.host) amplify.store('sandstormHost', queryParams.host);
 }
 
-//
+// Utility function to redirect on bad appId
+function redirectOnBadAppId() {
+  var appId = FlowRouter.current().params.appId;
+  if (!Apps.find(appId).count()) FlowRouter.go('appMarket');
+}
+
 function getPopulatedGenres() {
   Meteor.call('genres/getPopulated', function(err, res) {
     if (err) throw new Meteor.Error(err);
@@ -45,7 +50,7 @@ FlowRouter.route('/app/:appId', {
   subscriptions: function(params) {
     var route = this;
     this.register('apps by id',
-      Meteor.subscribe('apps by id', params.appId));
+      Meteor.subscribe('apps by id', params.appId, redirectOnBadAppId));
     this.register('user flags',
       Meteor.subscribe('user flags'));
   },
@@ -141,9 +146,7 @@ FlowRouter.route('/edit/:appId', {
     this.register('saved apps',
       Meteor.subscribe('saved apps'));
     this.register('this app',
-      Meteor.subscribe('apps by id', params.appId));
-    this.register('this app',
-      Meteor.subscribe('apps by id', params.appId));
+      Meteor.subscribe('apps by id', params.appId, redirectOnBadAppId));
   },
   action: function(params, queryParams) {
     getSandstormServer(queryParams);
@@ -158,7 +161,7 @@ FlowRouter.route('/upload/:appId', {
     this.register('all categories',
       Meteor.subscribe('all categories'));
     this.register('saved apps',
-      Meteor.subscribe('saved apps'));
+      Meteor.subscribe('saved apps', redirectOnBadAppId));
   },
   action: function(params, queryParams) {
     getSandstormServer(queryParams);
@@ -188,7 +191,7 @@ FlowRouter.route('/review/:appId', {
     this.register('saved apps',
       Meteor.subscribe('saved apps'));
     this.register('this app',
-      Meteor.subscribe('apps by id', params.appId, true));
+      Meteor.subscribe('apps by id', params.appId, true, redirectOnBadAppId));
     this.register('user flags',
       Meteor.subscribe('user flags'));
   },
