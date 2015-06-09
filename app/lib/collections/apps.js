@@ -224,7 +224,7 @@ var appsBaseSchema = {
   },
   filename: {
     type: String,
-    defaultValue: 'package.spk'
+    defaultValue: ''
   }
 
 };
