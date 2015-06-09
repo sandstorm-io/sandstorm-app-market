@@ -477,26 +477,31 @@ Template.genreGrid.events({
 
   },
 
-  'click [data-action="save-genre"], keyup [data-field="new-genre-name"], blur [data-field="new-genre-name"]': function(evt, tmp) {
+  'click [data-action="save-genre"], blur [data-field="new-genre-name"]': function(evt, tmp) {
 
-    if (evt.keyCode && evt.keyCode !== 13) {
+    var categories = tmp.get('categories').get();
+
+    delete this.editing;
+    this.selected = true;
+    tmp.get('app').set('categories', tmp.get('app').get('categories').concat(this.name));
+    categories = _.reject(categories, function(cat) { return !cat.name; });
+
+    tmp.get('categories').set(categories);
+
+  },
+
+  'keyup [data-field="new-genre-name"]': function (evt, tmp) {
+  
+    if (evt.keyCode !== 13) {
 
       this.name = s.titleize(tmp.$('[data-field="new-genre-name"]').val());
 
     } else {
 
-      var categories = tmp.get('categories').get();
-
-      delete this.editing;
-      this.selected = true;
-      tmp.get('app').set('categories', tmp.get('app').get('categories').concat(this.name));
-      categories = _.reject(categories, function(cat) { return !cat.name; });
-
-      tmp.get('categories').set(categories);
+      $(evt.currentTarget).blur();
 
     }
-
-  },
+  }
 
 });
 
