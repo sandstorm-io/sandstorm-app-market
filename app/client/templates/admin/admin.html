@@ -96,26 +96,28 @@
 <template name="genreSection">
 
   <div class="admin-filter grey square {{#if genreFilter 'suggestedGenres'}}active{{/if}}" data-action="select-genre" data-genre="suggestedGenres">
-    <div class="text">
+    <div class="all text">
       Suggested Genres
     </div>
   </div>
 
   <div class="admin-filter grey square {{#if genreFilter 'approved'}}active{{/if}}" data-action="select-genre" data-genre="approved">
-    <div class="text">
+    <div class="all text">
       Approved
     </div>
   </div>
 
   <div class="admin-filter grey square {{#if genreFilter 'rejected'}}active{{/if}}" data-action="select-genre" data-genre="rejected">
-    <div class="text">
+    <div class="all text">
       Rejected
     </div>
   </div>
 
+  <div class="genre-divider"></div>
+
   {{#each categories}}
     <div class="admin-filter grey square {{#if genreFilter name}}active{{/if}}" data-action="select-genre">
-      <div class="text">
+      <div class="all text">
         {{name}}
       </div>
     </div>
@@ -137,7 +139,7 @@
   <div class="left-float push-right">
 
     <div class="admin-filter grey square">
-      <div class="text">
+      <div class="all text" contenteditable>
         {{name}}
       </div>
     </div>

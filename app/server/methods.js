@@ -433,6 +433,7 @@ Meteor.methods({
     var cat = Categories.findOne({name: genre});
 
     if (!cat) throw new Meteor.Error('No genre with the name ' + genre + ' has been suggested');
+    Apps.update({categories: genre}, {$pull: {categories: genre}});
     return Categories.update({name: genre}, {$set: {
       approved: 1
     }});
