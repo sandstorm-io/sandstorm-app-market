@@ -15,6 +15,7 @@ Template.Genre.onCreated(function() {
     tmp.subscribe('apps by genre', s.capitalize(FlowRouter.reactiveCurrent().params.genre), tmp.subLimit.get(), {
       onReady: function() {
         tmp.subReady.set(true);
+        if (!Genres.getOne({name: params.genre})) FlowRouter.go('notFound', {object: 'genre'});
       }
     });
   });

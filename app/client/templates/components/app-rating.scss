@@ -128,23 +128,10 @@
 
 }
 
-// .app-item-container:not(.large) {
-//
-//   .app-rating-container {
-//     display: block;
-//
-//     > i {
-//       display: none;
-//     }
-//
-//     .ratings {
-//       width: 100%;
-//
-//       .bar {
-//         width: 100%;
-//       }
-//     }
-//
-//   }
-//
-// }
+.app-item-container {
+
+  .app-rating-container {
+    display: block;
+  }
+
+}

@@ -107,8 +107,6 @@ FlowRouter.route('/genre/:genre', {
     if (params.genre !== s.capitalize(params.genre))
       FlowRouter.setParams({genre: s.capitalize(params.genre)});
 
-    if (!Genres.getOne({name: genre})) FlowRouter.go('notFound', {object: 'genre'});
-
     if (params.genre === 'Popular') FlowLayout.render('MasterLayout', {mainSection: 'Popular'});
     else FlowLayout.render('MasterLayout', {mainSection: 'Genre', genre: FlowRouter.current().params.genre});
   }
