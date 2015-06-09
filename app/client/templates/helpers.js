@@ -42,7 +42,7 @@ var helpers = {
   latestVersionNumber: function(app) {
 
     app = app || this;
-    return app && app.latestVersion && app.latestVersion().number;
+    return app && app.latestVersion && app.latestVersion() && app.latestVersion().number;
 
   },
 
@@ -52,13 +52,6 @@ var helpers = {
     if (!url) return 'No link';
     else if (url.search('github.com') > -1) return '<a href="' + url + '">On Github</a>';
     else return '<a href="' + url + '">' + url + '</a>';
-
-  },
-
-  s3Link: function(path) {
-
-    return 'https://s3-' + Meteor.settings.public.AWSRegion + '.amazonaws.com/' +
-           Meteor.settings.public.spkBucket + '/' + path;
 
   },
 

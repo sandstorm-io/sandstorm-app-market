@@ -65,7 +65,7 @@ if (Meteor.isServer) {
         if (!doc.meta) {
           try {
             var packageMeta = App.spkVerify('uploads/spks/' + fields.copies.spkFS.key),
-                existing = Apps.findOne({'versions.packageId': packageMeta.packageId}),
+                existing = Apps.findOne({approved: {$ne: Apps.approval.draft}, 'versions.packageId': packageMeta.packageId}),
                 latest = Spks.findOne({'meta.appId': packageMeta.appId}, {sort: {'meta.version': -1}}),
                 update = {meta: packageMeta};
             if (existing) update.error = 'DUPLICATE_SPK';

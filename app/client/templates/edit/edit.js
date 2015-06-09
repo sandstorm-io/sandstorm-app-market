@@ -135,21 +135,15 @@ Template.Edit.onCreated(function() {
       var categories = Categories.find().fetch();
       tmp.categories.set(categories);
 
-      // And load the most recent of the user saved version and admin suggested version, or the actual app
-      var appDoc = Apps.findOne(FlowRouter.current().params.appId),
-          savedApp = Meteor.user() && Meteor.user().savedApp && Meteor.user().savedApp[FlowRouter.current().params.appId];
-      if (appDoc && appDoc.adminRequests.length && appDoc.lastUpdatedAdmin && (!savedApp || !savedApp.lastEdit || savedApp.lastEdit < appDoc.lastUpdatedAdmin)) {
-        // Admin has submitted changes more recently than user has saved
+      // And load the admin suggested version or the actual app
+      var appDoc = Apps.findOne(FlowRouter.current().params.appId);
+      if (appDoc && appDoc.adminRequests.length && appDoc.lastUpdatedAdmin) {
         tmp.app.set(appDoc.adminRequests[0]);
-        tmp.changedOriginal.set(true);
-      } else if (savedApp) {
-        // User has saved most recently
-        tmp.app.set(savedApp);
         tmp.changedOriginal.set(true);
       } else {
         var newVersion = Apps.findOne(FlowRouter.current().params.appId),
             latestVersion = newVersion.latestVersion();
-        newVersion.replacesApp = newVersion._id;
+        if (!newVersion.replacesApp) newVersion.replacesApp = newVersion._id;
         newVersion.versions = [latestVersion];
         Schemas.AppsBase.clean(newVersion);
         newVersion.lastVersionNumber = latestVersion;
@@ -312,11 +306,12 @@ Template.Edit.events({
   'click [data-action="save-app"]': function(evt, tmp) {
 
     tmp.validate();
-    Meteor.call('user/saveApp', tmp.app.all(), function(err) {
+    Meteor.call('user/saveApp', tmp.app.all(), function(err, res) {
       if (err) console.log(err);
       else {
         window.scrollTo(0, 0);
-        tmp.app.set(Meteor.user().savedApp[FlowRouter.current().params.appId]);
+        tmp.app.set(Apps.findOne(res));
+        FlowRouter.go('appsByMe');
       }
     });
 

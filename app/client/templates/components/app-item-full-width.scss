@@ -54,6 +54,9 @@
         &.rejected {
           color: #424242;
         }
+        &.draft {
+          color: #a0a0a0;
+        }
 
       }
 
@@ -183,7 +186,7 @@
     padding-left: $app-container-padding-lr;
     padding-right: $app-container-padding-lr;
 
-    &.approved, &.pending {
+    &.approved, &.pending, &.draft {
       display: none;
     }
     &.revise {

@@ -63,10 +63,10 @@ Meteor.publish('apps all', function(skip, limit) {
 
   if (Roles.userIsInRole(this.userId, 'admin')) {
 
-    var appsC = Apps.find({}, {skip: skip, limit: limit}),
+    var appsC = Apps.find({approved: {$lt: 4}}, {skip: skip, limit: limit}),
         userIds = _.uniq(appsC.map(function(app) { return app.author; }));
     return [
-      Genres.findIn('All', {}, {skip: skip, limit: limit}),
+      Genres.findIn('All', {approved: {$lt: 4}}, {skip: skip, limit: limit}),
       Meteor.users.find({_id: {$in: userIds}})
     ];
 
@@ -79,7 +79,7 @@ Meteor.publish('apps all', function(skip, limit) {
 });
 
 Meteor.publish('apps by author', function(authorId) {
-  return Apps.find({author: authorId});
+  return Apps.find({author: authorId, approved: Apps.approval.approved});
 });
 
 Meteor.publish('app search name', function(term) {
@@ -91,7 +91,8 @@ Meteor.publish('app search description', function(term) {
 });
 
 Meteor.publish('saved apps', function() {
-  return Meteor.users.find(this.userId, {fields: {savedApp: 1}});
+  // return Meteor.users.find(this.userId, {fields: {savedApp: 1}});
+  return Apps.find({author: this.userId, approved: Apps.approval.draft});
 });
 
 Meteor.publish('user flags', function() {
