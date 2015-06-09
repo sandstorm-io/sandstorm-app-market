@@ -197,6 +197,10 @@
 
     <div class="app-item-inner" data-action="admin-review">
 
+      {{#if soleCategory}}
+        <div class="unique-category"><i class="fa fa-exclamation"></i></div>
+      {{/if}}
+
       {{#with app}}
 
         <div class="image-surround large">

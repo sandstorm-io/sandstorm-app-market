@@ -492,6 +492,17 @@
     box-sizing: border-box;
     position: relative;
 
+    .unique-category {
+
+      position: absolute;
+      top: 0;
+      left: 0.5rem;
+      font-size: 4rem;
+      color: #e5a045;
+      z-index: 1;
+
+    }
+
     .image-surround {
 
       position: relative;

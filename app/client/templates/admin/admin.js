@@ -122,7 +122,7 @@ var genreTemplates = {
 
   'suggestedGenres': {
     template: 'suggestedGenres',
-    data: {filter: null}
+    data: {filter: {$exists: false}}
   },
 
   'approved': {
@@ -342,7 +342,7 @@ Template.suggestedGenres.helpers({
   genres: function() {
 
     var query = {suggested: true};
-    if (_.isNumber(this.filter)) {
+    if (typeof this.filter !== 'undefined') {
       query.approved = this.filter;
       delete query.suggested;
     }
@@ -363,6 +363,7 @@ Template.suggestedGenres.helpers({
 var saveGenre = _.debounce(function(evt, tmp) {
 
   var newName = s.trim(tmp.$(evt.currentTarget).text());
+  console.log(newName);
   if (newName !== this.name)
     Categories.update({_id: this._id}, {$set: {name: newName}});
 

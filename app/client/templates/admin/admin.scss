@@ -60,6 +60,19 @@ body.admin {
 
   }
 
+  .genre-divider {
+
+    display: inline-block;
+    vertical-align: middle;
+    height: 2.5rem;
+    border-left: 1px solid #aaaaaa;
+    margin-left: 1rem;
+    margin-right: 2rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    
+  }
+
 }
 
 .admin-filter {
