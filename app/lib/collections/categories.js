@@ -48,7 +48,7 @@ if (Meteor.isServer) {
     },
 
     update: function (userId, doc, fieldNames, modifier) {
-      return false;
+      return Roles.userIsInRole(userId, 'admin') && fieldNames[0] === 'name' && fieldNames.length === 1;
     },
 
     remove: function (userId, doc) {
@@ -62,7 +62,6 @@ if (Meteor.isServer) {
     },
 
     update: function (userId, doc, fieldNames, modifier) {
-      return true;
     },
 
     remove: function (userId, doc) {
@@ -73,3 +72,26 @@ if (Meteor.isServer) {
 }
 
 Categories.attachSchema(Schemas.Categories);
+
+if (Meteor.isServer) {
+
+  Categories.after.update(function(userId, doc, fieldNames) {
+
+    if (fieldNames.indexOf('name') > -1) {
+      console.log(doc.name, this.previous.name);
+
+      Apps.update({categories: this.previous.name}, {
+        $push: {
+          categories: doc.name
+        }
+      });
+      Apps.update({categories: this.previous.name}, {
+        $pull: {
+          categories: this.previous.name
+        }
+      });
+    }
+
+  });
+
+}

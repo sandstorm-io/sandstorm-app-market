@@ -349,6 +349,7 @@ Template.suggestedGenres.helpers({
 
     return Categories.find(query).map(function(cat) {
       return {
+        _id: cat._id,
         name: cat.name,
         appList: Apps.find({categories: cat.name}),
         approved: cat.approved
@@ -358,6 +359,14 @@ Template.suggestedGenres.helpers({
   }
 
 });
+
+var saveGenre = _.debounce(function(evt, tmp) {
+
+  var newName = s.trim(tmp.$(evt.currentTarget).text());
+  if (newName !== this.name)
+    Categories.update({_id: this._id}, {$set: {name: newName}});
+
+}, 500);
 
 Template.suggestedGenres.events({
 
@@ -374,6 +383,18 @@ Template.suggestedGenres.events({
     Meteor.call('admin/rejectGenre', this.name, function(err) {
       if (err) console.log(err);
     });
+
+  },
+
+  'blur [contenteditable]': saveGenre,
+
+  'keyup [contenteditable]': function(evt, tmp) {
+
+    if (evt.keyCode === 13) {
+      evt.preventDefault();
+      saveGenre.call(this, evt, tmp);
+      tmp.$(evt.currentTarget).blur();
+    }
 
   }
 

@@ -69,7 +69,6 @@ body.admin {
   font-size: 1.3rem;
   line-height: 2.5rem;
   border-radius: $button-border-radius;
-  padding-left: 0.75rem;
   cursor: pointer;
   margin-right: 1rem;
   margin-top: 0.5rem;
@@ -84,9 +83,23 @@ body.admin {
     vertical-align: bottom;
   }
 
+  i {
+    padding-left: 0.75rem;
+  }
+
   .text {
     padding-left: 0.75rem;
     padding-right: 1.5rem;
+    &.all {
+      padding-left: 1.5rem;
+    }
+
+    &[contenteditable] {
+      cursor: text;
+      white-space:nowrap;
+
+      br { display: none; }
+    }
   }
 
   .count {
