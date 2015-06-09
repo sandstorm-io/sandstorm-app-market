@@ -7,13 +7,13 @@ var appProto = function() {
         category: '',
         author: Meteor.userId()
       };
-    },
-    app = new ReactiveDict();
+    };
 
 Template.Edit.onCreated(function() {
 
-  var tmp = this;
-
+  var tmp = this,
+      app = new ReactiveDict();
+  
   tmp.file = new ReactiveVar();
   tmp.categories = new ReactiveVar();
   tmp.seedString = new ReactiveVar(Random.id());
