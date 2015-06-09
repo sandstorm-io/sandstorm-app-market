@@ -13,7 +13,7 @@ Template.Edit.onCreated(function() {
 
   var tmp = this,
       app = new ReactiveDict();
-  
+
   tmp.file = new ReactiveVar();
   tmp.categories = new ReactiveVar();
   tmp.seedString = new ReactiveVar(Random.id());
@@ -42,7 +42,8 @@ Template.Edit.onCreated(function() {
   tmp.app = app;
   var newApp = appProto();
   Schemas.AppsBase.clean(newApp);
-  var lastVersion = Apps.findOne(FlowRouter.current().params.appId).latestVersion();
+  var thisApp = Apps.findOne(FlowRouter.current().params.appId),
+      lastVersion = thisApp && thisApp.latestVersion();
   newApp.versions = [lastVersion];
   tmp.app.set(newApp);
 

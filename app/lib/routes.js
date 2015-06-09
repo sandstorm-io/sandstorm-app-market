@@ -23,7 +23,18 @@ function getSandstormServer(queryParams) {
   if (queryParams.host) amplify.store('sandstormHost', queryParams.host);
 }
 
-//
+
+// Subscription callback which checks it the supplied app exists when the
+// sub is ready, and redirects to a not found page if it isn't
+function checkAppExists() {
+  var app = Apps.findOne(FlowRouter.current().params.appId);
+  if (!app) FlowRouter.go('notFound', {object: 'app'});
+}
+function checkAuthorExists() {
+  var author = Meteor.users.findOne(FlowRouter.current().params.authorId);
+  if (!author) FlowRouter.go('notFound', {object: 'author'});
+}
+
 function getPopulatedGenres() {
   Meteor.call('genres/getPopulated', function(err, res) {
     if (err) throw new Meteor.Error(err);
@@ -40,12 +51,20 @@ FlowRouter.route('/login', {
   }
 });
 
+FlowRouter.route('/not-found/:object', {
+  name: 'notFound',
+  action: function(params, queryParams) {
+    getPopulatedGenres();
+    FlowLayout.render('MasterLayout', {mainSection: 'NotFound'});
+  }
+});
+
 FlowRouter.route('/app/:appId', {
   name: 'singleApp',
   subscriptions: function(params) {
     var route = this;
     this.register('apps by id',
-      Meteor.subscribe('apps by id', params.appId));
+      Meteor.subscribe('apps by id', params.appId, checkAppExists));
     this.register('user flags',
       Meteor.subscribe('user flags'));
   },
@@ -71,7 +90,7 @@ FlowRouter.route('/author/:authorId', {
     this.register('apps by author',
       Meteor.subscribe('apps by author', params.authorId));
     this.register('user basic',
-      Meteor.subscribe('user basic', params.authorId));
+      Meteor.subscribe('user basic', params.authorId, checkAuthorExists));
   },
   action: function(params, queryParams) {
     getSandstormServer(queryParams);
@@ -87,6 +106,8 @@ FlowRouter.route('/genre/:genre', {
     getPopulatedGenres();
     if (params.genre !== s.capitalize(params.genre))
       FlowRouter.setParams({genre: s.capitalize(params.genre)});
+
+    if (!Genres.getOne({name: genre})) FlowRouter.go('notFound', {object: 'genre'});
 
     if (params.genre === 'Popular') FlowLayout.render('MasterLayout', {mainSection: 'Popular'});
     else FlowLayout.render('MasterLayout', {mainSection: 'Genre', genre: FlowRouter.current().params.genre});
@@ -141,9 +162,7 @@ FlowRouter.route('/edit/:appId', {
     this.register('saved apps',
       Meteor.subscribe('saved apps'));
     this.register('this app',
-      Meteor.subscribe('apps by id', params.appId));
-    this.register('this app',
-      Meteor.subscribe('apps by id', params.appId));
+      Meteor.subscribe('apps by id', params.appId, checkAppExists));
   },
   action: function(params, queryParams) {
     getSandstormServer(queryParams);
@@ -158,7 +177,7 @@ FlowRouter.route('/upload/:appId', {
     this.register('all categories',
       Meteor.subscribe('all categories'));
     this.register('saved apps',
-      Meteor.subscribe('saved apps'));
+      Meteor.subscribe('saved apps', checkAppExists));
   },
   action: function(params, queryParams) {
     getSandstormServer(queryParams);
@@ -188,7 +207,7 @@ FlowRouter.route('/review/:appId', {
     this.register('saved apps',
       Meteor.subscribe('saved apps'));
     this.register('this app',
-      Meteor.subscribe('apps by id', params.appId, true));
+      Meteor.subscribe('apps by id', params.appId, true, checkAppExists));
     this.register('user flags',
       Meteor.subscribe('user flags'));
   },
@@ -226,6 +245,12 @@ FlowRouter.route('/service-configure', {
     FlowLayout.render('loginButtons');
   }
 });
+
+FlowRouter.notFound = {
+  action: function() {
+    FlowRouter.go('notFound', {object: 'page'});
+  }
+};
 
 FlowRouter.routeCategories = {
 
