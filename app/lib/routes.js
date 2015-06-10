@@ -38,7 +38,13 @@ function checkAuthorExists() {
 function getPopulatedGenres() {
   Meteor.call('genres/getPopulated', function(err, res) {
     if (err) throw new Meteor.Error(err);
-    else App.populatedGenres.set(res);
+    // need to replace genres with hard-coded versions if available as
+    // selector functions cannot be sent as EJSON 
+    res = _.map(res, function(genre) {
+      var thisGenre = Genres.getOne(genre.name);
+      return thisGenre || genre;
+    });
+    App.populatedGenres.set(res);
   });
 }
 
