@@ -25,13 +25,18 @@ Template.Edit.onCreated(function() {
   tmp.submitted = new ReactiveVar();
   tmp.changedOriginal = new ReactiveVar(false);
   tmp.validator = Schemas.AppsBase.namedContext();
+  tmp.descriptionWarning = false;
 
   tmp.validate = function() {
-    tmp.validator.validate(tmp.app.all());
-    if (tmp.app.get('versions').length === 0) tmp.validator.addInvalidKeys([{
-      name: 'version',
-      type: 'version number required'
-    }]);
+    var valid = tmp.validator.validate(tmp.app.all());
+    if (tmp.app.get('versions').length === 0) {
+      tmp.validator.addInvalidKeys([{
+        name: 'version',
+        type: 'version number required'
+      }]);
+      valid = false;
+    }
+    return valid;
   };
 
   var resetScreenshotsVis = function() {
@@ -147,7 +152,6 @@ Template.Edit.onCreated(function() {
         if (!newVersion.replacesApp) newVersion.replacesApp = newVersion._id;
         newVersion.versions = [latestVersion];
         Schemas.AppsBase.clean(newVersion);
-        newVersion.lastVersionNumber = latestVersion;
         tmp.app.set(newVersion);
       }
       tmp.setCategories(tmp.app.get('categories'));
@@ -289,17 +293,27 @@ Template.Edit.events({
 
   'click [data-action="submit-app"]': function(evt, tmp) {
 
-    tmp.validate();
-    if (tmp.app.get('versions').length > 0) {
-      Meteor.call('user/submitUpdate', tmp.app.all(), function(err, res) {
-        if (err) console.log(err);
-        else if (res) {
-          window.scrollTo(0, 0);
-          tmp.submitted.set(new Date());
+    if (tmp.validate()) {
+      if (tmp.app.get('versions').length > 0) {
+        if (!tmp.app.get('description') && !tmp.descriptionWarning) {
+          $(window).scrollTo('[data-description-warning]');
+          Tooltips.show('[data-description-warning]');
+          tmp.descriptionWarning = true;
+          Meteor.setTimeout(Tooltips.hide.bind(Tooltips), 5000);
+        } else {
+          Meteor.call('user/submitUpdate', tmp.app.all(), function(err, res) {
+            if (err) console.log(err);
+            else if (res) {
+              window.scrollTo(0, 0);
+              tmp.submitted.set(new Date());
+            }
+          });
         }
-      });
+      } else {
+        console.log('No new version specified');
+      }
     } else {
-      console.log('No new version specified');
+      console.log(tmp.validator);
     }
 
   },

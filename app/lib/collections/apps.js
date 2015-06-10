@@ -113,19 +113,9 @@ var VersionSchema = new SimpleSchema({
     type: Date,
     autoValue: function(doc) {
       if (!this.isSet || this.operator !== '$push') return new Date();
-      // if (this.isInsert) {
-      //   return new Date();
-      // } else if (this.isUpsert) {
-      //   return {$setOnInsert: new Date()};
-      // } else {
-      //   this.unset();
-      // }
     },
-    // optional: true
+    optional: true
   },
-  // dateTime: {
-  //   type: Date
-  // },
   changes: {
     type: String,
     max: 200,

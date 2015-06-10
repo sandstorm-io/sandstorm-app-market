@@ -53,6 +53,36 @@ Tooltips =
 	get: getTooltip
 	hide: hideTooltip
 	setPosition: setPosition
+	show: (el, content) ->
+		$el = $(el)
+
+		viewport = $el.data 'tooltip-disable'
+
+		if viewport and _.isString(viewport)
+			mq = window.matchMedia(viewport)
+			return false if mq.matches
+
+		setTooltip content or $el.data 'tooltip-manual'
+
+		Tracker.afterFlush ->
+			direction = $el.data('tooltip-direction') or 'n'
+			$tooltip = $(".tooltip")
+
+			position = $el.offset()
+			offLeft = $el.data('tooltip-left') or offset[0]
+			offTop = $el.data('tooltip-top') or offset[1]
+
+			position.top = switch direction
+				when 'w', 'e' then center vertically $tooltip, $el
+				when 'n' then position.top - $tooltip.outerHeight() - offTop
+				when 's' then position.top + $el.outerHeight() + offTop
+
+			position.left = switch direction
+				when 'n', 's' then center horizontally $tooltip, $el
+				when 'w' then position.left - $tooltip.outerWidth() - offLeft
+				when 'e' then position.left + $el.outerWidth() + offLeft
+
+			setPosition(position, direction)
 
 # Enable/disable for viewports
 
