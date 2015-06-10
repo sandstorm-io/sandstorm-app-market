@@ -287,10 +287,13 @@
 <template name="descriptionEditor">
 
   <div class="description-editor-container">
-    <div class="tab {{#unless viewOriginal}}active{{/unless}}" data-action="edit-markdown">Current</div>
-    <div class="tab {{#if viewOriginal}}active{{/if}}" data-action="view-original">Original</div>
+    <div class="tab {{#unless viewOriginal}}active{{/unless}}" data-action="edit-markdown">Edit</div>
+    <div class="tab {{#if viewOriginal}}active{{/if}}" data-action="view-original">Preview</div>
+    <div class="markdown-bar" data-tooltip-manual={{emptyDescriptionTooltip}} data-description-warning>
+      <a href="https://help.github.com/articles/markdown-basics/" target="_blank">Markdown supported &gt;</a>
+    </div>
     <textarea class="description-editor {{#if viewOriginal}}hidden{{/if}}" data-field="description">{{current}}</textarea>
-    <div class="description-editor {{#unless viewOriginal}}hidden{{/unless}}">{{{original}}}</div>
+    <div class="description-editor {{#unless viewOriginal}}hidden{{/unless}}" data-field="original">{{{original}}}</div>
   </div>
 
 </template>

@@ -553,14 +553,15 @@
     color: #555555;
     font-size: 1.95rem;
     font-family: $main-font;
-    height: 2.8rem;
+    height: 15rem;
     line-height: 2.8rem;
     padding-top: 1.1rem;
     padding-bottom: 1.1rem;
     padding-left: 1.1rem;
     padding-right: 1.1rem;
     box-sizing: border-box;
-    resize: vertical;
+    overflow-y: auto;
+    resize: none;
 
     .spacer {
       display: block;

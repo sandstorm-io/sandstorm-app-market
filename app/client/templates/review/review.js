@@ -465,6 +465,8 @@ Template.descriptionEditor.onCreated(function() {
   tmp.current = new ReactiveVar();
   tmp.viewOriginal = new ReactiveVar(false);
 
+  tmp.converter = new Showdown.converter();
+
   tmp.autorun(function(c) {
     if (FlowRouter.subsReady()) {
       Tracker.afterFlush(function() {
@@ -487,6 +489,10 @@ Template.descriptionEditor.helpers({
   },
   viewOriginal: function() {
     return Template.instance().get('viewOriginal').get();
+  },
+  emptyDescriptionTooltip: function() {
+    return '<h4>The description appears to be blank</h4><p>Are you sure you want to submit this' +
+           ' app for review?</p>';
   }
 
 });
@@ -494,10 +500,14 @@ Template.descriptionEditor.helpers({
 Template.descriptionEditor.events({
 
   'click [data-action="edit-markdown"]': function(evt, tmp) {
+    $('[data-field="description"]').css('height', $('[data-field="original"]').css('height'));
     tmp.viewOriginal.set(false);
+    Tracker.afterFlush($.prototype.focus.bind(tmp.$('[data-field="description"]')));
   },
 
   'click [data-action="view-original"]': function(evt, tmp) {
+    $('[data-field="original"]').css('height', $('[data-field="description"]').css('height'));
+    tmp.original.set(tmp.converter.makeHtml(tmp.get('app').get('description')));
     tmp.viewOriginal.set(true);
   },
 

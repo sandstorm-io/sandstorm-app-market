@@ -22,9 +22,10 @@ Template.Upload.onCreated(function() {
   tmp.suggestNewGenre = new ReactiveVar(false);
   tmp.submitted = new ReactiveVar();
   tmp.validator = Schemas.AppsBase.namedContext();
+  tmp.descriptionWarning = false;
 
   tmp.validate = function() {
-    tmp.validator.validate(tmp.app.all());
+    return tmp.validator.validate(tmp.app.all());
   };
 
   var resetScreenshotsVis = function() {
@@ -148,10 +149,51 @@ Template.Upload.onCreated(function() {
 
   // TODO: delete this, debug method
   window.showApp = function() {
-    console.log(tmp.app.all());
+    return tmp.app.all();
+  };
+  window.getTmp = function() {
+    return tmp;
   };
 
 });
+
+var buttonDict = {
+  markdown: {
+    text: 'Edit'
+  },
+  wysiwyg: {
+    text: 'Preview'
+  },
+  bold: {
+    text: 'B'
+  },
+  italic: {
+    text: 'I'
+  },
+  quote: {
+    text: '"Q"'
+  },
+  code: {
+    text: '&lt;Code&gt;'
+  },
+  ol: {
+    text: '&#9737;'
+  },
+  ul: {
+    text: '1.'
+  },
+  heading: {
+    text: 'H'
+  },
+  link: {
+    text: '',
+    hidden: true
+  },
+  image: {
+    text: '',
+    hidden: true
+  }
+};
 
 Template.Upload.onDestroyed(function() {
   $(window).off('resize.upload');
@@ -206,27 +248,35 @@ Template.Upload.events({
 
   'click [data-action="submit-app"]': function(evt, tmp) {
 
-    tmp.validate();
-    Meteor.call('user/submitApp', tmp.app.all(), function(err, res) {
-      if (err) {
-        console.log(err);
-        if (err.details && err.details.code === 11000) {
-          AntiModals.overlay('messageModal', {data: {
-            header: 'Duplicate App',
-            message: 'There\'s already an app associated with that <em>.spk</em> on the App Store. ' +
-                     'If you\'d like to update it with a new version, you can find it in ' +
-                     '<strong>Apps By Me</strong>, from which you can choose <strong>Edit</strong>.'
-          }});
-        }
+    if (tmp.validate()) {
+      if (!tmp.app.get('description') && !tmp.descriptionWarning) {
+        $(window).scrollTo('[data-description-warning]');
+        Tooltips.show('[data-description-warning]');
+        tmp.descriptionWarning = true;
+        Meteor.setTimeout(Tooltips.hide.bind(Tooltips), 5000);
+      } else {
+        Meteor.call('user/submitApp', tmp.app.all(), function(err, res) {
+          if (err) {
+            console.log(err);
+            if (err.details && err.details.code === 11000) {
+              AntiModals.overlay('messageModal', {data: {
+                header: 'Duplicate App',
+                message: 'There\'s already an app associated with that <em>.spk</em> on the App Store. ' +
+                         'If you\'d like to update it with a new version, you can find it in ' +
+                         '<strong>Apps By Me</strong>, from which you can choose <strong>Edit</strong>.'
+              }});
+            }
+          }
+          else {
+            var newApp = appProto();
+            Schemas.AppsBase.clean(newApp);
+            tmp.get('app').set(newApp);
+            window.scrollTo(0, 0);
+            tmp.submitted.set(new Date());
+          }
+        });
       }
-      else {
-        var newApp = appProto();
-        Schemas.AppsBase.clean(newApp);
-        tmp.get('app').set(newApp);
-        window.scrollTo(0, 0);
-        tmp.submitted.set(new Date());
-      }
-    });
+    }
 
   },
 
