@@ -392,7 +392,9 @@
     color: #555555;
   }
   &.input {
-    width: 10rem;
+    min-width: 10rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
   }
 
 }
