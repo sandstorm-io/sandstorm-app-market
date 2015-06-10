@@ -91,6 +91,7 @@ mongo@1.1.0
 mongo-livedata@1.0.8
 msavin:mongol@1.0.22
 mystor:device-detection@0.2.0
+natestrauser:jquery-scrollto@1.4.7
 npm-bcrypt@0.7.8_2
 npm-container@1.0.0
 numeral:numeral@1.5.3

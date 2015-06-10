@@ -38,23 +38,18 @@ Template.SingleApp.onRendered(function() {
 
   var tmp = this;
 
-  // DISABLE SLIDER INIT UNTIL PAYMENTS ARE ENABLED
-  // this.autorun(function(c) {
-  //   if (FlowRouter.subsReady()) {
-  //     Tracker.afterFlush(function() {
-  //       tmp.$('.slider').noUiSlider({
-  //         orientation: 'horizontal',
-  //         range: {
-  //           min: 0,
-  //           max: 40
-  //         },
-  //         start: 0
-  //       });
-  //       $('.slider').Link('lower').to($('[data-field="chip-amount"]'));
-  //     });
-  //     c.stop();
-  //   }
-  // });
+  if (FlowRouter.getQueryParam('rateApp')) {
+    tmp.get('writeReview').set(true);
+    // I cannot get this to work without a timeout, despite apparently waiting
+    // for everyhting else to be ready
+    $(document).ready(function() {
+      Tracker.afterFlush(function() {
+        Meteor.setTimeout(function() {
+          $(window).scrollTo($('.review-entry')[0]);
+        }, 50);
+      });
+    });
+  }
 
 });
 

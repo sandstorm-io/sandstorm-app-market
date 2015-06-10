@@ -15,3 +15,30 @@ Template.appRating.helpers({
   }
 
 });
+
+Template.appRating.events({
+
+  'click [data-action="rate-app"]': function(evt, tmp) {
+
+    evt.stopImmediatePropagation();
+
+    if (FlowRouter.current().route.name !== 'singleApp') {
+      var app = Template.parentData(1);
+      FlowRouter.go('singleApp', {appId: app._id}, {rateApp: true});
+    }
+    else {
+      tmp.get('writeReview').set(true);
+      // I cannot get this to work without a timeout, despite apparently waiting
+      // for everyhting else to be ready
+      $(document).ready(function() {
+        Tracker.afterFlush(function() {
+          Meteor.setTimeout(function() {
+            $(window).scrollTo($('.review-entry')[0]);
+          }, 50);
+        });
+      });
+    }
+
+  }
+
+});

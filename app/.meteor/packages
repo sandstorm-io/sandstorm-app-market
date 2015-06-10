@@ -50,3 +50,4 @@ amplify
 cfs:standard-packages
 cfs:filesystem
 simple:json-routes
+natestrauser:jquery-scrollto

@@ -107,9 +107,9 @@
         .app-author-full-width {
           clear: left;
           font-size: 1.7rem;
-          a {
-            color: #783189;
-          }
+          // a {
+          //   color: #783189;
+          // }
         }
 
       }
@@ -185,6 +185,7 @@
     .half-col {
 
       display: inline-block;
+      vertical-align: top;
       width: 50%;
 
     }

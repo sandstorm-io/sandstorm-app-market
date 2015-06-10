@@ -18,40 +18,42 @@
         </div>
       </div>
       {{else}}
-      <div class="message table">
-        <i class="icon-extra-thumbs-up"></i>
+      <div class="message table" data-action="rate-app">
         <span>Be the first to rate</span>
+        <i class="icon-extra-thumbs-up"></i>
         <i class="icon-extra-thumbs-down"></i>
       </div>
       {{/if}}
     {{else}}
-      <i class="icon-extra-thumbs-up"></i>
-      {{#if isNumber percentage.jobDone}}
-      <div class="ratings">
-        <div class="text">
-          <div class="labels">
-            {{#if percentage.amazing}}<div class="amazing" style="width: {{percentage.amazing}}%;">{{numberFormat percentage.amazing '0'}}%</div>{{/if}}
-            {{#if percentage.jobDone}}<div class="job-done" style="width: {{percentage.jobDone}}%;">{{numberFormat percentage.jobDone '0'}}%</div>{{/if}}
-            {{#if percentage.didntLike}}<div class="didnt-like" style="width: {{percentage.didntLike}}%;">{{numberFormat percentage.didntLike '0'}}%</div>{{/if}}
-            {{#if percentage.broken}}<div class="broken" style="width: {{percentage.broken}}%;">{{numberFormat percentage.broken '0'}}%</div>{{/if}}
-          </div>
+      {{#unless isNumber percentage.jobDone}}
+        <div class="message" data-action="rate-app">
+          Be the first to rate this app
         </div>
-        <div class="bar">
-          <div class="background {{backgroundCol}}"></div>
-          <div class="fill">
-            <div class="amazing" style="width: {{percentage.amazing}}%;"></div>
-            <div class="job-done" style="width: {{percentage.jobDone}}%;"></div>
-            <div class="didnt-like" style="width: {{percentage.didntLike}}%;"></div>
-            <div class="broken" style="width: {{percentage.broken}}%;"></div>
-          </div>
-        </div>
-      </div>
+        <i class="icon-extra-thumbs-up" data-action="rate-app"></i>
+        <i class="icon-extra-thumbs-down" data-action="rate-app"></i>
       {{else}}
-      <div class="message">
-        Be the first to rate this app
-      </div>
-      {{/if}}
-      <i class="icon-extra-thumbs-down"></i>
+        <i class="icon-extra-thumbs-up"></i>
+        <div class="ratings">
+          <div class="text">
+            <div class="labels">
+              {{#if percentage.amazing}}<div class="amazing" style="width: {{percentage.amazing}}%;">{{numberFormat percentage.amazing '0'}}%</div>{{/if}}
+              {{#if percentage.jobDone}}<div class="job-done" style="width: {{percentage.jobDone}}%;">{{numberFormat percentage.jobDone '0'}}%</div>{{/if}}
+              {{#if percentage.didntLike}}<div class="didnt-like" style="width: {{percentage.didntLike}}%;">{{numberFormat percentage.didntLike '0'}}%</div>{{/if}}
+              {{#if percentage.broken}}<div class="broken" style="width: {{percentage.broken}}%;">{{numberFormat percentage.broken '0'}}%</div>{{/if}}
+            </div>
+          </div>
+          <div class="bar">
+            <div class="background {{backgroundCol}}"></div>
+            <div class="fill">
+              <div class="amazing" style="width: {{percentage.amazing}}%;"></div>
+              <div class="job-done" style="width: {{percentage.jobDone}}%;"></div>
+              <div class="didnt-like" style="width: {{percentage.didntLike}}%;"></div>
+              <div class="broken" style="width: {{percentage.broken}}%;"></div>
+            </div>
+          </div>
+        </div>
+        <i class="icon-extra-thumbs-down"></i>
+      {{/unless}}
     {{/if}}
   </div>
 

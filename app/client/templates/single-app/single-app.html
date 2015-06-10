@@ -41,7 +41,7 @@
                 <div class="half-col">
 
                   <div class="date">{{dateFormat createdAt 'MMMM DD, YYYY'}}</div>
-                  <div class="genre"><a href="{{getZippedPath 'appMarketGenre' 'genre' category}}">{{category}}</a></div>
+                  <div class="genre"><a href="{{getZippedPath 'appMarketGenre' 'genre' categories.[0]}}">{{categories.[0]}}</a></div>
 
                 </div>
 
@@ -70,7 +70,7 @@
 
                 <div class="clearfix"></div>
 
-                <div class="action-buttons force-height">
+                <div class="action-buttons">
 
                   <a href="{{fullInstallLink}}" target="_blank" class="{{#if installed}}installed{{else}}install{{/if}} button" data-action="install-app">
                     INSTALL{{#if installed}}+{{/if}} <i class="icon-arrow-install"></i>

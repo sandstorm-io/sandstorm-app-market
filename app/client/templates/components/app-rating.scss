@@ -1,46 +1,59 @@
-.app-rating-container {
+.app-item-inner {
 
-  display: inline-block;
-  vertical-align: top;
-  line-height: auto;
-  font-size: 1.7rem;
-
-  > i {
-    display: inline-block;
-    vertical-align: middle;
-    font-size: 2.6rem !important;
-
-    &.icon-extra-thumbs-up {
-        color: #d8d8d8 !important;
-    }
-    &.icon-extra-thumbs-down {
-        color: #d8d8d8 !important;
-    }
-  }
-
-  .message {
-    display: inline-block;
-    color: #888888;
-    font-size: 1.3rem;
-
-    &.table {
-      display: block;
-      text-align: center;
-      > i {
-        display: inline-block;
-        width: 12%
+  &.reviews-section {
+    .rating .app-rating-container {
+      .message {
+        color: #222222;
       }
-      > span {
-        display: inline-block;
-        width: 70%;
+      i {
+        color: #888888;
       }
     }
   }
 
-  .ratings {
+  .app-rating-container {
 
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: top;
+    line-height: auto;
+    font-size: 1.7rem;
+
+    > i {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 2.6rem !important;
+
+      &.icon-extra-thumbs-up {
+          color: #c18ace;
+      }
+      &.icon-extra-thumbs-down {
+          color: #c18ace;
+      }
+    }
+
+    .message {
+      display: inline-block;
+      color: #783189;
+      font-size: 1.3rem;
+
+      &.table {
+        display: block;
+        text-align: center;
+        > i {
+          display: inline-block;
+          width: 12%
+        }
+        > span {
+          display: inline-block;
+          width: 70%;
+        }
+      }
+    }
+
+    .ratings {
+
+      display: inline-block;
+      vertical-align: middle;
 
 
       .text {
@@ -121,10 +134,18 @@
           .job-done { background-color: #41af00; }
           .amazing { background-color: #005e1b; }
         }
+
       }
 
-  }
+    }
 
+    [data-action="rate-app"] {
+
+      cursor: pointer;
+
+    }
+
+  }
 
 }
 
@@ -132,6 +153,10 @@
 
   .app-rating-container {
     display: block;
+
+    .message {
+      color: #888888;
+    }
   }
 
 }
