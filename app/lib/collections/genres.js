@@ -160,18 +160,18 @@ Genres = {
 
   findIn: function(name, selector, options, context) {
 
-    selector = selector || {};
-    options = options || {};
+    var thisSelector = selector || {},
+        theseOptions = options || {};
 
     var category = Categories.findOne({name: name}),
         extraGenre = _.findWhere(extraGenres, {name: name});
 
     if (category) {
-      _.extend(selector, {categories: category.name});
-      return Apps.find(selector, options);
+      _.extend(thisSelector, {categories: category.name});
+      return Apps.find(thisSelector, options);
     }
     else if (extraGenre) {
-      var params = invokeGenreFunctions(extraGenre, selector, options, context);
+      var params = invokeGenreFunctions(extraGenre, thisSelector, theseOptions, context);
       return Apps.find(params.selector, params.options);
     } else {
       return Apps.find(null);
@@ -181,18 +181,18 @@ Genres = {
 
   findOneIn: function(name, selector, options, context) {
 
-    selector = selector || {};
-    options = options || {};
+    var thisSelector = selector || {},
+        theseOptions = options || {};
 
     var category = Categories.findOne({name: name}),
         extraGenre = _.findWhere(extraGenres, {name: name});
 
     if (category) {
-      _.extend(selector, {categories: category.name});
-      return Apps.findOne(selector, options);
+      _.extend(thisSelector, {categories: category.name});
+      return Apps.findOne(thisSelector, theseOptions);
     }
     else if (extraGenre) {
-      var params = invokeGenreFunctions(extraGenre, selector, options, context);
+      var params = invokeGenreFunctions(extraGenre, thisSelector, theseOptions, context);
       return Apps.findOne(params.selector, params.options);
     }
 
@@ -231,7 +231,7 @@ Genres = {
 // Cache populated genres (more efficient than checking every time a user subscribes)
 if (Meteor.isServer) {
     Meteor.setInterval(function() {
-      App.populatedGenres = Genres.getPopulated();
+      App.populatedGenres = Genres.getPopulated({approved: Apps.approval.approved});
     }, 10000);
 }
 
@@ -245,8 +245,8 @@ function invokeGenreFunctions(extraGenre, origSelector, origOptions, context) {
   if (_.isFunction(eGenOptions)) eGenOptions = eGenOptions.apply(context);
 
   return {
-    selector: _.extend(origSelector, eGenSelector),
-    options: _.extend(origOptions, eGenOptions)
+    selector: _.extend({}, origSelector, eGenSelector),
+    options: _.extend({}, origOptions, eGenOptions)
   };
 
 }
