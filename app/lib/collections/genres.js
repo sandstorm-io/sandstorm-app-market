@@ -161,10 +161,19 @@ Genres = {
   findIn: function(name, selector, options, context) {
 
     var thisSelector = selector || {},
-        theseOptions = options || {};
+        theseOptions = options || {},
+        category,
+        extraGenre,
+        clientPopulated;
 
-    var category = Categories.findOne({name: name}),
-        extraGenre = _.findWhere(extraGenres, {name: name});
+    if (Meteor.isClient) {
+      clientPopulated = _.findWhere(App.populatedGenres.get(), {name: name});
+      if (clientPopulated && clientPopulated.selector) extraGenre = clientPopulated;
+      else category = clientPopulated;
+    } else {
+      category = Categories.findOne({name: name});
+      extraGenre = _.findWhere(extraGenres, {name: name});
+    }
 
     if (category) {
       _.extend(thisSelector, {categories: category.name});
@@ -182,10 +191,19 @@ Genres = {
   findOneIn: function(name, selector, options, context) {
 
     var thisSelector = selector || {},
-        theseOptions = options || {};
+        theseOptions = options || {},
+        category,
+        extraGenre,
+        clientPopulated;
 
-    var category = Categories.findOne({name: name}),
-        extraGenre = _.findWhere(extraGenres, {name: name});
+    if (Meteor.isClient) {
+      clientPopulated = _.findWhere(App.populatedGenres.get(), {name: name});
+      if (clientPopulated && clientPopulated.selector) extraGenre = clientPopulated;
+      else category = clientPopulated;
+    } else {
+      category = Categories.findOne({name: name});
+      extraGenre = _.findWhere(extraGenres, {name: name});
+    }
 
     if (category) {
       _.extend(thisSelector, {categories: category.name});

@@ -12,10 +12,11 @@ Template.Genre.onCreated(function() {
   // Reactively run the app subscription so that it will be stopped and restarted
   // whenever the genre or limit is changed.
   tmp.autorun(function() {
-    tmp.subscribe('apps by genre', s.capitalize(FlowRouter.reactiveCurrent().params.genre), tmp.subLimit.get(), {
+    var genre = s.capitalize(FlowRouter.reactiveCurrent().params.genre);
+    tmp.subscribe('apps by genre', genre, tmp.subLimit.get(), {
       onReady: function() {
         tmp.subReady.set(true);
-        if (!Genres.getOne({name: params.genre})) FlowRouter.go('notFound', {object: 'genre'});
+        if (!Genres.findOneIn(genre)) FlowRouter.go('notFound', {object: 'genre'});
       }
     });
   });
