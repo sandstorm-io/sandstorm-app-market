@@ -193,6 +193,12 @@ body.admin {
 
   }
 
+  @media screen and (min-width: $medium-tablet) and (max-width: $small-screen) {
+
+    padding-right: 2rem;
+
+  }
+
 }
 
 .margin-right {
@@ -202,6 +208,12 @@ body.admin {
   @media screen and (max-width: $medium-tablet) {
 
     margin-right: auto;
+
+  }
+
+  @media screen and (min-width: $medium-tablet) and (max-width: $small-screen) {
+
+    margin-right: 2rem;
 
   }
 

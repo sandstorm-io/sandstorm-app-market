@@ -28,7 +28,19 @@
     position: relative;
     height: $topbar-height;
 
-    @media (max-width: $small-tablet) {
+    @media (max-width: $small-phone) {
+      margin-left: $app-section-padding-left;
+      margin-right: 5rem;
+      .genres {right: 0;}
+    }
+
+    @media (min-width: $small-phone) and (max-width: $medium-phone) {
+      margin-left: $app-section-padding-left;
+      margin-right: 17rem;
+      .genres {right: 0;}
+    }
+
+    @media (min-width: $medium-phone) and (max-width: $small-tablet) {
       margin-left: $app-section-padding-left;
       margin-right: 22rem;
       .genres {right: 0;}
@@ -66,7 +78,13 @@
       display: inline-block;
 
       &.hide-above-small-phone {
-        @media (min-width: ($medium-phone + 1px)) {
+        @media (min-width: $medium-phone) {
+            display: none;
+        }
+      }
+
+      &.show-above-small-phone {
+        @media (max-width: $medium-phone) {
             display: none;
         }
       }
@@ -153,6 +171,7 @@
     position: absolute;
     right: $app-section-padding-right;
     bottom: $topbar-padding-bottom;
+    text-align: right;
 
     .search-box {
       display: inline-block;
@@ -203,6 +222,10 @@
 
     @media (max-width: $medium-tablet) {
       right: 1.5rem;
+    }
+
+    @media (min-width: $medium-tablet) and (max-width: $small-screen) {
+      right: 2rem;
     }
 
   }
