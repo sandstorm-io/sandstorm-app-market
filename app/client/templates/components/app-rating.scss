@@ -22,12 +22,10 @@
       display: inline-block;
       vertical-align: middle;
       font-size: 2.1rem !important;
+      color: #888888;
 
-      &.icon-extra-thumbs-up {
-          color: #c18ace;
-      }
-      &.icon-extra-thumbs-down {
-          color: #c18ace;
+      &.purple {
+        color: #c18ace;
       }
     }
 
