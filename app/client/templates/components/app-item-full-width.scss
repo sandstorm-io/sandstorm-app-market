@@ -126,6 +126,12 @@
           margin-bottom: 1rem;
           font-size: 1.7rem;
           color: #783189;
+          max-height: 5rem;
+          overflow-y: hidden;
+
+          a {
+            color: #783189;
+          }
         }
 
         .key {
@@ -144,6 +150,7 @@
           display: inline-block;
           width: calc(100% - 7.5rem);
           white-space: nowrap;
+          overflow: hidden;
           text-overflow: ellipsis;
           font-size: 1.3rem;
           line-height: 1.3rem;

@@ -55,6 +55,17 @@ var helpers = {
 
   },
 
+  genreString: function(app) {
+
+    app = app || this;
+    return app.categories.reduce(function(genreString, cat, ind) {
+      if (ind) genreString += ', ' + '<a href="' + FlowRouter.path('appMarketGenre', {genre: cat}) + '">' + cat + '</a>';
+      else if (ind < 3) genreString += '<a href="' + FlowRouter.path('appMarketGenre', {genre: cat}) + '">' + cat + '</a>';
+      return genreString;
+    }, '');
+
+  },
+
   approval: Apps.approval,
 
   appRatings: Reviews.rating,
