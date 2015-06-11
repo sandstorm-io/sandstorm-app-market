@@ -31,7 +31,7 @@ Meteor.methods({
 
   },
 
-  'user/installApp': function(appId) {
+  'user/installApp': function(appId, host) {
 
     this.unblock();
     var app = Apps.findOne(appId);
@@ -45,7 +45,10 @@ Meteor.methods({
     };
     Apps.update(appId, {$inc: {installCount: 1}, $push: {installDates: new Date()}});
     return Meteor.users.update(this.userId, {
-      $set: set
+      $set: set,
+      $addToSet: {
+        sandstormHosts: host
+      }
     });
 
   },

@@ -22,16 +22,20 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
   if (Meteor.isClient)
     app.install = function() {
       var _this = this;
-      Meteor.call('user/installApp', _this._id, function(err) {
-        if (err) console.log(err);
-        else {
-          var installedLocally = amplify.store('sandstormInstalledApps');
-          if (!installedLocally) amplify.store('sandstormInstalledApps', [_this._id]);
-          else if (installedLocally.indexOf(_this._id) === -1) {
-            installedLocally.push(_this._id);
-            amplify.store('sandstormInstalledApps', installedLocally);
+      App.getSandstormHost(function(host) {
+        Meteor.call('user/installApp', _this._id, host, function(err) {
+          if (err) console.log(err);
+          else {
+            var packageId = _this.latestVersion() && _this.latestVersion().packageId;
+            window.open(host + 'install/' + packageId + '?url=' + Meteor.absoluteUrl() + 'package/' + packageId, "_blank");
+            var installedLocally = amplify.store('sandstormInstalledApps');
+            if (!installedLocally) amplify.store('sandstormInstalledApps', [_this._id]);
+            else if (installedLocally.indexOf(_this._id) === -1) {
+              installedLocally.push(_this._id);
+              amplify.store('sandstormInstalledApps', installedLocally);
+            }
           }
-        }
+        });
       });
     };
 

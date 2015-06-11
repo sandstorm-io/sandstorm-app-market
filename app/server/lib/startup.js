@@ -7,7 +7,8 @@ Meteor.publish(null, function(){
     autoupdateApps: 1,
     appsByMe: 1,
     services: 1,
-    roles: 1
+    roles: 1,
+    sandstormHosts: 1
   }});
 });
 

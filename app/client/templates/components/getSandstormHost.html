@@ -1,0 +1,37 @@
+<template name="getSandstormHostModal">
+
+  <div class="anti-modal-box uninstall-box">
+
+    <div class="header">
+      SELECT SANDSTORM SERVER
+    </div>
+
+    <div class="divider">
+    </div>
+
+    <div class="blurb">
+      <p>
+        Select your server from the list below, or add a new one.
+      </p>
+    </div>
+
+    {{#each hosts}}
+    <div class="host-container">
+      <div class="sandstorm-button primary" data-action="install">
+        {{this}}
+      </div>
+    </div>
+    {{/each}}
+
+    <div class="sandstorm-input">
+      <div class="input">
+        <input type="text" data-field="new-host" placeholder="Add a new server" />
+      </div>
+      <div class="button">
+        <i class="fa fa-plus" data-action="install-new"></i>
+      </div>
+    </div>
+
+  </div>
+
+</template>

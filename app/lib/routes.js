@@ -36,7 +36,13 @@ function redirectOnSmallDevice(route) {
 // We have to do this in each route at present, as Flow Router doesn't
 // pass query params to middleware (yet)
 function getSandstormServer(context) {
-  if (context.queryParams.host) amplify.store('sandstormHost', context.queryParams.host);
+  if (context.queryParams.host) {
+    App.sandstormHost = context.queryParams.host;
+    amplify.store('sandstormHost', context.queryParams.host);
+    var allHosts = amplify.store('sandstormHostHistory') || [];
+    allHosts = _.unique(allHosts.concat(context.queryParams.host));
+    amplify.store('sandstormHostHistory', allHosts);
+  }
 }
 
 
