@@ -6,6 +6,8 @@ FlowRouter.subscriptions = function() {
 
 // ROUTES
 
+// FlowRouter.triggers.enter([function() {console.log(arguments);}]);
+
 // Utility function to redirect (either to App Market home or a given route)
 // if there is no logged in user
 function onlyLoggedIn(route) {
