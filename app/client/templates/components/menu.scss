@@ -92,7 +92,7 @@
 
   }
 
-  @media screen and (max-width: $small-tablet) {
+  @media screen and (max-width: $medium-tablet) {
 
     .menu-link.hide-for-phone {
 
@@ -148,7 +148,7 @@ body.admin {
 
     margin-left: 12.5rem;
 
-    @media screen and (max-width: $small-tablet) {
+    @media screen and (max-width: $medium-tablet) {
 
       margin-left: 1rem;
       margin-right: 1rem;
@@ -161,7 +161,7 @@ body.admin {
 
     padding-right: 4rem;
 
-    @media screen and (max-width: $small-tablet) {
+    @media screen and (max-width: $medium-tablet) {
 
       padding-right: 0;
 
@@ -174,7 +174,7 @@ body.admin {
 
   margin-left: $menu-width + $app-section-padding-left;
 
-  @media screen and (max-width: $small-tablet) {
+  @media screen and (max-width: $medium-tablet) {
 
     margin-left: 1rem;
     margin-right: 1rem;
@@ -187,7 +187,7 @@ body.admin {
 
   padding-right: $app-section-padding-right;
 
-  @media screen and (max-width: $small-tablet) {
+  @media screen and (max-width: $medium-tablet) {
 
     padding-right: 0;
 
@@ -199,7 +199,7 @@ body.admin {
 
   margin-right: $app-section-padding-right;
 
-  @media screen and (max-width: $small-tablet) {
+  @media screen and (max-width: $medium-tablet) {
 
     margin-right: auto;
 

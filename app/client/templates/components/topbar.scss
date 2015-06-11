@@ -25,11 +25,28 @@
 
     margin-left: $menu-width + $app-section-padding-left;
     margin-right: 32rem;
+    position: relative;
+    height: $topbar-height;
 
     @media (max-width: $small-tablet) {
-
       margin-left: $app-section-padding-left;
-      margin-right: 0;
+      margin-right: 22rem;
+      .genres {right: 0;}
+    }
+
+    @media (min-width: $small-tablet + 1px) and (max-width: $medium-tablet) {
+
+      margin-left: 28rem;
+      margin-right: 22rem;
+      .genres {right: 0;}
+
+    }
+
+    @media (min-width: $medium-tablet + 1px) and (max-width: $small-screen) {
+
+      margin-left: 28rem;
+      margin-right: 32rem;
+      .genres {right: 0;}
 
     }
 
@@ -41,7 +58,6 @@
     visibility: hidden;
 
     position: absolute;
-    left: $menu-width + $app-section-padding-left;
     bottom: $topbar-padding-bottom;
     white-space: nowrap;
 
@@ -113,7 +129,7 @@
             display: inline;
           }
 
-          @media (max-width: $small-tablet) {
+          @media (max-width: $medium-tablet) {
             left: auto;
             right: 0;
           }
@@ -127,14 +143,6 @@
         }
 
       }
-
-    }
-
-    @media (max-width: $small-tablet) {
-
-      left: initial;
-      right: 2.33rem;
-      text-align: right;
 
     }
 
@@ -191,6 +199,10 @@
       @media (max-width: $small-phone) {
         display: none;
       }
+    }
+
+    @media (max-width: $medium-tablet) {
+      right: 1.5rem;
     }
 
   }

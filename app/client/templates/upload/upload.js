@@ -29,7 +29,7 @@ Template.Upload.onCreated(function() {
   };
 
   var resetScreenshotsVis = function() {
-    tmp.screenshotsVis.set(Math.min(Math.ceil(($(window).width() - 300) / 600), 3));
+    tmp.screenshotsVis.set(Math.max(Math.min(Math.floor($(window).width() / 400), 3), 1));
   };
   resetScreenshotsVis();
 
@@ -140,10 +140,6 @@ Template.Upload.onCreated(function() {
     }
 
   });
-
-  var resetScreenshotsVis = function() {
-    tmp.screenshotsVis.set(Math.min(Math.ceil(($(window).width() - 300) / 600), 3));
-  };
 
   $(window).on('resize.upload', resetScreenshotsVis);
 

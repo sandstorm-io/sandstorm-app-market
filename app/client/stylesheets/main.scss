@@ -179,7 +179,7 @@ html {
   clear: none;
 
   &.block-phone {
-    @media (max-width: $small-tablet) {
+    @media (max-width: $medium-tablet) {
       float: none;
     }
   }
@@ -194,7 +194,7 @@ html {
   }
 
   &.block-phone {
-    @media (max-width: $small-tablet) {
+    @media (max-width: $medium-tablet) {
       float: none;
     }
   }
