@@ -41,7 +41,7 @@
                 <div class="half-col">
 
                   <div class="date">{{dateFormat createdAt 'MMMM DD, YYYY'}}</div>
-                  <div class="genre"><a href="{{getZippedPath 'appMarketGenre' 'genre' categories.[0]}}">{{categories.[0]}}</a></div>
+                  <div class="genre">{{{genreString}}}</div>
 
                 </div>
 
@@ -96,7 +96,7 @@
               </div>
             </div>
 
-            <div class="divider clearfix"></div>  
+            <div class="divider clearfix"></div>
 
             <div class="description">
 

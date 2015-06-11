@@ -32,7 +32,8 @@ Template.Review.onCreated(function() {
   };
 
   var resetScreenshotsVis = function() {
-    tmp.screenshotsVis.set(Math.min(Math.ceil(($(window).width() - 300) / 600), 3));
+    console.log($(window).width());
+    tmp.screenshotsVis.set(Math.max(Math.min(Math.floor($(window).width() / 400), 3), 1));
   };
   resetScreenshotsVis();
 
@@ -120,15 +121,15 @@ Template.Review.onCreated(function() {
       tmp.categories.set(categories);
 
       // Save the original app for comparison
-      tmp.originalApp = Apps.findOne(FlowRouter.current().params.appId);
+      tmp.originalApp = Apps.findOne(FlowRouter.getParam('appId'));
       // And load either a published admin's requested changes, this admin user's saved
       // version, or the currently published app (in that order of precedence).
       if (tmp.originalApp && tmp.originalApp.adminRequests[0]) {
         tmp.app.set(tmp.originalApp.adminRequests[0]);
-      } else if (Meteor.user() && Meteor.user().savedApp && Meteor.user().savedApp[FlowRouter.current().params.appId]) {
-        tmp.app.set(Meteor.user().savedApp[FlowRouter.current().params.appId]);
+      } else if (Meteor.user() && Meteor.user().savedApp && Meteor.user().savedApp[FlowRouter.getParam('appId')]) {
+        tmp.app.set(Meteor.user().savedApp[FlowRouter.getParam('appId')]);
       } else {
-        var newVersion = Apps.findOne(FlowRouter.current().params.appId),
+        var newVersion = Apps.findOne(FlowRouter.getParam('appId')),
             lastVersionNumber = newVersion.latestVersion();
         newVersion.replacesApp = newVersion._id;
         newVersion.versions = [];
@@ -150,10 +151,6 @@ Template.Review.onCreated(function() {
     }
 
   });
-
-  var resetScreenshotsVis = function() {
-    tmp.screenshotsVis.set(Math.min(Math.ceil(($(window).width() - 300) / 600), 3));
-  };
 
   $(window).on('resize.upload', resetScreenshotsVis);
 
@@ -178,13 +175,13 @@ Template.Review.helpers({
 
   parentApp: function() {
 
-    return Apps.findOne(FlowRouter.current().params.appId);
+    return Apps.findOne(FlowRouter.getParam('appId'));
 
   },
 
   isFlagged: function() {
 
-    var app = Apps.findOne(FlowRouter.current().params.appId);
+    var app = Apps.findOne(FlowRouter.getParam('appId'));
     return app && !_.isEmpty(app.flags);
 
   },
@@ -227,7 +224,7 @@ Template.Review.helpers({
 
   status: function() {
 
-    var originalApp = Apps.findOne(FlowRouter.current().params.appId);
+    var originalApp = Apps.findOne(FlowRouter.getParam('appId'));
     return [
 
       {
@@ -270,7 +267,7 @@ Template.Review.helpers({
 
   flagDetails: function() {
 
-    var originalApp = Apps.findOne(FlowRouter.current().params.appId);
+    var originalApp = Apps.findOne(FlowRouter.getParam('appId'));
     return Meteor.user() && Meteor.user().flags && Meteor.user().flags[originalApp._id];
 
   }
@@ -281,7 +278,7 @@ Template.Review.helpers({
 Template.Review.events({
 
   'click [data-action="submit-note"]': function(evt, tmp) {
-    Meteor.call('apps/addNote', FlowRouter.current().params.appId, tmp.$('[data-field="note-entry"]').val(), function(err) {
+    Meteor.call('apps/addNote', FlowRouter.getParam('appId'), tmp.$('[data-field="note-entry"]').val(), function(err) {
       tmp.$('[data-field="note-entry"]').val('');
       if (err) throw new Meteor.Error(err.message);
     });
@@ -375,7 +372,7 @@ Template.Review.events({
       if (err) console.log(err);
       else {
         window.scrollTo(0, 0);
-        tmp.app.set(Meteor.user().savedApp[FlowRouter.current().params.appId]);
+        tmp.app.set(Meteor.user().savedApp[FlowRouter.getParam('appId')]);
       }
     });
 
@@ -394,7 +391,7 @@ Template.Review.events({
           }
           else {
             tmp.clearApp();
-            var newVersion = Apps.findOne(FlowRouter.current().params.appId);
+            var newVersion = Apps.findOne(FlowRouter.getParam('appId'));
             newVersion.replacesApp = newVersion._id;
             newVersion.versions = [];
             Schemas.AppsBase.clean(newVersion);
@@ -434,23 +431,23 @@ Template.Review.events({
   },
 
   'click [data-action="approve"]': function() {
-    Meteor.call('apps/approve', FlowRouter.current().params.appId, function(err) {
+    Meteor.call('apps/approve', FlowRouter.getParam('appId'), function(err) {
       if (err) throw new Meteor.Error(err.message);
     });
   },
   'click [data-action="request-revision"]': function() {
-    Meteor.call('apps/request-revision', FlowRouter.current().params.appId, function(err) {
+    Meteor.call('apps/request-revision', FlowRouter.getParam('appId'), function(err) {
       if (err) throw new Meteor.Error(err.message);
     });
   },
   'click [data-action="flag"]': function(evt, tmp) {
     tmp.flagApp.set(!tmp.flagApp.get());
-    // Meteor.call('apps/flag', FlowRouter.current().params.appId, function(err) {
+    // Meteor.call('apps/flag', FlowRouter.getParam('appId'), function(err) {
     //   if (err) throw new Meteor.Error(err.message);
     // });
   },
   'click [data-action="reject"]': function() {
-    Meteor.call('apps/reject', FlowRouter.current().params.appId, function(err) {
+    Meteor.call('apps/reject', FlowRouter.getParam('appId'), function(err) {
       if (err) throw new Meteor.Error(err.message);
     });
   },

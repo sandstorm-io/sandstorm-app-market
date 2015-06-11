@@ -29,7 +29,7 @@ Template.Upload.onCreated(function() {
   };
 
   var resetScreenshotsVis = function() {
-    tmp.screenshotsVis.set(Math.min(Math.ceil(($(window).width() - 300) / 600), 3));
+    tmp.screenshotsVis.set(Math.max(Math.min(Math.floor($(window).width() / 400), 3), 1));
   };
   resetScreenshotsVis();
 
@@ -128,8 +128,8 @@ Template.Upload.onCreated(function() {
       tmp.categories.set(categories);
 
       // And load the draft if relevant
-      if (FlowRouter.current().params.appId) {
-        var draft = Apps.findOne(FlowRouter.current().params.appId),
+      if (FlowRouter.getParam('appId')) {
+        var draft = Apps.findOne(FlowRouter.getParam('appId')),
             oldApp = tmp.app.all();
         _.extend(oldApp, draft);
         tmp.app.set(oldApp);
@@ -140,10 +140,6 @@ Template.Upload.onCreated(function() {
     }
 
   });
-
-  var resetScreenshotsVis = function() {
-    tmp.screenshotsVis.set(Math.min(Math.ceil(($(window).width() - 300) / 600), 3));
-  };
 
   $(window).on('resize.upload', resetScreenshotsVis);
 
@@ -325,7 +321,7 @@ Template.fileBox.onCreated(function() {
 
   // pull out relevant .spk details as soon as app is available
   tmp.autorun(function(c) {
-    var app = Apps.findOne(FlowRouter.current().params.appId);
+    var app = Apps.findOne(FlowRouter.getParam('appId'));
     if (app && app.approved !== Apps.approval.draft) {
       var latest = app.latestVersion();
       tmp.fileId.set(latest.spkId);

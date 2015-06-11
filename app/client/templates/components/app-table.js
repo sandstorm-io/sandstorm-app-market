@@ -70,7 +70,7 @@ function recalcLineCapacity() {
       appItemWidth = 21.3; // THIS IS DEPENDENT ON THE SCSS VARIABLES $app-container-width
 
   if (!rem || !tableWidth) return;
-  var lineCapacity = Math.floor(tableWidth / (rem * appItemWidth));
+  var lineCapacity = Math.max(Math.floor(tableWidth / (rem * appItemWidth)), 2);
   if (Meteor.Device.isPhone()) lineCapacity = Math.max(lineCapacity, 2);
   App.lineCapacity.set(lineCapacity);
   App.defaultAppLimit.set((lineCapacity * 4) - 2);

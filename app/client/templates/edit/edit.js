@@ -40,14 +40,15 @@ Template.Edit.onCreated(function() {
   };
 
   var resetScreenshotsVis = function() {
-    tmp.screenshotsVis.set(Math.min(Math.ceil(($(window).width() - 300) / 600), 3));
+    console.log($(window).width());
+    tmp.screenshotsVis.set(Math.max(Math.min(Math.floor($(window).width() / 400), 3), 1));
   };
   resetScreenshotsVis();
 
   tmp.app = app;
   var newApp = appProto();
   Schemas.AppsBase.clean(newApp);
-  var thisApp = Apps.findOne(FlowRouter.current().params.appId),
+  var thisApp = Apps.findOne(FlowRouter.getParam('appId')),
       lastVersion = thisApp && thisApp.latestVersion();
   newApp.versions = [lastVersion];
   tmp.app.set(newApp);
@@ -142,12 +143,12 @@ Template.Edit.onCreated(function() {
       tmp.categories.set(categories);
 
       // And load the admin suggested version or the actual app
-      var appDoc = Apps.findOne(FlowRouter.current().params.appId);
+      var appDoc = Apps.findOne(FlowRouter.getParam('appId'));
       if (appDoc && appDoc.adminRequests.length && appDoc.lastUpdatedAdmin) {
         tmp.app.set(appDoc.adminRequests[0]);
         tmp.changedOriginal.set(true);
       } else {
-        var newVersion = Apps.findOne(FlowRouter.current().params.appId),
+        var newVersion = Apps.findOne(FlowRouter.getParam('appId')),
             latestVersion = newVersion.latestVersion();
         if (!newVersion.replacesApp) newVersion.replacesApp = newVersion._id;
         newVersion.versions = [latestVersion];
@@ -160,10 +161,6 @@ Template.Edit.onCreated(function() {
     }
 
   });
-
-  var resetScreenshotsVis = function() {
-    tmp.screenshotsVis.set(Math.min(Math.ceil(($(window).width() - 300) / 600), 3));
-  };
 
   $(window).on('resize.upload', resetScreenshotsVis);
 
@@ -194,7 +191,7 @@ Template.Edit.helpers({
 
   parentApp: function() {
 
-    return Apps.findOne(FlowRouter.current().params.appId);
+    return Apps.findOne(FlowRouter.getParam('appId'));
 
   },
 
@@ -206,7 +203,7 @@ Template.Edit.helpers({
 
   adminRequest: function() {
 
-    var app = Apps.findOne(FlowRouter.current().params.appId);
+    var app = Apps.findOne(FlowRouter.getParam('appId'));
     return app && app.adminRequests && app.adminRequests.length && app.adminRequests[0];
 
   },
@@ -345,7 +342,7 @@ Template.Edit.events({
           }
           else {
             tmp.clearApp();
-            var newVersion = Apps.findOne(FlowRouter.current().params.appId);
+            var newVersion = Apps.findOne(FlowRouter.getParam('appId'));
             newVersion.replacesApp = newVersion._id;
             newVersion.versions = [];
             Schemas.AppsBase.clean(newVersion);
