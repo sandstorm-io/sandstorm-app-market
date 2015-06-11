@@ -26,6 +26,7 @@ Template.getSandstormHostModal.helpers({
 Template.getSandstormHostModal.events({
 
   'click [data-action="install"]': function(evt, tmp) {
+    App.sandstormHost = this.toString();
     callback(this.toString());
   },
 
@@ -34,6 +35,7 @@ Template.getSandstormHostModal.events({
     if (!newHost) return false;
     if (newHost.slice(0, 7) !== 'http://') newHost = 'http://' + newHost;
     if (newHost.slice(newHost.length - 1) !== '/') newHost = newHost + '/';
+    App.sandstormHost = newHost;
     callback(newHost);
   }
 
