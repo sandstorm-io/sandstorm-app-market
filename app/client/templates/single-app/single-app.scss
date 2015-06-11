@@ -55,8 +55,21 @@
 
     }
 
+    .header-row {
+      text-align: justify;
+      &:after {
+        content: '';
+        display: inline-block;
+        width: 100%;
+        height: 0;
+        font-size:0;
+        line-height:0;
+      }
+    }
+
     .header {
-      float: left;
+      display: inline-block;
+      vertical-align: bottom;
       font-weight: normal;
       clear: none;
       font-size: 3.1rem;
@@ -64,9 +77,10 @@
 
     .option {
 
+      display: inline-block;
+      vertical-align: bottom;
       font-size: 1.7rem;
       cursor: pointer;
-      margin-top: -1rem;
 
       *:not(.sandstorm-button) > i {
         font-size: 3.8rem;
@@ -238,8 +252,7 @@
 
 .ratings-bar {
 
-  background-color: #f1ecf6;
-  padding-left: 1.275rem;
+  border-top: 1px solid #cfb5d6;
   padding-right: 1.275rem;
   line-height: 3.5rem;
   height: 3.5rem;
@@ -605,25 +618,23 @@
 
   .review-bar {
 
+    .rating {
+      display: inline-block;
+      vertical-align: bottom;
+    }
+
     .ratings-count {
       margin-left: 1rem;
     }
 
     .write-review {
       display: inline-block;
-      height: 4rem;
+      vertical-align: bottom;
       line-height: 4rem;
-      padding-top: 0.8rem;
-      margin-bottom: -0.8rem;
-
-      .rating {
-        display: inline-block;
-      }
 
       .my-rating-box {
-        display: inline;
+        display: inline-block;
         position: relative;
-        bottom: 0.5rem;
       }
     }
 

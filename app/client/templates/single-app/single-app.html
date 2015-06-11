@@ -76,33 +76,27 @@
                     INSTALL{{#if installed}}+{{/if}} <i class="icon-arrow-install"></i>
                   </a>
 
-                  <!-- <div class="chip-in-section {{#unless chipIn}}hidden{{/unless}}">
-                    <div class="slider-section">
-                      <div class="text">How much would you like to chip in? All proceeds go to the author.</div>
-                      <span class="dollar-sign">&#36;</span><input type="number" class="chip-amount" data-field="chip-amount" /><div class="slider"></div>
-                    </div>
-                    <div class="chip-in button" data-action="confirm-chip">CONFIRM</div>
-                  </div>
-                  <div class="chip-in button {{#if chipIn}}hidden{{/if}}" data-action="chip-in">CHIP IN <i class="fa fa-money"></i></div>
-                  <div class="blurb {{#if chipIn}}hidden{{/if}}">This app is free, and if you like it, feel free to chip in.</div> -->
-
                 </div>
 
               </div>
 
             </div>
 
+            <div class="clearfix"></div>
+
             {{#if screenshots}}
               {{> carousel images=screenshots}}
             {{/if}}
 
-            <div class="header">Description</div>
-            <div class="right-float option" data-action="flag-app">
-              Flag this app
-              <i class="{{#if flagged}}icon-flagged_dark{{else}}icon-flagged_light{{/if}}"></i>
+            <div class="header-row">
+              <div class="header">Description</div>
+              <div class="option" data-action="flag-app">
+                Flag this app
+                <i class="{{#if flagged}}icon-flagged_dark{{else}}icon-flagged_light{{/if}}"></i>
+              </div>
             </div>
 
-            <div class="divider clearfix"></div>
+            <div class="divider clearfix"></div>  
 
             <div class="description">
 
@@ -135,22 +129,20 @@
 
             <div class="clearfix"></div>
 
-            <div class="review-bar">
-              <div class="rating left-float">
+            <div class="review-bar header-row">
+              <div class="rating">
                 {{> appRating ratings=ratings}}
                 <span class="ratings-count"> ( {{ratingsCount}} )</span>
               </div>
 
-              <div class="right-float option">
-                <div class="write-review">
-                  {{#if writeReview}}
-                    {{> myRatingBox rating=myReview.rating}}
-                  {{/if}}
-                  <span data-action="write-review">
-                    Write a review
-                    <i class="fa {{#if writeReview}}fa-caret-up{{else}}fa-caret-down{{/if}}"></i>
-                  </span>
-                </div>
+              <div class="write-review option">
+                {{#if writeReview}}
+                  {{> myRatingBox rating=myReview.rating}}
+                {{/if}}
+                <span data-action="write-review">
+                  Write a review
+                  <i class="fa {{#if writeReview}}fa-caret-up{{else}}fa-caret-down{{/if}}"></i>
+                </span>
               </div>
 
             </div>
