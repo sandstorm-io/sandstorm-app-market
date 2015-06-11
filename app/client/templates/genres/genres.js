@@ -12,7 +12,8 @@ Template.Genre.onCreated(function() {
   // Reactively run the app subscription so that it will be stopped and restarted
   // whenever the genre or limit is changed.
   tmp.autorun(function() {
-    var genre = s.capitalize(FlowRouter.reactiveCurrent().params.genre);
+    FlowRouter.watchPathChange();
+    var genre = s.capitalize(FlowRouter.getParam('genre'));
     tmp.subscribe('apps by genre', genre, tmp.subLimit.get(), {
       onReady: function() {
         tmp.subReady.set(true);
@@ -25,7 +26,7 @@ Template.Genre.onCreated(function() {
   // we render a new genre, but NOT when the sub is stopped due to a change in
   // limit, so we need a separate autorun to track that...
   tmp.autorun(function() {
-    FlowRouter.reactiveCurrent();
+    FlowRouter.watchPathChange();
     tmp.subLimit.set(App.defaultAppLimit.get());
     tmp.subReady.set(false);
   });
@@ -47,13 +48,14 @@ Template.Genre.helpers({
 
   genre: function() {
 
-    return FlowRouter.current().params.authorId ? 'Apps By Author' : FlowRouter.reactiveCurrent().params.genre;
+    FlowRouter.watchPathChange();
+    return FlowRouter.getParam('authorId') ? 'Apps By Author' : FlowRouter.getParam('genre');
 
   },
 
   author: function() {
 
-    var authorId = FlowRouter.current().params.authorId;
+    var authorId = FlowRouter.getParam('authorId');
     return Meteor.users.findOne(authorId);
 
   }
@@ -74,7 +76,8 @@ Template.AppsByAuthor.onCreated(function() {
   // Reactively run the app subscription so that it will be stopped and restarted
   // whenever the genre or limit is changed.
   tmp.autorun(function() {
-    var genre = s.capitalize(FlowRouter.reactiveCurrent().params.genre);
+    FlowRouter.watchPathChange();
+    var genre = s.capitalize(FlowRouter.getParam('genre'));
     tmp.subscribe('apps by genre', genre, tmp.subLimit.get(), {
       onReady: function() {
         tmp.subReady.set(true);
@@ -87,7 +90,7 @@ Template.AppsByAuthor.onCreated(function() {
   // we render a new genre, but NOT when the sub is stopped due to a change in
   // limit, so we need a separate autorun to track that...
   tmp.autorun(function() {
-    FlowRouter.reactiveCurrent();
+    FlowRouter.watchPathChange();
     tmp.subLimit.set(App.defaultAppLimit.get());
     tmp.subReady.set(false);
   });
@@ -109,13 +112,14 @@ Template.AppsByAuthor.helpers({
 
   genre: function() {
 
-    return FlowRouter.current().params.authorId ? 'Apps By Author' : FlowRouter.reactiveCurrent().params.genre;
+    FlowRouter.watchPathChange();
+    return FlowRouter.getParam('authorId') ? 'Apps By Author' : FlowRouter.getParam('genre');
 
   },
 
   author: function() {
 
-    var authorId = FlowRouter.current().params.authorId;
+    var authorId = FlowRouter.getParam('authorId');
     return Meteor.users.findOne(authorId);
 
   }

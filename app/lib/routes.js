@@ -6,12 +6,25 @@ FlowRouter.subscriptions = function() {
 
 // ROUTES
 
-// FlowRouter.triggers.enter([function() {console.log(arguments);}]);
+// Pre render triggers
+FlowRouter.triggers.enter([getSandstormServer, getPopulatedGenres]);
+FlowRouter.triggers.enter([onlyAdmin.bind(this, 'login')], {
+  only: ['review', 'admin']
+});
+FlowRouter.triggers.enter([redirectOnSmallDevice.bind(this, null)], {
+  only: ['review', 'admin']
+});
+
 
 // Utility function to redirect (either to App Market home or a given route)
 // if there is no logged in user
 function onlyLoggedIn(route) {
   if (!Meteor.userId()) FlowRouter.go(route || 'appMarket');
+}
+// Utility function to redirect (either to App Market home or a given route)
+// if the user is not an admin
+function onlyAdmin(route) {
+  if (!Roles.userIsInRole(Meteor.userId(), 'admin')) FlowRouter.go(route || 'appMarket');
 }
 // Utility function to redirect (either to App Market home or a given route)
 // if the device is not a desktop
@@ -21,19 +34,19 @@ function redirectOnSmallDevice(route) {
 
 // We have to do this in each route at present, as Flow Router doesn't
 // pass query params to middleware (yet)
-function getSandstormServer(queryParams) {
-  if (queryParams.host) amplify.store('sandstormHost', queryParams.host);
+function getSandstormServer(context) {
+  if (context.queryParams.host) amplify.store('sandstormHost', context.queryParams.host);
 }
 
 
 // Subscription callback which checks it the supplied app exists when the
 // sub is ready, and redirects to a not found page if it isn't
 function checkAppExists() {
-  var app = Apps.findOne(FlowRouter.current().params.appId);
+  var app = Apps.findOne(FlowRouter.getParam('appId'));
   if (!app) FlowRouter.go('notFound', {object: 'app'});
 }
 function checkAuthorExists() {
-  var author = Meteor.users.findOne(FlowRouter.current().params.authorId);
+  var author = Meteor.users.findOne(FlowRouter.getParam('authorId'));
   if (!author) FlowRouter.go('notFound', {object: 'author'});
 }
 
@@ -47,8 +60,6 @@ function getPopulatedGenres() {
 FlowRouter.route('/login', {
   name: 'login',
   action: function(params, queryParams) {
-    getSandstormServer(queryParams);
-    getPopulatedGenres();
     FlowLayout.render('MasterLayout', {mainSection: 'Login'});
   }
 });
@@ -56,7 +67,6 @@ FlowRouter.route('/login', {
 FlowRouter.route('/not-found/:object', {
   name: 'notFound',
   action: function(params, queryParams) {
-    getPopulatedGenres();
     FlowLayout.render('MasterLayout', {mainSection: 'NotFound'});
   }
 });
@@ -71,8 +81,6 @@ FlowRouter.route('/app/:appId', {
       Meteor.subscribe('user flags'));
   },
   action: function(params, queryParams) {
-    getSandstormServer(queryParams);
-    getPopulatedGenres();
     FlowLayout.render('MasterLayout', {mainSection: 'SingleApp'});
   }
 });
@@ -80,8 +88,6 @@ FlowRouter.route('/app/:appId', {
 FlowRouter.route('/', {
   name: 'appMarket',
   action: function(params, queryParams) {
-    getSandstormServer(queryParams);
-    getPopulatedGenres();
     FlowLayout.render('MasterLayout', {mainSection: 'Home'});
   }
 });
@@ -95,8 +101,6 @@ FlowRouter.route('/author/:authorId', {
       Meteor.subscribe('user basic', params.authorId, checkAuthorExists));
   },
   action: function(params, queryParams) {
-    getSandstormServer(queryParams);
-    getPopulatedGenres();
     FlowLayout.render('MasterLayout', {mainSection: 'AppsByAuthor'});
   }
 });
@@ -104,13 +108,11 @@ FlowRouter.route('/author/:authorId', {
 FlowRouter.route('/genre/:genre', {
   name: 'appMarketGenre',
   action: function(params, queryParams) {
-    getSandstormServer(queryParams);
-    getPopulatedGenres();
     if (params.genre !== s.capitalize(params.genre))
       FlowRouter.setParams({genre: s.capitalize(params.genre)});
 
     if (params.genre === 'Popular') FlowLayout.render('MasterLayout', {mainSection: 'Popular'});
-    else FlowLayout.render('MasterLayout', {mainSection: 'Genre', genre: FlowRouter.current().params.genre});
+    else FlowLayout.render('MasterLayout', {mainSection: 'Genre', genre: FlowRouter.getParam('genre')});
   }
 });
 
@@ -123,8 +125,6 @@ FlowRouter.route('/search', {
       Meteor.subscribe('app search description', queryParams.term));
   },
   action: function(params, queryParams) {
-    getSandstormServer(queryParams);
-    getPopulatedGenres();
     FlowLayout.render('MasterLayout', {mainSection: 'Search'});
   }
 });
@@ -132,8 +132,6 @@ FlowRouter.route('/search', {
 FlowRouter.route('/installed', {
   name: 'installedApps',
   action: function(params, queryParams) {
-    getSandstormServer(queryParams);
-    getPopulatedGenres();
     var user = Meteor.users.findOne(Meteor.userId());
     FlowRouter.current().firstVisit = (typeof(user && user.autoupdateApps) === 'undefined');
     FlowLayout.render('MasterLayout', {mainSection: 'InstalledApps'});
@@ -148,8 +146,6 @@ FlowRouter.route('/apps-by-me', {
       Meteor.subscribe('apps by me'));
   },
   action: function(params, queryParams) {
-    getSandstormServer(queryParams);
-    getPopulatedGenres();
     FlowLayout.render('MasterLayout', {mainSection: 'AppsByMe'});
   }
 });
@@ -165,8 +161,6 @@ FlowRouter.route('/edit/:appId', {
       Meteor.subscribe('apps by id', params.appId, checkAppExists));
   },
   action: function(params, queryParams) {
-    getSandstormServer(queryParams);
-    getPopulatedGenres();
     FlowLayout.render('MasterLayout', {mainSection: 'Edit'});
   }
 });
@@ -180,8 +174,6 @@ FlowRouter.route('/upload/:appId', {
       Meteor.subscribe('saved apps', checkAppExists));
   },
   action: function(params, queryParams) {
-    getSandstormServer(queryParams);
-    getPopulatedGenres();
     FlowLayout.render('MasterLayout', {mainSection: 'Upload'});
   }
 });
@@ -193,8 +185,6 @@ FlowRouter.route('/upload', {
       Meteor.subscribe('all categories'));
   },
   action: function(params, queryParams) {
-    getSandstormServer(queryParams);
-    getPopulatedGenres();
     FlowLayout.render('MasterLayout', {mainSection: 'Upload'});
   }
 });
@@ -212,10 +202,6 @@ FlowRouter.route('/review/:appId', {
       Meteor.subscribe('user flags'));
   },
   action: function(params, queryParams) {
-    getSandstormServer(queryParams);
-    getPopulatedGenres();
-    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) FlowRouter.go('appMarket');
-    redirectOnSmallDevice();
     FlowLayout.render('MasterLayout', {mainSection: 'Review'});
   }
 });
@@ -231,10 +217,6 @@ FlowRouter.route('/admin', {
       Meteor.subscribe('suggested categories'));
   },
   action: function(params, queryParams) {
-    getSandstormServer(queryParams);
-    getPopulatedGenres();
-    if (!Roles.userIsInRole(Meteor.userId(), 'admin')) FlowRouter.go('appMarket');
-    redirectOnSmallDevice();
     FlowLayout.render('MasterLayout', {mainSection: 'Admin'});
   }
 });

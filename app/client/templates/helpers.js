@@ -86,7 +86,8 @@ var helpers = {
 
   routeRoot: function(string) {
 
-    return FlowRouter.reactiveCurrent().path.substr(0, string && string.length) === string ?
+    FlowRouter.watchPathChange();
+    return FlowRouter.current().path.substr(0, string && string.length) === string ?
           'active' : '';
 
   },

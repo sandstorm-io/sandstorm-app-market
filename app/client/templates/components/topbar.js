@@ -59,8 +59,8 @@ Template.Topbar.helpers({
 
   active: function() {
 
-    var path = /\/genres\/(.*)/.exec(FlowRouter.reactiveCurrent().path);
-    return path && path.length && path[1] === this.name;
+    FlowRouter.watchPathChange();
+    return FlowRouter.getParam('genre') === this.name;
 
   }
 });
