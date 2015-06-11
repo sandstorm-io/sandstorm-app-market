@@ -12,6 +12,10 @@ var appUnpublishedFields = {
   spkKey: 0
 };
 
+Meteor.publish('messages', function() {
+  return Messages.find();
+});
+
 Meteor.publish('categories', function () {
   var allCats = _.pluck(Categories.find({approved: 0}, {fields: {name: 1}}).fetch(), 'name'),
       popCats = _.filter(allCats, function(catId) {

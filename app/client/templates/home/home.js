@@ -41,7 +41,7 @@ Template.Home.helpers({
   message: function() {
 
     var welcomeMessage = Messages.findOne('welcome');
-    return welcomeMessage && welcomeMesssage.message;
+    return welcomeMessage && welcomeMessage.message;
 
   }
 
