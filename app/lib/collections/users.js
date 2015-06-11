@@ -70,6 +70,10 @@ Schemas.Users = new SimpleSchema({
     blackbox: true,
     defaultValue: {}
   },
+  sandstormHosts: {
+    type: [String],
+    defaultValue: []
+  },
   // Currently storing flags in both object and user objects
   flags: {
     type: Object,
