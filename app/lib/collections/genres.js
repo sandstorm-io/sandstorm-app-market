@@ -18,7 +18,7 @@
 //   and a selector/options pair to apply to a query on the Apps collection.
 //   selector and options can be an object or a function returning an object.
 
-var extraGenres = [
+App.extraGenres = [
 
   {
     name: 'All',
@@ -172,7 +172,7 @@ Genres = {
       else category = clientPopulated;
     } else {
       category = Categories.findOne({name: name});
-      extraGenre = _.findWhere(extraGenres, {name: name});
+      extraGenre = _.findWhere(App.extraGenres, {name: name});
     }
 
     if (category) {
@@ -202,7 +202,7 @@ Genres = {
       else category = clientPopulated;
     } else {
       category = Categories.findOne({name: name});
-      extraGenre = _.findWhere(extraGenres, {name: name});
+      extraGenre = _.findWhere(App.extraGenres, {name: name});
     }
 
     if (category) {
@@ -220,7 +220,7 @@ Genres = {
 
     options = options || {};
 
-    var genres  = extraGenres.concat(Categories.find().fetch());
+    var genres = App.extraGenres.concat(Categories.find().fetch());
     if (options.where) genres = _.where(genres, options.where);
     if (options.filter) genres = _.filter(genres, options.filter);
 
@@ -232,14 +232,14 @@ Genres = {
   getOne: function(name) {
 
     return Categories.findOne({name: name}) ||
-           _.findWhere(extraGenres, {name: name});
+           _.findWhere(App.extraGenres, {name: name});
 
   },
 
-  getPopulated: function(selector, options, context) {
+  getPopulated: function(selector) {
 
-    return _.filter(this.getAll(options), function(genre) {
-      return !!Genres.findOneIn(genre.name, selector, options, context);
+    return _.filter(Categories.find().fetch(), function(cat) {
+      return !!Apps.find(_.extend({}, selector, {categories: cat.name})).count();
     });
 
   }

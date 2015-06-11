@@ -36,6 +36,43 @@
 
 </template>
 
+<template name="AppsByAuthor">
+
+  <div class="genre-title-section">
+
+    <div class="contents">
+
+      <div class="genre-name large">Apps By Author - {{author.username}}</div>
+
+    </div>
+
+  </div>
+
+  {{#if getReactive 'subReady'}}
+
+  <div class="genre-popular-section">
+
+    <div class="contents">
+
+        {{> genreTablePopular genre='Apps By Author'}}
+
+    </div>
+
+  </div>
+
+  <div class="genre-other-section">
+
+    <div class="contents">
+
+        {{> genreTableOther genre='Apps By Author'}}
+
+    </div>
+
+  </div>
+
+  {{/if}}
+
+</template>
 
 <template name="genreTable">
 
