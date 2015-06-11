@@ -65,3 +65,33 @@ function removeReview(userId, review) {
 Reviews.after.insert(propagateReview);
 Reviews.after.update(propagateReview, {fetchPrevious: false});
 Reviews.after.remove(removeReview);
+
+if (Meteor.isServer) {
+  Reviews.allow({
+    insert: function (userId, doc) {
+      return false;
+    },
+
+    update: function (userId, doc, fieldNames, modifier) {
+      return false;
+    },
+
+    remove: function (userId, doc) {
+      return false;
+    }
+  });
+
+  Reviews.deny({
+    insert: function (userId, doc) {
+      return true;
+    },
+
+    update: function (userId, doc, fieldNames, modifier) {
+      return true;
+    },
+
+    remove: function (userId, doc) {
+      return true;
+    }
+  });
+}

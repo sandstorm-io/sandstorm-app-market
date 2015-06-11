@@ -40,7 +40,8 @@ Template.Home.helpers({
 
   message: function() {
 
-    return "This is a sample welcome message";
+    var welcomeMessage = Messages.findOne('welcome');
+    return welcomeMessage && welcomeMesssage.message;
 
   }
 
