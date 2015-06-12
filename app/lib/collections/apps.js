@@ -219,6 +219,11 @@ var appsBaseSchema = {
   filename: {
     type: String,
     defaultValue: ''
+  },
+  socialLinks: {
+    type: Object,
+    blackbox: true,
+    defaultValue: {}
   }
 
 };

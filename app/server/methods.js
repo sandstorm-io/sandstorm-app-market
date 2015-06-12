@@ -353,6 +353,14 @@ Meteor.methods({
 
   },
 
+  'apps/registerSocialData': function(key, secret) {
+
+    var details = OAuth.retrieveCredential(key, secret);
+    details.dateTime = new Date();
+    return SocialData.insert(details);
+
+  },
+
   'apps/reject': function(appId) {
 
     if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Can only be executed by admin user');

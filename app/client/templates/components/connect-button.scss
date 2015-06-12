@@ -13,7 +13,9 @@
   position: relative;
   display: inline-block;
   vertical-align: middle;
-  width: 22rem;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 27.5rem;
   font-size: 2rem;
   padding-top: 0;
   padding-bottom: 0;
@@ -30,6 +32,8 @@
     color: #783189;
     font-size: 1.2em;
     margin-right: 0.5rem;
+    width: 3rem;
+    display: inline-block;
 
     &:last-child {
       margin-left: 0.5rem;
@@ -40,6 +44,7 @@
   .service-name {
 
     font-weight: bold;
+    text-align: center;
 
   }
 
@@ -54,6 +59,12 @@
     i {
       color: #ffe9f5;
     }
+  }
+
+  .disconnect {
+    position: absolute;
+    right: 0;
+    line-height: 3.25rem;
   }
 
 }

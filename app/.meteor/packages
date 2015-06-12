@@ -51,3 +51,8 @@ cfs:standard-packages
 cfs:filesystem
 simple:json-routes
 natestrauser:jquery-scrollto
+twitter
+facebook
+accounts-twitter
+accounts-facebook
+oauth
