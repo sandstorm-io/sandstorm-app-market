@@ -6,7 +6,7 @@ var indicateSocialLinkInUserObject = function() {
   var socialLinks = this.get('app').get('socialLinks');
   socialLinks[this.data.service] = -1;
   this.get('app').set('socialLinks', socialLinks);
-}
+};
 
 Template.connectButton.onCreated(function() {
 
@@ -36,7 +36,7 @@ Template.connectButton.events({
 
     // Service is not a login option, so we need to do the OAuth dance
     if (_this.connect)
-      _this.connect.requestCredential(function(key) {
+      _this.connect.requestCredential({reauthenticate: true}, function(key) {
         secret =OAuth._retrieveCredentialSecret(key);
 
         Meteor.call('apps/registerSocialData', key, secret, function(err, id) {

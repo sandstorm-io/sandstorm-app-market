@@ -65,6 +65,24 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
       }
     };
 
+    // Tranform any entries in the socialLinks field from references to the author's
+    // data or docs in the SocialData collection to the actual data itself
+    app.transformSocialLinks = function() {
+      var user = Meteor.users.findOne(this.author);
+
+      var newSocialLinks = _.reduce(this.socialLinks, function(links, idx, service) {
+        if (idx === -1 && user) links[service] = user.services && _.omit(user.services[service],
+                                                 'accessToken', 'accessTokenSecret', 'idToken', 'expiresAt');
+        else if (typeof idx === 'string'){
+          var socialData = SocialData.findOne(idx);
+          if (socialData) links[service] = _.omit(socialData.serviceData, 'accessToken', 'accessTokenSecret',
+                                                  'idToken', 'expiresAt');
+        }
+        return links;
+      }, {});
+      Apps.update(this._id, {$set: {socialLinks: newSocialLinks}});
+    };
+
   }
 
   app.installed = function() {
@@ -79,6 +97,22 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
 
     return false;
 
+  };
+
+  app.googlePlusLink = function() {
+    return (this.socialLinks && this.socialLinks.google && this.socialLinks.google.id) ?
+             'https://plus.google.com/' + this.socialLinks.google.id : null;
+  };
+  app.facebookLink = function() {
+    return (this.socialLinks && this.socialLinks.facebook && this.socialLinks.facebook.link) ?
+             this.socialLinks.facebook.link : null;
+  };
+  app.twitterLink = function() {
+    return (this.socialLinks && this.socialLinks.twitter && this.socialLinks.twitter.screenName) ?
+             'https://twitter.com/' + this.socialLinks.twitter.screenName : null;
+  };
+  app.githubLink = function() {
+    return (this.onGithub()) ? this.codeLink : null;
   };
 
   return app;
@@ -483,6 +517,7 @@ function updateInstallCountThisWeek() {
 
 Apps.after.insert(function(userId, doc) {
   if (doc.approved !== Apps.approval.draft) this.transform().updateSpkDetails();
+  this.transform().transformSocialLinks();
 });
 
 Apps.after.update(function(userId, doc, fieldNames) {

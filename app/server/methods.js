@@ -356,8 +356,10 @@ Meteor.methods({
   'apps/registerSocialData': function(key, secret) {
 
     var details = OAuth.retrieveCredential(key, secret);
-    details.dateTime = new Date();
-    return SocialData.insert(details);
+    if (details) {
+      details.dateTime = new Date();
+      return SocialData.insert(details);
+    }
 
   },
 
