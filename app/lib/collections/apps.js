@@ -68,19 +68,27 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
     // Tranform any entries in the socialLinks field from references to the author's
     // data or docs in the SocialData collection to the actual data itself
     app.transformSocialLinks = function() {
-      var user = Meteor.users.findOne(this.author);
+      var user = Meteor.users.findOne(this.author),
+          socialLinks = this.socialLinks || {},
+          // we need to record whether we actually need to update the doc otherwise
+          // we'll end up in an infinite update loop thanks to calling this function
+          // from Apps.after.update
+          updated = false;
 
-      var newSocialLinks = _.reduce(this.socialLinks, function(links, idx, service) {
-        if (idx === -1 && user) links[service] = user.services && _.omit(user.services[service],
+      _.forEach(socialLinks, function(data, service) {
+        if (data === -1 && user) {
+          socialLinks[service] = user.services && _.omit(user.services[service],
                                                  'accessToken', 'accessTokenSecret', 'idToken', 'expiresAt');
-        else if (typeof idx === 'string'){
-          var socialData = SocialData.findOne(idx);
-          if (socialData) links[service] = _.omit(socialData.serviceData, 'accessToken', 'accessTokenSecret',
-                                                  'idToken', 'expiresAt');
+          updated = true;
         }
-        return links;
-      }, {});
-      Apps.update(this._id, {$set: {socialLinks: newSocialLinks}});
+        else if (typeof data === 'string') {
+          var socialData = SocialData.findOne(data);
+          if (socialData) socialLinks[service] = _.omit(socialData.serviceData, 'accessToken', 'accessTokenSecret',
+                                                  'idToken', 'expiresAt');
+          updated = true;
+        }
+      });
+      if (updated) Apps.update(this._id, {$set: {socialLinks: socialLinks}});
     };
 
   }
@@ -548,5 +556,6 @@ Apps.after.update(function(userId, doc, fieldNames) {
   if (fieldNames.indexOf('versions') > -1 && doc.approved !== Apps.approval.draft)
     this.transform().updateSpkDetails(this.previous);
 
-  this.transform().transformSocialLinks();
+  if (fieldNames.indexOf('socialLinks') > -1)
+    this.transform().transformSocialLinks();
 });

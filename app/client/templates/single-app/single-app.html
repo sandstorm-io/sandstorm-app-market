@@ -61,9 +61,7 @@
                   </div>
 
                   <div class="right-float social">
-                    <i class="icon-tw"></i>
-                    <i class="icon-go"></i>
-                    <i class="icon-fb"></i>
+                    {{#if invoke this 'twitterLink'}}<a href="{{invoke this 'twitterLink'}}" target="_blank"><i class="icon-tw"></i></a>{{/if}}
                   </div>
 
                 </div>
