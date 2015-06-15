@@ -468,24 +468,7 @@ Template.fileBox.events({
       else tmp.get('fileId').set(fileObj._id);
     });
 
-  },
-  //
-  // 'click [data-action="upload-spk"]': function(evt, tmp) {
-  //
-  //   var file = tmp.get('file').get(),
-  //       fileId;
-  //
-  //   if (file) {
-  //     tmp.progress.set(1);
-  //     Spks.insert(file, function(err, fileObj) {
-  //       if (err) console.log(err);
-  //       else tmp.get('fileId').set(fileObj._id);
-  //     });
-  //   }
-  //
-  //   else tmp.$('[data-action="file-picker"][data-for="spk"]').click();
-  //
-  // }
+  }
 
 });
 
