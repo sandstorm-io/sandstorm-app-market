@@ -40,7 +40,6 @@ Template.Edit.onCreated(function() {
   };
 
   var resetScreenshotsVis = function() {
-    console.log($(window).width());
     tmp.screenshotsVis.set(Math.max(Math.min(Math.floor($(window).width() / 400), 3), 1));
   };
   resetScreenshotsVis();
@@ -147,9 +146,9 @@ Template.Edit.onCreated(function() {
       if (appDoc && appDoc.adminRequests.length && appDoc.lastUpdatedAdmin) {
         tmp.app.set(appDoc.adminRequests[0]);
         tmp.changedOriginal.set(true);
-      } else {
-        var newVersion = Apps.findOne(FlowRouter.getParam('appId')),
-            latestVersion = newVersion.latestVersion();
+      } else if (appDoc) {
+        var newVersion = Apps.findOne(FlowRouter.getParam('appId'));
+        var latestVersion = newVersion.latestVersion();
         if (!newVersion.replacesApp) newVersion.replacesApp = newVersion._id;
         newVersion.versions = [latestVersion];
         Schemas.AppsBase.clean(newVersion);
@@ -298,19 +297,22 @@ Template.Edit.events({
           tmp.descriptionWarning = true;
           Meteor.setTimeout(Tooltips.hide.bind(Tooltips), 5000);
         } else {
-          Meteor.call('user/submitUpdate', tmp.app.all(), function(err, res) {
-            if (err) console.log(err);
-            else if (res) {
-              window.scrollTo(0, 0);
-              tmp.submitted.set(new Date());
-            }
-          });
+          Meteor.call('user/submitUpdate', tmp.app.all(), App.redirectOrErrorCallback('appsByMe'));
         }
       } else {
-        console.log('No new version specified');
+        $(window).scrollTo('[data-action="update-version"]');
+        $('[data-action="update-version"]').data('invalid', true);
+        Tooltips.setClasses(['invalid']);
+        Tooltips.show(tmp.$('[data-action="update-version"]')[0], 'You need to enter a new version number', 's');
+        Tooltips.hideDelay(3000, 500);
       }
     } else {
-      console.log(tmp.validator);
+      Tracker.afterFlush(function() {
+        $(window).scrollTo('[data-invalid]');
+        Tooltips.setClasses(['invalid']);
+        Tooltips.show(tmp.$('[data-invalid]').next()[0], 'You need to update this field', 's');
+        Tooltips.hideDelay(3000, 500);
+      });
     }
 
   },
@@ -318,14 +320,7 @@ Template.Edit.events({
   'click [data-action="save-app"]': function(evt, tmp) {
 
     tmp.validate();
-    Meteor.call('user/saveApp', tmp.app.all(), function(err, res) {
-      if (err) console.log(err);
-      else {
-        window.scrollTo(0, 0);
-        tmp.app.set(Apps.findOne(res));
-        FlowRouter.go('appsByMe');
-      }
-    });
+    Meteor.call('user/saveApp', tmp.app.all(), App.redirectOrErrorCallback('appsByMe'));
 
   },
 
@@ -336,21 +331,7 @@ Template.Edit.events({
       bottomMessage: 'This can\'t be undone.',
       actionText: 'Yes, discard',
       actionFunction: function(cb) {
-        Meteor.call('user/deleteSavedApp', tmp.app.get('replacesApp'), function(err, res) {
-          if (err) {
-            console.log(err);
-          }
-          else {
-            tmp.clearApp();
-            var newVersion = Apps.findOne(FlowRouter.getParam('appId'));
-            newVersion.replacesApp = newVersion._id;
-            newVersion.versions = [];
-            Schemas.AppsBase.clean(newVersion);
-            tmp.app.set(newVersion);
-            tmp.setCategories(tmp.app.get('categories'));
-            cb();
-          }
-        });
+        Meteor.call('user/deleteSavedApp', FlowRouter.getParam('appId'), App.redirectOrErrorCallback('appsByMe', cb));
       }
     }});
 
@@ -363,14 +344,7 @@ Template.Edit.events({
       bottomMessage: 'This can\'t be undone.',
       actionText: 'Yes, nuke',
       actionFunction: function(cb) {
-        Meteor.call('user/deleteApp', tmp.app.get('replacesApp'), function(err, res) {
-          if (err) console.log(err);
-          else {
-            tmp.clearApp();
-            FlowRouter.go('appsByMe');
-            cb();
-          }
-        });
+        Meteor.call('user/deleteApp', FlowRouter.getParam('appId'), App.redirectOrErrorCallback('appsByMe', cb));
       }
     }});
 

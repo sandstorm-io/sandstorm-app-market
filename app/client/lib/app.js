@@ -33,6 +33,18 @@ _.extend(App, {
 
     }
 
+  },
+
+  redirectOrErrorCallback: function(redirectPath, callback) {
+    return function(err, res) {
+      if (err) {
+        console.log(err);
+        AntiModals.overlay('errorModal', {data: {err: err}});
+      } else {
+        callback && callback.call(this);
+        redirectPath && FlowRouter.go(redirectPath);
+      }
+    };
   }
 
 });

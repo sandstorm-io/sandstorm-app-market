@@ -247,31 +247,20 @@ Template.Upload.events({
     if (tmp.validate()) {
       if (!tmp.app.get('description') && !tmp.descriptionWarning) {
         $(window).scrollTo('[data-description-warning]');
+        Tooltips.setClasses(['invalid']);
         Tooltips.show('[data-description-warning]');
+        Tooltips.hideDelay(5000, 500);
         tmp.descriptionWarning = true;
-        Meteor.setTimeout(Tooltips.hide.bind(Tooltips), 5000);
       } else {
-        Meteor.call('user/submitApp', tmp.app.all(), function(err, res) {
-          if (err) {
-            console.log(err);
-            if (err.details && err.details.code === 11000) {
-              AntiModals.overlay('messageModal', {data: {
-                header: 'Duplicate App',
-                message: 'There\'s already an app associated with that <em>.spk</em> on the App Store. ' +
-                         'If you\'d like to update it with a new version, you can find it in ' +
-                         '<strong>Apps By Me</strong>, from which you can choose <strong>Edit</strong>.'
-              }});
-            }
-          }
-          else {
-            var newApp = appProto();
-            Schemas.AppsBase.clean(newApp);
-            tmp.get('app').set(newApp);
-            window.scrollTo(0, 0);
-            tmp.submitted.set(new Date());
-          }
-        });
+        Meteor.call('user/submitApp', tmp.app.all(), App.redirectOrErrorCallback('appsByMe'));
       }
+    } else {
+      Tracker.afterFlush(function() {
+        $(window).scrollTo('[data-invalid]');
+        Tooltips.setClasses(['invalid']);
+        Tooltips.show(tmp.$('[data-invalid]').next()[0], 'You need to update this field', 's');
+        Tooltips.hideDelay(3000, 500);
+      });
     }
 
   },
@@ -279,14 +268,7 @@ Template.Upload.events({
   'click [data-action="save-app"]': function(evt, tmp) {
 
     tmp.validate();
-    Meteor.call('user/saveApp', tmp.app.all(), function(err, res) {
-      if (err) console.log(err);
-      else {
-        window.scrollTo(0, 0);
-        tmp.app.set(Apps.findOne(res));
-        FlowRouter.go('appsByMe');
-      }
-    });
+    Meteor.call('user/saveApp', tmp.app.all(), App.redirectOrErrorCallback('appsByMe'));
 
   },
 
@@ -298,8 +280,11 @@ Template.Upload.events({
       actionText: 'Yes, nuke',
       actionFunction: function(cb) {
         tmp.clearApp();
-        FlowRouter.go('appsByMe');
-        cb();
+        if (FlowRouter.getParam('appId')) Meteor.call('user/deleteApp', FlowRouter.getParam('appId'), App.redirectOrErrorCallback('appsByMe', cb));
+        else {
+          FlowRouter.go('appsByMe');
+          cb();
+        }
       }
     }});
 
@@ -702,27 +687,11 @@ Template.screenshotPicker.events({
 
 Template.nukeModal.events({
 
-  'click [data-action="close-modal"]': function() {
-
-    AntiModals.dismissAll();
-
-  },
-
   'click [data-action="perform-action"]': function() {
 
     this.actionFunction && this.actionFunction.call(this, function() {
       AntiModals.dismissAll();
     });
-
-  }
-
-});
-
-Template.messageModal.events({
-
-  'click [data-action="close-modal"]': function() {
-
-    AntiModals.dismissAll();
 
   }
 

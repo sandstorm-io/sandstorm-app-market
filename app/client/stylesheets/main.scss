@@ -238,14 +238,13 @@ html {
 
 }
 
-.tooltip {
-  $background-color: #e7e4ea;
-  $border-color: #a694b2;
+@mixin tooltip($background-color, $text-color, $border-color) {
 
   z-index: 1001;
   pointer-events: none;
   transition: opacity .1s ease-out;
   opacity: 0;
+  transition: opacity 0.5s;
   background: $background-color;
   padding: 1rem;
   font-size: 1.3rem;
@@ -253,6 +252,7 @@ html {
   box-sizing: border-box;
   position: relative;
   border: 0.1rem solid $border-color;
+  color: $text-color;
 
   .arrow {
   	background: $background-color;
@@ -302,5 +302,14 @@ html {
 
   &.show {
     opacity: 1;
+  }
+}
+
+
+.tooltip {
+  @include tooltip(#e7e4ea, #444444, #a694b2);
+
+  &.invalid {
+    @include tooltip(#ffffff, #800000, #800000);
   }
 }

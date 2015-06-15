@@ -130,11 +130,10 @@ Template.Review.onCreated(function() {
         tmp.app.set(Meteor.user().savedApp[FlowRouter.getParam('appId')]);
       } else {
         var newVersion = Apps.findOne(FlowRouter.getParam('appId')),
-            lastVersionNumber = newVersion.latestVersion();
+            lastVersion = newVersion.latestVersion();
         newVersion.replacesApp = newVersion._id;
-        newVersion.versions = [];
         Schemas.AppsBase.clean(newVersion);
-        newVersion.lastVersionNumber = lastVersionNumber;
+        newVersion.versions = [lastVersion];
         tmp.app.set(newVersion);
       }
       // highlight edited fields
@@ -355,26 +354,14 @@ Template.Review.events({
   'click [data-action="submit-admin-requests"]': function(evt, tmp) {
 
     tmp.validate();
-    Meteor.call('admin/submitAdminRequests', tmp.app.all(), function(err, res) {
-      if (err) console.log(err);
-      else if (res) {
-        window.scrollTo(0, 0);
-        tmp.submitted.set(new Date());
-      }
-    });
+    Meteor.call('admin/submitAdminRequests', tmp.app.all(), App.redirectOrErrorCallback('admin'));
 
   },
 
   'click [data-action="save-admin-requests"]': function(evt, tmp) {
 
     tmp.validate();
-    Meteor.call('user/saveApp', tmp.app.all(), function(err) {
-      if (err) console.log(err);
-      else {
-        window.scrollTo(0, 0);
-        tmp.app.set(Meteor.user().savedApp[FlowRouter.getParam('appId')]);
-      }
-    });
+    Meteor.call('user/saveApp', tmp.app.all(), App.redirectOrErrorCallback('appsByMe'));
 
   },
 
@@ -385,21 +372,7 @@ Template.Review.events({
       bottomMessage: 'This can\'t be undone.',
       actionText: 'Yes, nuke',
       actionFunction: function(cb) {
-        Meteor.call('user/deleteSavedApp', tmp.app.get('replacesApp'), function(err, res) {
-          if (err) {
-            console.log(err);
-          }
-          else {
-            tmp.clearApp();
-            var newVersion = Apps.findOne(FlowRouter.getParam('appId'));
-            newVersion.replacesApp = newVersion._id;
-            newVersion.versions = [];
-            Schemas.AppsBase.clean(newVersion);
-            tmp.app.set(newVersion);
-            tmp.setCategories(tmp.app.get('categories'));
-            cb();
-          }
-        });
+        Meteor.call('user/deleteSavedApp', FlowRouter.getParams('appId'), App.redirectOrErrorCallback('admin'));
       }
     }});
 
@@ -412,13 +385,7 @@ Template.Review.events({
       bottomMessage: 'This will delete the app itself, not just your version, and it can\'t be undone.',
       actionText: 'Yes, nuke',
       actionFunction: function(cb) {
-        Meteor.call('user/deleteApp', tmp.app.get('replacesApp'), function(err, res) {
-          if (err) console.log(err);
-          else {
-            tmp.clearApp();
-            cb();
-          }
-        });
+        Meteor.call('user/deleteApp', FlowRouter.getParams('appId'), App.redirectOrErrorCallback('admin'));
       }
     }});
 
@@ -458,17 +425,19 @@ Template.descriptionEditor.onCreated(function() {
 
   var tmp = this;
 
+  tmp.preview = new ReactiveVar();
+  tmp.edit = new ReactiveVar();
   tmp.original = new ReactiveVar();
-  tmp.current = new ReactiveVar();
-  tmp.viewOriginal = new ReactiveVar(false);
+  tmp.currentView = new ReactiveVar('edit');
 
   tmp.converter = new Showdown.converter();
 
   tmp.autorun(function(c) {
     if (FlowRouter.subsReady()) {
       Tracker.afterFlush(function() {
-        tmp.original.set(tmp.data.original || tmp.data.initial);
-        tmp.current.set(tmp.data.initial);
+        tmp.preview.set(tmp.data.initial || tmp.data.original);
+        tmp.edit.set(tmp.data.initial);
+        tmp.original.set(tmp.data.original);
         c.stop();
       });
     }
@@ -478,14 +447,17 @@ Template.descriptionEditor.onCreated(function() {
 
 Template.descriptionEditor.helpers({
 
-  current: function() {
-    return Template.instance().get('current').get();
+  edit: function() {
+    return Template.instance().get('edit').get();
+  },
+  preview: function() {
+    return Template.instance().get('preview').get();
   },
   original: function() {
     return Template.instance().get('original').get();
   },
-  viewOriginal: function() {
-    return Template.instance().get('viewOriginal').get();
+  view: function(view) {
+    return Template.instance().get('currentView').get() === view;
   },
   emptyDescriptionTooltip: function() {
     return '<h4>The description appears to be blank</h4><p>Are you sure you want to submit this' +
@@ -496,19 +468,16 @@ Template.descriptionEditor.helpers({
 
 Template.descriptionEditor.events({
 
-  'click [data-action="edit-markdown"]': function(evt, tmp) {
-    $('[data-field="description"]').css('height', $('[data-field="original"]').css('height'));
-    tmp.viewOriginal.set(false);
-    Tracker.afterFlush($.prototype.focus.bind(tmp.$('[data-field="description"]')));
+  'click [data-view]': function(evt, tmp) {
+    var $target = $(evt.currentTarget),
+        view = $target.data('view');
+    if (view === 'preview') tmp.preview.set(tmp.converter.makeHtml(tmp.get('app').get('description')));
+    tmp.$('[data-field="' + view + '"]').css('height', tmp.$('.description-editor:not(.hidden)').css('height'));
+    tmp.currentView.set(view);
+    Tracker.afterFlush($.prototype.focus.bind(tmp.$('[data-field="' + view + '"]')));
   },
 
-  'click [data-action="view-original"]': function(evt, tmp) {
-    $('[data-field="original"]').css('height', $('[data-field="description"]').css('height'));
-    tmp.original.set(tmp.converter.makeHtml(tmp.get('app').get('description')));
-    tmp.viewOriginal.set(true);
-  },
-
-  'change [data-field="description"]': function(evt, tmp) {
+  'change [data-field="edit"]': function(evt, tmp) {
     var app = tmp.get('app');
     app.set('description', $(evt.currentTarget).val());
   }

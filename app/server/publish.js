@@ -95,7 +95,6 @@ Meteor.publish('app search description', function(term) {
 });
 
 Meteor.publish('saved apps', function() {
-  // return Meteor.users.find(this.userId, {fields: {savedApp: 1}});
   return Apps.find({author: this.userId, approved: Apps.approval.draft});
 });
 

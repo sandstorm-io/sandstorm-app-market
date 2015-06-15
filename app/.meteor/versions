@@ -80,7 +80,7 @@ meteor-platform@1.2.2
 meteorhacks:async@1.0.0
 meteorhacks:fast-render@2.5.0
 meteorhacks:flow-layout@1.4.0
-meteorhacks:flow-router@1.14.1
+meteorhacks:flow-router@1.15.0
 meteorhacks:inject-data@1.3.0
 meteorhacks:npm@1.3.0
 meteorhacks:picker@1.0.2
@@ -121,7 +121,7 @@ simple:rest@0.2.3
 spacebars@1.0.6
 spacebars-compiler@1.0.6
 splendido:accounts-emails-field@1.2.0
-splendido:accounts-meld@1.3.0
+splendido:accounts-meld@1.3.1
 srp@1.0.3
 templating@1.1.1
 tracker@1.0.7

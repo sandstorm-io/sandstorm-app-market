@@ -119,10 +119,9 @@ Meteor.methods({
     this.unblock();
     if (!this.userId) return false;
 
-    var unset = {},
-      unsetString = 'savedApp.' + (appId || 'new');
-    unset[unsetString] = true;
-    return Meteor.users.update(this.userId, {$unset: unset});
+    var app = Apps.findOne(appId);
+    if (app.approved === Apps.approval.draft) Apps.remove(appId);
+    return true;
 
   },
 
@@ -183,6 +182,9 @@ Meteor.methods({
         currentApp = Apps.findOne(app.replacesApp),
         latestVersion = currentApp && currentApp.latestVersion();
 
+    if (!currentApp) throw new Meteor.Error('The app this is supposed to replace doesn\'t exist!');
+    if (!latestVersion) throw new Meteor.Error('This app doesn\'t have a published version to replace!');
+
     // Confirm veracity of .spk, but only if there's a new packageId
     if (latestVersion.packageId !== app.versions[0].packageId) {
       if (!fileObj && latestVersion && latestVersion.packageId !== app.versions[0].packageId)
@@ -207,8 +209,25 @@ Meteor.methods({
     app.approved = Apps.approval.pending;
 
     // if there is a draft of this update, replace it with the submitted version
-    var draft = Apps.findOne({_id: app._id, approved: Apps.approval.draft});
-    if (draft) Apps.update(app._id, {$set: _.omit(app, 'id')});
+    var replaceMe = Apps.findOne({_id: app._id, approved: Apps.approval.draft});
+    // or if there's an existing pending update, replace that
+    replaceMe = replaceMe || Apps.findOne({replacesApp: app.replacesApp, approved: {$in: [
+      Apps.approval.pending,
+      Apps.approval.rejected,
+      Apps.approval.revisionRequested
+    ]}});
+    // or finally if the original submission is still pending, replace that
+    replaceMe = replaceMe || Apps.findOne({_id: app.replacesApp, approved: {$in: [
+      Apps.approval.pending,
+      Apps.approval.rejected,
+      Apps.approval.revisionRequested
+    ]}});
+    if (replaceMe) {
+      // we shouldn't update replacesApp in the app, as it might not replace something
+      // that's already been approved (and it would be more complicated to check)
+      delete app.replacesApp;
+      Apps.update(replaceMe._id, {$set: _.omit(app, '_id')});
+    }
     // otherwise, just insert it as a new app pending approval
     else Apps.insert(app);
 
@@ -221,8 +240,7 @@ Meteor.methods({
 
   'user/deleteApp': function(appId) {
 
-    var fut = new Future(),
-        app = Apps.findOne(appId);
+    var app = Apps.findOne(appId);
 
     this.unblock();
     if (!this.userId) return false;
@@ -322,7 +340,7 @@ Meteor.methods({
       var newVersion = app.versions[0];
       Schemas.AppsBase.clean(app);
       delete app.versions;
-      delete app.replacesApp;
+      app.replacesApp = app._id;
       app.approved = 0;
       Apps.update(replacesApp, {$set: app, $push: {versions: newVersion}});
       Apps.remove(appId);
@@ -395,18 +413,6 @@ Meteor.methods({
     if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Only an admin user can save an app that isn\'t theirs');
 
     return Apps.update(app.replacesApp, {$set: {adminRequests: [app], approved: 2}});
-
-  },
-
-  'admin/saveEdits': function(appId) {
-
-    this.unblock();
-    if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Only an admin user can save an app that isn\'t theirs');
-
-    var set = {},
-      setString = 'savedApp.' + (app.replacesApp || 'new');
-    set[setString] = app;
-    return Meteor.users.update(this.userId, {$set: set});
 
   },
 

@@ -1,9 +1,11 @@
 # Defaults
 
 Tooltip =
+	live: false
 	text: false
 	css: {top: 0, left: 0}
 	direction: 'tooltip--top'
+	classes: []
 
 dep = new Tracker.Dependency()
 offset = [10, 10]
@@ -25,13 +27,21 @@ setTooltip = (what, where) ->
 	Tooltip.text = what
 	dep.changed()
 
+makeLive = (live) ->
+	Tooltip.live = live
+	dep.changed()
+
 setPosition = (position, direction) ->
 	Tooltip.css = position
 	Tooltip.direction = DIRECTION_MAP[direction] if direction
 	dep.changed()
 
+setClasses = (classes) ->
+	Tooltip.classes = classes
+	dep.changed()
+
 hideTooltip = ->
-	setTooltip false
+	makeLive false
 
 # Positioning
 
@@ -52,8 +62,16 @@ Tooltips =
 	set: setTooltip
 	get: getTooltip
 	hide: hideTooltip
+	hideDelay: (mainDelay, classDelay) ->
+	  Meteor.setTimeout (->
+	    Tooltips.hide()
+	    Meteor.setTimeout Tooltips.setClasses, classDelay
+	    return
+	  ), mainDelay
+	  return
 	setPosition: setPosition
-	show: (el, content) ->
+	setClasses: setClasses
+	show: (el, content, dir) ->
 		$el = $(el)
 
 		viewport = $el.data 'tooltip-disable'
@@ -63,9 +81,10 @@ Tooltips =
 			return false if mq.matches
 
 		setTooltip content or $el.data 'tooltip-manual'
+		makeLive true
 
 		Tracker.afterFlush ->
-			direction = $el.data('tooltip-direction') or 'n'
+			direction = dir or $el.data('tooltip-direction') or 'n'
 			$tooltip = $(".tooltip")
 
 			position = $el.offset()
@@ -106,7 +125,7 @@ Template.tooltips.helpers
 		if Template.instance().disabled.get() is true
 			return 'hide'
 
-		if tip.text then 'show' else 'hide'
+		if tip.live then 'show' else 'hide'
 
 	position: ->
 		css = getTooltip().css
@@ -115,8 +134,14 @@ Template.tooltips.helpers
 	content: ->
 		getTooltip().text
 
+	live: ->
+		getTooltip().live
+
 	direction: ->
 		getTooltip().direction
+
+	classes: ->
+		getTooltip().classes
 
 # Init
 
@@ -146,6 +171,7 @@ Meteor.startup ->
 			return false if mq.matches
 
 		setTooltip $el.data 'tooltip'
+		makeLive true
 
 		Tracker.afterFlush ->
 			direction = $el.data('tooltip-direction') or 'n'

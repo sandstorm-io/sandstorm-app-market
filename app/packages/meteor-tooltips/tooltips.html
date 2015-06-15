@@ -1,10 +1,10 @@
 <template name="tooltips">
-	<div class="tooltip {{direction}} {{display}}" style="{{position}}">
-		{{#if content}}
+	{{#if content}}
+	<div class="tooltip {{direction}} {{display}} {{#each classes}}{{this}} {{/each}}" style="{{position}}">
 			<div class="inner">{{{content}}}</div>
 			<div class="arrow"></div>
-		{{/if}}
 	</div>
+	{{/if}}
 </template>
 
 <template name="tooltip">

@@ -49,12 +49,16 @@ function getSandstormServer(context) {
 // Subscription callback which checks it the supplied app exists when the
 // sub is ready, and redirects to a not found page if it isn't
 function checkAppExists() {
-  var app = Apps.findOne(FlowRouter.getParam('appId'));
-  if (!app) FlowRouter.go('notFound', {object: 'app'});
+  Meteor.defer(function() {
+    var app = Apps.find(FlowRouter.getParam('appId')).count();
+    if (!app) FlowRouter.go('notFound', {object: 'app'});
+  });
 }
 function checkAuthorExists() {
-  var author = Meteor.users.findOne(FlowRouter.getParam('authorId'));
-  if (!author) FlowRouter.go('notFound', {object: 'author'});
+  Meteor.defer(function() {
+    var author = Meteor.users.find(FlowRouter.getParam('authorId')).count();
+    if (!author) FlowRouter.go('notFound', {object: 'author'});
+  });
 }
 
 function getPopulatedGenres() {

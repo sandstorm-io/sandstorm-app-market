@@ -327,7 +327,7 @@
 
     <div class="button-block big-gap">
 
-      <div class="sandstorm-button neutral" data-action="close-modal">
+      <div class="sandstorm-button neutral anti-modal-closer">
         Cancel
       </div>
       <div class="sandstorm-button neutral" data-action="perform-action">
@@ -357,7 +357,37 @@
 
     <div class="button-block big-gap">
 
-      <div class="sandstorm-button neutral" data-action="close-modal">
+      <div class="sandstorm-button neutral anti-modal-closer">
+        Close
+      </div>
+
+    </div>
+
+  </div>
+
+</template>
+
+<template name="errorModal">
+
+  <div class="anti-modal-box nuke-modal clearfix">
+
+    <h2 class="header">
+      Error
+    </h2>
+
+    <div class="message">
+      Sorry, there was a problem:
+      <pre>
+        {{err}}
+      </pre>
+    </div>
+
+    <div class="spacer">
+    </div>
+
+    <div class="button-block big-gap">
+
+      <div class="sandstorm-button neutral anti-modal-closer">
         Close
       </div>
 
