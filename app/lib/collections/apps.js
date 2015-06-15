@@ -548,4 +548,5 @@ Apps.after.update(function(userId, doc, fieldNames) {
   if (fieldNames.indexOf('versions') > -1 && doc.approved !== Apps.approval.draft)
     this.transform().updateSpkDetails(this.previous);
 
+  this.transform().transformSocialLinks();
 });
