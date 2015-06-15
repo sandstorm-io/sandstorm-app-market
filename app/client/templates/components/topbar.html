@@ -20,8 +20,11 @@
         {{/each}}
 
         <div class="genre-box extra-genres {{#unless extraGenres}}hidden{{/unless}}" data-action="{{#if moreOpen}}close-more-menu{{else}}open-more-menu{{/if}}">
-          <a class="more show-above-small-phone">More</a>
-          <a class="more hide-above-small-phone">Genres</a>
+          {{#if genres}}
+            <a class="more">More</a>
+          {{else}}
+            <a class="more">Genres</a>
+          {{/if}}
           <ul class="extra-genres-list {{#if moreOpen}}open{{/if}}">
             {{#each extraGenres}}
               <a href="{{getZippedPath 'appMarketGenre' 'genre' name}}" data-action="close-more-menu"><li class="genre-box {{#if active}}active{{/if}}">{{name}}</li></a>
@@ -35,7 +38,7 @@
 
     <div class="search-section">
       <input class="search-box" type="text" data-field="search-term" />
-      <button class="search-button" data-action="search-apps"><i class="icon-search"></i></button>      
+      <button class="search-button" data-action="search-apps"><i class="icon-search"></i></button>
     </div>
 
   </div>
