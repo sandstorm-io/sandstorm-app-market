@@ -61,9 +61,10 @@
                   </div>
 
                   <div class="right-float social">
-                    <i class="icon-tw"></i>
-                    <i class="icon-go"></i>
-                    <i class="icon-fb"></i>
+                    {{#if invoke 'twitterLink'}}<a href="{{invoke 'twitterLink'}}" target="_blank"><i class="icon-tw"></i></a>{{/if}}
+                    {{#if invoke 'githubLink'}}<a href="{{invoke 'githubLink'}}" target="_blank"><i class="icon-gh"></i></a>{{/if}}
+                    {{#if invoke 'googlePlusLink'}}<a href="{{invoke 'googlePlusLink'}}" target="_blank"><i class="icon-go"></i></a>{{/if}}
+                    {{#if invoke 'facebookLink'}}<a href="{{invoke 'facebookLink'}}" target="_blank"><i class="icon-fb"></i></a>{{/if}}
                   </div>
 
                 </div>

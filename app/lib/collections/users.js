@@ -1,3 +1,13 @@
+// Helper methods - these would ideally be transforms, but transforms are
+// difficult to implement on the Meteor.users Collection
+// (see https://github.com/meteor/meteor/issues/810) so we make do with methods
+// on the Collection rather than the docs
+Meteor.users.googlePlusLink = function(user) {
+  if (typeof user === 'string') user = Meteor.users(user);
+  return (user.services && user.services.google && user.services.google.id) ?
+           'https://plus.google.com/' + user.services.google.id : null;
+};
+
 Schemas.UserProfile = new SimpleSchema({
   info: { // THIS IS JUST A PLACEHOLDER
     type: String,

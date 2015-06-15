@@ -2,11 +2,15 @@
 
   <div class="button-row">
     {{#with serviceDetails}}
-    <div class="connect-button {{status}}" data-action="connect">
+    <div class="connect-button {{#if connected}}connected{{/if}}" data-action="connect">
 
       <i class="{{icon}}"></i>
-      Connect with
+      Connect{{#if connected}}ed{{/if}} with
       <span class="service-name">{{name}}</span>
+
+      {{#if connected}}
+      <i class="fa fa-times disconnect" data-action="disconnect"></i>
+      {{/if}}
 
     </div>
     {{/with}}

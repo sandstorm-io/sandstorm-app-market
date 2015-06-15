@@ -158,6 +158,10 @@ html {
   body {
     margin: 0;
     user-select: none;
+
+    &.serviceConfiguration {
+      user-select: initial;
+    }
   }
 
   a {

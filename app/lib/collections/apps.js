@@ -65,6 +65,32 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
       }
     };
 
+    // Tranform any entries in the socialLinks field from references to the author's
+    // data or docs in the SocialData collection to the actual data itself
+    app.transformSocialLinks = function() {
+      var user = Meteor.users.findOne(this.author),
+          socialLinks = this.socialLinks || {},
+          // we need to record whether we actually need to update the doc otherwise
+          // we'll end up in an infinite update loop thanks to calling this function
+          // from Apps.after.update
+          updated = false;
+
+      _.forEach(socialLinks, function(data, service) {
+        if (data === -1 && user) {
+          socialLinks[service] = user.services && _.omit(user.services[service],
+                                                 'accessToken', 'accessTokenSecret', 'idToken', 'expiresAt');
+          updated = true;
+        }
+        else if (typeof data === 'string') {
+          var socialData = SocialData.findOne(data);
+          if (socialData) socialLinks[service] = _.omit(socialData.serviceData, 'accessToken', 'accessTokenSecret',
+                                                  'idToken', 'expiresAt');
+          updated = true;
+        }
+      });
+      if (updated) Apps.update(this._id, {$set: {socialLinks: socialLinks}});
+    };
+
   }
 
   app.installed = function() {
@@ -79,6 +105,22 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
 
     return false;
 
+  };
+
+  app.googlePlusLink = function() {
+    return (this.socialLinks && this.socialLinks.google && this.socialLinks.google.id) ?
+             'https://plus.google.com/' + this.socialLinks.google.id : null;
+  };
+  app.facebookLink = function() {
+    return (this.socialLinks && this.socialLinks.facebook && this.socialLinks.facebook.link) ?
+             this.socialLinks.facebook.link : null;
+  };
+  app.twitterLink = function() {
+    return (this.socialLinks && this.socialLinks.twitter && this.socialLinks.twitter.screenName) ?
+             'https://twitter.com/' + this.socialLinks.twitter.screenName : null;
+  };
+  app.githubLink = function() {
+    return (this.onGithub()) ? this.codeLink : null;
   };
 
   return app;
@@ -219,6 +261,11 @@ var appsBaseSchema = {
   filename: {
     type: String,
     defaultValue: ''
+  },
+  socialLinks: {
+    type: Object,
+    blackbox: true,
+    defaultValue: {}
   }
 
 };
@@ -478,6 +525,7 @@ function updateInstallCountThisWeek() {
 
 Apps.after.insert(function(userId, doc) {
   if (doc.approved !== Apps.approval.draft) this.transform().updateSpkDetails();
+  this.transform().transformSocialLinks();
 });
 
 Apps.after.update(function(userId, doc, fieldNames) {
@@ -508,4 +556,6 @@ Apps.after.update(function(userId, doc, fieldNames) {
   if (fieldNames.indexOf('versions') > -1 && doc.approved !== Apps.approval.draft)
     this.transform().updateSpkDetails(this.previous);
 
+  if (fieldNames.indexOf('socialLinks') > -1)
+    this.transform().transformSocialLinks();
 });
