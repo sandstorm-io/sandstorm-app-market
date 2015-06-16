@@ -1,0 +1,12 @@
+{
+  "AWSAccessKeyId": "AKIAIYYCJOYHWYKU2T5Q",
+  "AWSSecretAccessKey": "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",
+  "GCSProjectId": "sandstorm-app-store",
+  "GCSKeyFilename": "SandstormAppStore.json",
+  "GCSPemFilename": "SandstormAppStore.pem",
+  "GCSAccessId": "518634416961-n4s3fskdavssi5s41k7taakb88chucic@developer.gserviceaccount.com",
+  "public": {
+    "spkBucket": "sandstorm-spks",
+    "imageBucket": "sandstorm-spks"
+  }
+}

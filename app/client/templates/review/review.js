@@ -426,9 +426,9 @@ Template.descriptionEditor.onCreated(function() {
   var tmp = this;
 
   tmp.preview = new ReactiveVar();
-  tmp.edit = new ReactiveVar();
+  tmp.description = new ReactiveVar();
   tmp.original = new ReactiveVar();
-  tmp.currentView = new ReactiveVar('edit');
+  tmp.currentView = new ReactiveVar('description');
 
   tmp.converter = new Showdown.converter();
 
@@ -436,7 +436,7 @@ Template.descriptionEditor.onCreated(function() {
     if (FlowRouter.subsReady()) {
       Tracker.afterFlush(function() {
         tmp.preview.set(tmp.data.initial || tmp.data.original);
-        tmp.edit.set(tmp.data.initial);
+        tmp.description.set(tmp.data.initial);
         tmp.original.set(tmp.data.original);
         c.stop();
       });
@@ -447,8 +447,8 @@ Template.descriptionEditor.onCreated(function() {
 
 Template.descriptionEditor.helpers({
 
-  edit: function() {
-    return Template.instance().get('edit').get();
+  description: function() {
+    return Template.instance().get('description').get();
   },
   preview: function() {
     return Template.instance().get('preview').get();
@@ -477,7 +477,7 @@ Template.descriptionEditor.events({
     Tracker.afterFlush($.prototype.focus.bind(tmp.$('[data-field="' + view + '"]')));
   },
 
-  'change [data-field="edit"]': function(evt, tmp) {
+  'change [data-field="description"]': function(evt, tmp) {
     var app = tmp.get('app');
     app.set('description', $(evt.currentTarget).val());
   }
