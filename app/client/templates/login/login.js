@@ -28,12 +28,7 @@ Template.Login.events({
   },
   'click [data-action="login-with-email"]': function(evt, tmp) {
     var credentials = getCredentials(tmp);
-    Meteor.loginWithPassword(_.pick(credentials, 'email'), credentials.password, function(err) {
-      if (err) {
-        console.log(err);
-        tmp.error.set(err.reason);
-      }
-    });
+    Meteor.loginWithPassword(_.pick(credentials, 'email'), credentials.password, setErr.bind(tmp));
   },
   'click [data-action="login-with-github"]': function(evt, tmp) {
     Meteor.loginWithGithub(setError.bind(tmp));
@@ -58,6 +53,8 @@ function setError(err) {
   if (err) {
     console.log(err);
     this.error.set(err.reason);
+  } else if (FlowRouter.getQueryParam('return')) {
+    FlowRouter.go(FlowRouter.getQueryParam('return'));
   } else {
     this.error.set('');
   }

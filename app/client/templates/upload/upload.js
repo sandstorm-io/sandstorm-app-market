@@ -436,7 +436,8 @@ Template.fileBox.events({
 
   'click [data-action="choose-file"]': function(evt, tmp) {
 
-    tmp.$('[data-action="file-picker"][data-for="spk"]').click();
+    if (!Meteor.userId()) FlowRouter.go('login', {}, {return: FlowRouter.getRouteName()});
+    else tmp.$('[data-action="file-picker"][data-for="spk"]').click();
     evt.stopPropagation();
 
   },
@@ -539,7 +540,8 @@ Template.iconPicker.events({
 
   'click [data-action="choose-file"]': function(evt, tmp) {
 
-    tmp.$('[data-action="file-picker"][data-for="' + $(evt.currentTarget).data('name') + '"]').click();
+    if (!Meteor.userId()) FlowRouter.go('login', {}, {return: FlowRouter.getRouteName()});
+    else tmp.$('[data-action="file-picker"][data-for="' + $(evt.currentTarget).data('name') + '"]').click();
     evt.stopPropagation();
 
   },
@@ -588,7 +590,8 @@ Template.screenshotPicker.events({
 
   'click [data-action="choose-file"]': function(evt, tmp) {
 
-    tmp.$('[data-action="file-picker"][data-for="' + $(evt.currentTarget).data('name') + '"]').click();
+    if (!Meteor.userId()) FlowRouter.go('login', {}, {return: FlowRouter.getRouteName()});
+    else tmp.$('[data-action="file-picker"][data-for="' + $(evt.currentTarget).data('name') + '"]').click();
     evt.stopPropagation();
 
   },
