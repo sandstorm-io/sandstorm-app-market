@@ -45,6 +45,18 @@ _.extend(App, {
         redirectPath && FlowRouter.go(redirectPath);
       }
     };
+  },
+
+  populatedGenres: new ReactiveVar([]),
+
+  historyDep: new Tracker.Dependency(),
+
+  installHistoryCount: function() {
+    App.historyDep.depend();
+    var localInstall = amplify.store('sandstormInstalledApps'),
+        count = localInstall ? localInstall.length : 0;
+    if (Meteor.user()) count += _.keys(Meteor.user().installedApps).length;
+    return count;
   }
 
 });

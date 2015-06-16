@@ -7,10 +7,12 @@
       <div class="menu-text">App Market</div>
     </a>
 
+    {{#if installHistoryCount}}
     <a class="menu-link {{inRouteCategory 'installedApps'}}" href="{{getPath 'installedApps'}}">
       <i class="icon-apps"></i>
       <div class="menu-text">Install History</div>
     </a>
+    {{/if}}
 
     <a class="menu-link {{inRouteCategory 'appsByMe'}} {{#unless currentUser}}disabled{{/unless}}" href="{{#if currentUser}}{{getPath 'appsByMe'}}{{/if}}">
       <i class="icon-extra-myapps_dark"></i>

@@ -1,3 +1,11 @@
+Template.Menu.helpers({
+
+  installHistoryCount: function() {
+    return App.installHistoryCount();
+  }
+
+});
+
 Template.Menu.events({
 
   'click .menu-link.active': function(evt, tmp) {

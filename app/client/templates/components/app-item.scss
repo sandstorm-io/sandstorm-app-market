@@ -139,6 +139,16 @@
 
       }
 
+      .uninstall-app {
+
+        font-size: $installed-bar-icon-size;
+        color: $installed-bar-icon;
+        cursor: pointer;
+        display: inline-block;
+        float: right;
+
+      }
+
     }
 
     .installed-bar {
@@ -186,16 +196,6 @@
           display: none;
 
         }
-
-      }
-
-      .uninstall-app {
-
-        float: right;
-        display: inline-block;
-        font-size: $installed-bar-icon-size;
-        color: $installed-bar-icon;
-        cursor: pointer;
 
       }
 

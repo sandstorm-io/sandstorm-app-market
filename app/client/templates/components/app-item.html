@@ -63,25 +63,12 @@
 
           <a href="{{getZippedPath 'appMarketAuthor' 'authorId' author}}"><div class="app-author">{{authorName}}</div></a>
 
-          {{#if ../../../installPage}}
-            <div class="app-rating">
-              {{> appRating ratings=ratings simple=true}}
-              <a class="rate-it" href="{{getZippedPath 'singleApp' 'appId' this._id}}">
-                {{#if myRating}}
-                YOUR RATING
-                {{else}}
-                RATE IT
-                {{/if}}
-              </a>
-            </div>
-          {{else}}
-            <div class="app-rating">
-              {{> appRating ratings=ratings simple=true}}
-            </div>
-          {{/if}}
+          <div class="app-rating">
+            {{> appRating ratings=ratings simple=true}}
+          </div>
 
           {{#if ../../../installPage}}
-
+{{!--
             <div class="installed-bar">
 
               <div class="installed-details">
@@ -100,6 +87,18 @@
                 </div>
 
               </div>
+
+              <div class="uninstall-app">
+                <i class="icon-garbage" data-action="uninstall-app-modal"></i>
+              </div>
+
+            </div>
+             --}}
+            <div class="install-price">
+
+              <a href="{{fullInstallLink}}" target="_blank" class="app-install {{#if invoke 'installed'}}installed{{/if}}" data-action="install-app">
+                {{#if invoke 'installed'}}RE-{{/if}}INSTALL  <i class="icon-arrow-install"></i>
+              </a>
 
               <div class="uninstall-app">
                 <i class="icon-garbage" data-action="uninstall-app-modal"></i>
