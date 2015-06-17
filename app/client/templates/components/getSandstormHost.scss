@@ -1,6 +1,122 @@
+@import "../../stylesheets/variables";
+
 .host-container {
 
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
+
+}
+
+.sandstorm-server-box {
+
+  &.anti-modal-box {
+
+    padding: 4rem;
+    padding-bottom: 6rem;
+    box-shadow: none;
+    border: none;
+    font-family: $main-font;
+    width: 38rem;
+    text-align: center;
+
+  }
+
+  padding-top: $uninstall-app-modal-padding-tb;
+  padding-bottom: $uninstall-app-modal-padding-tb;
+  padding-left: $uninstall-app-modal-padding-lr;
+  padding-right: $uninstall-app-modal-padding-lr;
+  color: #783189;
+  background-color: $uninstall-app-modal-bg;
+
+  .header {
+
+    text-align: center;
+    font-size: 3.2rem;
+    margin-bottom: 3rem;
+    font-weight: normal;
+
+  }
+
+  .blurb {
+
+    text-align: center;
+    line-height: 1.5;
+    font-size: 1.5rem;
+    font-weight: normal;
+
+    p {
+      margin-top: $uninstall-app-modal-blurb-p-margin-top;
+      margin-bottom: $uninstall-app-modal-blurb-p-margin-bottom;
+    }
+
+    margin-bottom: 3rem;
+
+  }
+
+  .buttons {
+
+    word-spacing: $uninstall-app-modal-button-spacing;
+
+    .button {
+
+      display: inline-block;
+      color: $uninstall-app-modal-button-text;
+      background-color: $uninstall-app-modal-button-bg;
+      padding-top: $uninstall-app-modal-button-padding-tb;
+      padding-bottom: $uninstall-app-modal-button-padding-tb;
+      padding-left: $uninstall-app-modal-button-padding-lr;
+      padding-right: $uninstall-app-modal-button-padding-lr;
+      border-radius: $button-border-radius;
+      font-size: $uninstall-app-modal-button-font-size;
+      cursor: pointer;
+
+      &:hover, &:active {
+        background-color: $uninstall-app-modal-button-hover-bg;
+      }
+
+    }
+
+  }
+
+  .hosts {
+    display: inline-block;
+    text-align: left;
+
+    .sandstorm-button {
+      font-weight: normal;
+    }
+
+    .or {
+      text-align: center;
+      line-height: 1.4;
+      font-size: 1.5rem;
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .sandstorm-input {
+      .input {
+        padding: 0;
+
+        input {
+          width: 13rem;
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
+      }
+
+      .button {
+        background-color: #783189;
+        padding-left: 1rem;
+        padding-right: 1.5rem;
+        i {
+          color: $uninstall-app-modal-bg;
+          font-size: 0.85em;
+          vertical-align: middle;
+        }
+      }
+    }
+
+  }
 
 }

@@ -36,6 +36,9 @@ Template.getSandstormHostModal.events({
     if (newHost.slice(0, 7) !== 'http://') newHost = 'http://' + newHost;
     if (newHost.slice(newHost.length - 1) !== '/') newHost = newHost + '/';
     App.sandstormHost = newHost;
+    var allHosts = amplify.store('sandstormHostHistory') || [];
+    allHosts = _.unique(allHosts.concat(newHost));
+    amplify.store('sandstormHostHistory', allHosts);
     callback(newHost);
   }
 
