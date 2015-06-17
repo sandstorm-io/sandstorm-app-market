@@ -6,7 +6,10 @@
       "username": "silverton.richard",
       // "password": "password"
       // or pem file (ssh based authentication)
-      "pem": "~/.ssh/id_rsa"
+      "pem": "~/.ssh/id_rsa",
+      "env": {
+        "DISABLE_WEBSOCKETS": 1
+      }
     }
   ],
 
