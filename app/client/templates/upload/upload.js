@@ -555,9 +555,12 @@ Template.iconPicker.events({
 
       App.imageUploader.send(file, function(err, downloadUrl) {
 
-        if (err)
+        if (err) {
           console.error('Error uploading', err);
-        else {
+          AntiModals.overlay('errorModal', {data: {err: err}});
+          tmp.get('seedString').set(Random.id());
+          tmp.get('app').set('image', '');
+        } else {
           tmp.get('app').set('image', encodeURI(downloadUrl));
         }
       });
@@ -604,9 +607,10 @@ Template.screenshotPicker.events({
 
       App.imageUploader.send(file, function(err, downloadUrl) {
 
-        if (err)
+        if (err) {
           console.error('Error uploading', err);
-        else {
+          AntiModals.overlay('errorModal', {data: {err: err}});
+        } else {
           var screenshots = tmp.get('app').get('screenshots'),
               screenshotObj = {};
           downloadUrl = encodeURI(downloadUrl);
