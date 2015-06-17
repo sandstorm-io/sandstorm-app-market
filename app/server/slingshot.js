@@ -3,7 +3,6 @@ Slingshot.GoogleCloud.directiveDefault.GoogleSecretKey = Assets.getText('Sandsto
 Slingshot.createDirective("imageUploader", Slingshot.GoogleCloud, {
   bucket: Meteor.settings.public.imageBucket,
   GoogleAccessId: Meteor.settings.GCSAccessId,
-  // GoogleSecretKey: Meteor.settings.GCSSecretKey,
   acl: "public-read",
 
   authorize: function () {
@@ -17,9 +16,6 @@ Slingshot.createDirective("imageUploader", Slingshot.GoogleCloud, {
   },
 
   key: function (file) {
-    //Store file into a directory by the user's username.
-    return file.name;
-    var user = Meteor.users.findOne(this.userId);
-    return 'images/' + user.username + ' ' + new moment().format("hh:mm:ss_DD-MM-YY") + ' ' + file.name;
+    return 'images/' + this.userId + '_' + new Date().valueOf() + '_' + file.name;
   }
 });

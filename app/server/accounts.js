@@ -1,8 +1,6 @@
 // TODO: access full username from Github/Google
 
 Accounts.onCreateUser(function(options, user) {
-  console.log(options, user);
-
   if (options.profile) user.profile = options.profile;
   if (!user.username) {
     if (user.services && user.services.google) user.username = options.profile.name;
