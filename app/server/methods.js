@@ -381,6 +381,14 @@ Meteor.methods({
 
   },
 
+  'apps/checkIds': function(ids) {
+    if (!ids) return [];
+    else return _.reduce(ids, function(returnIds, id) {
+      if (Apps.find(id).count()) returnIds.push(id);
+      return returnIds;
+    }, []);
+  },
+
   'apps/reject': function(appId) {
 
     if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Can only be executed by admin user');
