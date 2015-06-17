@@ -253,7 +253,7 @@
 <template name="iconPicker">
 
   <div class="identicon-container">
-    <div class="identicon" style="background-image: url('{{imageUrl image}}')" data-field="icon-image">#
+    <div class="identicon" style="background-image: url('{{image}}')" data-field="icon-image">#
       <div class="tint"></div>
       <div class="regenerate" data-action="regenerate-identicon"><i class="icon-rejected_dark"></i></div>
       <div class="upload" data-action="choose-file" data-name="identicon"><i class="icon-myapps"></i></div>
@@ -270,7 +270,7 @@
 
   <div class="screenshot-outer">
       <div class="screenshot-container">
-        <div class="screenshot" style="background-image: url('{{imageUrl this.url}}')" data-action="change-screenshot">
+        <div class="screenshot" style="background-image: url('{{this.url}}')" data-action="change-screenshot">
           {{#if this.admin}}<div class="admin-tint"></div>{{/if}}
         </div>
         <div class="remove" data-action="remove-screenshot"><i class="icon-rejected_dark"></i></div>
