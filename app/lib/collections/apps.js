@@ -259,6 +259,10 @@ var appsBaseSchema = {
     type: String,
     optional: true
   },
+  tempFileId: {
+    type: String,
+    optional: true
+  },
   filename: {
     type: String,
     defaultValue: ''

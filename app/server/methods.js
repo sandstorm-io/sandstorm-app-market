@@ -104,13 +104,15 @@ Meteor.methods({
     // add TimeStamp
     app.lastEdit = new Date();
     app.approved = 4;
-    var currentDraft = Apps.findOne({replacesApp: app.replacesApp, approved: Apps.approval.draft});
+    var currentDraft = Apps.findOne({replacesApp: app.replacesApp, approved: Apps.approval.draft}) ||
+                       Apps.findOne({_id: app._id, approved: Apps.approval.draft});
 
     if (app.replacesApp && currentDraft) {
-      Apps.update({replacesApp: app.replacesApp, approved: Apps.approval.draft}, {$set: app});
+      Apps.update({replacesApp: app.replacesApp, approved: Apps.approval.draft}, {$set: app}, {validate: false});
       return currentDraft._id;
-    }
-    else return Apps.insert(app, {validate: false});
+    } else if (currentDraft){
+      Apps.update(currentDraft._id, {$set: app}, {validate: false});
+    } else return Apps.insert(app, {validate: false});
 
   },
 

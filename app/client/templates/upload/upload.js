@@ -25,6 +25,7 @@ Template.Upload.onCreated(function() {
   tmp.descriptionWarning = false;
 
   tmp.validate = function() {
+    tmp.app.set(tmp.app.all());
     return tmp.validator.validate(tmp.app.all());
   };
 
@@ -132,6 +133,7 @@ Template.Upload.onCreated(function() {
         var draft = Apps.findOne(FlowRouter.getParam('appId')),
             oldApp = tmp.app.all();
         _.extend(oldApp, draft);
+        Schemas.AppsBase.clean(oldApp);
         tmp.app.set(oldApp);
         tmp.setCategories(oldApp.categories);
       }
@@ -317,8 +319,43 @@ Template.fileBox.onCreated(function() {
 
   // subscribe to original spk details separately to avoid rerunning query
   tmp.autorun(function(c) {
-    var origFileId = tmp.origFileId.get();
+    var origFileId = tmp.origFileId.get() || tmp.get('app').get('tempFileId');
     tmp.subscribe('spks', origFileId);
+  });
+
+  // in case an upload has been in progress when the draft was saved
+  // see https://github.com/tableflip/sandstorm-appstore/issues/169
+  // but we can't do this in the subscribe callback, as the upload might still
+  // not have finished when the user navigates back to the page!
+  tmp.autorun(function(c) {
+    if (tmp.get('app').get('tempFileId')) {
+      Spks.find(tmp.get('app').get('tempFileId')).observe({
+        added: function(fileObj) {
+          if (!fileObj.meta) return;
+          tmp.error.set(null);
+          var app = tmp.get('app').allNonReactive();
+          app.appId = fileObj.meta.appId;
+          app.name = fileObj.meta.title;
+          app.versions = [{
+            number: fileObj.meta.marketingVersion,
+            version: fileObj.meta.version,
+            packageId: fileObj.meta.packageId,
+            spkId: fileObj._id
+          }];
+          // if this is an update, open up version detail boxes for editing
+          if (tmp.get('editingFields')) {
+            var fieldEd = tmp.get('editingFields').get();
+            fieldEd.latestVersion = true;
+            tmp.get('editingFields').set(fieldEd);
+          }
+          if (tmp.origFileId.get() !== tmp.fileId.get() && tmp.get('newVersion')) tmp.get('newVersion').set(true);
+          tmp.origFileId.set(app.tempFileId);
+          app.tempFileId = null;
+          tmp.get('app').set(app);
+          tmp.get('validate').call(tmp);
+        }
+      });
+    }
   });
 
   tmp.autorun(function(c) {
@@ -374,7 +411,7 @@ Template.fileBox.onCreated(function() {
             }
             if (tmp.origFileId.get() !== tmp.fileId.get() && tmp.get('newVersion')) tmp.get('newVersion').set(true);
             tmp.origFileId.set(tmp.fileId.get());
-
+            app.tempFileId = null;
             tmp.get('app').set(app);
           }
         }
@@ -451,7 +488,10 @@ Template.fileBox.events({
     tmp.progress.set(1);
     Spks.insert(file, function(err, fileObj) {
       if (err) console.log(err);
-      else tmp.get('fileId').set(fileObj._id);
+      else {
+        tmp.get('fileId').set(fileObj._id);
+        tmp.get('app').set('tempFileId', fileObj._id);
+      }
     });
 
   }
