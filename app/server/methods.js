@@ -120,7 +120,7 @@ Meteor.methods({
     if (!this.userId) return false;
 
     var app = Apps.findOne(appId);
-    if (app.approved === Apps.approval.draft) Apps.remove(appId);
+    if (app && app.approved === Apps.approval.draft) Apps.remove(appId);
     return true;
 
   },
@@ -379,6 +379,14 @@ Meteor.methods({
       return SocialData.insert(details);
     }
 
+  },
+
+  'apps/checkIds': function(ids) {
+    if (!ids) return [];
+    else return _.reduce(ids, function(returnIds, id) {
+      if (Apps.find(id).count()) returnIds.push(id);
+      return returnIds;
+    }, []);
   },
 
   'apps/reject': function(appId) {

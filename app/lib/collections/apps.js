@@ -33,6 +33,7 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
             else if (installedLocally.indexOf(_this._id) === -1) {
               installedLocally.push(_this._id);
               amplify.store('sandstormInstalledApps', installedLocally);
+              App.historyDep.changed();
             }
           }
         });

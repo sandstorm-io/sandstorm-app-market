@@ -71,6 +71,7 @@ App.extraGenres = [
   {
     name: 'Installed',
     selector: function(userId) {
+      if (App.historyDep) App.historyDep.depend();
       var user = getUser.call(this, userId),
           allInstalledApps = [];
       if (typeof window !== 'undefined')

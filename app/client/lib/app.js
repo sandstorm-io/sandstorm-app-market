@@ -45,6 +45,31 @@ _.extend(App, {
         redirectPath && FlowRouter.go(redirectPath);
       }
     };
-  }
+  },
+
+  populatedGenres: new ReactiveVar([]),
+
+  historyDep: new Tracker.Dependency(),
+
+  installHistoryCount: function() {
+    App.historyDep.depend();
+    var localInstall = amplify.store('sandstormInstalledApps'),
+        count = localInstall ? localInstall.length : 0;
+    if (Meteor.user()) count += _.keys(Meteor.user().installedApps).length;
+    if (!App.localAppListChecked) Meteor.call('apps/checkIds', amplify.store('sandstormInstalledApps'), function(err, res) {
+      if (err) console.log(err);
+      else {
+        amplify.store('sandstormInstalledApps', res);
+        App.localAppListChecked = true;
+        App.historyDep.changed();
+      }
+    });
+    return count;
+  },
+
+  // this is a flag so that we know if the localStorage app list has been checked to
+  // ensure that all entries are still existing apps (and to remove if they're not)
+  // we only need to run once per client session
+  localAppListChecked: false
 
 });

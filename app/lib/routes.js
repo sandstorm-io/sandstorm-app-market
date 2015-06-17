@@ -16,6 +16,11 @@ FlowRouter.triggers.enter([redirectOnSmallDevice.bind(this, null)], {
   only: ['review', 'admin']
 });
 
+FlowRouter.triggers.exit([hideTooltips]);
+
+function hideTooltips() {
+  Tooltips && Tooltips.hide();
+}
 
 // Utility function to redirect (either to App Market home or a given route)
 // if there is no logged in user
