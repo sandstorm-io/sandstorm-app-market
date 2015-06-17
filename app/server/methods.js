@@ -120,7 +120,7 @@ Meteor.methods({
     if (!this.userId) return false;
 
     var app = Apps.findOne(appId);
-    if (app.approved === Apps.approval.draft) Apps.remove(appId);
+    if (app && app.approved === Apps.approval.draft) Apps.remove(appId);
     return true;
 
   },
