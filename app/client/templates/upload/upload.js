@@ -128,12 +128,14 @@ Template.Upload.onCreated(function() {
       var categories = Categories.find().fetch();
       tmp.categories.set(categories);
 
-      // And load the draft if relevant
-      if (FlowRouter.getParam('appId')) {
-        var draft = Apps.findOne(FlowRouter.getParam('appId')),
+      // And load the draft if
+      var _id = FlowRouter.getParam('appId');
+      if (_id) {
+        var draft = Apps.findOne(_id),
             oldApp = tmp.app.all();
         _.extend(oldApp, draft);
         Schemas.AppsBase.clean(oldApp);
+        oldApp._id = _id;
         tmp.app.set(oldApp);
         tmp.setCategories(oldApp.categories);
       }
