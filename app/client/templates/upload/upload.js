@@ -135,7 +135,6 @@ Template.Upload.onCreated(function() {
             oldApp = tmp.app.all();
         _.extend(oldApp, draft);
         Schemas.AppsBase.clean(oldApp);
-        oldApp._id = _id;
         tmp.app.set(oldApp);
         tmp.setCategories(oldApp.categories);
       }
@@ -256,7 +255,9 @@ Template.Upload.events({
         Tooltips.hideDelay(5000, 500);
         tmp.descriptionWarning = true;
       } else {
-        Meteor.call('user/submitApp', tmp.app.all(), App.redirectOrErrorCallback('appsByMe'));
+        var app = tmp.app.all();
+        app._id = FlowRouter.getParam('appId');
+        Meteor.call('user/submitApp', app, App.redirectOrErrorCallback('appsByMe'));
       }
     } else {
       Tracker.afterFlush(function() {

@@ -319,6 +319,20 @@ Meteor.methods({
 
   },
 
+  'user/addSandstormHost': function(host) {
+
+    this.unblock();
+    return Meteor.users.update(this.userId, {$addToSet: {sandstormHosts: host}});
+
+  },
+
+  'user/removeSandstormHost': function(host) {
+
+    this.unblock();
+    return Meteor.users.update(this.userId, {$pull: {sandstormHosts: host}});
+    
+  },
+
   'apps/togglePrivate': function(appId) {
 
     this.unblock();

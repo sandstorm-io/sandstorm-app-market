@@ -17,20 +17,23 @@
       <div class="host-container">
         <div class="sandstorm-button primary" data-action="install">
           {{this}}
+          <i class="fa fa-times" data-action="remove-host"></i>
         </div>
       </div>
       {{/each}}
 
+      {{#if hosts}}
       <div class="or">
         or
       </div>
+      {{/if}}
 
       <div class="sandstorm-input">
         <div class="input">
           <input type="text" data-field="new-host" placeholder="Add a new server" />
         </div>
         <div class="button">
-          <i class="fa fa-plus" data-action="install-new"></i>
+          <i class="fa fa-plus" data-action="add-host"></i>
         </div>
       </div>
     </div>
