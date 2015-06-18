@@ -70,6 +70,33 @@ _.extend(App, {
   // this is a flag so that we know if the localStorage app list has been checked to
   // ensure that all entries are still existing apps (and to remove if they're not)
   // we only need to run once per client session
-  localAppListChecked: false
+  localAppListChecked: false,
+
+  hostDep: new Tracker.Dependency(),
+
+  addSandstormHost: function(host) {
+
+    if (host.slice(0, 7) !== 'http://') host = 'http://' + host;
+    if (host.slice(host.length - 1) !== '/') host = host + '/';
+    App.sandstormHost = host;
+    var allHosts = amplify.store('sandstormHostHistory') || [];
+    allHosts = _.unique(allHosts.concat(host));
+    Meteor.call('user/addSandstormHost', host);
+    App.hostDep.changed();
+    return amplify.store('sandstormHostHistory', allHosts);
+
+  },
+
+  removeSandstormHost: function(host) {
+
+    console.log(host);
+    App.sandstormHost = null;
+    var allHosts = amplify.store('sandstormHostHistory') || [];
+    allHosts = _.without(allHosts, host);
+    Meteor.call('user/removeSandstormHost', host);
+    App.hostDep.changed();
+    return amplify.store('sandstormHostHistory', allHosts);
+
+  }
 
 });
