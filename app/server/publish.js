@@ -53,8 +53,8 @@ Meteor.publish('apps by id', function (ids, flags) {
   if (!Roles.userIsInRole(this.userId, 'admin') || !flags) fields.flags = 0;
 
   var apps = Array.isArray(ids) ?
-        Apps.find({_id: {$in: ids}}, {fields: fields}) :
-        Apps.find(ids, {fields: fields});
+        Apps.find({_id: {$in: ids}, public: true}, {fields: fields}) :
+        Apps.find({_id: ids, public: true}, {fields: fields});
 
   return apps;
 });
@@ -83,15 +83,19 @@ Meteor.publish('apps all', function(skip, limit) {
 });
 
 Meteor.publish('apps by author', function(authorId) {
-  return Apps.find({author: authorId, approved: Apps.approval.approved});
+  return Apps.find({author: authorId, approved: Apps.approval.approved, public: true});
 });
 
 Meteor.publish('app search name', function(term) {
-  return Apps.find({name: {$regex: term, $options: 'i'}, public: true, approved: 0}, {fields: appUnpublishedFields});
+  return Apps.find({name: {$regex: term, $options: 'i'}, public: true, approved: Apps.approval.approved}, {fields: appUnpublishedFields});
 });
 
 Meteor.publish('app search description', function(term) {
-  return Apps.find({description: {$regex: term, $options: 'i'}, public: true, approved: 0}, {fields: appUnpublishedFields});
+  return Apps.find({description: {$regex: term, $options: 'i'}, public: true, approved: Apps.approval.approved}, {fields: appUnpublishedFields});
+});
+
+Meteor.publish('apps private', function() {
+  return Apps.find({public: false, author: this.userId});
 });
 
 Meteor.publish('saved apps', function() {

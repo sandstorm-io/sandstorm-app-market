@@ -3,6 +3,7 @@
 FlowRouter.subscriptions = function() {
   this.register('categories', Meteor.subscribe('categories'));
   this.register('messages', Meteor.subscribe('messages'));
+  this.register('apps private', Meteor.subscribe('apps private'));
 };
 
 // ROUTES
