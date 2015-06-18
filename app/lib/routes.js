@@ -8,7 +8,7 @@ FlowRouter.subscriptions = function() {
 // ROUTES
 
 // Pre render triggers
-FlowRouter.triggers.enter([getSandstormServer, getPopulatedGenres]);
+FlowRouter.triggers.enter([getSandstormServer, getPopulatedGenres, scrollUp]);
 FlowRouter.triggers.enter([onlyAdmin.bind(this, 'login')], {
   only: ['review', 'admin']
 });
@@ -20,6 +20,11 @@ FlowRouter.triggers.exit([hideTooltips]);
 
 function hideTooltips() {
   Tooltips && Tooltips.hide();
+}
+function scrollUp() {
+  var scrollY = window.scrollY,
+      bodyMaxTop = $('body').height() - $(window).height();
+  if (scrollY > bodyMaxTop) window.scrollTo(0, bodyMaxTop);
 }
 
 // Utility function to redirect (either to App Market home or a given route)
@@ -69,7 +74,7 @@ function checkAuthorExists() {
 function getPopulatedGenres() {
   Meteor.call('genres/getPopulated', function(err, res) {
     if (err) throw new Meteor.Error(err);
-    App.populatedGenres.set(App.extraGenres.concat(res));
+    App.populatedGenres.set(res ? App.extraGenres.concat(res) : App.extraGenres);
   });
 }
 

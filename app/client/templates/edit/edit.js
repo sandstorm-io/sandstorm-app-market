@@ -297,7 +297,7 @@ Template.Edit.events({
           tmp.descriptionWarning = true;
           Meteor.setTimeout(Tooltips.hide.bind(Tooltips), 5000);
         } else {
-          Meteor.call('user/submitUpdate', tmp.app.all(), App.redirectOrErrorCallback('appsByMe'));
+          Meteor.call('user/submitApp', tmp.app.all(), App.redirectOrErrorCallback('appsByMe'));
         }
       } else {
         $(window).scrollTo('[data-action="update-version"]');
