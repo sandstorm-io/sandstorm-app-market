@@ -89,7 +89,6 @@ _.extend(App, {
 
   removeSandstormHost: function(host) {
 
-    console.log(host);
     App.sandstormHost = null;
     var allHosts = amplify.store('sandstormHostHistory') || [];
     allHosts = _.without(allHosts, host);
