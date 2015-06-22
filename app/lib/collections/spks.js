@@ -141,6 +141,7 @@ if (Meteor.isServer) {
 
       res.writeHead(200, {
         'Content-Disposition': 'attachment; filename=' + app.filename,
+        'Cache-Control': 'max-age=31536000'
       });
       var spkFile = gcsBucket.file(app.spkKey);
       spkFile.createReadStream().pipe(res);

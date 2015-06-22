@@ -8,7 +8,7 @@
       // or pem file (ssh based authentication)
       "pem": "~/.ssh/id_rsa",
       "env": {
-        "DISABLE_WEBSOCKETS": 1
+        "DDP_DEFAULT_CONNECTION_URL": "http://ddp.sandstorm-app-store-test.ga"
       }
     }
   ],
