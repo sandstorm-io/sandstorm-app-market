@@ -210,6 +210,7 @@
       padding-top: $topbar-item-padding-tb;
       padding-bottom: $topbar-item-padding-tb;
       border: none;
+      line-height: 1.67rem;
 
       &:active, &:hover {
         background-color: $topbar-item-active-bg;
