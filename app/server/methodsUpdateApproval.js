@@ -1,6 +1,3 @@
-function checkSpk(app) {
-}
-
 Meteor.methods({
 
   'user/saveApp': function(app) {
@@ -40,7 +37,6 @@ Meteor.methods({
     var thisApp = Apps.findOne(app._id),
         replaceApp = Apps.findOne(app.replacesApp),
         fileObj = Spks.findOne(app.versions[0].spkId);
-
 
     if (!app.replacesApp) {
 
@@ -94,6 +90,14 @@ Meteor.methods({
       else editSubmitFromPending(app);
 
     }
+
+    // add new genres to collection
+    _.each(app.categories, function(cat) {
+      if (!Categories.findOne({name: cat})) Categories.insert({
+        name: cat,
+        suggested: true
+      });
+    });
 
   },
 
