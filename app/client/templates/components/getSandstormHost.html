@@ -8,7 +8,11 @@
 
     <div class="blurb">
       <p>
-        Select from the list below or add a new one:
+        {{#if hosts}}
+          Select from the list below or add a new one:
+        {{else}}
+          Add your first server below:
+        {{/if}}
       </p>
     </div>
 
