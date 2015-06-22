@@ -13,11 +13,17 @@ body {
   height: $welcome-message-height;
   background-color: #bacae2;
   background-position-x: $menu-width;
-  background-size: contain;
+  background-size: auto 100%;
   background-repeat: no-repeat;
   background-image: url('images/welcome-banner.png');
   overflow: hidden;
   padding-left: $menu-width + $app-section-padding-left;
+
+  @media screen and (max-width: $medium-tablet) {
+
+    background-position-x: 0;
+
+  }
 
   @media screen and (max-width: $small-tablet) {
 
