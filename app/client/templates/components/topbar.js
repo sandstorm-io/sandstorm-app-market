@@ -25,6 +25,8 @@ function resizeTopbar(template) {
 
 }
 
+App.resizeTopbar = resizeTopbar;
+
 Template.Topbar.onCreated(function() {
 
   this.genreCount = new ReactiveVar(100);
