@@ -76,8 +76,6 @@ _.extend(App, {
 
   addSandstormHost: function(host) {
 
-
-    if (host.slice(0, 7) !== 'http://') host = 'http://' + host;
     if (host.slice(host.length - 1) !== '/') host = host + '/';
     if (!urlRegex.exec(host)) return null;
     App.sandstormHost = host;
