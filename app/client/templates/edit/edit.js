@@ -40,7 +40,9 @@ Template.Edit.onCreated(function() {
   };
 
   var resetScreenshotsVis = function() {
-    tmp.screenshotsVis.set(Math.max(Math.min(Math.floor($(window).width() / 400), 3), 1));
+    var width = $(window).width(),
+        vis = (width > 1279) ? 3 : (width > 720 ? 2 : 1);
+    tmp.screenshotsVis.set(vis);
   };
   resetScreenshotsVis();
 

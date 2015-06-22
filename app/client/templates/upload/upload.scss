@@ -416,6 +416,15 @@
     min-width: 22rem;
     box-sizing: border-box;
 
+
+    @media (max-width: $small-screen) {
+      width: 50%;
+    }
+    @media (max-width: $small-tablet) {
+      width: 100%;
+    }
+
+
     .comment-box {
       width: calc(100% - 0.5rem);
       display: block;
@@ -440,15 +449,7 @@
 
   .screenshot-container {
     display: block;
-
     position: relative;
-
-    @media (max-width: $small-screen) {
-      width: 50%;
-    }
-    @media (max-width: $small-tablet) {
-      width: 100%;
-    }
 
     .screenshot {
 
