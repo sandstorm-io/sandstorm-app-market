@@ -2,7 +2,8 @@
 .meteor/meteorite
 app/settings.json
 app/npm-debug.log
-app/private/SandstormAppStore.json
-app/private/SandstormAppStore.pem
+app/private/*.json
+app/private/*.pem
 mup/settings.json
 mupx/settings.json
+app/tests/cucumber/.screenshots

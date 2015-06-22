@@ -74,7 +74,7 @@ Template.Topbar.onRendered(function() {
   $(window).on('resize.topbar', _.debounce(resizeTopbar.bind(null, template), 250));
   template.autorun(function(c) {
     if (FlowRouter.subsReady('categories')) {
-      Tracker.afterFlush(resizeTopbar.bind(null, template));
+      Meteor.defer(resizeTopbar.bind(null, template));
       c.stop();
     }
   });
