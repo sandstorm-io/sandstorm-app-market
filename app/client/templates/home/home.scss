@@ -11,7 +11,11 @@ body {
 
   position: relative;
   height: $welcome-message-height;
-  background-color: $welcome-message-bg;
+  background-color: #bacae2;
+  background-position-x: $menu-width;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url('images/welcome-banner.png');
   overflow: hidden;
   padding-left: $menu-width + $app-section-padding-left;
 
