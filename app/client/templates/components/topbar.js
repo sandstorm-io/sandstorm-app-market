@@ -73,8 +73,10 @@ Template.Topbar.onRendered(function() {
   Meteor.setTimeout(resizeTopbar.bind(null, template), 50);
   $(window).on('resize.topbar', _.debounce(resizeTopbar.bind(null, template), 250));
   template.autorun(function(c) {
-    if (FlowRouter.subsReady('categories')) {
-      Meteor.defer(resizeTopbar.bind(null, template));
+    if (App.populatedGenres.get().length) {
+      Meteor.setTimeout(function() {
+        resizeTopbar(template);
+      }, 50);
       c.stop();
     }
   });
@@ -101,7 +103,7 @@ Template.Topbar.events({
 
     var term = tmp.$('[data-field="search-term"]').val();
 
-    if (term) FlowRouter.go('/appMarket/search?term=' + term);
+    if (term) FlowRouter.go('appSearch', {}, {term: term});
 
   }
 
