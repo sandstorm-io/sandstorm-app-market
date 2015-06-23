@@ -244,6 +244,7 @@
 <template name="reviewFrame">
 
   {{#unless isPhone}}
+    {{#if reviewGroups}}
     <div class="review-frame">
       <div class="prev-button {{#unless extraReviews}}disabled{{/unless}}" data-action="reviews-prev"><i class="icon-extra-l-angle"></i></div>
       <div class="reviews">
@@ -259,6 +260,7 @@
       </div>
       <div class="next-button {{#unless extraReviews}}disabled{{/unless}}" data-action="reviews-next"><i class="icon-extra-r-angle"></i></div>
     </div>
+    {{/if}}
   {{else}}
   <div class="reviews">
     {{#each reviews}}
