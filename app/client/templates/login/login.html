@@ -6,6 +6,10 @@
 
       <form class="login-form">
 
+        <div class="header">
+          Login
+        </div>
+
         {{#if currentUser}}
 
           <div class="user-info">
@@ -22,30 +26,41 @@
 
         {{else}}
 
-          <div class="button-block oauth-buttons">
+          <div class="login password">
 
-            <div class="sandstorm-button active" data-action="login-with-github">
-              <i class="icon-gh"></i>
-              <span class="text">Login with GitHub</span>
-            </div>
+            <input class="search-box" type="email" placeholder="Email" />
+            <input class="search-box" type="password" placeholder="Password" />
 
-            <div class="sandstorm-button active" data-action="login-with-google">
-              <i class="icon-go"></i>
-              <span class="text">Login with Google</span>
+            <div class="button-block">
+
+              <div class="sandstorm-button secondary" data-action="create-account">
+                <span class="text">Create Account</span>
+              </div>
+              <div class="sandstorm-button primary" data-action="login-with-email">
+                <span class="text">Log in</span>
+              </div>
+
             </div>
 
           </div>
 
-          <input class="search-box" type="email" placeholder="Email" />
-          <input class="search-box" type="password" placeholder="Password" />
+          <div class="or">
+            OR
+          </div>
 
-          <div class="button-block">
+          <div class="login oauth">
 
-            <div class="sandstorm-button secondary" data-action="create-account">
-              <span class="text">Create Account</span>
-            </div>
-            <div class="sandstorm-button primary" data-action="login-with-email">
-              <span class="text">Login with Email</span>
+            <div class="button-block oauth-buttons">
+
+              <div class="sandstorm-button active" data-action="login-with-github">
+                <i class="icon-gh"></i>
+                <span class="text">Login with <span class="provider">GitHub</span></span>
+              </div>
+
+              <div class="sandstorm-button active" data-action="login-with-google">
+                <i class="icon-go"></i>
+                <span class="text">Login with <span class="provider">Google</span></span>
+              </div>
             </div>
 
           </div>

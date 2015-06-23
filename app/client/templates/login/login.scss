@@ -2,19 +2,87 @@
 
 .login-form {
 
-  font-size: $login-form-font-size;
+  font-size: 0;
   color: $login-form-text;
-  padding-top: 4rem;
+  background-color: #ffffff;
+  position: relative;
+  top: 10rem;
+  display: inline-block;
+  padding: 4.6rem;
+  width: 70rem;
+  box-sizing: border-box;
 
-  > * {
+  .header {
+    color: #783189;
+    font-size: 3rem;
+    border-bottom: 1px solid #ccb8d1;
     display: block;
-    box-sizing: border-box;
-    padding-bottom: 4rem;
+    font-weight: 500;
+    padding-bottom: 1rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .login {
+    display: inline-block;
+    text-align: center;
+    position: relative;
+
+    &.password {
+
+      width: 40%;
+
+      .button-block {
+        text-align: justify;
+        margin-top: 0.75rem;
+        &:after {
+          content: '';
+          display: inline-block;
+          width: 100%;
+          height: 0;
+          line-height: 0;
+          font-size: 0;
+        }
+      }
+
+    }
+
+    &.oauth {
+
+      text-align: center;
+      vertical-align: top;
+      width: 35%;
+
+      .button-block {
+        .sandstorm-button {
+          margin-left: 0;
+          margin-right: 0;
+          width: 100%;
+          box-sizing: border-box;
+
+          .provider {
+            font-weight: bold;
+          }
+
+          &:first-child {
+            margin-bottom: 0.75rem;
+          }
+        }
+      }
+    }
+  }
+
+  .or {
+    display: inline-block;
+    width: 25%;
+    font-size: 2rem;
+    text-align: center;
   }
 
   .user-info {
 
     display: inline-block;
+    font-size: 2rem;
+    margin-bottom: 2rem;
 
     .username {
 
@@ -24,25 +92,18 @@
 
   }
 
-  .or {
-
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
-    margin-left: 5rem;
-    display: block;
-
-  }
-
   input {
     display: inline-block;
     color: $topbar-item-bg;
-    background: none;
-    border: 1px solid $topbar-item-bg;
+    background: #f2f2f2;
+    border: 1px solid #ab9eb2;
     padding-left: $topbar-item-padding-lr;
     padding-right: $topbar-item-padding-lr;
     padding-top: $topbar-item-padding-tb;
     padding-bottom: $topbar-item-padding-tb;
-    margin-bottom: 2rem;
+    margin-bottom: 0.75rem;
+    width: 100%;
+    box-sizing: border-box;
     &:focus {
       outline: none;
       border: 1px solid $topbar-item-active-bg;
@@ -69,10 +130,13 @@
 
   .error {
 
-    font-size: 1.5em;
+    display: block;
+    padding: 0.5rem 1.5rem;
+    background-color: #d4c3d8;
+    font-size: 2rem;
     font-weight: bold;
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
+    font-style: italic;
+    margin-top: 2rem;
 
   }
 
@@ -80,6 +144,22 @@
 
     vertical-align: middle;
 
+  }
+
+  @media (max-width: $large-tablet) {
+    width: 100%;
+    top: 1rem;
+  }
+
+  @media (max-width: $large-phone) {
+    .login.password, .login.oauth, .or {
+      display: block;
+      width: 100%;
+    }
+
+    .or {
+      margin: 2rem 0;
+    }
   }
 
   @media (max-width: $small-tablet) {
