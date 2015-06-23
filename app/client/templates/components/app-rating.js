@@ -21,9 +21,14 @@ Template.appRating.events({
   'click [data-action="rate-app"]': function(evt, tmp) {
 
     evt.stopImmediatePropagation();
+    var app = Template.parentData(1);
+
+    if (!Meteor.userId()) {
+      App.loginRedirect = '/app/' + app._id + '?rateApp=true';
+      return FlowRouter.go('login');
+    }
 
     if (FlowRouter.current().route.name !== 'singleApp') {
-      var app = Template.parentData(1);
       FlowRouter.go('singleApp', {appId: app._id}, {rateApp: true});
     }
     else {
