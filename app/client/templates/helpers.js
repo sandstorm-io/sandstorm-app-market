@@ -127,6 +127,12 @@ var helpers = {
 
   },
 
+  getParam: function(param) {
+
+    return FlowRouter.getParam(param);
+
+  },
+
   sandstormHost: function() {
 
     return amplify.store('sandstormHost');
