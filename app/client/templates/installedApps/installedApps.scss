@@ -143,6 +143,7 @@
 
     text-align: center;
     font-size: $uninstall-app-modal-header-font-size;
+    letter-spacing: 1px;
     margin-bottom: $uninstall-app-modal-header-margin-bottom;
 
   }
@@ -169,7 +170,17 @@
 
   .buttons {
 
-    word-spacing: $uninstall-app-modal-button-spacing;
+    font-size: 0;
+    text-align: justify;
+
+    &:after{
+      content: '';
+      display: inline-block;
+      width: 100%;
+      height: 0;
+      font-size:0;
+      line-height:0;
+    }
 
     .button {
 
