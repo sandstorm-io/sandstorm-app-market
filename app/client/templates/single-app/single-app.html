@@ -105,7 +105,7 @@
                 {{> flagBox flagDetails}}
               {{/if}}
 
-              <div class="text {{#unless extendedDescription}}padded{{/unless}}">
+              <div class="text {{#unless extendedDescription}}padded{{/unless}} {{#if flagApp}}min-height{{/if}}">
                 {{{getDescription description}}}
               </div>
 
@@ -298,7 +298,13 @@
       <div class="sandstorm-button {{#if equal rating 1}}primary{{else}}neutral{{/if}}" data-rating=1>
         I didn't like it
       </div>
+      <div class="sandstorm-button secondary" data-button-state=1 data-rating=2>
+        <i class="fa fa-thumbs-up"></i>
+      </div>
     {{else}}{{#if equal buttonState 1}}
+      <div class="sandstorm-button secondary" data-button-state=-1 data-rating=1>
+        <i class="fa fa-thumbs-down"></i>
+      </div>
       <div class="sandstorm-button {{#if equal rating 2}}primary{{else}}neutral{{/if}}" data-rating=2>
         It gets the job done
       </div>

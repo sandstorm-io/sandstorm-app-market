@@ -1,5 +1,7 @@
 @import "../../stylesheets/variables";
 
+$app-container-padding-rl: 4.6rem;
+
 .single-app-container {
 
   width: 100%;
@@ -15,8 +17,8 @@
 
     padding-top: $app-container-padding-top;
     padding-bottom: $app-container-padding-bottom;
-    padding-left: 4.6rem;
-    padding-right: 4.6rem;
+    padding-left: $app-container-padding-rl;
+    padding-right: $app-container-padding-rl;
     box-shadow: $app-container-box-shadow;
     background-color: $app-box-bg;
     box-sizing: border-box;
@@ -451,6 +453,10 @@
       padding-bottom: 2rem;
     }
 
+    &.min-height {
+      min-height: 28rem;
+    }
+
   }
 
   .read-more-bar {
@@ -477,15 +483,16 @@
 
 #flag-box {
 
-  float: right;
-  width: 15.5rem;
+  position: absolute;
+  right: $app-container-padding-rl;
+  width: 19.5rem;
   background-color: #f2f2f2;
   box-shadow: $app-container-box-shadow;
   color: #783189;
   padding: 1.1rem;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   border: 1px solid #e4dfe5;
-  line-height: 1.4;
+  line-height: 1.8;
 
   &.hidden {
     display: none;
@@ -500,9 +507,9 @@
     float: right;
     background-color: #c9add0;
     color: #ffffff;
-    height: 1.2rem;
-    line-height: 1.2rem;
-    font-size: 0.85rem;
+    height: 1.7rem;
+    line-height: 1.7rem;
+    font-size: 1.4rem;
     padding-left: 0.65rem;
     padding-right: 0.65rem;
     margin-left: 0.25rem;
@@ -547,13 +554,13 @@
     color: #783189;
     font-family: $main-font;
     font-weight: 300;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     margin-bottom: 0.8rem;
     padding: 0.2rem;
   }
 
   div[contenteditable] {
-    min-height: 3.1rem;
+    min-height: 3.5rem;
   }
 
 }
