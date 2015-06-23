@@ -18,15 +18,12 @@ Template.appsByMe_standard.helpers({
 
 Template.appsByMe_standard.events({
 
-  'keyup [data-field="search-by"]': function(evt) {
+  'keyup [data-field="search-by"], click [data-action="apply-search"]': function(evt) {
 
-    searchTermLocal = $(evt.currentTarget).val();
-
-  },
-
-  'click [data-action="apply-search"]': function() {
-
-    Template.instance().searchTerm.set(searchTermLocal);
+    if (evt.keyCode === 13 || !evt.keyCode)
+      Template.instance().searchTerm.set(searchTermLocal);
+    else
+      searchTermLocal = $(evt.currentTarget).val();
 
   }
 
