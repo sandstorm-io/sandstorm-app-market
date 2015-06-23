@@ -72,7 +72,7 @@ less@1.0.14
 livedata@1.0.13
 localstorage@1.0.3
 logging@1.0.7
-london:body-class@2.1.0
+london:body-class@2.1.1
 lookback:tooltips@0.3.1
 markdown@1.0.4
 matb33:collection-hooks@0.7.13
@@ -81,7 +81,7 @@ meteor-platform@1.2.2
 meteorhacks:async@1.0.0
 meteorhacks:fast-render@2.5.0
 meteorhacks:flow-layout@1.4.0
-meteorhacks:flow-router@1.15.0
+meteorhacks:flow-router@1.16.1
 meteorhacks:inject-data@1.3.0
 meteorhacks:npm@1.3.0
 meteorhacks:picker@1.0.2
@@ -144,5 +144,5 @@ velocity:meteor-internals@1.1.0_7
 velocity:shim@0.1.0
 webapp@1.2.0
 webapp-hashing@1.0.3
-wolves:bourbon@1.2.0
-xolvio:cucumber@0.9.3
+wolves:bourbon@2.0.0
+xolvio:cucumber@0.10.0

@@ -14,17 +14,27 @@
 
     <div class="contents">
 
+      {{#if appList}}
+
       <div class="genre-other">
 
         <div class="app-table">
 
-          {{#each appList}}
-            {{> appItem app=this}}
-          {{/each}}
+            {{#each appList}}
+              {{> appItem app=this}}
+            {{/each}}
 
         </div>
 
       </div>
+
+      {{else}}
+
+      <div class="title-message">Sorry, I can't find any matching apps.</div>
+
+      <div class="subtitle-message">Would you like to browse the <a href="{{getPath 'appMarketGenre' 'genre' 'Popular'}}">most popular</a> apps we have in the store?</div>
+
+      {{/if}}
 
     </div>
 

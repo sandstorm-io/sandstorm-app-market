@@ -87,11 +87,15 @@ Meteor.publish('apps by author', function(authorId) {
 });
 
 Meteor.publish('app search name', function(term) {
-  return Apps.find({name: {$regex: term, $options: 'i'}, public: true, approved: Apps.approval.approved}, {fields: appUnpublishedFields});
+  if (term)
+    return Apps.find({name: {$regex: term, $options: 'i'}, public: true, approved: Apps.approval.approved}, {fields: appUnpublishedFields});
+    else this.ready();
 });
 
 Meteor.publish('app search description', function(term) {
-  return Apps.find({description: {$regex: term, $options: 'i'}, public: true, approved: Apps.approval.approved}, {fields: appUnpublishedFields});
+  if (term)
+    return Apps.find({description: {$regex: term, $options: 'i'}, public: true, approved: Apps.approval.approved}, {fields: appUnpublishedFields});
+  else this.ready();
 });
 
 Meteor.publish('apps private', function() {

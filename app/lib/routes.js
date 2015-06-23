@@ -17,7 +17,7 @@ FlowRouter.triggers.enter([redirectOnSmallDevice.bind(this, null)], {
   only: ['review', 'admin']
 });
 
-FlowRouter.triggers.exit([hideTooltips]);
+FlowRouter.triggers.exit([hideTooltips, history]);
 
 function hideTooltips() {
   Tooltips && Tooltips.hide();
@@ -26,6 +26,13 @@ function scrollUp() {
   var scrollY = window.scrollY,
       bodyMaxTop = $('body').height() - $(window).height();
   if (scrollY > bodyMaxTop) window.scrollTo(0, bodyMaxTop);
+}
+function history(context) {
+  if (context.route.name !== 'notFound') {
+    if (FlowRouter.history) FlowRouter.history.push(context.path);
+    else FlowRouter.history = [context.path];
+    FlowRouter.history = FlowRouter.history.splice(FlowRouter.history.length - 2, 2);
+  }
 }
 
 // Utility function to redirect (either to App Market home or a given route)
@@ -142,9 +149,9 @@ FlowRouter.route('/search', {
   name: 'appSearch',
   subscriptions: function(params, queryParams) {
     this.register('appSearchName',
-      Meteor.subscribe('app search name', queryParams.term));
+      Meteor.subscribe('app search name', queryParams && queryParams.term));
     this.register('appSearchDescription',
-      Meteor.subscribe('app search description', queryParams.term));
+      Meteor.subscribe('app search description', queryParams && queryParams.term));
   },
   action: function(params, queryParams) {
     FlowLayout.render('MasterLayout', {mainSection: 'Search'});
@@ -252,7 +259,7 @@ FlowRouter.route('/service-configure', {
 
 FlowRouter.notFound = {
   action: function() {
-    FlowRouter.go('notFound', {object: 'page'});
+    Meteor.defer(function() {FlowRouter.go('notFound', {object: 'page'});});
   }
 };
 
