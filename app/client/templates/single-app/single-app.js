@@ -246,6 +246,16 @@ Template.flagBox.onRendered(function() {
 
 });
 
+Template.flagBox.events({
+
+  'click [data-action="flag-app"]': function(evt, tmp) {
+
+    if (Meteor.userId()) tmp.get('flagApp').set(!tmp.get('flagApp').get());
+
+  }
+
+});
+
 Template.carousel.onRendered(function() {
 
   this.$(".owl-carousel").owlCarousel({
