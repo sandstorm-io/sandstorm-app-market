@@ -135,6 +135,7 @@ Template.Upload.onCreated(function() {
             oldApp = tmp.app.all();
         _.extend(oldApp, draft);
         Schemas.AppsBase.clean(oldApp);
+        oldApp._id = _id;
         tmp.app.set(oldApp);
         tmp.setCategories(oldApp.categories);
       }
