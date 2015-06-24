@@ -173,6 +173,7 @@ body.admin {
 .menu-spacer {
 
   margin-left: $menu-width + $app-section-padding-left;
+  position: relative;
 
   @media screen and (max-width: $medium-tablet) {
 

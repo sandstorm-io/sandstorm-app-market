@@ -27,8 +27,8 @@ body {
 
   @media screen and (max-width: $small-tablet) {
 
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 2.167rem;
+    padding-right: 2.167rem;
 
   }
 
@@ -109,6 +109,10 @@ body {
 
   i.icon-chevron-right {
     color: $genre-title-chevron;
+  }
+
+  @media (max-width: $small-tablet) {
+    padding-left: 1.167rem;
   }
 
 }

@@ -6,6 +6,8 @@
   margin-right: -$app-container-margin-lr;
   font-size: 0;
   display: block;
+  width: 100%;
+  box-sizing: border-box;
   clear: both;
 
   @media screen and (max-width: $small-tablet) {
