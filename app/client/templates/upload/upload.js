@@ -250,7 +250,7 @@ Template.Upload.events({
 
     if (tmp.validate()) {
       if (!tmp.app.get('description') && !tmp.descriptionWarning) {
-        $(window).scrollTo('[data-description-warning]');
+        $(window).scrollTo('[data-description-warning]', 250, {easing: 'swing'});
         Tooltips.setClasses(['invalid']);
         Tooltips.show('[data-description-warning]');
         Tooltips.hideDelay(5000, 500);
@@ -262,9 +262,10 @@ Template.Upload.events({
       }
     } else {
       Tracker.afterFlush(function() {
-        $(window).scrollTo('[data-invalid]');
+        $(window).scrollTo('[data-invalid]', 250, {easing: 'swing'});
         Tooltips.setClasses(['invalid']);
-        Tooltips.show(tmp.$('[data-invalid]').next()[0], 'You need to update this field', 's');
+        var tooltipTarget = tmp.$('[data-invalid]').next()[0] || tmp.$('[data-invalid]')[0];
+        Tooltips.show(tooltipTarget, 'You need to update this field', 's');
         Tooltips.hideDelay(3000, 500);
       });
     }

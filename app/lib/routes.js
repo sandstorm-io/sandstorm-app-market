@@ -9,7 +9,7 @@ FlowRouter.subscriptions = function() {
 // ROUTES
 
 // Pre render triggers
-FlowRouter.triggers.enter([getSandstormServer, getPopulatedGenres, scrollUp]);
+FlowRouter.triggers.enter([getSandstormServer, getPopulatedGenres]);
 FlowRouter.triggers.enter([onlyAdmin.bind(this, 'login')], {
   only: ['review', 'admin']
 });
@@ -21,11 +21,6 @@ FlowRouter.triggers.exit([hideTooltips, history]);
 
 function hideTooltips() {
   Tooltips && Tooltips.hide();
-}
-function scrollUp() {
-  var scrollY = window.scrollY,
-      bodyMaxTop = $('body').height() - $(window).height();
-  if (scrollY > bodyMaxTop) window.scrollTo(0, bodyMaxTop);
 }
 function history(context) {
   if (context.route.name !== 'notFound') {

@@ -3,6 +3,7 @@ var searchTermLocal = '';
 Template.appsByMe_standard.onCreated(function() {
 
   this.searchTerm = new ReactiveVar('');
+  window.scrollTo(0, 0);
 
 });
 

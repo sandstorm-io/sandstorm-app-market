@@ -312,7 +312,8 @@ Template.Edit.events({
       Tracker.afterFlush(function() {
         $(window).scrollTo('[data-invalid]');
         Tooltips.setClasses(['invalid']);
-        Tooltips.show(tmp.$('[data-invalid]').next()[0], 'You need to update this field', 's');
+        var tooltipTarget = tmp.$('[data-invalid]').next()[0] || tmp.$('[data-invalid]')[0];
+        Tooltips.show(tooltipTarget, 'You need to update this field', 's');
         Tooltips.hideDelay(3000, 500);
       });
     }

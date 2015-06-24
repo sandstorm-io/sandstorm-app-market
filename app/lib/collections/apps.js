@@ -171,6 +171,11 @@ var VersionSchema = new SimpleSchema({
 });
 
 var appsBaseSchema = {
+  _id: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
+    optional: true
+  },
   name: {
     type: String,
     max: 200,
@@ -185,7 +190,8 @@ var appsBaseSchema = {
   description: {
     type: String,
     max: 5000,
-    defaultValue: ''
+    defaultValue: '',
+    optional: true
   },
   image: {
     type: String,

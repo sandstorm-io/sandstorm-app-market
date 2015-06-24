@@ -73,6 +73,8 @@ Tooltips =
 	setClasses: setClasses
 	show: (el, content, dir) ->
 		$el = $(el)
+		if !$el.length
+			return false
 
 		viewport = $el.data 'tooltip-disable'
 

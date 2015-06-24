@@ -45,7 +45,8 @@ Template.SingleApp.onRendered(function() {
     $(document).ready(function() {
       Tracker.afterFlush(function() {
         Meteor.setTimeout(function() {
-          $(window).scrollTo($('.review-entry')[0]);
+          var reviewEntry = $('.review-entry');
+          reviewEntry.length && $(window).scrollTo(reviewEntry[0]);
           $('[data-field="review-text"]').focus();
         }, 50);
       });
