@@ -1,9 +1,9 @@
-Slingshot.GoogleCloud.directiveDefault.GoogleSecretKey = Assets.getText('SandstormAppStore.pem');
+Slingshot.GoogleCloud.directiveDefault.GoogleSecretKey = Assets.getText(Meteor.settings.GCSPemFilename);
 
 Slingshot.createDirective("imageUploader", Slingshot.GoogleCloud, {
   bucket: Meteor.settings.public.imageBucket,
   GoogleAccessId: Meteor.settings.GCSAccessId,
-  GoogleSecretKey: Assets.getText('sandstorm-app-store-test.pem'),
+  GoogleSecretKey: Assets.getText(Meteor.settings.GCSPemFilename),
   acl: "public-read",
 
   authorize: function () {

@@ -8,7 +8,7 @@ App Store application for the [Sandstorm.io](https://sandstorm.io/) platform for
 
 ### Setting up storage
 
-Sandstorm App Store is configured to store all assets (.spk files and images) in Google Cloud Storage, so you need to set this up even if you're running the application locally. **Note that you will also use this project for login service configuration and VM provisioning (if you deploy your app)**.
+Sandstorm App Store is configured to store all assets (.spk files and images) in Google Cloud Storage, so you need to set this up even if you're running the application locally. **Note that you will also use this Google Cloud project for login service configuration and VM provisioning (if you deploy the app store)**.
 
 1. Visit https://console.developers.google.com/project and, after setting up a new account if required, click "Create Project".
 2. Enter a project name and click "Create", then wait for Google to provision your new project.
@@ -21,7 +21,7 @@ Sandstorm App Store is configured to store all assets (.spk files and images) in
 9. Back at the Google Cloud web console, select APIs & auth > Credentials and click "Create new Client ID".
 10. Select "Service Account" and hit "Create Client ID"; you actually need both a JSON and a P12 key, so it doesn't matter which you select first.
 11. Once the id has been created, your chosen key will automatically download.  Download the other key type by clicking on "Generate new #### key" under the newly created service account (so, "Generate new P12 key" assuming you left "JSON key" selected in the previous step).
-12. Convert your P12 Key to a PEM key with the shell command `openssl pkcs12 -in YOURKEYNAME.p12 -nodes -nocerts > YOURKEYNAME.pem`.
+12. Convert your P12 Key to a PEM key with the shell command `openssl pkcs12 -in YOURKEYNAME.p12 -nodes -nocerts > YOURKEYNAME.pem`. When you are prompted for a password, enter `notasecret`.
 13. Copy *both* the JSON and newly-created PEM keys to the `/app/private` directory. **Note that these should *not* be uploaded to Github under any circumstances**. The default .gitignore should prevent this, but caution is advised.
 14. Now copy the template `settings.json` file in the project root to `/app` and begin to populate it.  **You should also avoid uploading this file to Github once it's populated**.
 15. The required information is as follows:
