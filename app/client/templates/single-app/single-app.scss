@@ -571,13 +571,23 @@ $app-container-padding-rl: 4.6rem;
   font-size: 0;
   margin-top: 2rem;
   margin-bottom: 5rem;
+  text-align: justify;
+
+  &:after {
+    content: '';
+    display: inline-block;
+    height: 0;
+    line-height: 0;
+    font-size: 0;
+    width: 100%;
+  }
 
   .owl-carousel {
 
     display: inline-block;
     vertical-align: middle;
     background-color: #e0e0e0;
-    width: 94%;
+    width: 90%;
 
     .screenshot-container {
 

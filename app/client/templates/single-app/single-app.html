@@ -190,15 +190,15 @@
 
   <div class="carousel">
 
-    <div class="prev-button" data-action="carousel-prev"><i class="icon-extra-l-angle"></i></div>
+    <div class="prev-button {{#unless extraScreenshots}}disabled{{/unless}}" data-action="carousel-prev"><i class="icon-extra-l-angle"></i></div>
     <div class="owl-carousel">
       {{#each images}}
       <div class="screenshot-container">
-        <div class="screenshot" style="background-image: url('{{this.url}}')"></div>
+        <div class="screenshot" style="background-image: url('{{this.url}}')" data-action="image-lightbox" data-src={{this.url}}></div>
       </div>
       {{/each}}
     </div>
-    <div class="next-button" data-action="carousel-next"><i class="icon-extra-r-angle"></i></div>
+    <div class="next-button {{#unless extraScreenshots}}disabled{{/unless}}" data-action="carousel-next"><i class="icon-extra-r-angle"></i></div>
 
   </div>
 

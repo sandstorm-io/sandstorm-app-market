@@ -89,7 +89,7 @@ Template.SingleApp.helpers({
 
   extendedDescription: function() {
 
-    return this.description.length > 1200;
+    return this.description && this.description.length > 1200;
 
   },
 
@@ -276,29 +276,81 @@ Template.flagBox.events({
 
 Template.carousel.onRendered(function() {
 
-  this.$(".owl-carousel").owlCarousel({
+  var tmp = this;
+
+  tmp.$(".owl-carousel").owlCarousel({
     items: Meteor.Device.isPhone() ? 1 : 2,
     loop: true,
     mouseDrag: false,
     nav: false,
     navRewind: false,
     navText: ['&#x27;next&#x27;','&#x27;prev&#x27;'],
-    dots: false
+    dots: false,
+    onInitialized: function() {
+      tmp.$('[data-action="image-lightbox"]').each(function() {
+        var $el = $(this);
+        Meteor.defer(function() {
+          $el.magnificPopup({
+            items: {
+              src: $el.data('src')
+            },
+            type: 'image',
+            disableOn: 400,
+            zoom: {
+              enabled: true,
+              duration: 300,
+              easing: 'ease-in-out',
+              opener: function() {
+                return $el;
+              }
+            }
+          });
+        });
+      });
+    }
   });
+
+});
+
+Template.carousel.helpers({
+
+  extraScreenshots: function() {
+    return this.images && this.images.length - (Meteor.Device.isPhone() ? 1 : 2) > 0;
+  }
 
 });
 
 Template.carousel.events({
 
-  'click [data-action="carousel-prev"]': function (evt, tmp) {
+  'click [data-action="carousel-prev"]:not(.disabled)': function (evt, tmp) {
 
     tmp.$('.owl-carousel').trigger('prev.owl.carousel');
 
   },
 
-  'click [data-action="carousel-next"]': function (evt, tmp) {
+  'click [data-action="carousel-next"]:not(.disabled)': function (evt, tmp) {
 
     tmp.$('.owl-carousel').trigger('next.owl.carousel');
+
+  },
+
+  'click [data-action="image-lightbox"]': function(evt, tmp) {
+
+    tmp.$(evt.currentTarget).magnificPopup({
+        items: {
+          src: tmp.$(evt.currentTarget).data('src')
+        },
+        type: 'image',
+        disableOn: 400,
+        zoom: {
+          enabled: true,
+          duration: 300,
+          easing: 'ease-in-out',
+          opener: function() {
+            return tmp.$(evt.currentTarget);
+          }
+        }
+    });
 
   }
 

@@ -200,9 +200,10 @@ Meteor.methods({
     if (replacesApp) {
       var newVersion = app.versions[0];
       Schemas.AppsBase.clean(app);
-      delete app.versions;
       app.replacesApp = app._id;
       app.approved = 0;
+      delete app.versions;
+      delete app._id;
       Apps.update(replacesApp, {$set: app, $push: {versions: newVersion}});
       Apps.remove(appId);
     } else {

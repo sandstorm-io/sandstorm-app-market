@@ -154,6 +154,7 @@ Template.Edit.onCreated(function() {
         if (!newVersion.replacesApp) newVersion.replacesApp = newVersion._id;
         newVersion.versions = [latestVersion];
         Schemas.AppsBase.clean(newVersion);
+        delete newVersion._id;
         tmp.app.set(newVersion);
       }
       tmp.setCategories(tmp.app.get('categories'));

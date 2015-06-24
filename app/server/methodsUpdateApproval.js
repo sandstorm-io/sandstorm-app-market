@@ -152,6 +152,7 @@ function editSaveDraftFromApproved(app) {
 function editSubmitFromApproved(app) {
   // much better to try the insert first in case there's a validation error
   // and then delete any other drafts
+  console.log(app);
   var ret = Apps.insert(app);
   Apps.remove({replacesApp: app.replacesApp, approved: Apps.approval.draft});
   return ret;
