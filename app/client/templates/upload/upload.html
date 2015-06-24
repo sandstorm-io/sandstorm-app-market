@@ -182,7 +182,7 @@
 
 <template name="fileBox">
 
-  <div class="file-box">
+  <div class="file-box" data-invalid={{validate 'versions.0.spkId'}}>
 
     {{#if equal version "update"}}
 

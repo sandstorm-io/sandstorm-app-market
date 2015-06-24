@@ -5,7 +5,8 @@ var appProto = function() {
       return {
         name: '',
         category: '',
-        author: Meteor.userId()
+        author: Meteor.userId(),
+        versions: [{}]
       };
     };
 
@@ -26,7 +27,8 @@ Template.Upload.onCreated(function() {
 
   tmp.validate = function() {
     tmp.app.set(tmp.app.all());
-    return tmp.validator.validate(tmp.app.all());
+    var valid = tmp.validator.validate(tmp.app.all());
+    return valid;
   };
 
   var resetScreenshotsVis = function() {
@@ -229,7 +231,8 @@ Template.Upload.events({
     var versions = tmp.app.get('versions'),
         $el = $(evt.currentTarget);
 
-    versions[0].number = $el.val();
+    if (versions.length) versions[0].number = $el.val();
+    else versions = [{number: $el.val()}];
     tmp.app.set('versions', versions);
 
   },
