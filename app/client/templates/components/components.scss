@@ -97,6 +97,34 @@
 
   }
 
+  &.selected {
+    color: #783189;
+    background: #e7daea;
+    border-color: #e7e4ea;
+    border-width: 1px;
+    border-style: solid;
+
+    i {
+      color: #783189;
+      display: inline-block;
+    }
+
+  }
+
+  &.unselected {
+    color: #783189;
+    background: none;
+    border-color: #e7e4ea;
+    border-width: 1px;
+    border-style: solid;
+
+    i {
+      color: #783189;
+      display: inline-block;
+    }
+
+  }
+
   &.color {
     background-color: #ffffff;
     border-color: #cdc7d3;

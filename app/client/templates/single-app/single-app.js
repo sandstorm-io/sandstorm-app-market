@@ -13,9 +13,13 @@ Template.SingleApp.onCreated(function() {
     appId: FlowRouter.getParam('appId'),
     text: ''
   });
+  tmp.reviewValidator = Schemas.Reviews.namedContext();
   tmp.reviewValid = new ReactiveVar(false);
   tmp.validateReview = function() {
-    tmp.reviewValid.set(!!tmp.myReview.get().text);
+    var review = _.extend({userId: Meteor.userId()}, tmp.myReview.get());
+    var valid = tmp.reviewValidator.validate(review);
+    tmp.reviewValid.set(valid);
+    return valid;
   };
 
   // Load existing review of this app (if it exists)
@@ -33,6 +37,7 @@ Template.SingleApp.onCreated(function() {
   });
 
 });
+
 
 Template.SingleApp.onRendered(function() {
 
@@ -187,7 +192,8 @@ Template.SingleApp.events({
 
     if (Meteor.userId()) tmp.writeReview.set(!tmp.writeReview.get());
     else {
-      App.loginRedirect = FlowRouter.current().path;
+      var currentPath = FlowRouter.current();
+      App.loginRedirect = FlowRouter.path(currentPath.route.name, currentPath.params, _.extend({}, currentPath.queryParams, {rateApp: true}));
       FlowRouter.go('login');
     }
 
@@ -208,17 +214,28 @@ Template.SingleApp.events({
       appId: FlowRouter.getParam('appId'),
       text: ''
     });
-    tmp.writeReview.set(false);
+    Meteor.call('user/discardReview', FlowRouter.getParam('appId'), App.redirectOrErrorCallback(null, function() {
+      tmp.writeReview.set(false);
+    }));
 
   },
 
   'click [data-action="submit-review"]': function(evt, tmp) {
 
     if (tmp.reviewValid.get()) {
-      Meteor.call('user/reviewApp', FlowRouter.getParam('appId'), tmp.myReview.get(), function(err) {
-        if (err) console.log(err);
+      Meteor.call('user/reviewApp', FlowRouter.getParam('appId'), tmp.myReview.get(), App.redirectOrErrorCallback(null, function() {
         tmp.writeReview.set(false);
-      });
+      }));
+    }
+
+  },
+
+  'mouseover [data-action="review-tooltip"]': function(evt, tmp) {
+
+    if (!tmp.reviewValid.get()) {
+      Tooltips.setClasses(['invalid']);
+      Tooltips.show(tmp.$('.my-rating-box')[0], 'You need to choose a rating', 's');
+      Tooltips.hideDelay(3000, 500);
     }
 
   },
@@ -289,13 +306,20 @@ Template.carousel.events({
 
 Template.reviewFrame.onRendered(function() {
 
-  this.$(".owl-carousel").owlCarousel({
-    items: reviewCols,
-    loop: true,
-    mouseDrag: false,
-    nav: false,
-    navRewind: false,
-    dots: false
+  var tmp = this;
+
+  tmp.autorun(function() {
+    if (Template.currentData()) Tracker.afterFlush(function() {
+      tmp.$(".owl-carousel").owlCarousel({
+        items: reviewCols,
+        loop: true,
+        mouseDrag: false,
+        nav: false,
+        navRewind: false,
+        dots: false
+      });
+    });
+
   });
 
 });
@@ -398,6 +422,7 @@ Template.myRatingBox.events({
     var myReview = tmp.get('myReview').get();
     myReview.rating = parseInt($(evt.currentTarget).data('rating'), 10);
     tmp.get('myReview').set(myReview);
+    tmp.get('validateReview').call();
 
   },
 

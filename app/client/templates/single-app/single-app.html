@@ -154,7 +154,7 @@
               <textarea class="review-entry" data-field="review-text">{{myReview.text}}</textarea>
               <div class="right-float on-top">
                 <div class="button-block">
-                  <div class="sandstorm-button {{#if reviewValid}}primary{{else}}neutral submit{{/if}}" data-action="{{#if reviewValid}}submit-review{{/if}}">
+                  <div class="sandstorm-button {{#if reviewValid}}primary{{else}}neutral submit{{/if}}" data-action="{{#if reviewValid}}submit-review{{else}}review-tooltip{{/if}}">
                     SUBMIT REVIEW
                   </div>
                   <div class="sandstorm-button neutral" data-action="discard-review">
@@ -294,30 +294,30 @@
 
   <div class="my-rating-box">
     {{#if equal buttonState -1}}
-      <div class="sandstorm-button {{#if equal rating 0}}primary{{else}}neutral{{/if}}" data-rating=0 data-action="bug-modal">
+      <div class="sandstorm-button {{#if equal rating 0}}selected{{else}}unselected{{/if}}" data-rating=0 data-action="bug-modal">
         It's broken
       </div>
-      <div class="sandstorm-button {{#if equal rating 1}}primary{{else}}neutral{{/if}}" data-rating=1>
+      <div class="sandstorm-button {{#if equal rating 1}}selected{{else}}unselected{{/if}}" data-rating=1>
         I didn't like it
       </div>
-      <div class="sandstorm-button secondary" data-button-state=1 data-rating=2>
+      <div class="sandstorm-button unselected" data-button-state=1 data-rating=2>
         <i class="fa fa-thumbs-up"></i>
       </div>
     {{else}}{{#if equal buttonState 1}}
-      <div class="sandstorm-button secondary" data-button-state=-1 data-rating=1>
+      <div class="sandstorm-button unselected" data-button-state=-1 data-rating=1>
         <i class="fa fa-thumbs-down"></i>
       </div>
-      <div class="sandstorm-button {{#if equal rating 2}}primary{{else}}neutral{{/if}}" data-rating=2>
+      <div class="sandstorm-button {{#if equal rating 2}}selected{{else}}unselected{{/if}}" data-rating=2>
         It gets the job done
       </div>
-      <div class="sandstorm-button {{#if equal rating 3}}primary{{else}}neutral{{/if}}" data-rating=3>
+      <div class="sandstorm-button {{#if equal rating 3}}selected{{else}}unselected{{/if}}" data-rating=3>
         It's amazing!
       </div>
     {{else}}
-      <div class="sandstorm-button secondary" data-button-state=-1 data-rating=1>
+      <div class="sandstorm-button unselected" data-button-state=-1 data-rating=1>
         <i class="fa fa-thumbs-down"></i>
       </div>
-      <div class="sandstorm-button secondary" data-button-state=1 data-rating=2>
+      <div class="sandstorm-button unselected" data-button-state=1 data-rating=2>
         <i class="fa fa-thumbs-up"></i>
       </div>
     {{/if}}{{/if}}

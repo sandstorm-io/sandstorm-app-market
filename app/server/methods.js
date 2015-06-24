@@ -145,20 +145,22 @@ Meteor.methods({
     this.unblock();
     if (!this.userId) return false;
 
-    if (review.rating) {
-      check(review.rating, Match.Integer);
-      check(review.rating, Match.Where(function(rating) {return (0 <= rating) && (3 >= rating);}));
-    }
-    check(review.text, String);
-    check(review.text, Match.Where(function(text) {return text.length > 0;}));
+    review.userId = this.userId;
 
     if (!Apps.findOne(review.appId)) throw new Meteor.Error('no matching app', 'Cannot submit a review for an app which is not in the database');
-
-    review.userId = this.userId;
 
     if (Reviews.findOne(_.pick(review, ['appId', 'userId'])))
       Reviews.update(_.pick(review, ['appId', 'userId']), {$set: review});
     else Reviews.insert(review);
+
+  },
+
+  'user/discardReview': function(appId) {
+
+    this.unblock();
+    if (!this.userId) return false;
+
+    return Reviews.remove({appId: appId, userId: this.userId});
 
   },
 
