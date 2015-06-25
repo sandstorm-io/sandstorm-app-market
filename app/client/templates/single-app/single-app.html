@@ -61,6 +61,8 @@
                   </div>
 
                   <div class="right-float social">
+                    {{#if codeLink}}<a href="{{codeLink}}" target="_blank"><i class="fa fa-code"></i></a>{{/if}}
+                    {{#if webLink}}<a href="{{webLink}}" target="_blank"><i class="fa fa-globe"></i></a>{{/if}}
                     {{#if invoke 'twitterLink'}}<a href="{{invoke 'twitterLink'}}" target="_blank"><i class="icon-tw"></i></a>{{/if}}
                     {{#if invoke 'githubLink'}}<a href="{{invoke 'githubLink'}}" target="_blank"><i class="icon-gh"></i></a>{{/if}}
                     {{#if invoke 'googlePlusLink'}}<a href="{{invoke 'googlePlusLink'}}" target="_blank"><i class="icon-go"></i></a>{{/if}}
