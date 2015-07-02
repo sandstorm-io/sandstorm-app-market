@@ -416,9 +416,9 @@ Template.fileBox.onCreated(function() {
                           ' does not appear to be for this app.');
           } else {
             app.appId = fileObj.meta.appId;
-            app.name = fileObj.meta.title;
+            app.name = fileObj.meta.title || app.name;
             app.versions = [{
-              number: fileObj.meta.marketingVersion,
+              number: fileObj.meta.marketingVersion || app.versions[0].number,
               version: fileObj.meta.version,
               packageId: fileObj.meta.packageId,
               spkId: fileObj._id

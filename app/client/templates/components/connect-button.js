@@ -5,7 +5,6 @@
 var indicateSocialLinkInUserObject = function() {
   var socialLinks = this.get('app').get('socialLinks');
   socialLinks[this.data.service] = -1;
-  console.log(this.data);
   this.get('app').set('socialLinks', socialLinks);
 };
 
