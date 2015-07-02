@@ -121,7 +121,8 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
              'https://twitter.com/' + this.socialLinks.twitter.screenName : null;
   };
   app.githubLink = function() {
-    return (this.onGithub()) ? this.codeLink : null;
+    return (this.socialLinks && this.socialLinks.github && this.socialLinks.github.username) ?
+             'https://github.com/' + this.socialLinks.github.username : null;
   };
 
   return app;
