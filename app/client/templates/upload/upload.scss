@@ -348,7 +348,8 @@
       left: 0.5rem;
       cursor: pointer;
       background-position: center;
-      background-size: cover;
+      background-size: contain;
+      background-repeat: no-repeat;
 
       .tint {
         background-color: #000000;

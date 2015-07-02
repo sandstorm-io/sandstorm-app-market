@@ -50,7 +50,8 @@ $app-container-padding-rl: 4.6rem;
         .image {
 
           content: "";
-          background-size: cover;
+          background-size: contain;
+          background-repeat: no-repeat;
           background-position: center;
           display: block;
           height: 100%;
