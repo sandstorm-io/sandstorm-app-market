@@ -22,7 +22,7 @@ Template.Edit.onCreated(function() {
   tmp.suggestNewGenre = new ReactiveVar(false);
   tmp.editingFields = new ReactiveVar({});
   tmp.newVersion = new ReactiveVar(false);
-  tmp.submitted = new ReactiveVar();
+  tmp.message = new ReactiveVar({});
   tmp.changedOriginal = new ReactiveVar(false);
   tmp.validator = Schemas.AppsBase.namedContext();
   tmp.descriptionWarning = false;
@@ -185,9 +185,9 @@ Template.Edit.helpers({
 
   },
 
-  submitted: function() {
+  message: function() {
 
-    return Template.instance().submitted.get();
+    return Template.instance().message.get();
 
   },
 
@@ -290,7 +290,7 @@ Template.Edit.events({
 
   },
 
-  'click [data-action="submit-app"]': function(evt, tmp) {
+  'click [data-action="submit-app"]:not(.disabled)': function(evt, tmp) {
 
     if (tmp.validate()) {
       if (tmp.app.get('versions').length > 0) {
@@ -300,7 +300,13 @@ Template.Edit.events({
           tmp.descriptionWarning = true;
           Meteor.setTimeout(Tooltips.hide.bind(Tooltips), 5000);
         } else {
-          Meteor.call('user/submitApp', tmp.app.all(), App.redirectOrErrorCallback('appsByMe'));
+          Meteor.call('user/submitApp', tmp.app.all(), App.redirectOrErrorCallback('appsByMe', function() {
+            window.scroll(0, 0);
+            tmp.message.set({
+              icon: 'green icon-approved_dark',
+              text: 'SUBMITTED ON ' + new moment().format('DD MMM YY at H:mm')
+            });
+          }, 2000));
         }
       } else {
         $(window).scrollTo('[data-action="update-version"]');
@@ -321,10 +327,16 @@ Template.Edit.events({
 
   },
 
-  'click [data-action="save-app"]': function(evt, tmp) {
+  'click [data-action="save-app"]:not(.disabled)': function(evt, tmp) {
 
     tmp.validate();
-    Meteor.call('user/saveApp', tmp.app.all(), App.redirectOrErrorCallback('appsByMe'));
+    Meteor.call('user/saveApp', tmp.app.all(), App.redirectOrErrorCallback('appsByMe', function() {
+      window.scroll(0, 0);
+      tmp.message.set({
+        icon: 'green icon-approved_dark',
+        text: 'SAVED ON ' + new moment().format('DD MMM YY at H:mm')
+      });
+    }, 2000));
 
   },
 

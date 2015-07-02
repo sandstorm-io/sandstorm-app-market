@@ -57,5 +57,24 @@ Meteor.methods({
     else Reviews.insert(review);
 
   },
+  
+  'user/saveApp': function(app) {
+
+    $('[data-action="save-app"]').addClass('disabled');
+    $('[data-action="save-admin-requests"]').addClass('disabled');
+     
+  },
+  
+  'user/submitApp': function(app) {
+
+    $('[data-action="submit-app"]').addClass('disabled');
+     
+  },
+  
+  'admin/submitAdminRequests': function(app) {
+
+    $('[data-action="submit-admin-requests"]').addClass('disabled');
+     
+  }  
 
 });

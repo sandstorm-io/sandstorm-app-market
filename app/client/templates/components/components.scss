@@ -125,6 +125,21 @@
 
   }
 
+  &.disabled {
+    color: lighten(#6d627c, 40%) !important;
+    background: none;
+    border-color: lighten(#6d627c, 40%) !important;
+    border-width: 1px;
+    border-style: solid;
+    cursor: default !important;
+
+    i {
+      color: lighten(#6d627c, 40%) !important;
+      display: inline-block;
+    }
+
+  }
+
   &.color {
     background-color: #ffffff;
     border-color: #cdc7d3;

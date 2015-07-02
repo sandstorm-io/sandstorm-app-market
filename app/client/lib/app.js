@@ -35,14 +35,17 @@ _.extend(App, {
 
   },
 
-  redirectOrErrorCallback: function(redirectPath, callback) {
+  redirectOrErrorCallback: function(redirectPath, callback, delay) {
     return function(err, res) {
+      var _this = this;
       if (err) {
         console.log(err);
         AntiModals.overlay('errorModal', {data: {err: err}});
       } else {
-        callback && callback.call(this);
-        redirectPath && FlowRouter.go(redirectPath);
+        callback && callback.call(_this);
+        Meteor.setTimeout(function() {
+          redirectPath && FlowRouter.go(redirectPath);
+        }, delay || 0);
       }
     };
   },

@@ -21,7 +21,7 @@ Template.Upload.onCreated(function() {
   tmp.imageUrl = new ReactiveVar(false);
   tmp.screenshotsVis = new ReactiveVar(3);
   tmp.suggestNewGenre = new ReactiveVar(false);
-  tmp.submitted = new ReactiveVar();
+  tmp.message = new ReactiveVar({});
   tmp.validator = Schemas.AppsBase.namedContext();
   tmp.descriptionWarning = false;
 
@@ -208,11 +208,11 @@ Template.Upload.helpers({
     return Template.instance().app.all();
 
   },
-
-  submitted: function() {
-
-    return Template.instance().submitted.get();
-
+  
+  message: function() {
+    
+    return Template.instance().message.get();
+    
   }
 
 });
@@ -249,7 +249,7 @@ Template.Upload.events({
 
   },
 
-  'click [data-action="submit-app"]': function(evt, tmp) {
+  'click [data-action="submit-app"]:not(.disabled)': function(evt, tmp) {
 
     if (tmp.validate()) {
       if (!tmp.app.get('description') && !tmp.descriptionWarning) {
@@ -261,7 +261,13 @@ Template.Upload.events({
       } else {
         var app = tmp.app.all();
         app._id = FlowRouter.getParam('appId');
-        Meteor.call('user/submitApp', app, App.redirectOrErrorCallback('appsByMe'));
+        Meteor.call('user/submitApp', app, App.redirectOrErrorCallback('appsByMe', function() {
+          window.scroll(0, 0);
+          tmp.message.set({
+            icon: 'green icon-approved_dark',
+            text: 'SUBMITTED ON ' + new moment().format('DD MMM YY at H:mm')
+          });
+        }, 2000));
       }
     } else {
       Tracker.afterFlush(function() {
@@ -275,10 +281,16 @@ Template.Upload.events({
 
   },
 
-  'click [data-action="save-app"]': function(evt, tmp) {
+  'click [data-action="save-app"]:not(.disabled)': function(evt, tmp) {
 
     tmp.validate();
-    Meteor.call('user/saveApp', tmp.app.all(), App.redirectOrErrorCallback('appsByMe'));
+    Meteor.call('user/saveApp', tmp.app.all(), App.redirectOrErrorCallback('appsByMe', function() {
+      window.scroll(0, 0);
+      tmp.message.set({
+        icon: 'green icon-approved_dark',
+        text: 'SAVED ON ' + new moment().format('DD MMM YY at H:mm')
+      });
+    }, 2000));
 
   },
 

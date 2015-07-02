@@ -23,7 +23,7 @@ Template.Review.onCreated(function() {
   tmp.editingFields = new ReactiveVar({});
   tmp.editedFields = new ReactiveVar({});
   tmp.newVersion = new ReactiveVar(false);
-  tmp.submitted = new ReactiveVar();
+  tmp.message = new ReactiveVar({});
   tmp.validator = Schemas.AppsBase.namedContext();
   tmp.flagApp = new ReactiveVar(!!FlowRouter.current().queryParams.flag);
 
@@ -32,7 +32,6 @@ Template.Review.onCreated(function() {
   };
 
   var resetScreenshotsVis = function() {
-    console.log($(window).width());
     tmp.screenshotsVis.set(Math.max(Math.min(Math.floor($(window).width() / 400), 3), 1));
   };
   resetScreenshotsVis();
@@ -132,8 +131,9 @@ Template.Review.onCreated(function() {
         var newVersion = Apps.findOne(FlowRouter.getParam('appId')),
             lastVersion = newVersion.latestVersion();
         newVersion.replacesApp = newVersion._id;
-        Schemas.AppsBase.clean(newVersion);
         newVersion.versions = [lastVersion];
+        Schemas.AppsBase.clean(newVersion);
+        delete newVersion._id;
         tmp.app.set(newVersion);
       }
       // highlight edited fields
@@ -209,9 +209,9 @@ Template.Review.helpers({
 
   },
 
-  submitted: function() {
+  message: function() {
 
-    return Template.instance().submitted.get();
+    return Template.instance().message.get();
 
   },
 
@@ -351,17 +351,29 @@ Template.Review.events({
 
   },
 
-  'click [data-action="submit-admin-requests"]': function(evt, tmp) {
+  'click [data-action="submit-admin-requests"]:not(.disabled)': function(evt, tmp) {
 
     tmp.validate();
-    Meteor.call('admin/submitAdminRequests', tmp.app.all(), App.redirectOrErrorCallback('admin'));
+    Meteor.call('admin/submitAdminRequests', tmp.app.all(), App.redirectOrErrorCallback('admin', function() {
+      window.scroll(0, 0);
+      tmp.message.set({
+        icon: 'green icon-approved_dark',
+        text: 'SUBMITTED ON ' + new moment().format('DD MMM YY at H:mm')
+      });
+    }, 2000));
 
   },
 
-  'click [data-action="save-admin-requests"]': function(evt, tmp) {
+  'click [data-action="save-admin-requests"]:not(.disabled)': function(evt, tmp) {
 
     tmp.validate();
-    Meteor.call('user/saveApp', tmp.app.all(), App.redirectOrErrorCallback('appsByMe'));
+    Meteor.call('user/saveApp', tmp.app.all(), App.redirectOrErrorCallback('appsByMe', function() {
+      window.scroll(0, 0);
+      tmp.message.set({
+        icon: 'green icon-approved_dark',
+        text: 'SAVED ON ' + new moment().format('DD MMM YY at H:mm')
+      });
+    }, 2000));
 
   },
 
