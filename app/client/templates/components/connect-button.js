@@ -5,6 +5,7 @@
 var indicateSocialLinkInUserObject = function() {
   var socialLinks = this.get('app').get('socialLinks');
   socialLinks[this.data.service] = -1;
+  console.log(this.data);
   this.get('app').set('socialLinks', socialLinks);
 };
 
@@ -52,7 +53,11 @@ Template.connectButton.events({
       if (Meteor.user() && Meteor.user().services && Meteor.user().services[tmp.data.service]) indicateSocialLinkInUserObject.call(tmp);
       // If not, log in and then indicate data will be available
       else _this.login.call(_this, function(err, res) {
-        if (!err) indicateSocialLinkInUserObject.call(tmp);
+        if (!err || err.message === 'Service correctly added to the current user, no need to proceed!') indicateSocialLinkInUserObject.call(tmp);
+        else {
+          console.log(err);
+          AntiModals.overlay('errorModal', {data: {err: err}});
+        }
       });
     }
   },
