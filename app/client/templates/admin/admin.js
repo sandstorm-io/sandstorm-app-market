@@ -237,19 +237,21 @@ Template.adminFilters.events({
 
   'click [data-action="search"]': function(evt, tmp) {
 
-    tmp.get('searchOpen').set(true);
-    Tracker.afterFlush(function() {
-      tmp.$('[data-field="search-term"]').focus();
-    });
+    if (tmp.get('searchOpen').get()) {
+      tmp.get('searchTerm').set(tmp.$('[data-field="search-term"]').val());
+    } else {
+      tmp.get('searchOpen').set(true);
+      Tracker.afterFlush(function() {
+        tmp.$('[data-field="search-term"]').focus();
+      });
+    }
 
   },
 
   'keyup [data-field="search-term"]': function(evt, tmp) {
 
     if (evt.keyCode !== 13) return false;
-    else {
-      tmp.get('searchTerm').set($(evt.currentTarget).val());
-    }
+    else tmp.get('searchTerm').set(tmp.$(evt.currentTarget).val());
 
   }
 
@@ -309,10 +311,12 @@ Template.chronology.helpers({
     var apps = {},
         tmp = Template.instance(),
         filterObj = tmp.get('filterObj'),
-        filter = filterObj.run(),
+        filter = _.clone(filterObj.run()),
         searchTerm = tmp.get('searchTerm').get();
 
-    if (searchTerm) _.extend(filter, {name: {$regex: searchTerm} });
+    if (searchTerm) _.extend(filter, {name: {$regex: new RegExp(searchTerm, 'gi')} });
+    
+    console.log(filter);
 
     Apps.find(filter).forEach(function(app) {
       var sod = new moment(app.lastUpdated).startOf('day'),

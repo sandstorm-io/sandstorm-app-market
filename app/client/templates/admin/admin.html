@@ -57,7 +57,7 @@
 
     <div class="right-float">
       <div class="sandstorm-button neutral big-icon" data-action="search">
-        {{#if searchOpen}}<input type="text" class="button-search" data-field="search-term" />{{/if}}
+        <input type="text" class="button-search {{#if searchOpen}}visible{{/if}}" data-field="search-term" />
         <i class="icon-search"></i>
       </div>
     </div>

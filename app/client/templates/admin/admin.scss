@@ -72,6 +72,16 @@ body.admin {
     margin-bottom: 0.5rem;
     
   }
+  
+  .sandstorm-button.neutral input.button-search[data-field="search-term"] {
+    width: 0;
+    overflow: hidden;
+    transition: width 0.5s;
+    
+    &.visible {
+      width: 14rem;
+    }
+  }
 
 }
 
