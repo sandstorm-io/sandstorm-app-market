@@ -316,8 +316,6 @@ Template.chronology.helpers({
 
     if (searchTerm) _.extend(filter, {name: {$regex: new RegExp(searchTerm, 'gi')} });
     
-    console.log(filter);
-
     Apps.find(filter).forEach(function(app) {
       var sod = new moment(app.lastUpdated).startOf('day'),
           sodString = sod.format('DDMMYY');
