@@ -419,11 +419,8 @@ Template.Review.events({
       if (err) throw new Meteor.Error(err.message);
     });
   },
-  'click [data-action="flag"]': function(evt, tmp) {
+  'click [data-action="flag-app"]': function(evt, tmp) {
     tmp.flagApp.set(!tmp.flagApp.get());
-    // Meteor.call('apps/flag', FlowRouter.getParam('appId'), function(err) {
-    //   if (err) throw new Meteor.Error(err.message);
-    // });
   },
   'click [data-action="reject"]': function() {
     Meteor.call('apps/reject', FlowRouter.getParam('appId'), function(err) {
