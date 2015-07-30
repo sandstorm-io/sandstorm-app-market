@@ -24,7 +24,7 @@ Template.appRating.events({
     var app = Template.parentData(1);
 
     if (!Meteor.userId()) {
-      App.loginRedirect = '/app/' + app._id + '?rateApp=true';
+      AppMarket.loginRedirect = '/app/' + app._id + '?rateApp=true';
       return FlowRouter.go('login');
     }
 

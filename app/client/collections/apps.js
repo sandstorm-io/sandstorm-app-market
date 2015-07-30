@@ -1,4 +1,4 @@
-Apps = new Mongo.Collection('apps', {transform: function(app) {
+Apps = new Mongo.Collection(null, {transform: function(app) {
 
   app.latestVersion = function() {
     return _.sortBy(this.versions, function(entry) {
@@ -14,26 +14,25 @@ Apps = new Mongo.Collection('apps', {transform: function(app) {
     return this.spkLink;
   };
 
-  if (Meteor.isClient)
-    app.install = function() {
-      var _this = this;
-      App.getSandstormHost(function(host) {
-        Meteor.call('user/installApp', _this._id, host, function(err) {
-          if (err) console.log(err);
-          else {
-            var packageId = _this.latestVersion() && _this.latestVersion().packageId;
-            window.open(host + 'install/' + packageId + '?url=' + Meteor.absoluteUrl() + 'package/' + packageId, "_blank");
-            var installedLocally = amplify.store('sandstormInstalledApps');
-            if (!installedLocally) amplify.store('sandstormInstalledApps', [_this._id]);
-            else if (installedLocally.indexOf(_this._id) === -1) {
-              installedLocally.push(_this._id);
-              amplify.store('sandstormInstalledApps', installedLocally);
-              App.historyDep.changed();
-            }
+  app.install = function() {
+    var _this = this;
+    AppMarket.getSandstormHost(function(host) {
+      Meteor.call('user/installApp', _this._id, host, function(err) {
+        if (err) console.log(err);
+        else {
+          var packageId = _this.latestVersion() && _this.latestVersion().packageId;
+          window.open(host + 'install/' + packageId + '?url=' + Meteor.absoluteUrl() + 'package/' + packageId, "_blank");
+          var installedLocally = amplify.store('sandstormInstalledApps');
+          if (!installedLocally) amplify.store('sandstormInstalledApps', [_this._id]);
+          else if (installedLocally.indexOf(_this._id) === -1) {
+            installedLocally.push(_this._id);
+            amplify.store('sandstormInstalledApps', installedLocally);
+            AppMarket.historyDep.changed();
           }
-        });
+        }
       });
-    };
+    });
+  };
 
   app.installed = function() {
 
@@ -83,7 +82,6 @@ Apps.approval = {
 var VersionSchema = new SimpleSchema({
   version: {
     type: String,
-    optional: true
   },
   packageId: {
     type: String,

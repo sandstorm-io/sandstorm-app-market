@@ -1,5 +1,5 @@
 Accounts.onLogin(function() {
 
-  if (App.loginRedirect) FlowRouter.go(App.loginRedirect);
+  if (AppMarket.loginRedirect) FlowRouter.go(AppMarket.loginRedirect);
 
 });

@@ -102,7 +102,7 @@ Template.Review.onCreated(function() {
 
   // Autorun to regenerate identicon when required
   tmp.autorun(function() {
-    tmp.app.set('image', App.blockies.create({
+    tmp.app.set('image', AppMarket.blockies.create({
       seed: tmp.seedString.get(),
       size: 5,
       scale: 50
@@ -123,8 +123,8 @@ Template.Review.onCreated(function() {
       tmp.originalApp = Apps.findOne(FlowRouter.getParam('appId'));
       // And load either a published admin's requested changes, this admin user's saved
       // version, or the currently published app (in that order of precedence).
-      if (tmp.originalApp && tmp.originalApp.adminRequests[0]) {
-        tmp.app.set(tmp.originalApp.adminRequests[0]);
+      if (tmp.originalApp && tmp.originalAppMarket.adminRequests[0]) {
+        tmp.app.set(tmp.originalAppMarket.adminRequests[0]);
       } else if (Meteor.user() && Meteor.user().savedApp && Meteor.user().savedApp[FlowRouter.getParam('appId')]) {
         tmp.app.set(Meteor.user().savedApp[FlowRouter.getParam('appId')]);
       } else {
@@ -248,13 +248,13 @@ Template.Review.helpers({
       },
 
 
-    ][originalApp && originalApp.approved];
+    ][originalApp && originalAppMarket.approved];
 
   },
 
   flagApp: function() {
 
-    return Template.instance().flagApp.get();
+    return Template.instance().flagAppMarket.get();
 
   },
 
@@ -267,7 +267,7 @@ Template.Review.helpers({
   flagDetails: function() {
 
     var originalApp = Apps.findOne(FlowRouter.getParam('appId'));
-    return Meteor.user() && Meteor.user().flags && Meteor.user().flags[originalApp._id];
+    return Meteor.user() && Meteor.user().flags && Meteor.user().flags[originalAppMarket._id];
 
   }
 
@@ -354,7 +354,7 @@ Template.Review.events({
   'click [data-action="submit-admin-requests"]:not(.disabled)': function(evt, tmp) {
 
     tmp.validate();
-    Meteor.call('admin/submitAdminRequests', tmp.app.all(), App.redirectOrErrorCallback('admin', function() {
+    Meteor.call('admin/submitAdminRequests', tmp.app.all(), AppMarket.redirectOrErrorCallback('admin', function() {
       window.scroll(0, 0);
       tmp.message.set({
         icon: 'green icon-approved_dark',
@@ -367,7 +367,7 @@ Template.Review.events({
   'click [data-action="save-admin-requests"]:not(.disabled)': function(evt, tmp) {
 
     tmp.validate();
-    Meteor.call('user/saveApp', tmp.app.all(), App.redirectOrErrorCallback('appsByMe', function() {
+    Meteor.call('user/saveApp', tmp.app.all(), AppMarket.redirectOrErrorCallback('appsByMe', function() {
       window.scroll(0, 0);
       tmp.message.set({
         icon: 'green icon-approved_dark',
@@ -384,7 +384,7 @@ Template.Review.events({
       bottomMessage: 'This can\'t be undone.',
       actionText: 'Yes, nuke',
       actionFunction: function(cb) {
-        Meteor.call('user/deleteSavedApp', FlowRouter.getParams('appId'), App.redirectOrErrorCallback('admin'));
+        Meteor.call('user/deleteSavedApp', FlowRouter.getParams('appId'), AppMarket.redirectOrErrorCallback('admin'));
       }
     }});
 
@@ -397,7 +397,7 @@ Template.Review.events({
       bottomMessage: 'This will delete the app itself, not just your version, and it can\'t be undone.',
       actionText: 'Yes, nuke',
       actionFunction: function(cb) {
-        Meteor.call('user/deleteApp', FlowRouter.getParams('appId'), App.redirectOrErrorCallback('admin'));
+        Meteor.call('user/deleteApp', FlowRouter.getParams('appId'), AppMarket.redirectOrErrorCallback('admin'));
       }
     }});
 
@@ -420,7 +420,7 @@ Template.Review.events({
     });
   },
   'click [data-action="flag-app"]': function(evt, tmp) {
-    tmp.flagApp.set(!tmp.flagApp.get());
+    tmp.flagAppMarket.set(!tmp.flagAppMarket.get());
   },
   'click [data-action="reject"]': function() {
     Meteor.call('apps/reject', FlowRouter.getParam('appId'), function(err) {

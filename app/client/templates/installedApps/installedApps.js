@@ -73,12 +73,12 @@ Template.uninstallApp.events({
   'click [data-action="uninstall-app"]': function() {
 
     var _this = this;
-    Meteor.call('user/uninstallApp', _this._id, App.redirectOrErrorCallback(null, function() {
+    Meteor.call('user/uninstallApp', _this._id, AppMarket.redirectOrErrorCallback(null, function() {
       AntiModals.dismissAll();
       var installedLocally = amplify.store('sandstormInstalledApps');
       if (installedLocally && installedLocally.indexOf(_this._id) > -1) {
         amplify.store('sandstormInstalledApps', _.without(installedLocally, _this._id));
-        App.historyDep.changed();
+        AppMarket.historyDep.changed();
       }
     }));
 

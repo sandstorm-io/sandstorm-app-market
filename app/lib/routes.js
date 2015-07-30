@@ -50,7 +50,7 @@ function redirectOnSmallDevice(route) {
 // pass query params to middleware (yet)
 function getSandstormServer(context) {
   if (context.queryParams.host) {
-    App.sandstormHost = context.queryParams.host;
+    AppMarket.sandstormHost = context.queryParams.host;
     amplify.store('sandstormHost', context.queryParams.host);
     var allHosts = amplify.store('sandstormHostHistory') || [];
     allHosts = _.unique(allHosts.concat(context.queryParams.host));
@@ -77,7 +77,7 @@ function checkAuthorExists() {
 function getPopulatedGenres() {
   Meteor.call('genres/getPopulated', function(err, res) {
     if (err) throw new Meteor.Error(err);
-    App.populatedGenres.set(res ? App.extraGenres.concat(res) : App.extraGenres);
+    AppMarket.populatedGenres.set(res ? AppMarket.extraGenres.concat(res) : AppMarket.extraGenres);
   });
 }
 

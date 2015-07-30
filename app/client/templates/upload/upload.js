@@ -113,7 +113,7 @@ Template.Upload.onCreated(function() {
 
   // Autorun to regenerate identicon when required
   tmp.autorun(function() {
-    tmp.app.set('image', App.blockies.create({
+    tmp.app.set('image', AppMarket.blockies.create({
       seed: tmp.seedString.get(),
       size: 5,
       scale: 50
@@ -137,9 +137,9 @@ Template.Upload.onCreated(function() {
             oldApp = tmp.app.all();
         _.extend(oldApp, draft);
         Schemas.AppsBase.clean(oldApp);
-        oldApp._id = _id;
+        oldAppMarket._id = _id;
         tmp.app.set(oldApp);
-        tmp.setCategories(oldApp.categories);
+        tmp.setCategories(oldAppMarket.categories);
       }
 
       c.stop();
@@ -261,7 +261,7 @@ Template.Upload.events({
       } else {
         var app = tmp.app.all();
         app._id = FlowRouter.getParam('appId');
-        Meteor.call('user/submitApp', app, App.redirectOrErrorCallback('appsByMe', function() {
+        Meteor.call('user/submitApp', app, AppMarket.redirectOrErrorCallback('appsByMe', function() {
           window.scroll(0, 0);
           tmp.message.set({
             icon: 'green icon-approved_dark',
@@ -284,7 +284,7 @@ Template.Upload.events({
   'click [data-action="save-app"]:not(.disabled)': function(evt, tmp) {
 
     tmp.validate();
-    Meteor.call('user/saveApp', tmp.app.all(), App.redirectOrErrorCallback('appsByMe', function() {
+    Meteor.call('user/saveApp', tmp.app.all(), AppMarket.redirectOrErrorCallback('appsByMe', function() {
       window.scroll(0, 0);
       tmp.message.set({
         icon: 'green icon-approved_dark',
@@ -302,7 +302,7 @@ Template.Upload.events({
       actionText: 'Yes, nuke',
       actionFunction: function(cb) {
         tmp.clearApp();
-        if (FlowRouter.getParam('appId')) Meteor.call('user/deleteApp', FlowRouter.getParam('appId'), App.redirectOrErrorCallback('appsByMe', cb));
+        if (FlowRouter.getParam('appId')) Meteor.call('user/deleteApp', FlowRouter.getParam('appId'), AppMarket.redirectOrErrorCallback('appsByMe', cb));
         else {
           FlowRouter.go('appsByMe');
           cb();
@@ -452,7 +452,7 @@ Template.fileBox.helpers({
 
   uploaderStatus: function() {
 
-    return App.spkUploader.status();
+    return AppMarket.spkUploader.status();
 
   },
 
@@ -611,9 +611,9 @@ Template.iconPicker.events({
     var file = evt.currentTarget.files[0];
 
     if (file) {
-      tmp.get('app').set('image', App.imageUploader.url(true));
+      tmp.get('app').set('image', AppMarket.imageUploader.url(true));
 
-      App.imageUploader.send(file, function(err, downloadUrl) {
+      AppMarket.imageUploader.send(file, function(err, downloadUrl) {
 
         if (err) {
           console.error('Error uploading', err);
@@ -665,7 +665,7 @@ Template.screenshotPicker.events({
 
     if (file) {
 
-      App.imageUploader.send(file, function(err, downloadUrl) {
+      AppMarket.imageUploader.send(file, function(err, downloadUrl) {
 
         if (err) {
           console.error('Error uploading', err);
