@@ -30,7 +30,7 @@
 
                   <div class="header">{{name}}</div>
 
-                  <div class="app-author-full-width"><a href="{{getZippedPath 'appMarketAuthor' 'authorId' author}}">{{authorName}}</a></div>
+                  <div class="app-author-full-width"><a href="{{getZippedPath 'appMarketAuthor' 'authorName' authorName}}">{{authorName}}</a></div>
 
                 </div>
 
@@ -235,7 +235,6 @@
     </div>
     <input type="text" data-field="flag-other" />
     <div>Additional information:</div>
-    {{!-- <textarea data-field="additional-info" resize="none"></textarea> --}}
     <div class="additional-info" data-field="additional-info" contenteditable>{{additional}}</div>
     <div class="button" data-action="submit-flag-app">SUBMIT</div>
     <div class="button" data-action="flag-app">CLOSE</div>

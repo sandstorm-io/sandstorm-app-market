@@ -42,7 +42,7 @@ Apps = new Mongo.Collection(null, {transform: function(app) {
     }
     var userId = this.userId || Meteor.userId(),
         user = Meteor.users.findOne(userId);
-    if (user && this._id in user.installedApps) return true;
+    if (user && user.installedApps && this._id in user.installedApps) return true;
 
     return false;
 
@@ -85,11 +85,14 @@ var VersionSchema = new SimpleSchema({
     max: 20
   },
   packageId: {
-    type: String,
+    type: String
   },
   changes: {
     type: String,
     optional: true
+  },
+  createdAt: {
+    type: Date
   }
 });
 
@@ -103,6 +106,9 @@ var appsBaseSchema = {
     type: String,
     max: 200,
     index: true
+  },
+  createdAt: {
+    type: Date
   },
   categories: {
     type: [String],

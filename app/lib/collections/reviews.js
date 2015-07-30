@@ -14,6 +14,10 @@ Schemas.Reviews = new SimpleSchema({
     regEx: SimpleSchema.RegEx.Id,
     index: true
   },
+  username: {
+    type: String,
+    index: true
+  },
   userId: {
     type: String,
     regEx: SimpleSchema.RegEx.Id,

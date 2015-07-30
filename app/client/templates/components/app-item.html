@@ -34,10 +34,6 @@
                 {{#if invoke 'installed'}}RE-{{/if}}INSTALL  <i class="icon-arrow-install"></i>
               </a>
 
-              <div class="app-price {{#if free price}}free{{/if}}">
-                {{#if free price}}FREE{{else}}{{numberFormat price '$0,0.00'}}{{/if}}
-              </div>
-
             </div>
 
             <div class="app-description">
@@ -113,10 +109,6 @@
               <a href="{{fullInstallLink}}" target="_blank" class="app-install {{#if invoke 'installed'}}installed{{/if}}" data-action="install-app">
                 {{#if invoke 'installed'}}RE-{{/if}}INSTALL  <i class="icon-arrow-install"></i>
               </a>
-
-              <div class="app-price {{#if free price}}free{{/if}}">
-                {{#if free price}}FREE{{else}}{{numberFormat price '$0,0.00'}}{{/if}}
-              </div>
 
             </div>
 

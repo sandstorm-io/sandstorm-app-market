@@ -1,5 +1,5 @@
-var reviewRows = 4,
-    reviewCols = 3;
+var REVIEW_ROWS = 4,
+    REVIEW_COLS = 3;
 
 Template.SingleApp.onCreated(function() {
 
@@ -23,18 +23,12 @@ Template.SingleApp.onCreated(function() {
   };
 
   // Load existing review of this app (if it exists)
-  tmp.autorun(function(c) {
-    if (FlowRouter.subsReady()) {
-      var appId = FlowRouter.getParam('appId'),
-          user = Meteor.user(),
-          app = Apps.findOne(appId);
-      if (!app || !app.screenshots.length) tmp.readMore.set(true);
-      if (user && user.reviews && appId in user.reviews) {
-        tmp.myReview.set(user.reviews[appId]);
-      }
-      c.stop();
-    }
+  tmp.subscribe('reviews', FlowRouter.getParam('appId'), function() {
+    var myReview = Reviews.findOne({userId: Meteor.userId()});
+    if (myReview) tmp.myReview.set(myReview);
   });
+
+  // if (!app || !app.screenshots.length) tmp.readMore.set(true);
 
 });
 
@@ -95,20 +89,22 @@ Template.SingleApp.helpers({
 
   flagApp: function() {
 
-    return Template.instance().flagAppMarket.get();
+    return Template.instance().flagApp.get();
 
   },
 
   flagged: function() {
 
-    return Meteor.user() && Meteor.user().flags && (this._id in Meteor.user().flags);
+    Template.instance().flagApp.dep.depend();
+    var flags = amplify.store('sandstormAppFlags');
+    return flags && this._id in flags;
 
   },
 
   flagDetails: function() {
 
-    return Meteor.user() && Meteor.user().flags && Meteor.user().flags[this._id];
-
+    var flags = amplify.store('sandstormAppFlags');
+    return flags && flags[this._id];
   },
 
   readMore: function() {
@@ -137,7 +133,7 @@ Template.SingleApp.helpers({
 
   reviews: function() {
 
-    return _.values(this.reviews);
+    return Reviews.find({appId: FlowRouter.getParam('appId')}).fetch();
 
   },
 
@@ -363,7 +359,7 @@ Template.reviewFrame.onRendered(function() {
   tmp.autorun(function() {
     if (Template.currentData()) Tracker.afterFlush(function() {
       tmp.$(".owl-carousel").owlCarousel({
-        items: reviewCols,
+        items: REVIEW_COLS,
         loop: true,
         mouseDrag: false,
         nav: false,
@@ -382,9 +378,9 @@ Template.reviewFrame.helpers({
 
     if (!this.reviews) return [];
 
-    var size =  this.reviews.length > (reviewRows * reviewCols) ?
-                reviewRows :
-                Math.ceil(this.reviews.length / reviewCols);
+    var size =  this.reviews.length > (REVIEW_ROWS * REVIEW_COLS) ?
+                REVIEW_ROWS :
+                Math.ceil(this.reviews.length / REVIEW_COLS);
 
     var res = _.groupBy(this.reviews, function(reviews, i) {
         return Math.floor(i / size);
@@ -395,7 +391,7 @@ Template.reviewFrame.helpers({
 
   extraReviews: function() {
 
-    return this.reviews.length > reviewRows * reviewCols;
+    return this.reviews.length > REVIEW_ROWS * REVIEW_COLS;
 
   }
 
@@ -442,10 +438,20 @@ Template.flagBox.events({
         cat: cat,
         additional: additional
       };
+      var localFlags = amplify.store('sandstormAppFlags') || {};
+      localFlags[FlowRouter.getParam('appId')] = flag;
 
-      Meteor.call('user/flagApp', FlowRouter.getParam('appId'), flag, function(err) {
-        if (err) console.log(err);
-        tmp.get('flagApp').set(false);
+      $.ajax({
+        method: 'POST',
+        url: Meteor.settings && Meteor.settings.public && Meteor.settings.public.FLAG,
+        data: flag,
+        success: function() {
+          amplify.store('sandstormAppFlags', localFlags);
+          return tmp.get('flagApp').set(false);          
+        },
+        error: function() {
+          return AntiModals.overlay('errorModal', {data: {err: 'Could not post flag. Please check your internet connection.'}});
+        }
       });
 
     }
