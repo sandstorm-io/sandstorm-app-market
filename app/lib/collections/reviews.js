@@ -39,33 +39,6 @@ Schemas.Reviews = new SimpleSchema({
 
 Reviews.attachSchema(Schemas.Reviews);
 
-function propagateReview(userId, review) {
-
-  var updateUser = {},
-      updateApp = {},
-      user = Meteor.users.findOne(review.userId);
-  updateUser['reviews.' + review.appId] = review;
-  Meteor.users.update(review.userId, {$set: updateUser});
-  if (user) review.username = user.username;
-  updateApp['reviews.' + review.userId] = review;
-  Apps.update(review.appId, {$set: updateApp});
-
-}
-
-function removeReview(userId, review) {
-
-  var updateUser = {},
-      updateApp = {};
-  updateUser['reviews.' + review.appId] = true;
-  updateApp['reviews.' + review.userId] = true;
-  Meteor.users.update(review.userId, {$unset: updateUser});
-  Apps.update(review.appId, {$unset: updateApp});
-}
-
-Reviews.after.insert(propagateReview);
-Reviews.after.update(propagateReview, {fetchPrevious: false});
-Reviews.after.remove(removeReview);
-
 if (Meteor.isServer) {
   Reviews.allow({
     insert: function (userId, doc) {

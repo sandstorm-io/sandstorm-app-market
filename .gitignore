@@ -1,9 +1,6 @@
-.meteor/local
-.meteor/meteorite
+app/.meteor/local
 app/settings.json
 app/npm-debug.log
 app/private/*.json
 app/private/*.pem
 mup/settings.json
-mupx/settings.json
-app/tests/cucumber/.screenshots
