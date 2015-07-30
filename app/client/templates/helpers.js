@@ -19,6 +19,26 @@ var helpers = {
 
   // APP HELPERS
 
+  apps: function(genre, skip, limit) {
+
+    var options = {sort: {installCount: -1}};
+    if (skip) options.skip = skip;
+    if (limit) options.limit = limit;
+
+    return Genres.findIn(genre, {}, options);
+
+  },
+
+  appsCount: function(genre, skip, limit) {
+
+    var options = {sort: {installCount: -1}};
+    if (!AppMarket.isBlankKeyword(skip)) options.skip = skip;
+    if (!AppMarket.isBlankKeyword(limit)) options.limit = limit;
+
+    return Genres.findIn(genre, {}, options).count();
+
+  },
+
   appRating: function(rating) {
 
     rating = rating || 0;
@@ -76,6 +96,13 @@ var helpers = {
   },
 
   // ROUTER/SUB HELPERS
+  
+  
+  subLimit: function() {
+    
+    return Template.instance().get('subLimit').get();
+    
+  },
 
   routerSubsReady: function(name) {
 

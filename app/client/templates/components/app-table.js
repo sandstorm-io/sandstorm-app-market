@@ -1,23 +1,3 @@
-Template.registerHelper('apps', function(genre, skip, limit) {
-
-  var options = {sort: {installCount: -1}};
-  if (skip) options.skip = skip;
-  if (limit) options.limit = limit;
-
-  return Genres.findIn(genre, {}, options);
-
-});
-
-Template.registerHelper('appsCount', function(genre, skip, limit) {
-
-  var options = {sort: {installCount: -1}};
-  if (!AppMarket.isBlankKeyword(skip)) options.skip = skip;
-  if (!AppMarket.isBlankKeyword(limit)) options.limit = limit;
-
-  return Genres.findIn(genre, {}, options).count();
-
-});
-
 // SMALL APP ITEM TABLE
 
 Template.appTable.helpers({
@@ -35,6 +15,7 @@ Template.appTable.helpers({
           reactive: !!this.reactive
         },
         data = _.extend({}, Template.parentData(1), this);
+    if (this.limit) options.limit = this.limit;
     if (data.sortAsc) options.sort[data.sortAsc] = 1;
     else if (data.sortDesc) options.sort[data.sortDesc] = -1;
     else options.sort = {installCount: -1};

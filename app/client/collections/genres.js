@@ -148,7 +148,7 @@ AppMarket.extraGenres = [
     name: 'Apps By Author',
     selector: function() {
       return {
-        author: this.authorId || (FlowRouter.getParam && FlowRouter.getParam('authorId'))
+        authorName: this.authorName || (FlowRouter.getParam && FlowRouter.getParam('authorName'))
       };
     },
     priority: 0,

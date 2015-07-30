@@ -4,7 +4,7 @@
 
     <div class="contents">
 
-      <div class="genre-name large">{{genre}}{{#if author}} - {{author.username}}{{/if}}</div>
+      <div class="genre-name large">{{genre}}{{#if authorName}} - {{authorName}}{{/if}}</div>
 
     </div>
 
@@ -38,7 +38,7 @@
 
     <div class="contents">
 
-      <div class="genre-name large">Apps By Author - {{author.username}}</div>
+      <div class="genre-name large">Apps By Author - {{authorName}}</div>
 
     </div>
 
@@ -109,7 +109,7 @@
 
   <div class="genre-other">
 
-    {{> appTable skipLines=1 afterBigLeader=true genre=genre reactive=true}}
+    {{> appTable skipLines=1 limit=subLimit afterBigLeader=true genre=genre reactive=true}}
 
   </div>
 
