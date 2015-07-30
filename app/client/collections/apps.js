@@ -92,20 +92,8 @@ var VersionSchema = new SimpleSchema({
   packageId: {
     type: String,
   },
-  spkId: {
-    type: String,
-    regEx: SimpleSchema.RegEx.Id
-  },
-  createdAt: {
-    type: Date,
-    autoValue: function(doc) {
-      if (!this.isSet || this.operator !== '$push') return new Date();
-    },
-    optional: true
-  },
   changes: {
     type: String,
-    max: 200,
     optional: true
   }
 });
