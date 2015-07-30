@@ -3,7 +3,6 @@ Template.Genre.onCreated(function() {
   var tmp = this;
 
   tmp.subLimit = new ReactiveVar(AppMarket.defaultAppLimit.get());
-  tmp.subReady = new ReactiveVar(false);
 
   tmp.addApps = function() {
     tmp.subLimit.set(tmp.subLimit.get() + (2 * AppMarket.lineCapacity.get()));
@@ -16,7 +15,6 @@ Template.Genre.onCreated(function() {
     var genre = s.capitalize(FlowRouter.getParam('genre'));
     tmp.subscribe('apps by genre', genre, tmp.subLimit.get(), {
       onReady: function() {
-        tmp.subReady.set(true);
         if (genre && !Genres.findOneIn(genre)) Tracker.afterFlush(function() {
           FlowRouter.go('notFound', {object: 'genre'});
         });
@@ -30,7 +28,6 @@ Template.Genre.onCreated(function() {
   tmp.autorun(function() {
     FlowRouter.watchPathChange();
     tmp.subLimit.set(AppMarket.defaultAppLimit.get());
-    tmp.subReady.set(false);
   });
 
   $(window).on('scroll.genre', _.debounce(function() {
@@ -69,7 +66,6 @@ Template.AppsByAuthor.onCreated(function() {
   var tmp = this;
 
   tmp.subLimit = new ReactiveVar(AppMarket.defaultAppLimit.get());
-  tmp.subReady = new ReactiveVar(false);
 
   tmp.addApps = function() {
     tmp.subLimit.set(tmp.subLimit.get() + (2 * AppMarket.lineCapacity.get()));
@@ -82,7 +78,6 @@ Template.AppsByAuthor.onCreated(function() {
     var genre = s.capitalize(FlowRouter.getParam('genre'));
     tmp.subscribe('apps by genre', genre, tmp.subLimit.get(), {
       onReady: function() {
-        tmp.subReady.set(true);
         if (genre && !Genres.findOneIn(genre)) FlowRouter.go('notFound', {object: 'genre'});
       }
     });
@@ -94,7 +89,6 @@ Template.AppsByAuthor.onCreated(function() {
   tmp.autorun(function() {
     FlowRouter.watchPathChange();
     tmp.subLimit.set(AppMarket.defaultAppLimit.get());
-    tmp.subReady.set(false);
   });
 
   $(window).on('scroll.genre', _.debounce(function() {
@@ -126,8 +120,4 @@ Template.AppsByAuthor.helpers({
 
   }
 
-});
-
-Template.genreTable.onCreated(function() {
-  this.subscribe('apps by genre', this.data.genre, AppMarket.lineCapacity.get());
 });

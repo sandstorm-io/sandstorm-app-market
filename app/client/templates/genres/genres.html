@@ -10,8 +10,6 @@
 
   </div>
 
-  {{#if getReactive 'subReady'}}
-
   <div class="genre-popular-section">
 
     <div class="contents">
@@ -32,8 +30,6 @@
 
   </div>
 
-  {{/if}}
-
 </template>
 
 <template name="AppsByAuthor">
@@ -47,8 +43,6 @@
     </div>
 
   </div>
-
-  {{#if getReactive 'subReady'}}
 
   <div class="genre-popular-section">
 
@@ -70,20 +64,16 @@
 
   </div>
 
-  {{/if}}
-
 </template>
 
 <template name="genreTable">
 
-  {{#if Template.subscriptionsReady}}
   {{#if countApps genre}}
 
     <div class="genre-name"><a href="{{getZippedPath 'appMarketGenre' 'genre' genre}}">{{genre}} <i class="icon-chevron-right"></i></a></div>
 
     {{> appTable genre=genre reactive=true bigLeader=bigLeader}}
 
-  {{/if}}
   {{/if}}
 
 </template>
