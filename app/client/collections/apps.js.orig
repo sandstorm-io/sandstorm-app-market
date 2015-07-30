@@ -82,7 +82,10 @@ Apps.approval = {
 var VersionSchema = new SimpleSchema({
   number: {
     type: String,
+<<<<<<< HEAD
+=======
     max: 20
+>>>>>>> refactor-apps-collection
   },
   packageId: {
     type: String,
