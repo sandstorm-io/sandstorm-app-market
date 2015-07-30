@@ -81,9 +81,9 @@ Apps.approval = {
 // but NOT anything which will be autoValued or receive a default value only
 // when the app is added to the DB.
 var VersionSchema = new SimpleSchema({
-  version: {
+  number: {
     type: String,
-    optional: true
+    max: 20
   },
   packageId: {
     type: String,
