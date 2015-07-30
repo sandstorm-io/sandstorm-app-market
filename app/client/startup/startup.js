@@ -26,7 +26,7 @@ Meteor.startup(function() {
       AppMarket.populatedGenres.set(genres.concat(AppMarket.extraGenres));
     },
     error: function(err, desc) {
-      return AntiModals.overlay('errorModal', {data: {err: desc}});  
+      return AntiModals.overlay('errorModal', {data: {err: 'There was an error loading app data from the server'}});  
     }
   });
   
