@@ -5,7 +5,3 @@ App = {
   }
 
 };
-
-function isPositiveInteger(x) {
-  return /^\d+$/.test(x);
-}

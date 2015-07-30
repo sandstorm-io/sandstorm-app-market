@@ -59,14 +59,7 @@ _.extend(App, {
     var localInstall = amplify.store('sandstormInstalledApps'),
         count = localInstall ? localInstall.length : 0;
     if (Meteor.user()) count += _.keys(Meteor.user().installedApps).length;
-    if (!App.localAppListChecked) Meteor.call('apps/checkIds', amplify.store('sandstormInstalledApps'), function(err, res) {
-      if (err) console.log(err);
-      else {
-        amplify.store('sandstormInstalledApps', res);
-        App.localAppListChecked = true;
-        App.historyDep.changed();
-      }
-    });
+    // TODO: check local installed apps list contains only real apps
     return count;
   },
 

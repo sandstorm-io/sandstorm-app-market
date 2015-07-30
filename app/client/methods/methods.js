@@ -2,41 +2,6 @@
 /* STUB Methods - these don't actually do anything permanent! */
 /*****************************************************************************/
 Meteor.methods({
-  'user/toggleAutoupdate': function() {
-
-    var user = Meteor.users.findOne(Meteor.userId());
-    if (!user) return false;
-    return Meteor.users.update(user._id, {
-      $set: {
-        autoupdateApps: !(user && user.autoupdateApps)
-      }
-    });
-
-  },
-
-  'user/uninstallApp': function(appId) {
-
-    if (!Meteor.userId()) return false;
-
-    var unset = {};
-
-    unset['installedApps.' + appId] = true;
-    return Meteor.users.update(Meteor.userId(), {
-      $unset: unset
-    });
-
-  },
-
-  'apps/togglePrivate': function(appId) {
-
-    var app = Apps.findOne(appId);
-    if (!app || app.author !== Meteor.userId()) return false;
-
-    Apps.update(appId, {$set: {public: !app.public}});
-
-    return true;
-
-  },
 
   'user/review-app': function(review) {
 
@@ -56,25 +21,6 @@ Meteor.methods({
       Reviews.update(_.pick(review, ['appId', 'userId']), {$set: review});
     else Reviews.insert(review);
 
-  },
-  
-  'user/saveApp': function(app) {
-
-    $('[data-action="save-app"]').addClass('disabled');
-    $('[data-action="save-admin-requests"]').addClass('disabled');
-     
-  },
-  
-  'user/submitApp': function(app) {
-
-    $('[data-action="submit-app"]').addClass('disabled');
-     
-  },
-  
-  'admin/submitAdminRequests': function(app) {
-
-    $('[data-action="submit-admin-requests"]').addClass('disabled');
-     
-  }  
+  }
 
 });
