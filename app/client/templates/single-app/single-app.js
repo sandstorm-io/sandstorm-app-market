@@ -83,7 +83,7 @@ Template.SingleApp.helpers({
 
   getDescription: function() {
 
-    return Template.instance().readMore.get() ? this.htmlDescription : s.prune(this.htmlDescription, 1200);
+    return Template.instance().readMore.get() ? this.description : s.prune(this.description, 1200);
 
   },
 

@@ -2,7 +2,7 @@
 
 .app-item-container {
 
-  display: none;
+  display: inline-block;
   vertical-align: top;
   text-align: left;
   width: $app-container-width;
@@ -12,15 +12,6 @@
   padding-bottom: $app-container-margin-tb;
   box-sizing: border-box;
   cursor: pointer;
-
-  // This is a semi-hack to hide apps which are unapproved in the short period
-  // between navigating back to an app market page from the admin view and
-  // the unapproved apps being flushed from the DB. At present, Meteor doesn't
-  // provide a reactive method "stopped()" equivalent to "ready()" that you
-  // can use to test for this and delay rendering, so we use CSS instead.
-  &.approved-0, &.admin, &.full-width {
-    display: inline-block;
-  }
 
   .app-item-inner {
 

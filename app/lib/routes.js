@@ -1,15 +1,13 @@
 // GLOBAL SUBSCRIPTIONS
 
 FlowRouter.subscriptions = function() {
-  this.register('categories', Meteor.subscribe('categories'));
   this.register('messages', Meteor.subscribe('messages'));
-  this.register('apps private', Meteor.subscribe('apps private'));
 };
 
 // ROUTES
 
 // Pre render triggers
-FlowRouter.triggers.enter([getSandstormServer, getPopulatedGenres]);
+FlowRouter.triggers.enter([getSandstormServer]);
 FlowRouter.triggers.enter([onlyAdmin.bind(this, 'login')], {
   only: ['review', 'admin']
 });
@@ -58,7 +56,6 @@ function getSandstormServer(context) {
   }
 }
 
-
 // Subscription callback which checks it the supplied app exists when the
 // sub is ready, and redirects to a not found page if it isn't
 function checkAppExists() {
@@ -69,15 +66,8 @@ function checkAppExists() {
 }
 function checkAuthorExists() {
   Meteor.defer(function() {
-    var author = Meteor.users.find(FlowRouter.getParam('authorId')).count();
+    var authorApps = Apps.find({authorName: FlowRouter.getParam('authorName')}).count();
     if (!author) FlowRouter.go('notFound', {object: 'author'});
-  });
-}
-
-function getPopulatedGenres() {
-  Meteor.call('genres/getPopulated', function(err, res) {
-    if (err) throw new Meteor.Error(err);
-    AppMarket.populatedGenres.set(res ? AppMarket.extraGenres.concat(res) : AppMarket.extraGenres);
   });
 }
 
@@ -97,13 +87,6 @@ FlowRouter.route('/not-found/:object', {
 
 FlowRouter.route('/app/:appId', {
   name: 'singleApp',
-  subscriptions: function(params) {
-    var route = this;
-    this.register('apps by id',
-      Meteor.subscribe('apps by id', params.appId, checkAppExists));
-    this.register('user flags',
-      Meteor.subscribe('user flags'));
-  },
   action: function(params, queryParams) {
     FlowLayout.render('MasterLayout', {mainSection: 'SingleApp'});
   }
@@ -116,14 +99,8 @@ FlowRouter.route('/', {
   }
 });
 
-FlowRouter.route('/author/:authorId', {
+FlowRouter.route('/author/:authorName', {
   name: 'appMarketAuthor',
-  subscriptions: function(params) {
-    this.register('apps by author',
-      Meteor.subscribe('apps by author', params.authorId));
-    this.register('user basic',
-      Meteor.subscribe('user basic', params.authorId, checkAuthorExists));
-  },
   action: function(params, queryParams) {
     FlowLayout.render('MasterLayout', {mainSection: 'AppsByAuthor'});
   }
@@ -142,12 +119,6 @@ FlowRouter.route('/genre/:genre', {
 
 FlowRouter.route('/search', {
   name: 'appSearch',
-  subscriptions: function(params, queryParams) {
-    this.register('appSearchName',
-      Meteor.subscribe('app search name', queryParams && queryParams.term));
-    this.register('appSearchDescription',
-      Meteor.subscribe('app search description', queryParams && queryParams.term));
-  },
   action: function(params, queryParams) {
     FlowLayout.render('MasterLayout', {mainSection: 'Search'});
   }
@@ -165,83 +136,15 @@ FlowRouter.route('/installed', {
 FlowRouter.route('/apps-by-me', {
   name: 'appsByMe',
   foo: 'bar',
-  subscriptions: function() {
-    this.register('appsByMe',
-      Meteor.subscribe('apps by me'));
-  },
   action: function(params, queryParams) {
     FlowLayout.render('MasterLayout', {mainSection: 'AppsByMe'});
   }
 });
 
-FlowRouter.route('/edit/:appId', {
-  name: 'edit',
-  subscriptions: function(params) {
-    this.register('all categories',
-      Meteor.subscribe('all categories'));
-    this.register('saved apps',
-      Meteor.subscribe('saved apps'));
-    this.register('this app',
-      Meteor.subscribe('apps by id', params.appId, checkAppExists));
-  },
-  action: function(params, queryParams) {
-    FlowLayout.render('MasterLayout', {mainSection: 'Edit'});
-  }
-});
-
-FlowRouter.route('/upload/:appId', {
-  name: 'upload draft',
-  subscriptions: function(params) {
-    this.register('all categories',
-      Meteor.subscribe('all categories'));
-    this.register('saved apps',
-      Meteor.subscribe('saved apps', checkAppExists));
-  },
-  action: function(params, queryParams) {
-    FlowLayout.render('MasterLayout', {mainSection: 'Upload'});
-  }
-});
-
 FlowRouter.route('/upload', {
   name: 'upload',
-  subscriptions: function(params) {
-    this.register('all categories',
-      Meteor.subscribe('all categories'));
-  },
   action: function(params, queryParams) {
     FlowLayout.render('MasterLayout', {mainSection: 'Upload'});
-  }
-});
-
-FlowRouter.route('/review/:appId', {
-  name: 'review',
-  subscriptions: function(params) {
-    this.register('all categories',
-      Meteor.subscribe('all categories'));
-    this.register('saved apps',
-      Meteor.subscribe('saved apps'));
-    this.register('this app',
-      Meteor.subscribe('apps by id', params.appId, true, checkAppExists));
-    this.register('user flags',
-      Meteor.subscribe('user flags'));
-  },
-  action: function(params, queryParams) {
-    FlowLayout.render('MasterLayout', {mainSection: 'Review'});
-  }
-});
-
-FlowRouter.route('/admin', {
-  name: 'admin',
-  subscriptions: function() {
-    this.register('apps all',
-      Meteor.subscribe('apps all'));
-    this.register('all categories',
-      Meteor.subscribe('all categories'));
-    this.register('suggested categories',
-      Meteor.subscribe('suggested categories'));
-  },
-  action: function(params, queryParams) {
-    FlowLayout.render('MasterLayout', {mainSection: 'Admin'});
   }
 });
 

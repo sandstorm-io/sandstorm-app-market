@@ -123,8 +123,8 @@ Template.Review.onCreated(function() {
       tmp.originalApp = Apps.findOne(FlowRouter.getParam('appId'));
       // And load either a published admin's requested changes, this admin user's saved
       // version, or the currently published app (in that order of precedence).
-      if (tmp.originalApp && tmp.originalAppMarket.adminRequests[0]) {
-        tmp.app.set(tmp.originalAppMarket.adminRequests[0]);
+      if (tmp.originalApp && tmp.originalApp.adminRequests[0]) {
+        tmp.app.set(tmp.originalApp.adminRequests[0]);
       } else if (Meteor.user() && Meteor.user().savedApp && Meteor.user().savedApp[FlowRouter.getParam('appId')]) {
         tmp.app.set(Meteor.user().savedApp[FlowRouter.getParam('appId')]);
       } else {
@@ -248,7 +248,7 @@ Template.Review.helpers({
       },
 
 
-    ][originalApp && originalAppMarket.approved];
+    ][originalApp && originalApp.approved];
 
   },
 
@@ -267,7 +267,7 @@ Template.Review.helpers({
   flagDetails: function() {
 
     var originalApp = Apps.findOne(FlowRouter.getParam('appId'));
-    return Meteor.user() && Meteor.user().flags && Meteor.user().flags[originalAppMarket._id];
+    return Meteor.user() && Meteor.user().flags && Meteor.user().flags[originalApp._id];
 
   }
 

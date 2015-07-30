@@ -88,22 +88,6 @@ var serviceDoc = {
     icon: 'icon-go',
     login: Meteor.loginWithGoogle
 
-  },
-
-  'facebook': {
-
-    name: 'Facebook',
-    icon: 'icon-fb',
-    connect: Facebook
-
-  },
-
-  'twitter': {
-
-    name: 'Twitter',
-    icon: 'icon-tw',
-    connect: Twitter
-
   }
 
 };

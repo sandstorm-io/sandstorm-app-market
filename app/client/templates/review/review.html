@@ -22,15 +22,15 @@
           <div class="message">
             <i class="{{message.icon}}"></i>{{message.text}}
           </div>
-          <div class="sandstorm-button color green {{#if equal parentAppMarket.approved approval.approved}}active{{/if}}" data-action="approve">
+          <div class="sandstorm-button color green {{#if equal parentApp.approved approval.approved}}active{{/if}}" data-action="approve">
             <i class="icon-approved_light"></i>
             <div class="text">Approve</div>
           </div>
-          <div class="sandstorm-button color purple {{#if equal parentAppMarket.approved approval.revisionRequested}}active{{/if}}" data-action="request-revision">
+          <div class="sandstorm-button color purple {{#if equal parentApp.approved approval.revisionRequested}}active{{/if}}" data-action="request-revision">
             <i class="icon-revisions"></i>
             <div class="text">Request Revision</div>
           </div>
-          <div class="sandstorm-button color black {{#if equal parentAppMarket.approved approval.rejected}}active{{/if}}" data-action="reject">
+          <div class="sandstorm-button color black {{#if equal parentApp.approved approval.rejected}}active{{/if}}" data-action="reject">
             <i class="icon-rejected_light"></i>
             <div class="text">Reject</div>
           </div>
@@ -55,7 +55,7 @@
 
       <div class="spacer clearfix"></div>
 
-      {{> appNotesBox notes=parentAppMarket.notes flags=parentAppMarket.flags}}
+      {{> appNotesBox notes=parentApp.notes flags=parentApp.flags}}
 
       <div class="spacer clearfix"></div>
 
@@ -97,7 +97,7 @@
         {{/if}}
 
         <h3 class="title">Author</h3>
-        <div class="read-only">{{parentAppMarket.authorName}}</div>
+        <div class="read-only">{{parentApp.authorName}}</div>
 
       </div>
 
@@ -110,7 +110,7 @@
       <div class="half-col">
 
         <h4 class="mini-title">Ported by</h4>
-        <div class="read-only">{{parentAppMarket.authorName}}</div>
+        <div class="read-only">{{parentApp.authorName}}</div>
 
         <h4 class="mini-title" data-invalid={{validate 'codeLink'}}>Code URL</h4>
         {{#if fieldEdit 'codeLink'}}
@@ -169,16 +169,16 @@
           <div>For the best results, we suggest the icon be:</div>
           <div><strong>600px</strong> wide by <strong>600px</strong> high (minimum) in PNG or JPEG format.</div>
 
-          {{#unless equal image originalAppMarket.image}}
+          {{#unless equal image originalApp.image}}
             <div class="identicon-container small">
-              <div class="identicon" style="background-image: url('{{originalAppMarket.image}}')" data-field="icon-image">#
+              <div class="identicon" style="background-image: url('{{originalApp.image}}')" data-field="icon-image">#
               </div>
             </div>
           {{/unless}}
 
         </div>
 
-        {{#unless equal image originalAppMarket.image}}
+        {{#unless equal image originalApp.image}}
         <div class="clearfix icon-captions">
           <div class="left">
             NEW ICON
@@ -239,7 +239,7 @@
 
       <h3 class="title">Description</h3>
 
-      {{> descriptionEditor initial=description original=originalAppMarket.htmlDescription}}
+      {{> descriptionEditor initial=description original=originalApp.description}}
 
     </div>
 
