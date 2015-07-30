@@ -247,13 +247,6 @@ Genres = {
 
 };
 
-// Cache populated genres (more efficient than checking every time a user subscribes)
-if (Meteor.isServer) {
-    Meteor.setInterval(function() {
-      AppMarket.populatedGenres = Genres.getPopulated({approved: Apps.approval.approved});
-    }, 10000);
-}
-
 // UTILITY FUNCTIONS
 
 function invokeGenreFunctions(extraGenre, origSelector, origOptions, context) {
