@@ -1,4 +1,4 @@
-Categories = new Mongo.Collection('categories');
+Categories = new Mongo.Collection(null);
 
 Schemas.Categories = new SimpleSchema({
   name: {

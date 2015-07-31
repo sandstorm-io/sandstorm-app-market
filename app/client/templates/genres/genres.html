@@ -4,13 +4,11 @@
 
     <div class="contents">
 
-      <div class="genre-name large">{{genre}}{{#if author}} - {{author.username}}{{/if}}</div>
+      <div class="genre-name large">{{genre}}{{#if authorName}} - {{authorName}}{{/if}}</div>
 
     </div>
 
   </div>
-
-  {{#if getReactive 'subReady'}}
 
   <div class="genre-popular-section">
 
@@ -32,8 +30,6 @@
 
   </div>
 
-  {{/if}}
-
 </template>
 
 <template name="AppsByAuthor">
@@ -42,13 +38,11 @@
 
     <div class="contents">
 
-      <div class="genre-name large">Apps By Author - {{author.username}}</div>
+      <div class="genre-name large">Apps By Author - {{authorName}}</div>
 
     </div>
 
   </div>
-
-  {{#if getReactive 'subReady'}}
 
   <div class="genre-popular-section">
 
@@ -70,20 +64,16 @@
 
   </div>
 
-  {{/if}}
-
 </template>
 
 <template name="genreTable">
 
-  {{#if Template.subscriptionsReady}}
   {{#if countApps genre}}
 
     <div class="genre-name"><a href="{{getZippedPath 'appMarketGenre' 'genre' genre}}">{{genre}} <i class="icon-chevron-right"></i></a></div>
 
     {{> appTable genre=genre reactive=true bigLeader=bigLeader}}
 
-  {{/if}}
   {{/if}}
 
 </template>
@@ -119,7 +109,7 @@
 
   <div class="genre-other">
 
-    {{> appTable skipLines=1 afterBigLeader=true genre=genre reactive=true}}
+    {{> appTable skipLines=1 limit=subLimit afterBigLeader=true genre=genre reactive=true}}
 
   </div>
 

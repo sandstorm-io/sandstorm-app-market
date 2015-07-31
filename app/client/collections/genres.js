@@ -148,7 +148,7 @@ AppMarket.extraGenres = [
     name: 'Apps By Author',
     selector: function() {
       return {
-        author: this.authorId || (FlowRouter.getParam && FlowRouter.getParam('authorId'))
+        authorName: this.authorName || (FlowRouter.getParam && FlowRouter.getParam('authorName'))
       };
     },
     priority: 0,
@@ -246,13 +246,6 @@ Genres = {
   }
 
 };
-
-// Cache populated genres (more efficient than checking every time a user subscribes)
-if (Meteor.isServer) {
-    Meteor.setInterval(function() {
-      AppMarket.populatedGenres = Genres.getPopulated({approved: Apps.approval.approved});
-    }, 10000);
-}
 
 // UTILITY FUNCTIONS
 

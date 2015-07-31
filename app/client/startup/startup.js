@@ -12,18 +12,15 @@ Meteor.startup(function() {
         Apps.insert(app);
         categories = _.uniq(categories.concat(app.categories));
       });
-      genres = _.map(categories, function(cat) {
-        return {
+      _.each(categories, function(cat) {
+        Categories.insert({
           name: cat,
-          priority: 0,
+          populated: true,
           showSummary: true,
-          selector: {
-            genre: cat
-          },
-          options: {}
-        };
+          approved: 0
+        });
       });
-      AppMarket.populatedGenres.set(genres.concat(AppMarket.extraGenres));
+      AppMarket.populatedGenres.set(AppMarket.extraGenres.concat(Genres.getPopulated()));
     },
     error: function(err, desc) {
       return AntiModals.overlay('errorModal', {data: {err: 'There was an error loading app data from the server'}});  
