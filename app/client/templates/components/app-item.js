@@ -55,9 +55,10 @@ Template.appItem.events({
 
   },
 
-  'click [data-link="single-app"]': function() {
+  'click [data-link="single-app"]': function(evt) {
 
-    FlowRouter.go('singleApp', {appId: this.app._id});
+    // We need to check if they've actually clicked on a link before redirecting
+    if (!evt.target.href && !evt.target.parentElement.href) FlowRouter.go('singleApp', {appId: this.app._id});
 
   }
 

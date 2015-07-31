@@ -24,7 +24,7 @@
 
             <div class="app-name">{{name}}</div>
 
-            <a href="{{getZippedPath 'appMarketAuthor' 'authorName' authorName}}"><div class="app-author">{{authorName}}</div></a>
+            <a href="{{getZippedPath 'appMarketAuthor' 'authorName' author.name}}"><div class="app-author">{{author.name}}</div></a>
 
             <div class="app-rating">{{> appRating ratings=ratings simple=true}}</div>
 
@@ -57,7 +57,7 @@
 
           <div class="app-name">{{name}}</div>
 
-          <a href="{{getZippedPath 'appMarketAuthor' 'authorName' authorName}}"><div class="app-author">{{authorName}}</div></a>
+          <a href="{{getZippedPath 'appMarketAuthor' 'authorName' author.name}}"><div class="app-author">{{author.name}}</div></a>
 
           <div class="app-rating">
             {{> appRating ratings=ratings simple=true}}
