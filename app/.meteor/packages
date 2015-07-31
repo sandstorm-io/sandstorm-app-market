@@ -35,6 +35,7 @@ alanning:roles
 underscorestring:underscore.string
 momentjs:moment
 numeral:numeral
+chuangbo:marked
 
 anti:modals
 digilord:faker

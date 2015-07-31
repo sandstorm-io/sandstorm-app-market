@@ -2,7 +2,7 @@
 
   <div class="apps-by-me-standard">
 
-    {{#if routerSubsReady}}
+    {{#if getReactive 'ready'}}
 
       <div class="app-table-large">
 
@@ -16,7 +16,7 @@
 
               <div class="image-surround-full-width">
 
-                <div class="image" style="background-image: url('{{image}}');"></div>
+                <div class="image" style="background-image: url('{{imageUrl imageId}}');"></div>
 
               </div>
 
@@ -30,7 +30,7 @@
 
                   <div class="header">{{name}}</div>
 
-                  <div class="app-author-full-width"><a href="{{getZippedPath 'appMarketAuthor' 'authorName' authorName}}">{{authorName}}</a></div>
+                  <div class="app-author-full-width"><a href="{{getZippedPath 'appMarketAuthor' 'authorName' author.name}}">{{author.name}}</a></div>
 
                 </div>
 
@@ -47,10 +47,10 @@
 
                 <div class="half-col">
 
-                  <div class="key">Ported by:</div><div class="value">{{authorName}}&nbsp;</div>
+                  <div class="key">Ported by:</div><div class="value">{{author.name}}&nbsp;</div>
                   <div class="key">License:</div><div class="value">{{verboseNone license}}&nbsp;</div>
                   <div class="key">Code:</div><div class="value">{{{codeFormat codeLink}}}&nbsp;</div>
-                  <div class="key">Version:</div><div class="value" data-tooltip={{versionChanges}} data-tooltip-direction="s">{{verboseNone latestVersionNumber}}&nbsp;</div>
+                  <div class="key">Version:</div><div class="value" data-tooltip={{versionChanges}} data-tooltip-direction="s">{{version}}&nbsp;</div>
 
                 </div>
 
@@ -93,22 +93,27 @@
 
             <div class="header-row">
               <div class="header">Description</div>
-              <div class="option" data-action="flag-app">
+              <!-- FLAG APP CURRENTLY DISABLED -->
+              <!-- <div class="option" data-action="flag-app">
                 Flag this app
                 <i class="{{#if flagged}}icon-flagged_dark{{else}}icon-flagged_light{{/if}}"></i>
-              </div>
+              </div> -->
             </div>
 
             <div class="divider clearfix"></div>
 
             <div class="description">
 
-              {{#if flagApp}}
+              <!-- FLAG APP CURRENTLY DISABLED -->
+              <!-- {{#if flagApp}}
                 {{> flagBox flagDetails}}
-              {{/if}}
+              {{/if}} -->
 
-              <div class="text {{#unless extendedDescription}}padded{{/unless}} {{#if flagApp}}min-height{{/if}}">
-                {{{getDescription description}}}
+              <div class="text {{#unless extendedDescription}}padded{{/unless}} {{#if flagApp}}min-height{{/if}} {{#unless readMore}}max-height{{/unless}}">
+                {{#markdown}}
+                  {{description}}
+                {{/markdown}}
+                <div class="fade-box {{#if readMore}}hidden{{/if}}"></div>
               </div>
 
               {{#if extendedDescription}}
@@ -196,7 +201,7 @@
     <div class="owl-carousel">
       {{#each images}}
       <div class="screenshot-container">
-        <div class="screenshot" style="background-image: url('{{this.url}}')" data-action="image-lightbox" data-src={{this.url}}></div>
+        <div class="screenshot" style="background-image: url('{{imageUrl this.imageId}}')" data-action="image-lightbox" data-src={{imageUrl this.imageId}}></div>
       </div>
       {{/each}}
     </div>

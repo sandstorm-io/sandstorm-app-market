@@ -315,25 +315,6 @@ var helpers = {
 
   },
 
-  // IMAGE HELPERS
-
-  imageUrl: function(image) {
-
-    return (!image || image.substr(0, 4) === 'data' || image.substr(0, 20) === 'http://cdn.filter.to' ||
-            image.substr(0, 23) === 'http://www.gravatar.com') ?
-      image :
-      'http://cdn.filter.to/250x250/' + image.substr(8);
-
-  },
-
-  screenshotImageUrl: function(image) {
-
-    return (!image || image.substr(0, 4) === 'data' || image.substr(0, 20) === 'http://cdn.filter.to') ?
-      image :
-      'http://cdn.filter.to/800x450/' + image.substr(8);
-
-  },
-
   // ADMIN HELPERS
 
   isAdmin: function() {

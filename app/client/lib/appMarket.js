@@ -1,6 +1,8 @@
 _.extend(AppMarket, {
 
   lineCapacity: new ReactiveVar(5),
+  
+  appInit: new ReactiveVar(false),
 
   isBlankKeyword: function(value) {
 
