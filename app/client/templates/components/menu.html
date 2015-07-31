@@ -14,22 +14,10 @@
     </a>
     {{/if}}
 
-    <a class="menu-link {{inRouteCategory 'appsByMe'}} {{#unless currentUser}}disabled{{/unless}}" href="{{#if currentUser}}{{getPath 'appsByMe'}}{{/if}}">
-      <i class="icon-extra-myapps_dark"></i>
-      <div class="menu-text">Apps by Me</div>
-    </a>
-
-    <a class="menu-link {{inRouteCategory 'upload'}} hide-for-phone" href="{{getPath 'upload'}}">
+    <a class="menu-link {{inRouteCategory 'upload'}} hide-for-phone" href="TODO">
       <i class="icon-upload"></i>
       <div class="menu-text">Upload an App</div>
     </a>
-
-    {{#if isAdmin}}
-    <a class="menu-link {{inRouteCategory 'admin'}} hide-for-phone" href="{{getPath 'admin'}}">
-      <i class="icon-admin"></i>
-      <div class="menu-text">Admin</div>
-    </a>
-    {{/if}}
 
     <a class="menu-link {{inRouteCategory 'login'}}" href="{{getPath 'login'}}">
       <i class="icon-my"></i>
