@@ -23,6 +23,7 @@ browser-policy-framing@1.0.4
 callback-hook@1.0.3
 check@1.0.5
 chuangbo:cookie@1.1.0
+chuangbo:marked@0.3.5
 coffeescript@1.0.6
 cosmos:browserify@0.3.0
 ddp@1.1.0

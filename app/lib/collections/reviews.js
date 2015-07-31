@@ -11,7 +11,10 @@ Reviews.invertedRating = _.invert(Reviews.rating);
 Schemas.Reviews = new SimpleSchema({
   appId: {
     type: String,
-    regEx: SimpleSchema.RegEx.Id,
+    index: true
+  },
+  username: {
+    type: String,
     index: true
   },
   userId: {

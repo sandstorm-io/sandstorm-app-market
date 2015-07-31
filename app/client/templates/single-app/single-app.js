@@ -1,40 +1,69 @@
-var reviewRows = 4,
-    reviewCols = 3;
+var REVIEW_ROWS = 4,
+    REVIEW_COLS = 3;
 
 Template.SingleApp.onCreated(function() {
 
   var tmp = this;
+  tmp.appId = FlowRouter.getParam('appId');
+  tmp.ready = new ReactiveVar(false);
 
-  tmp.chipIn = new ReactiveVar(false);
+  // Load full app data
+  Api.getApp(tmp.appId, function(err, app) {
+    if (err) return AntiModals.overlay('errorModal', {data: {err: 'There was an error loading app data from the server'}});
+
+    // Make sure there's a partial app object already present to extend
+    tmp.autorun(function(c) {
+      if (AppMarket.appInit.get()) {
+        // TODO: REMOVE THIS    
+        // *****************
+        app.appId = tmp.appId;
+        console.log(app);
+        // *****************
+        if (Apps.find({appId: app.appId}).count()) {
+          Apps.update(app.appId, {$set: app});
+        } else {
+          app._id = app.appId;
+          Apps.insert(app);
+        }
+        tmp.ready.set(true);
+        c.stop();
+      }
+    });
+  });
+
   tmp.readMore = new ReactiveVar(false);
   tmp.flagApp = new ReactiveVar(!!FlowRouter.current().queryParams.flag);
   tmp.writeReview = new ReactiveVar(false);
-  tmp.myReview = new ReactiveVar({
-    appId: FlowRouter.getParam('appId'),
-    text: ''
-  });
-  tmp.reviewValidator = Schemas.Reviews.namedContext();
+  tmp.myReview = new ReactiveVar({});
+  tmp.reviewValidator = new SimpleSchema({
+    rating: {
+      type: Number,
+      min: 0,
+      max: 3
+    },
+    text: {
+      type: String,
+      max: 500,
+      optional: true
+    }
+  }).namedContext();
   tmp.reviewValid = new ReactiveVar(false);
   tmp.validateReview = function() {
-    var review = _.extend({userId: Meteor.userId()}, tmp.myReview.get());
+    var review = tmp.myReview.get();
     var valid = tmp.reviewValidator.validate(review);
     tmp.reviewValid.set(valid);
     return valid;
   };
 
   // Load existing review of this app (if it exists)
-  tmp.autorun(function(c) {
-    if (FlowRouter.subsReady()) {
-      var appId = FlowRouter.getParam('appId'),
-          user = Meteor.user(),
-          app = Apps.findOne(appId);
-      if (!app || !app.screenshots.length) tmp.readMore.set(true);
-      if (user && user.reviews && appId in user.reviews) {
-        tmp.myReview.set(user.reviews[appId]);
-      }
-      c.stop();
-    }
+  tmp.subscribe('reviews', tmp.appId, function() {
+    var myReview = Reviews.findOne({userId: Meteor.userId()});
+    if (myReview) tmp.myReview.set(_.pick(myReview, ['text', 'rating']));
   });
+
+  // if (!app || !app.screenshots.length) tmp.readMore.set(true);
+  // TODO: remove this method
+  window.getTpl = function() {return tmp;};
 
 });
 
@@ -64,7 +93,7 @@ Template.SingleApp.helpers({
 
   app: function() {
 
-    return Apps.findOne(FlowRouter.getParam('appId'));
+    return Apps.findOne(Template.instance().appId);
 
   },
 
@@ -95,20 +124,22 @@ Template.SingleApp.helpers({
 
   flagApp: function() {
 
-    return Template.instance().flagAppMarket.get();
+    return Template.instance().flagApp.get();
 
   },
 
   flagged: function() {
 
-    return Meteor.user() && Meteor.user().flags && (this._id in Meteor.user().flags);
+    Template.instance().flagApp.dep.depend();
+    var flags = amplify.store('sandstormAppFlags');
+    return flags && this._id in flags;
 
   },
 
   flagDetails: function() {
 
-    return Meteor.user() && Meteor.user().flags && Meteor.user().flags[this._id];
-
+    var flags = amplify.store('sandstormAppFlags');
+    return flags && flags[this._id];
   },
 
   readMore: function() {
@@ -137,7 +168,7 @@ Template.SingleApp.helpers({
 
   reviews: function() {
 
-    return _.values(this.reviews);
+    return Reviews.find({appId: Template.instance().appId}).fetch();
 
   },
 
@@ -160,25 +191,16 @@ Template.SingleApp.helpers({
 
 Template.SingleApp.events({
 
-  'click [data-action="install-app"]': function() {
+  'click [data-action="install-app"]': function(evt, tmp) {
 
-    this.install();
-
-  },
-
-  'click [data-action="chip-in"]': function(evt, tmp) {
-
-    tmp.chipIn.set(!tmp.chipIn.get());
-
-  },
-
-  'click [data-action="confirm-chip"]': function(evt, tmp) {
-
-    var amount = parseFloat(tmp.$('[data-field="chip-amount"]').val(), 10);
-    Meteor.call('user/chipIn', FlowRouter.getParam('appId'), amount, function(err) {
-      if (err) console.log(err);
-      tmp.chipIn.set(false);
-    });
+    if (!$(evt.target).attr('href')) {
+      evt.preventDefault();
+      AppMarket.getSandstormHost(this.packageId, function() {
+        Tracker.afterFlush(function() {
+          tmp.$('[data-action="install-app"]').click();
+        });
+      });
+    }
 
   },
 
@@ -210,11 +232,8 @@ Template.SingleApp.events({
 
   'click [data-action="discard-review"]': function(evt, tmp) {
 
-    tmp.myReview.set({
-      appId: FlowRouter.getParam('appId'),
-      text: ''
-    });
-    Meteor.call('user/discardReview', FlowRouter.getParam('appId'), AppMarket.redirectOrErrorCallback(null, function() {
+    tmp.myReview.set({});
+    Meteor.call('user/discardReview', tmp.appId, AppMarket.redirectOrErrorCallback(null, function() {
       tmp.writeReview.set(false);
     }));
 
@@ -223,7 +242,7 @@ Template.SingleApp.events({
   'click [data-action="submit-review"]': function(evt, tmp) {
 
     if (tmp.reviewValid.get()) {
-      Meteor.call('user/reviewApp', FlowRouter.getParam('appId'), tmp.myReview.get(), AppMarket.redirectOrErrorCallback(null, function() {
+      Meteor.call('user/reviewApp', tmp.appId, tmp.myReview.get(), AppMarket.redirectOrErrorCallback(null, function() {
         tmp.writeReview.set(false);
       }));
     }
@@ -363,7 +382,7 @@ Template.reviewFrame.onRendered(function() {
   tmp.autorun(function() {
     if (Template.currentData()) Tracker.afterFlush(function() {
       tmp.$(".owl-carousel").owlCarousel({
-        items: reviewCols,
+        items: REVIEW_COLS,
         loop: true,
         mouseDrag: false,
         nav: false,
@@ -382,9 +401,9 @@ Template.reviewFrame.helpers({
 
     if (!this.reviews) return [];
 
-    var size =  this.reviews.length > (reviewRows * reviewCols) ?
-                reviewRows :
-                Math.ceil(this.reviews.length / reviewCols);
+    var size =  this.reviews.length > (REVIEW_ROWS * REVIEW_COLS) ?
+                REVIEW_ROWS :
+                Math.ceil(this.reviews.length / REVIEW_COLS);
 
     var res = _.groupBy(this.reviews, function(reviews, i) {
         return Math.floor(i / size);
@@ -395,7 +414,7 @@ Template.reviewFrame.helpers({
 
   extraReviews: function() {
 
-    return this.reviews.length > reviewRows * reviewCols;
+    return this.reviews.length > REVIEW_ROWS * REVIEW_COLS;
 
   }
 
@@ -442,10 +461,20 @@ Template.flagBox.events({
         cat: cat,
         additional: additional
       };
+      var localFlags = amplify.store('sandstormAppFlags') || {};
+      localFlags[tmp.get('appId')] = flag;
 
-      Meteor.call('user/flagApp', FlowRouter.getParam('appId'), flag, function(err) {
-        if (err) console.log(err);
-        tmp.get('flagApp').set(false);
+      $.ajax({
+        method: 'POST',
+        url: Meteor.settings && Meteor.settings.public && Meteor.settings.public.FLAG,
+        data: flag,
+        success: function() {
+          amplify.store('sandstormAppFlags', localFlags);
+          return tmp.get('flagApp').set(false);          
+        },
+        error: function() {
+          return AntiModals.overlay('errorModal', {data: {err: 'Could not post flag. Please check your internet connection.'}});
+        }
       });
 
     }

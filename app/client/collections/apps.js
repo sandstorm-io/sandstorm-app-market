@@ -16,7 +16,7 @@ Apps = new Mongo.Collection(null, {transform: function(app) {
 
   app.install = function() {
     var _this = this;
-    AppMarket.getSandstormHost(function(host) {
+    AppMarket.getSandstormHost(this.packageId, function(host) {
       Meteor.call('user/installApp', _this._id, host, function(err) {
         if (err) console.log(err);
         else {
@@ -42,7 +42,7 @@ Apps = new Mongo.Collection(null, {transform: function(app) {
     }
     var userId = this.userId || Meteor.userId(),
         user = Meteor.users.findOne(userId);
-    if (user && this._id in user.installedApps) return true;
+    if (user && user.installedApps && this._id in user.installedApps) return true;
 
     return false;
 
@@ -68,14 +68,6 @@ Apps = new Mongo.Collection(null, {transform: function(app) {
   return app;
 }});
 
-Apps.approval = {
-  approved: 0,
-  pending: 1,
-  revisionRequested: 2,
-  rejected: 3,
-  draft: 4
-};
-
 // appsBaseSchema contains the keys that are required for a valid app object,
 // but NOT anything which will be autoValued or receive a default value only
 // when the app is added to the DB.
@@ -85,24 +77,28 @@ var VersionSchema = new SimpleSchema({
     max: 20
   },
   packageId: {
-    type: String,
+    type: String
   },
   changes: {
     type: String,
     optional: true
+  },
+  createdAt: {
+    type: Date
   }
 });
 
 var appsBaseSchema = {
-  _id: {
-    type: String,
-    regEx: SimpleSchema.RegEx.Id,
-    optional: true
+  appId: {
+    type: String
   },
   name: {
     type: String,
-    max: 200,
     index: true
+  },
+  createdAt: {
+    type: Date,
+    optional: true
   },
   categories: {
     type: [String],
@@ -116,26 +112,28 @@ var appsBaseSchema = {
     defaultValue: '',
     optional: true
   },
-  image: {
-    type: String,
-    // regEx: SimpleSchema.RegEx.Url,
-    optional: true
+  imageId: {
+    type: String
   },
   screenshots: {
     type: [Object],
-    blackbox: true,
-    defaultValue: []
-  },
-  'screenshots.$.url': {
-    type: String,
-    regEx: SimpleSchema.RegEx.Url
-  },
-  'screenshots.$.comment': {
-    type: String,
     optional: true
   },
-  authorName: {
+  'screenshots.$.imageId': {
+    type: String,
+  },
+  'screenshots.$.width': {
+    type: Number,
+  },
+  'screenshots.$.height': {
+    type: Number,
+  },
+  'author.name': {
     type: String
+  },
+  'githubUsername': {
+    type: String,
+    optional: true
   },
   webLink: {
     type: String,
@@ -147,32 +145,25 @@ var appsBaseSchema = {
     regEx: SimpleSchema.RegEx.Url,
     optional: true
   },
-  spkLink: {
+  packageId: {
     type: String,
-    regEx: SimpleSchema.RegEx.Url,
-    optional: true
   },
   license: {
     type: String,
     optional: true
   },
-  versions: {
-    type: [VersionSchema],
-    defaultValue: [],
-    minCount: 1
-  },
-  appId: {
-    type: String,
-    optional: true
-  },
-  socialLinks: {
-    type: Object,
-    blackbox: true,
-    defaultValue: {}
+  // versions: {
+  //   type: [VersionSchema],
+  //   defaultValue: [],
+  //   minCount: 1
+  // },
+  version: {
+    type: String
   },
   installCount: {
     type: Number,
     min: 0,
+    optional: true,
     defaultValue: 0
   },
   installCountThisWeek: {
@@ -180,19 +171,12 @@ var appsBaseSchema = {
     min: 0,
     defaultValue: 0
   },
+  
+  // added on insertion
   ratingsCount: {
     type: Number,
     min: 0,
     defaultValue: 0
-  },
-  ratings: {
-    type: Object,
-    defaultValue: {
-      broken: 0,
-      didntLike: 0,
-      jobDone: 0,
-      amazing: 0
-    },
   },
   'ratings.broken': {
     type: Number,

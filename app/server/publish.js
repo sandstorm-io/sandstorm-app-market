@@ -5,3 +5,8 @@ Meteor.publish('messages', function() {
 Meteor.publish('user flags', function() {
   return Meteor.users.find(this.userId, {fields: {flags: 1}});
 });
+
+Meteor.publish('reviews', function(appId) {
+  check(appId, String);
+  return Reviews.find({appId: appId});
+});

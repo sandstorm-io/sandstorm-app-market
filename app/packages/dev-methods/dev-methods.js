@@ -40,12 +40,13 @@ Meteor.startup(function() {
           _this = this;
 
       query['reviews.' + appId] = {$exists: false};
-      var users = Meteor.users.find(query, {fields: {_id: 1}}).fetch().slice(0, n);
+      var users = Meteor.users.find(query, {fields: {_id: 1, username: 1}}).fetch().slice(0, n);
 
       _.each(users, function(user) {
         Reviews.insert({
           appId: appId,
           userId: user._id,
+          username: user.username,
           rating: _.sample(_.range(0, 4)),
           text: faker.lorem.paragraph()
         });

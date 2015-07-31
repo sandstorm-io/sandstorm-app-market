@@ -1,6 +1,8 @@
 _.extend(AppMarket, {
 
   lineCapacity: new ReactiveVar(5),
+  
+  appInit: new ReactiveVar(false),
 
   isBlankKeyword: function(value) {
 
@@ -54,7 +56,7 @@ _.extend(AppMarket, {
     AppMarket.historyDep.depend();
     var localInstall = amplify.store('sandstormInstalledApps'),
         count = localInstall ? localInstall.length : 0;
-    if (Meteor.user()) count += _.keys(Meteor.user().installedApps).length;
+    if (Meteor.user() & Meteor.user().installedApps) count += _.keys(Meteor.user().installedApps).length;
     // TODO: check local installed apps list contains only real apps
     return count;
   },

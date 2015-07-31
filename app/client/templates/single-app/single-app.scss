@@ -26,7 +26,7 @@ $app-container-padding-rl: 4.6rem;
 
     .description {
 
-      overflow: auto;
+      overflow: hidden;
 
     }
 
@@ -182,6 +182,10 @@ $app-container-padding-rl: 4.6rem;
 
           a {
             color: #7d627c;
+          }
+          
+          &[data-tooltip] {
+            display: inline-block;
           }
 
         }
@@ -443,6 +447,7 @@ $app-container-padding-rl: 4.6rem;
 }
 
 .description {
+  position: relative;
 
   .text {
 
@@ -457,6 +462,22 @@ $app-container-padding-rl: 4.6rem;
     &.min-height {
       min-height: 28rem;
     }
+    
+    &.max-height {
+      max-height: 28rem;
+    }
+    
+    .fade-box {
+      position: absolute;
+      height: 5rem;
+      bottom: 3.4rem;
+      width: 100%;
+      background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+      
+      &.hidden {
+        display: none;
+      }
+    }
 
   }
 
@@ -467,7 +488,8 @@ $app-container-padding-rl: 4.6rem;
 
     .read-more {
       display: inline-block;
-      padding: 0.5rem 1rem 0 1rem;
+      padding: 0.5rem 1rem 0.5rem 1rem;
+      margin-top: 0.5rem;
       border-top: 1px solid #cfb5d6;
       font-size: 1.9rem;
       color: #783189;
@@ -607,6 +629,7 @@ $app-container-padding-rl: 4.6rem;
         left: 0.6rem;
         background-position: center;
         background-size: cover;
+        cursor: pointer;
 
       }
 
