@@ -1,4 +1,4 @@
-_.extend(App, {
+_.extend(AppMarket, {
 
   lineCapacity: new ReactiveVar(5),
 
@@ -51,7 +51,7 @@ _.extend(App, {
   historyDep: new Tracker.Dependency(),
 
   installHistoryCount: function() {
-    App.historyDep.depend();
+    AppMarket.historyDep.depend();
     var localInstall = amplify.store('sandstormInstalledApps'),
         count = localInstall ? localInstall.length : 0;
     if (Meteor.user()) count += _.keys(Meteor.user().installedApps).length;
@@ -70,22 +70,22 @@ _.extend(App, {
 
     if (host.slice(host.length - 1) !== '/') host = host + '/';
     if (!urlRegex.exec(host)) return null;
-    App.sandstormHost = host;
+    AppMarket.sandstormHost = host;
     var allHosts = amplify.store('sandstormHostHistory') || [];
     allHosts = _.unique(allHosts.concat(host));
     Meteor.call('user/addSandstormHost', host);
-    App.hostDep.changed();
+    AppMarket.hostDep.changed();
     return amplify.store('sandstormHostHistory', allHosts);
 
   },
 
   removeSandstormHost: function(host) {
 
-    App.sandstormHost = null;
+    AppMarket.sandstormHost = null;
     var allHosts = amplify.store('sandstormHostHistory') || [];
     allHosts = _.without(allHosts, host);
     Meteor.call('user/removeSandstormHost', host);
-    App.hostDep.changed();
+    AppMarket.hostDep.changed();
     return amplify.store('sandstormHostHistory', allHosts);
 
   }

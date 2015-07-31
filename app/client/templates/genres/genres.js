@@ -2,11 +2,11 @@ Template.Genre.onCreated(function() {
 
   var tmp = this;
 
-  tmp.subLimit = new ReactiveVar(App.defaultAppLimit.get());
+  tmp.subLimit = new ReactiveVar(AppMarket.defaultAppLimit.get());
   tmp.subReady = new ReactiveVar(false);
 
   tmp.addApps = function() {
-    tmp.subLimit.set(tmp.subLimit.get() + (2 * App.lineCapacity.get()));
+    tmp.subLimit.set(tmp.subLimit.get() + (2 * AppMarket.lineCapacity.get()));
   };
 
   // Reactively run the app subscription so that it will be stopped and restarted
@@ -29,7 +29,7 @@ Template.Genre.onCreated(function() {
   // limit, so we need a separate autorun to track that...
   tmp.autorun(function() {
     FlowRouter.watchPathChange();
-    tmp.subLimit.set(App.defaultAppLimit.get());
+    tmp.subLimit.set(AppMarket.defaultAppLimit.get());
     tmp.subReady.set(false);
   });
 
@@ -68,11 +68,11 @@ Template.AppsByAuthor.onCreated(function() {
 
   var tmp = this;
 
-  tmp.subLimit = new ReactiveVar(App.defaultAppLimit.get());
+  tmp.subLimit = new ReactiveVar(AppMarket.defaultAppLimit.get());
   tmp.subReady = new ReactiveVar(false);
 
   tmp.addApps = function() {
-    tmp.subLimit.set(tmp.subLimit.get() + (2 * App.lineCapacity.get()));
+    tmp.subLimit.set(tmp.subLimit.get() + (2 * AppMarket.lineCapacity.get()));
   };
 
   // Reactively run the app subscription so that it will be stopped and restarted
@@ -93,7 +93,7 @@ Template.AppsByAuthor.onCreated(function() {
   // limit, so we need a separate autorun to track that...
   tmp.autorun(function() {
     FlowRouter.watchPathChange();
-    tmp.subLimit.set(App.defaultAppLimit.get());
+    tmp.subLimit.set(AppMarket.defaultAppLimit.get());
     tmp.subReady.set(false);
   });
 
@@ -129,5 +129,5 @@ Template.AppsByAuthor.helpers({
 });
 
 Template.genreTable.onCreated(function() {
-  this.subscribe('apps by genre', this.data.genre, App.lineCapacity.get());
+  this.subscribe('apps by genre', this.data.genre, AppMarket.lineCapacity.get());
 });

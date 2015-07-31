@@ -50,8 +50,8 @@ Template.Edit.onCreated(function() {
   var newApp = appProto();
   Schemas.AppsBase.clean(newApp);
   var thisApp = Apps.findOne(FlowRouter.getParam('appId')),
-      lastVersion = thisApp && thisApp.latestVersion();
-  newApp.versions = [lastVersion];
+      lastVersion = thisApp && thisAppMarket.latestVersion();
+  newAppMarket.versions = [lastVersion];
   tmp.app.set(newApp);
 
   tmp.setCategories = function(categories) {
@@ -126,7 +126,7 @@ Template.Edit.onCreated(function() {
 
   // Autorun to regenerate identicon when required
   tmp.autorun(function() {
-    tmp.app.set('image', App.blockies.create({
+    tmp.app.set('image', AppMarket.blockies.create({
       seed: tmp.seedString.get(),
       size: 5,
       scale: 50
@@ -300,7 +300,7 @@ Template.Edit.events({
           tmp.descriptionWarning = true;
           Meteor.setTimeout(Tooltips.hide.bind(Tooltips), 5000);
         } else {
-          Meteor.call('user/submitApp', tmp.app.all(), App.redirectOrErrorCallback('appsByMe', function() {
+          Meteor.call('user/submitApp', tmp.app.all(), AppMarket.redirectOrErrorCallback('appsByMe', function() {
             window.scroll(0, 0);
             tmp.message.set({
               icon: 'green icon-approved_dark',
@@ -330,7 +330,7 @@ Template.Edit.events({
   'click [data-action="save-app"]:not(.disabled)': function(evt, tmp) {
 
     tmp.validate();
-    Meteor.call('user/saveApp', tmp.app.all(), App.redirectOrErrorCallback('appsByMe', function() {
+    Meteor.call('user/saveApp', tmp.app.all(), AppMarket.redirectOrErrorCallback('appsByMe', function() {
       window.scroll(0, 0);
       tmp.message.set({
         icon: 'green icon-approved_dark',
@@ -347,7 +347,7 @@ Template.Edit.events({
       bottomMessage: 'This can\'t be undone.',
       actionText: 'Yes, discard',
       actionFunction: function(cb) {
-        Meteor.call('user/deleteSavedApp', FlowRouter.getParam('appId'), App.redirectOrErrorCallback('appsByMe', cb));
+        Meteor.call('user/deleteSavedApp', FlowRouter.getParam('appId'), AppMarket.redirectOrErrorCallback('appsByMe', cb));
       }
     }});
 
@@ -360,7 +360,7 @@ Template.Edit.events({
       bottomMessage: 'This can\'t be undone.',
       actionText: 'Yes, nuke',
       actionFunction: function(cb) {
-        Meteor.call('user/deleteApp', FlowRouter.getParam('appId'), App.redirectOrErrorCallback('appsByMe', cb));
+        Meteor.call('user/deleteApp', FlowRouter.getParam('appId'), AppMarket.redirectOrErrorCallback('appsByMe', cb));
       }
     }});
 

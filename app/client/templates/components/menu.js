@@ -1,7 +1,7 @@
 Template.Menu.helpers({
 
   installHistoryCount: function() {
-    return App.installHistoryCount();
+    return AppMarket.installHistoryCount();
   }
 
 });

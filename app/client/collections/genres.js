@@ -18,7 +18,7 @@
 //   and a selector/options pair to apply to a query on the Apps collection.
 //   selector and options can be an object or a function returning an object.
 
-App.extraGenres = [
+AppMarket.extraGenres = [
 
   {
     name: 'All',
@@ -71,7 +71,7 @@ App.extraGenres = [
   {
     name: 'Installed',
     selector: function(userId) {
-      if (App.historyDep) App.historyDep.depend();
+      if (AppMarket.historyDep) AppMarket.historyDep.depend();
       var user = getUser.call(this, userId),
           allInstalledApps = [];
       if (typeof window !== 'undefined')
@@ -168,12 +168,12 @@ Genres = {
         clientPopulated;
 
     if (Meteor.isClient) {
-      clientPopulated = _.findWhere(App.populatedGenres.get(), {name: name});
+      clientPopulated = _.findWhere(AppMarket.populatedGenres.get(), {name: name});
       if (clientPopulated && clientPopulated.selector) extraGenre = clientPopulated;
       else category = clientPopulated;
     } else {
       category = Categories.findOne({name: name});
-      extraGenre = _.findWhere(App.extraGenres, {name: name});
+      extraGenre = _.findWhere(AppMarket.extraGenres, {name: name});
     }
 
     if (category) {
@@ -198,12 +198,12 @@ Genres = {
         clientPopulated;
 
     if (Meteor.isClient) {
-      clientPopulated = _.findWhere(App.populatedGenres.get(), {name: name});
+      clientPopulated = _.findWhere(AppMarket.populatedGenres.get(), {name: name});
       if (clientPopulated && clientPopulated.selector) extraGenre = clientPopulated;
       else category = clientPopulated;
     } else {
       category = Categories.findOne({name: name});
-      extraGenre = _.findWhere(App.extraGenres, {name: name});
+      extraGenre = _.findWhere(AppMarket.extraGenres, {name: name});
     }
 
     if (category) {
@@ -221,7 +221,7 @@ Genres = {
 
     options = options || {};
 
-    var genres = App.extraGenres.concat(Categories.find().fetch());
+    var genres = AppMarket.extraGenres.concat(Categories.find().fetch());
     if (options.where) genres = _.where(genres, options.where);
     if (options.filter) genres = _.filter(genres, options.filter);
 
@@ -233,7 +233,7 @@ Genres = {
   getOne: function(name) {
 
     return Categories.findOne({name: name}) ||
-           _.findWhere(App.extraGenres, {name: name});
+           _.findWhere(AppMarket.extraGenres, {name: name});
 
   },
 
@@ -250,7 +250,7 @@ Genres = {
 // Cache populated genres (more efficient than checking every time a user subscribes)
 if (Meteor.isServer) {
     Meteor.setInterval(function() {
-      App.populatedGenres = Genres.getPopulated({approved: Apps.approval.approved});
+      AppMarket.populatedGenres = Genres.getPopulated({approved: Apps.approval.approved});
     }, 10000);
 }
 

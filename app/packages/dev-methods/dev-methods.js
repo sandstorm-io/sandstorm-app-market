@@ -16,7 +16,7 @@ Meteor.startup(function() {
       check(n, Match.Where(function(x) { return x < 500; }));
 
       while (Apps.find().count() < n)
-        App.fakeApp();
+        AppMarket.fakeApp();
 
     },
 

@@ -11,8 +11,8 @@ Template.registerHelper('apps', function(genre, skip, limit) {
 Template.registerHelper('appsCount', function(genre, skip, limit) {
 
   var options = {sort: {installCount: -1}};
-  if (!App.isBlankKeyword(skip)) options.skip = skip;
-  if (!App.isBlankKeyword(limit)) options.limit = limit;
+  if (!AppMarket.isBlankKeyword(skip)) options.skip = skip;
+  if (!AppMarket.isBlankKeyword(limit)) options.limit = limit;
 
   return Genres.findIn(genre, {}, options).count();
 
@@ -40,12 +40,12 @@ Template.appTable.helpers({
     else options.sort = {installCount: -1};
     if (data.bigLeader) options.skip += 1;
     if (data.skipLines) {
-      options.skip += (App.lineCapacity.get() * data.skipLines);
+      options.skip += (AppMarket.lineCapacity.get() * data.skipLines);
       if (data.afterBigLeader) options.skip -= 2;
       options.skip = Math.max(options.skip, 1);
     }
     if (data.singleLine) {
-      options.limit = App.lineCapacity.get();
+      options.limit = AppMarket.lineCapacity.get();
       if (data.bigLeader) options.limit -= 3;
       options.limit = Math.max(options.limit, 0);
     }
@@ -72,8 +72,8 @@ function recalcLineCapacity() {
   if (!rem || !tableWidth) return;
   var lineCapacity = Math.max(Math.floor(tableWidth / (rem * appItemWidth)), 2);
   if (Meteor.Device.isPhone()) lineCapacity = Math.max(lineCapacity, 2);
-  App.lineCapacity.set(lineCapacity);
-  App.defaultAppLimit.set((lineCapacity * 4) - 2);
+  AppMarket.lineCapacity.set(lineCapacity);
+  AppMarket.defaultAppLimit.set((lineCapacity * 4) - 2);
 
 }
 

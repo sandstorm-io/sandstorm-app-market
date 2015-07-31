@@ -25,7 +25,7 @@ function resizeTopbar(template) {
 
 }
 
-App.resizeTopbar = resizeTopbar;
+AppMarket.resizeTopbar = resizeTopbar;
 
 Template.Topbar.onCreated(function() {
 
@@ -37,7 +37,7 @@ Template.Topbar.onCreated(function() {
 Template.Topbar.helpers({
   genres: function() {
 
-    var genres = _.where(App.populatedGenres.get(), {showSummary: true}),
+    var genres = _.where(AppMarket.populatedGenres.get(), {showSummary: true}),
         template = Template.instance();
 
     return genres.slice(0, template.genreCount.get());
@@ -46,7 +46,7 @@ Template.Topbar.helpers({
 
   extraGenres: function() {
 
-    var genres = _.where(App.populatedGenres.get(), {showSummary: true}),
+    var genres = _.where(AppMarket.populatedGenres.get(), {showSummary: true}),
         template = Template.instance();
 
     return genres.slice(template.genreCount.get());
@@ -73,7 +73,7 @@ Template.Topbar.onRendered(function() {
   Meteor.setTimeout(resizeTopbar.bind(null, template), 50);
   $(window).on('resize.topbar', _.debounce(resizeTopbar.bind(null, template), 250));
   template.autorun(function(c) {
-    if (App.populatedGenres.get().length) {
+    if (AppMarket.populatedGenres.get().length) {
       Meteor.setTimeout(function() {
         resizeTopbar(template);
       }, 50);

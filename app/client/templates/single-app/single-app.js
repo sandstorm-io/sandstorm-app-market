@@ -83,7 +83,7 @@ Template.SingleApp.helpers({
 
   getDescription: function() {
 
-    return Template.instance().readMore.get() ? this.htmlDescription : s.prune(this.htmlDescription, 1200);
+    return Template.instance().readMore.get() ? this.description : s.prune(this.description, 1200);
 
   },
 
@@ -95,7 +95,7 @@ Template.SingleApp.helpers({
 
   flagApp: function() {
 
-    return Template.instance().flagApp.get();
+    return Template.instance().flagAppMarket.get();
 
   },
 
@@ -193,7 +193,7 @@ Template.SingleApp.events({
     if (Meteor.userId()) tmp.writeReview.set(!tmp.writeReview.get());
     else {
       var currentPath = FlowRouter.current();
-      App.loginRedirect = FlowRouter.path(currentPath.route.name, currentPath.params, _.extend({}, currentPath.queryParams, {rateApp: true}));
+      AppMarket.loginRedirect = FlowRouter.path(currentPath.route.name, currentPath.params, _.extend({}, currentPath.queryParams, {rateApp: true}));
       FlowRouter.go('login');
     }
 
@@ -214,7 +214,7 @@ Template.SingleApp.events({
       appId: FlowRouter.getParam('appId'),
       text: ''
     });
-    Meteor.call('user/discardReview', FlowRouter.getParam('appId'), App.redirectOrErrorCallback(null, function() {
+    Meteor.call('user/discardReview', FlowRouter.getParam('appId'), AppMarket.redirectOrErrorCallback(null, function() {
       tmp.writeReview.set(false);
     }));
 
@@ -223,7 +223,7 @@ Template.SingleApp.events({
   'click [data-action="submit-review"]': function(evt, tmp) {
 
     if (tmp.reviewValid.get()) {
-      Meteor.call('user/reviewApp', FlowRouter.getParam('appId'), tmp.myReview.get(), App.redirectOrErrorCallback(null, function() {
+      Meteor.call('user/reviewApp', FlowRouter.getParam('appId'), tmp.myReview.get(), AppMarket.redirectOrErrorCallback(null, function() {
         tmp.writeReview.set(false);
       }));
     }
@@ -244,7 +244,7 @@ Template.SingleApp.events({
 
     if (Meteor.userId()) tmp.get('flagApp').set(!tmp.get('flagApp').get());
     else {
-      App.loginRedirect = FlowRouter.current().path;
+      AppMarket.loginRedirect = FlowRouter.current().path;
       FlowRouter.go('login');
     }
 
@@ -423,7 +423,7 @@ Template.flagBox.events({
 
       if (Meteor.userId()) tmp.get('flagApp').set(!tmp.get('flagApp').get());
       else {
-        App.loginRedirect = FlowRouter.current().path;
+        AppMarket.loginRedirect = FlowRouter.current().path;
         FlowRouter.go('login');
       }
 
