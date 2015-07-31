@@ -47,14 +47,7 @@ Template.appItem.events({
     AntiModals.overlay('uninstallApp', {data: this});
 
   },
-
-  'click [data-action="install-app"]': function(evt) {
-
-    evt.stopPropagation();
-    this.install();
-
-  },
-
+  
   'click [data-link="single-app"]': function(evt) {
 
     // We need to check if they've actually clicked on a link before redirecting
