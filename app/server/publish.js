@@ -10,3 +10,7 @@ Meteor.publish('reviews', function(appId) {
   check(appId, String);
   return Reviews.find({appId: appId});
 });
+
+Meteor.publish(null, function() {
+  return AggregateReviews.find();
+});

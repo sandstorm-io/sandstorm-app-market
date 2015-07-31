@@ -39,24 +39,11 @@ var helpers = {
 
   },
 
-  appRating: function(rating) {
-
-    rating = rating || 0;
-    return _.reduce(_.range(4), function(html, ind) {
-      if (rating >= ind) html += '<i class="icon-star dark" data-index="' + ind + '"></i>';
-      else html += '<i class="icon-star light" data-index="' + ind + '"></i>';
-      return html;
-    }, '');
-
-  },
-
-  percentageRating: function(app) {
-
-    app = app || this;
-    if (!app) return 0;
-    if (!app.ratingsCount) return 50;
-    else return (app.ratingsPos / app.ratingsCount) * 100;
-
+  ratingsCount: function() {
+    
+    var aggregateReview = AggregateReviews.findOne({appId: this.appId});
+    return aggregateReview ? aggregateReview.ratingsCount : 0;
+    
   },
 
   latestVersionNumber: function(app) {
