@@ -167,10 +167,15 @@ var helpers = {
 
   fullInstallLink: function() {
 
-    // var packageId = this.latestVersion() && this.latestVersion().packageId;
-    // if (amplify.store('sandstormHost') && packageId)
-    //   return amplify.store('sandstormHost') + 'install/' + packageId + '?url=' +
-    //          Meteor.absoluteUrl() + 'package/' + packageId;
+    AppMarket.hostDep.depend();
+    return (this.packageId && AppMarket.sandstormHost) ?
+           [
+             AppMarket.sandstormHost,
+             'install/',
+             this.packageId,
+             '?url=',
+             Api.packageUrl(this.packageId)
+           ].join('') : '';
 
   },
 
