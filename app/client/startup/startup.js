@@ -1,5 +1,20 @@
 Meteor.startup(function() {
   
+  var renderer = new marked.Renderer();
+  
+  // overwrite image renderer to return an empty string
+  renderer.image = function (href, title, text) {
+    return '';
+  };
+  
+  // "gfm" accepts Github-flavor markdown
+  // "sanitize" escapes html within the markdown
+  marked.setOptions({
+    renderer: renderer,
+    gfm: true,
+    sanitize: true
+  });
+  
   Api.getIndex(function(err, data) {
     if (err) return AntiModals.overlay('errorModal', {data: {err: 'There was an error loading app data from the server'}});  
     

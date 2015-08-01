@@ -108,7 +108,11 @@ var appsBaseSchema = {
   },
   description: {
     type: String,
-    max: 5000,
+    defaultValue: '',
+    optional: true
+  },
+  shortDescription: {
+    type: String,
     defaultValue: '',
     optional: true
   },
