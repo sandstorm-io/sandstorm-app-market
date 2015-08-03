@@ -25,11 +25,9 @@ aldeed:collection2
 matb33:collection-hooks
 mystor:device-detection
 
-accounts-password
 accounts-github
 accounts-google
 accounts-ui-unstyled
-service-configuration
 splendido:accounts-meld
 alanning:roles
 
