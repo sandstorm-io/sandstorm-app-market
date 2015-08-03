@@ -21,8 +21,10 @@ Template.appTable.helpers({
     else options.sort = {installCount: -1};
     if (data.bigLeader) options.skip += 1;
     if (data.skipLines) {
-      options.skip += (AppMarket.lineCapacity.get() * data.skipLines);
-      if (data.afterBigLeader) options.skip -= 2;
+      var skipApps = (AppMarket.lineCapacity.get() * data.skipLines);
+      if (data.afterBigLeader) skipApps -= 2;
+      options.skip += skipApps;
+      if (options.limit) options.limit -= skipApps;
       options.skip = Math.max(options.skip, 1);
     }
     if (data.singleLine) {

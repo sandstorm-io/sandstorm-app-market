@@ -52,7 +52,7 @@ AppMarket.extraGenres = [
     name: 'New & Updated',
     selector: {},
     options: {
-      sort: {lastUpdated: -1}
+      sort: {createdAt: -1}
     },
     priority: 0,
     showSummary: true
@@ -148,7 +148,7 @@ AppMarket.extraGenres = [
     name: 'Apps By Author',
     selector: function() {
       return {
-        authorName: this.authorName || (FlowRouter.getParam && FlowRouter.getParam('authorName'))
+        'author.name': this.authorName || (FlowRouter.getParam && FlowRouter.getParam('authorName'))
       };
     },
     priority: 0,

@@ -39,24 +39,11 @@ var helpers = {
 
   },
 
-  appRating: function(rating) {
-
-    rating = rating || 0;
-    return _.reduce(_.range(4), function(html, ind) {
-      if (rating >= ind) html += '<i class="icon-star dark" data-index="' + ind + '"></i>';
-      else html += '<i class="icon-star light" data-index="' + ind + '"></i>';
-      return html;
-    }, '');
-
-  },
-
-  percentageRating: function(app) {
-
-    app = app || this;
-    if (!app) return 0;
-    if (!app.ratingsCount) return 50;
-    else return (app.ratingsPos / app.ratingsCount) * 100;
-
+  ratingsCount: function() {
+    
+    var aggregateReview = AggregateReviews.findOne({appId: this.appId});
+    return aggregateReview ? aggregateReview.ratingsCount : 0;
+    
   },
 
   latestVersionNumber: function(app) {
@@ -167,10 +154,15 @@ var helpers = {
 
   fullInstallLink: function() {
 
-    // var packageId = this.latestVersion() && this.latestVersion().packageId;
-    // if (amplify.store('sandstormHost') && packageId)
-    //   return amplify.store('sandstormHost') + 'install/' + packageId + '?url=' +
-    //          Meteor.absoluteUrl() + 'package/' + packageId;
+    AppMarket.hostDep.depend();
+    return (this.packageId && AppMarket.sandstormHost) ?
+           [
+             AppMarket.sandstormHost,
+             'install/',
+             this.packageId,
+             '?url=',
+             Api.packageUrl(this.packageId)
+           ].join('') : '';
 
   },
 
@@ -312,25 +304,6 @@ var helpers = {
 
     var args = Array.prototype.slice.call(arguments, 1);
     return this[action] && this[action].call(this, args);
-
-  },
-
-  // IMAGE HELPERS
-
-  imageUrl: function(image) {
-
-    return (!image || image.substr(0, 4) === 'data' || image.substr(0, 20) === 'http://cdn.filter.to' ||
-            image.substr(0, 23) === 'http://www.gravatar.com') ?
-      image :
-      'http://cdn.filter.to/250x250/' + image.substr(8);
-
-  },
-
-  screenshotImageUrl: function(image) {
-
-    return (!image || image.substr(0, 4) === 'data' || image.substr(0, 20) === 'http://cdn.filter.to') ?
-      image :
-      'http://cdn.filter.to/800x450/' + image.substr(8);
 
   },
 
