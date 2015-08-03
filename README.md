@@ -57,13 +57,13 @@ You can obtain the required credentials as follows:
 * Create a project [here](https://console.developers.google.com), singing up first if required.
 * Select *APIs & Auth => Consent screen* from the menu on the left and enter a name for the app (e.g. "Sandstorm App Market").  Save it.
 * Then, select *APIs & Auth => Credentials* and click *Create new Client ID* and select *Web Application*.
-* Change the homepage to match your site's homepage (or *http://localhost* if running in development). Change the authorized redirect URL to *[HOMEPAGE]/_oauth/google*.
+* Change the homepage to match your site's homepage (or *http://localhost:3000* if running in development). Change the authorized redirect URL to *[HOMEPAGE]/_oauth/google*.
 * The Client ID and Secret should appear on the right hand side of the screen presently.
 
 ### Github
 
 * Create a project [here](https://github.com/settings/applications/new).
-* Change the homepage to match your site's homepage (or *http://localhost* if running in development). Change the authorized redirect URL to *[HOMEPAGE]/_oauth/github*.
+* Change the homepage to match your site's homepage (or *http://localhost:3000* if running in development). Change the authorized redirect URL to *[HOMEPAGE]/_oauth/github*.
 * The Client ID and Secret will appear near the top of the page after you submit.
 
 ## How to deploy the app to Google Cloud
