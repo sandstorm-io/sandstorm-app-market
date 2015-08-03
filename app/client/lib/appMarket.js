@@ -55,9 +55,9 @@ _.extend(AppMarket, {
   installHistoryCount: function() {
     AppMarket.historyDep.depend();
     var localInstall = amplify.store('sandstormInstalledApps'),
-        count = localInstall ? localInstall.length : 0;
-    if (Meteor.user() & Meteor.user().installedApps) count += _.keys(Meteor.user().installedApps).length;
-    // TODO: check local installed apps list contains only real apps
+        count = localInstall ? localInstall.length : 0,
+        user = Meteor.user();
+    if (user && user.installedApps) count += _.keys(user.installedApps).length;
     return count;
   },
 
