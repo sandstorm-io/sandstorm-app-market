@@ -52,7 +52,7 @@ AppMarket.extraGenres = [
     name: 'New & Updated',
     selector: {},
     options: {
-      sort: {lastUpdated: -1}
+      sort: {createdAt: -1}
     },
     priority: 0,
     showSummary: true
