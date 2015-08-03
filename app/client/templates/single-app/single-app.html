@@ -111,7 +111,7 @@
 
               <div class="text {{#unless extendedDescription}}padded{{/unless}} {{#if flagApp}}min-height{{/if}} {{#unless readMore}}max-height{{/unless}}">
                 {{#markdown}}{{description}}{{/markdown}}
-                <div class="fade-box {{#if readMore}}hidden{{/if}}"></div>
+                {{#if extendedDescription}}<div class="fade-box {{#if readMore}}hidden{{/if}}"></div>{{/if}}
               </div>
 
               {{#if extendedDescription}}
