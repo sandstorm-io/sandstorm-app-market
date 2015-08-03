@@ -14,7 +14,8 @@ Template.SingleApp.onCreated(function() {
     // Make sure there's a partial app object already present to extend
     tmp.autorun(function(c) {
       if (AppMarket.appInit.get()) {
-        // TODO: REMOVE THIS    
+        // TODO: REMOVE THIS - it only exists to ensure the random API data we get back in testing
+        // corresponds to the current route when it's added to the DB. 
         // *****************
         app.appId = tmp.appId;
         console.log(app);
@@ -26,6 +27,8 @@ Template.SingleApp.onCreated(function() {
           Apps.insert(app);
         }
         tmp.ready.set(true);
+        
+        if (!app.screenshots.length) tmp.readMore.set(true);
         c.stop();
       }
     });
@@ -57,13 +60,12 @@ Template.SingleApp.onCreated(function() {
 
   // Load existing review of this app (if it exists)
   tmp.subscribe('reviews', tmp.appId, function() {
-    var myReview = Reviews.findOne({userId: Meteor.userId()});
+    var myReview = Reviews.findOne({
+      userId: Meteor.userId(), 
+      appId: tmp.appId
+    });
     if (myReview) tmp.myReview.set(_.pick(myReview, ['text', 'rating']));
   });
-
-  // if (!app || !app.screenshots.length) tmp.readMore.set(true);
-  // TODO: remove this method
-  window.getTpl = function() {return tmp;};
 
 });
 
