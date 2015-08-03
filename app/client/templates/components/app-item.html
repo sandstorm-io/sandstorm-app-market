@@ -1,14 +1,8 @@
 <template name="appItem">
 
-  <div class="app-item-container {{size}} {{#if installed app}}installed{{/if}}" data-link="single-app">
+  <div class="app-item-container {{size}} {{appInstalled.cssClass}}" data-link="single-app">
 
     <div class="app-item-inner">
-
-      {{#if ../../updateChrome}}
-
-        {{> updateChrome}}
-
-      {{/if}}
 
       {{#if equal size "large"}}
 
@@ -30,8 +24,8 @@
 
             <div class="install-price">
 
-              <a href="{{fullInstallLink}}" target="_blank" class="app-install {{#if invoke 'installed'}}installed{{/if}}" data-action="install-app">
-                {{#if invoke 'installed'}}RE-{{/if}}INSTALL  <i class="icon-arrow-install"></i>
+              <a href="{{fullInstallLink}}" target="_blank" class="app-install {{appInstalled.cssClass}}" data-action="install-app">
+                {{appInstalled.buttonText}} <i class="icon-arrow-install"></i>
               </a>
 
             </div>
@@ -63,56 +57,13 @@
             {{> appRating app=this simple=true}}
           </div>
 
-          {{#if ../../../installPage}}
-{{!--
-            <div class="installed-bar">
+          <div class="install-price">
 
-              <div class="installed-details">
+            <a href="{{fullInstallLink}}" target="_blank" class="app-install {{appInstalled.cssClass}}" data-action="install-app">
+              {{appInstalled.buttonText}} <i class="icon-arrow-install"></i>
+            </a>
 
-                <div class="install-date">
-                  <div class="installed-text">
-                    INSTALLED
-                  </div>
-                  <div class="install-date-inner">
-                    {{dateFormat installDetails.dateTime 'MMM DD'}}
-                  </div>
-                </div>
-
-                <div class="installed-version">
-                  V {{installDetails.version.number}}
-                </div>
-
-              </div>
-
-              <div class="uninstall-app">
-                <i class="icon-garbage" data-action="uninstall-app-modal"></i>
-              </div>
-
-            </div>
-             --}}
-            <div class="install-price">
-
-              <a href="{{fullInstallLink}}" target="_blank" class="app-install {{#if invoke 'installed'}}installed{{/if}}" data-action="install-app">
-                {{#if invoke 'installed'}}RE-{{/if}}INSTALL  <i class="icon-arrow-install"></i>
-              </a>
-
-              <div class="uninstall-app">
-                <i class="icon-garbage" data-action="uninstall-app-modal"></i>
-              </div>
-
-            </div>
-
-          {{else}}
-
-            <div class="install-price">
-
-              <a href="{{fullInstallLink}}" target="_blank" class="app-install {{#if invoke 'installed'}}installed{{/if}}" data-action="install-app">
-                {{#if invoke 'installed'}}RE-{{/if}}INSTALL  <i class="icon-arrow-install"></i>
-              </a>
-
-            </div>
-
-          {{/if}}
+          </div>
 
         {{/with}}
 

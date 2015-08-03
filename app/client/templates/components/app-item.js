@@ -6,14 +6,16 @@ Template.appItem.helpers({
 
   },
 
-  installed: function(app) {
+  appInstalled: function() {
 
-    return false;
-    // var user = Meteor.users.findOne(Meteor.userId(), {fields: {installedApps: 1}});
-    // app = app || this;
-    //
-    // if (!user) return;
-    // else if (user.installedApps[app._id] !== undefined) return true;
+    var app = this.app ? this.app : this;
+    
+    return app.installed() ? {
+      cssClass: 'installed',
+      buttonText: 'RE-INSTALL'
+    } : {
+      buttonText: 'INSTALL'
+    };
 
   },
 

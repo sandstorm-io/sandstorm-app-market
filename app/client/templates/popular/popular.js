@@ -30,9 +30,3 @@ Template.Popular.helpers({
   },
 
 });
-
-Template.popularThisWeekTable.onCreated(function() {
-
-  this.subscribe('apps by genre', 'This Week', AppMarket.lineCapacity.get());
-
-});
