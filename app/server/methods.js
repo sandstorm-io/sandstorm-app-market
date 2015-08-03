@@ -9,10 +9,13 @@ Meteor.methods({
 
     this.unblock();
     if (!this.userId) return false;
+    
+    check(appId, String);
+    check(review.text, String);
 
+    review.appId = appId;
     review.userId = this.userId;
-
-    if (!Apps.findOne(review.appId)) throw new Meteor.Error('no matching app', 'Cannot submit a review for an app which is not in the database');
+    review.username = Meteor.users.findOne(this.userId).profile.name;
 
     if (Reviews.findOne(_.pick(review, ['appId', 'userId'])))
       Reviews.update(_.pick(review, ['appId', 'userId']), {$set: review});
@@ -25,6 +28,8 @@ Meteor.methods({
     this.unblock();
     if (!this.userId) return false;
 
+    check(appId, String);
+
     return Reviews.remove({appId: appId, userId: this.userId});
 
   },
@@ -32,6 +37,9 @@ Meteor.methods({
   'user/addSandstormHost': function(host) {
 
     this.unblock();
+
+    check(host, String);
+
     return Meteor.users.update(this.userId, {$addToSet: {sandstormHosts: host}});
 
   },
@@ -39,6 +47,9 @@ Meteor.methods({
   'user/removeSandstormHost': function(host) {
 
     this.unblock();
+
+    check(host, String);
+
     return Meteor.users.update(this.userId, {$pull: {sandstormHosts: host}});
 
   }

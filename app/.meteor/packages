@@ -22,19 +22,19 @@ meteorhacks:subs-manager
 
 aldeed:template-extension
 aldeed:collection2
+matb33:collection-hooks
 mystor:device-detection
 
-accounts-password
 accounts-github
 accounts-google
 accounts-ui-unstyled
-service-configuration
 splendido:accounts-meld
 alanning:roles
 
 underscorestring:underscore.string
 momentjs:moment
 numeral:numeral
+chuangbo:marked
 
 anti:modals
 digilord:faker

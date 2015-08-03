@@ -11,7 +11,10 @@ Reviews.invertedRating = _.invert(Reviews.rating);
 Schemas.Reviews = new SimpleSchema({
   appId: {
     type: String,
-    regEx: SimpleSchema.RegEx.Id,
+    index: true
+  },
+  username: {
+    type: String,
     index: true
   },
   userId: {
@@ -68,3 +71,31 @@ if (Meteor.isServer) {
     }
   });
 }
+
+function calculateAggregates(userId, doc) {
+  var appId = doc.appId;
+  
+  var aggregates = {
+    appId: appId,
+    ratingsCount: 0,
+    ratings: {
+      broken: 0,
+      didntLike: 0,
+      jobDone: 0,
+      amazing: 0
+    }
+  };
+  
+  Reviews.find({appId: appId}).forEach(function(review) {
+    if ('rating' in review) {
+      aggregates.ratingsCount += 1;
+      aggregates.ratings[Reviews.invertedRating[review.rating]] += 1;
+    }
+  });
+  
+  AggregateReviews.upsert({appId: appId}, aggregates);
+}
+
+Reviews.after.insert(calculateAggregates);
+Reviews.after.update(calculateAggregates, {fetchPrevious: false});
+Reviews.after.remove(calculateAggregates);

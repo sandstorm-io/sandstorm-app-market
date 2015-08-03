@@ -148,13 +148,6 @@ FlowRouter.route('/upload', {
   }
 });
 
-FlowRouter.route('/service-configure', {
-  name: 'serviceConfiguration',
-  action: function() {
-    FlowLayout.render('loginButtons');
-  }
-});
-
 FlowRouter.notFound = {
   action: function() {
     Meteor.defer(function() {FlowRouter.go('notFound', {object: 'page'});});
@@ -174,7 +167,6 @@ FlowRouter.routeCategories = {
   'edit': 'upload',
   'upload': 'upload',
   'review': 'admin',
-  'admin': 'admin',
-  'serviceConfiguration': 'serviceConfig'
+  'admin': 'admin'
 
 };

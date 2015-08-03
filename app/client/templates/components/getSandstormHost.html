@@ -19,10 +19,10 @@
     <div class="hosts">
       {{#each hosts}}
       <div class="host-container">
-        <div class="sandstorm-button primary" data-action="install">
+        <a href={{installUrl}} target="_blank" class="sandstorm-button primary" data-action="install">
           {{this}}
           <i class="fa fa-times" data-action="remove-host"></i>
-        </div>
+        </a>
       </div>
       {{/each}}
 

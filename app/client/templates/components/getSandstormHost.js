@@ -1,11 +1,11 @@
 var callback;
 
-AppMarket.getSandstormHost = function(cb) {
+AppMarket.getSandstormHost = function(packageId, cb) {
 
   if (AppMarket.sandstormHost) cb(AppMarket.sandstormHost);
   else {
     callback = cb;
-    AntiModals.overlay('getSandstormHostModal');
+    AntiModals.overlay('getSandstormHostModal', {data: {packageId: packageId}});
   }
 
 };
@@ -20,7 +20,21 @@ Template.getSandstormHostModal.helpers({
     return user ? _.union(user.sandstormHosts, amplify.store('sandstormHostHistory')) :
                   amplify.store('sandstormHostHistory');
 
-    }
+  },
+  
+  installUrl: function() {
+
+    var packageId = Template.parentData(1).packageId;
+    
+    return [
+      this,
+      'install/',
+      packageId,
+      '?url=',
+      Api.packageUrl(packageId)
+    ].join('');
+    
+  }
 
 });
 
@@ -28,6 +42,7 @@ Template.getSandstormHostModal.events({
 
   'click [data-action="install"]': function(evt, tmp) {
     AppMarket.sandstormHost = this.toString();
+    AppMarket.hostDep.changed();
     AntiModals.dismissAll();
     callback(this.toString());
   },

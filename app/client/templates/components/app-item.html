@@ -1,14 +1,8 @@
 <template name="appItem">
 
-  <div class="app-item-container {{size}} {{#if installed app}}installed{{/if}}" data-link="single-app">
+  <div class="app-item-container {{size}} {{appInstalled.cssClass}}" data-link="single-app">
 
     <div class="app-item-inner">
-
-      {{#if ../../updateChrome}}
-
-        {{> updateChrome}}
-
-      {{/if}}
 
       {{#if equal size "large"}}
 
@@ -16,7 +10,7 @@
 
           <div class="image-surround">
 
-            <div class="image" style="background-image: url('{{image}}');"></div>
+            <div class="image" style="background-image: url('{{imageUrl imageId}}');"></div>
 
           </div>
 
@@ -24,24 +18,20 @@
 
             <div class="app-name">{{name}}</div>
 
-            <a href="{{getZippedPath 'appMarketAuthor' 'authorName' authorName}}"><div class="app-author">{{authorName}}</div></a>
+            <a href="{{getZippedPath 'appMarketAuthor' 'authorName' author.name}}"><div class="app-author">{{author.name}}</div></a>
 
-            <div class="app-rating">{{> appRating ratings=ratings simple=true}}</div>
+            <div class="app-rating">{{> appRating app=this simple=true}}</div>
 
             <div class="install-price">
 
-              <a href="{{fullInstallLink}}" target="_blank" class="app-install {{#if invoke 'installed'}}installed{{/if}}" data-action="install-app">
-                {{#if invoke 'installed'}}RE-{{/if}}INSTALL  <i class="icon-arrow-install"></i>
+              <a href="{{fullInstallLink}}" target="_blank" class="app-install {{appInstalled.cssClass}}" data-action="install-app">
+                {{appInstalled.buttonText}} <i class="icon-arrow-install"></i>
               </a>
-
-              <div class="app-price {{#if free price}}free{{/if}}">
-                {{#if free price}}FREE{{else}}{{numberFormat price '$0,0.00'}}{{/if}}
-              </div>
 
             </div>
 
             <div class="app-description">
-              {{{description}}}
+              {{#markdown}}{{shortDescription}}{{/markdown}}
               <div class="fade-box"></div>
             </div>
 
@@ -55,72 +45,25 @@
 
           <div class="image-surround large">
 
-            <div class="image" style="background-image: url('{{image}}');"></div>
+            <div class="image" style="background-image: url('{{imageUrl imageId}}');"></div>
 
           </div>
 
           <div class="app-name">{{name}}</div>
 
-          <a href="{{getZippedPath 'appMarketAuthor' 'authorName' authorName}}"><div class="app-author">{{authorName}}</div></a>
+          <a href="{{getZippedPath 'appMarketAuthor' 'authorName' author.name}}"><div class="app-author">{{author.name}}</div></a>
 
           <div class="app-rating">
-            {{> appRating ratings=ratings simple=true}}
+            {{> appRating app=this simple=true}}
           </div>
 
-          {{#if ../../../installPage}}
-{{!--
-            <div class="installed-bar">
+          <div class="install-price">
 
-              <div class="installed-details">
+            <a href="{{fullInstallLink}}" target="_blank" class="app-install {{appInstalled.cssClass}}" data-action="install-app">
+              {{appInstalled.buttonText}} <i class="icon-arrow-install"></i>
+            </a>
 
-                <div class="install-date">
-                  <div class="installed-text">
-                    INSTALLED
-                  </div>
-                  <div class="install-date-inner">
-                    {{dateFormat installDetails.dateTime 'MMM DD'}}
-                  </div>
-                </div>
-
-                <div class="installed-version">
-                  V {{installDetails.version.number}}
-                </div>
-
-              </div>
-
-              <div class="uninstall-app">
-                <i class="icon-garbage" data-action="uninstall-app-modal"></i>
-              </div>
-
-            </div>
-             --}}
-            <div class="install-price">
-
-              <a href="{{fullInstallLink}}" target="_blank" class="app-install {{#if invoke 'installed'}}installed{{/if}}" data-action="install-app">
-                {{#if invoke 'installed'}}RE-{{/if}}INSTALL  <i class="icon-arrow-install"></i>
-              </a>
-
-              <div class="uninstall-app">
-                <i class="icon-garbage" data-action="uninstall-app-modal"></i>
-              </div>
-
-            </div>
-
-          {{else}}
-
-            <div class="install-price">
-
-              <a href="{{fullInstallLink}}" target="_blank" class="app-install {{#if invoke 'installed'}}installed{{/if}}" data-action="install-app">
-                {{#if invoke 'installed'}}RE-{{/if}}INSTALL  <i class="icon-arrow-install"></i>
-              </a>
-
-              <div class="app-price {{#if free price}}free{{/if}}">
-                {{#if free price}}FREE{{else}}{{numberFormat price '$0,0.00'}}{{/if}}
-              </div>
-
-            </div>
-
-          {{/if}}
+          </div>
 
         {{/with}}
 
@@ -204,7 +147,7 @@
 
         <div class="image-surround large">
 
-          <div class="image" style="background-image: url('{{image}}');"></div>
+          <div class="image" style="background-image: url('{{imageUrl imageId}}');"></div>
 
         </div>
 
