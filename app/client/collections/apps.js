@@ -49,20 +49,20 @@ Apps = new Mongo.Collection(null, {transform: function(app) {
   };
 
   app.googlePlusLink = function() {
-    return (this.socialLinks && this.socialLinks.google && this.socialLinks.google.id) ?
-             'https://plus.google.com/' + this.socialLinks.google.id : null;
+    return (this.author && this.author.googleId) ?
+             'https://plus.google.com/' + this.author.googleId : null;
   };
   app.facebookLink = function() {
-    return (this.socialLinks && this.socialLinks.facebook && this.socialLinks.facebook.link) ?
-             this.socialLinks.facebook.link : null;
+    return (this.author && this.author.facebookLink) ?
+             this.author.facebookLink : null;
   };
   app.twitterLink = function() {
-    return (this.socialLinks && this.socialLinks.twitter && this.socialLinks.twitter.screenName) ?
-             'https://twitter.com/' + this.socialLinks.twitter.screenName : null;
+    return (this.author && this.author.twitterUsername) ?
+             'https://twitter.com/' + this.author.twitterUsername : null;
   };
   app.githubLink = function() {
-    return (this.socialLinks && this.socialLinks.github && this.socialLinks.github.username) ?
-             'https://github.com/' + this.socialLinks.github.username : null;
+    return (this.author && this.author.githubUsername) ?
+             'https://github.com/' + this.author.githubUsername : null;
   };
 
   return app;
@@ -140,7 +140,19 @@ var appsBaseSchema = {
   'author.name': {
     type: String
   },
-  'githubUsername': {
+  'author.githubUsername': {
+    type: String,
+    optional: true
+  },
+  'author.twitterUsername': {
+    type: String,
+    optional: true
+  },
+  'author.facebookLink': {
+    type: String,
+    optional: true
+  },
+  'author.googleId': {
     type: String,
     optional: true
   },
