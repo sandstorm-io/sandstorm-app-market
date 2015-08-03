@@ -10,8 +10,6 @@ Meteor.methods({
     this.unblock();
     if (!this.userId) return false;
     
-    console.log(review.text);
-    
     check(appId, String);
     check(review, {
       text: Match.Optional(String),
