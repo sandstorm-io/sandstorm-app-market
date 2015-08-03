@@ -170,7 +170,7 @@ Template.SingleApp.helpers({
 
   renderedChangelog: function() {
     
-    return this.changelog && marked(this.changelog);
+    return this.changelog && htmlTruncate(marked(this.changelog), 200);
     
   }
 
