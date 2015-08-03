@@ -16,7 +16,7 @@ You will need to supply a `settings.json` file as follows:
     "APP_OVERRIDE_URL": "[OPTIONAL - override the app detail endpoint]",
     "IMAGE_OVERRIDE_URL": "[OPTIONAL - override the app images endpoint]",
     "PACKAGE_OVERRIDE_URL": "[OPTIONAL - override the app spks endpoint]",
-    "FLAG_URl": "URL to which to POST app flag details"
+    "FLAG_URl": "[URL to which to POST app flag details]"
   }
 }
 ```
@@ -43,16 +43,28 @@ The app will be served at `localhost:3000`.
 
 ## Configuring service accounts for OAuth
 
-Sandstorm App Store allows users to authenticate with Github and Google (for login) and Facebook and Twitter (to attach social links to apps).  In order to facilitate this, each of the services must be configured.
+In order to login with social auth providers, you will need to insert the following docs into the mongo  *meteor_accounts_loginServiceConfiguration* collection:
 
-1. Navigate to `/service-configure`.
-2. Click "Sign In" and the config/login form will expand.
-3. Go through each of the four account types as required, following the instructions for setting up a new project and copying the required details back to the configuration page.
-4. Note that the Google project has already been created above, you just need to create a new Client ID for a web application rather than a new project.
-5. Popup-style login (default) should be fine for most use cases.
-6. Navigate back to `/`.
+```json
+{ "service" : "github", "clientId" : "[YOUR_ID]", "secret" : "[YOUR_SECRET]" }
+{ "service" : "google", "clientId" : "[YOUR_ID]", "secret" : "[YOUR_SECRET]", "loginStyle" : "popup" }
+```
 
-You should now be able to log in with Github and/or Google, if these have had their configurations updated.
+You can obtain the required credentials as follows:
+
+### Google
+
+* Create a project [here](https://console.developers.google.com), singing up first if required.
+* Select *APIs & Auth => Consent screen* from the menu on the left and enter a name for the app (e.g. "Sandstorm App Market").  Save it.
+* Then, select *APIs & Auth => Credentials* and click *Create new Client ID* and select *Web Application*.
+* Change the homepage to match your site's homepage (or *http://localhost* if running in development). Change the authorized redirect URL to *[HOMEPAGE]/_oauth/google*.
+* The Client ID and Secret should appear on the right hand side of the screen presently.
+
+### Github
+
+* Create a project [here](https://github.com/settings/applications/new).
+* Change the homepage to match your site's homepage (or *http://localhost* if running in development). Change the authorized redirect URL to *[HOMEPAGE]/_oauth/github*.
+* The Client ID and Secret will appear near the top of the page after you submit.
 
 ## How to deploy the app to Google Cloud
 
