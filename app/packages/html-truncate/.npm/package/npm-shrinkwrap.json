@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "html-truncate": {
+      "version": "1.2.1"
+    }
+  }
+}
