@@ -17,7 +17,7 @@ Template.getSandstormHostModal.helpers({
     AppMarket.hostDep.depend();
     var user = Meteor.user();
 
-    return user ? _.union(user.sandstormHosts, amplify.store('sandstormHostHistory')) :
+    return user ? _.compact(_.union(user.sandstormHosts, amplify.store('sandstormHostHistory'))) :
                   amplify.store('sandstormHostHistory');
 
   },
@@ -57,6 +57,7 @@ Template.getSandstormHostModal.events({
 
   'click [data-action="remove-host"]': function(evt, tmp) {
     evt.stopImmediatePropagation();
+    evt.preventDefault();
     var thisHost = this.toString();
     AppMarket.removeSandstormHost(thisHost);
   }
