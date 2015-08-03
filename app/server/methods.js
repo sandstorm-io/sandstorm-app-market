@@ -10,8 +10,16 @@ Meteor.methods({
     this.unblock();
     if (!this.userId) return false;
     
+    console.log(review.text);
+    
     check(appId, String);
-    check(review.text, String);
+    check(review, {
+      text: Match.Optional(String),
+      rating: Match.Integer
+    });
+    check(review.rating, Match.Where(function(rating) {
+      return (0 <= rating) && (3 >= rating);
+    }));
 
     review.appId = appId;
     review.userId = this.userId;
