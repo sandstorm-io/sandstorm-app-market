@@ -106,12 +106,6 @@ Template.SingleApp.helpers({
 
   },
 
-  chipIn: function() {
-
-    return Template.instance().chipIn.get();
-
-  },
-
   getDescription: function() {
 
     return Template.instance().readMore.get() ? this.description : s.prune(this.description, 1200);
@@ -174,19 +168,10 @@ Template.SingleApp.helpers({
 
   },
 
-  versionChanges: function() {
-
-    var count = 0;
-    return Spacebars.SafeString(_.reduceRight(this.versions, function(str, version) {
-      if (count < 2 && version.changes) {
-        if (count > 0) str += '<br>';
-        str += '<strong>' + version.number + '</strong><br>';
-        str += version.changes + '<br>';
-        count += 1;
-      }
-      return str;
-    }, ''));
-
+  renderedChangelog: function() {
+    
+    return this.changelog && marked(this.changelog);
+    
   }
 
 });

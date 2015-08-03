@@ -12,7 +12,7 @@ body {
   position: relative;
   height: $welcome-message-height;
   background-color: #bacae2;
-  background-position-x: $menu-width;
+  background-position: $menu-width 0;
   background-size: auto 100%;
   background-repeat: no-repeat;
   background-image: url('images/welcome-banner.png');
