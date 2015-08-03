@@ -116,6 +116,11 @@ var appsBaseSchema = {
     defaultValue: '',
     optional: true
   },
+  changelog: {
+    type: String,
+    defaultValue: '',
+    optional: true
+  },
   imageId: {
     type: String
   },
