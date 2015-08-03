@@ -47,17 +47,11 @@ Template.appItem.events({
     AntiModals.overlay('uninstallApp', {data: this});
 
   },
+  
+  'click [data-link="single-app"]': function(evt) {
 
-  'click [data-action="install-app"]': function(evt) {
-
-    evt.stopPropagation();
-    this.install();
-
-  },
-
-  'click [data-link="single-app"]': function() {
-
-    FlowRouter.go('singleApp', {appId: this.app._id});
+    // We need to check if they've actually clicked on a link before redirecting
+    if (!evt.target.href && !evt.target.parentElement.href) FlowRouter.go('singleApp', {appId: this.app._id});
 
   }
 

@@ -1,7 +1,7 @@
 <template name="appRating">
-
+  {{#with aggregateReview}}
   <div class="app-rating-container">
-    {{#if simple}}
+    {{#if ../simple}}
       {{#if isNumber percentage.positive}}
       <div class="ratings">
         <div class="text">
@@ -56,5 +56,5 @@
       {{/unless}}
     {{/if}}
   </div>
-
+  {{/with}}
 </template>

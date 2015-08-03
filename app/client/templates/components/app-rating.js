@@ -1,9 +1,12 @@
 Template.appRating.helpers({
 
-  percentage: function() {
+  aggregateReview: function() {
+    return AggregateReviews.findOne({appId: this.app.appId}) || {ratings: {}};
+  },
 
-    var denom = this.ratings.broken + this.ratings.didntLike +
-                this.ratings.jobDone + this.ratings.amazing;
+  percentage: function() {
+    
+    var denom = this.ratingsCount;
 
     return denom ? {
       broken: this.ratings.broken * 100 / denom,

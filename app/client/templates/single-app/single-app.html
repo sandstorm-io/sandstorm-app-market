@@ -57,7 +57,7 @@
                 <div class="ratings-bar">
 
                   <div class="left-float">
-                    {{> appRating ratings=ratings backgroundCol='light'}}
+                    {{> appRating app=this backgroundCol='light'}}
                   </div>
 
                   <div class="right-float social">
@@ -139,7 +139,7 @@
 
             <div class="review-bar header-row">
               <div class="rating">
-                {{> appRating ratings=ratings}}
+                {{> appRating app=this}}
                 <span class="ratings-count"> ( {{ratingsCount}} )</span>
               </div>
 
