@@ -395,12 +395,23 @@
           font-size: $app-description-large-font-size;
           color: $app-description-text;
           clear: both;
-          height: 12rem;
           position: relative;
           overflow-y: hidden;
 
           >*:first-child {
             margin-top: 0;
+          }
+          
+          .fade-box {
+            position: absolute;
+            height: 5rem;
+            top: 9rem;
+            width: 100%;
+            background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+            
+            &.hidden {
+              display: none;
+            }
           }
 
         }
