@@ -11,15 +11,26 @@ Meteor.methods({
     if (!this.userId) return false;
     
     check(appId, String);
-    check(review.text, String);
+    check(review, {
+      text: Match.Optional(String),
+      rating: Match.Integer
+    });
+    check(review.rating, Match.Where(function(rating) {
+      return (0 <= rating) && (3 >= rating);
+    }));
 
     review.appId = appId;
     review.userId = this.userId;
     review.username = Meteor.users.findOne(this.userId).profile.name;
 
-    if (Reviews.findOne(_.pick(review, ['appId', 'userId'])))
-      Reviews.update(_.pick(review, ['appId', 'userId']), {$set: review});
-    else Reviews.insert(review);
+    // Collection2 does not play well with upserts, so we need to check for existence
+    // and either update or insert
+    var reviewFields = _.pick(review, ['appId', 'userId']);
+    if (Reviews.findOne(reviewFields)) {
+      Reviews.update(reviewFields, {$set: review});
+    } else {
+      Reviews.insert(review);
+    }
 
   },
 

@@ -29,7 +29,8 @@ Schemas.Reviews = new SimpleSchema({
   },
   text: {
     type: String,
-    max: 500
+    max: 500,
+    optional: true
   },
   createdAt: {
     type: Date,
