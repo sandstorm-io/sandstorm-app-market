@@ -1,3 +1,20 @@
+Template.appItem.onCreated(function() {
+  this.textOverflow = new ReactiveVar(false);
+});
+
+Template.appItem.onRendered(function() {
+  var tmp = this;
+  
+  Meteor.defer(function() {
+    var textSection = tmp.$('.text-section')[0],
+        appDescription = tmp.$('.app-description')[0];
+
+    if (!textSection || !appDescription) return false;
+    
+    tmp.textOverflow.set((appDescription.offsetTop + appDescription.offsetHeight) > textSection.offsetHeight);
+  });
+});
+
 Template.appItem.helpers({
 
   free: function(price) {
@@ -8,14 +25,15 @@ Template.appItem.helpers({
 
   appInstalled: function() {
 
-    var app = this.app ? this.app : this;
+    var app = this.app ? this.app : this,
+        appInstalled = app.installed && app.installed();
     
-    return app.installed() ? {
-      cssClass: 'installed',
-      buttonText: 'RE-INSTALL'
-    } : {
-      buttonText: 'INSTALL'
-    };
+    return appInstalled ? {
+              cssClass: 'installed',
+              buttonText: 'RE-INSTALL'
+            } : {
+              buttonText: 'INSTALL'
+            };
 
   },
 
@@ -37,6 +55,12 @@ Template.appItem.helpers({
     if (!user) return;
     else return user.installedApps[this._id];
 
+  },
+  
+  textOverflow: function() {
+    
+    return Template.instance().textOverflow.get();
+    
   }
 
 });
