@@ -25,14 +25,15 @@ Template.appItem.helpers({
 
   appInstalled: function() {
 
-    var app = this.app ? this.app : this;
+    var app = this.app ? this.app : this,
+        appInstalled = app.installed && app.installed();
     
-    return app.installed && (app.installed() ? {
-      cssClass: 'installed',
-      buttonText: 'RE-INSTALL'
-    } : {
-      buttonText: 'INSTALL'
-    });
+    return appInstalled ? {
+              cssClass: 'installed',
+              buttonText: 'RE-INSTALL'
+            } : {
+              buttonText: 'INSTALL'
+            };
 
   },
 
