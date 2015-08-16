@@ -156,6 +156,10 @@ var appsBaseSchema = {
     type: String,
     optional: true
   },
+  'upstreamAuthor': {
+    type: String,
+    optional: true
+  },
   webLink: {
     type: String,
     regEx: SimpleSchema.RegEx.Url,
