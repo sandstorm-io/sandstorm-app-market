@@ -1,8 +1,51 @@
+var fetchStatus = {};
+
 _.extend(AppMarket, {
 
   lineCapacity: new ReactiveVar(5),
   
   appInit: new ReactiveVar(false),
+
+  // Fetch extended info about a specific app and insert it into the app table.
+  // Reactively returns whether or not the details have completed being fetched.
+  ensureDetailsFetched: function (appId) {
+    var status = fetchStatus[appId];
+
+    if (!status) {
+      status = new ReactiveVar(false);
+      fetchStatus[appId] = status;
+
+      Api.getApp(appId, function(err, app) {
+        if (err) {
+          status.set(err);
+          return;
+        };
+
+        // Make sure there's a partial app object already present to extend
+        Tracker.autorun(function(c) {
+          if (AppMarket.appInit.get()) {
+            // Merge the extended data into the original object.
+            if (Apps.find(appId).count() == 0) {
+              // Don't display broken partial data...
+              status.set(new Error("App not in index."));
+            } else {
+              Apps.update(appId, {$set: app});
+              status.set(true);
+            }
+
+            c.stop();
+          }
+        });
+      });
+    }
+
+    var result = status.get();
+    if (result instanceof Error) {
+      throw result;
+    } else {
+      return result;
+    }
+  },
 
   isBlankKeyword: function(value) {
 
@@ -92,6 +135,15 @@ _.extend(AppMarket, {
 
   }
 
+});
+
+Template.registerHelper("ensureDetailsFetched", function (appId) {
+  try {
+    return AppMarket.ensureDetailsFetched(appId);
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
 });
 
 var urlRegex = new RegExp(

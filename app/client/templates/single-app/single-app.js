@@ -6,33 +6,21 @@ Template.SingleApp.onCreated(function() {
   var tmp = this;
   tmp.appId = FlowRouter.getParam('appId');
   tmp.ready = new ReactiveVar(false);
-
-  // Load full app data
-  Api.getApp(tmp.appId, function(err, app) {
-    // TODO: This error overlay doesn't work.
-    if (err) return AntiModals.overlay('errorModal', {data: {err: 'There was an error loading app data from the server'}});
-
-    // Make sure there's a partial app object already present to extend
-    tmp.autorun(function(c) {
-      if (AppMarket.appInit.get()) {
-        // Merge the extended data into the original object.
-        if (Apps.find(tmp.appId).count()) {
-          Apps.update(tmp.appId, {$set: app});
-        } else {
-          console.error("Basic index data missing for app:", tmp.appId);
-          // Don't display broken partial data...
-          // TODO: This error overlay doesn't work.
-          return AntiModals.overlay('errorModal', {data: {err: 'There was an error loading app data from the server'}})
-        }
+  tmp.readMore = new ReactiveVar(false);
+  tmp.autorun(function () {
+    try {
+      if (AppMarket.ensureDetailsFetched(tmp.appId)) {
         tmp.ready.set(true);
-        
+        var app = Apps.findOne(tmp.appId);
         if (!app.screenshots.length) tmp.readMore.set(true);
-        c.stop();
       }
-    });
+    } catch (err) {
+      console.error(err);
+      // TODO: This doesn't work as there is no `errorModal` template.
+      AntiModals.overlay('errorModal', {data: {err: 'There was an error loading app data from the server'}});
+    }
   });
 
-  tmp.readMore = new ReactiveVar(false);
   tmp.flagApp = new ReactiveVar(!!FlowRouter.current().queryParams.flag);
   tmp.writeReview = new ReactiveVar(false);
   tmp.myReview = new ReactiveVar({});
