@@ -48,10 +48,12 @@ function redirectOnSmallDevice(route) {
 // pass query params to middleware (yet)
 function getSandstormServer(context) {
   if (context.queryParams.host) {
-    AppMarket.sandstormHost = context.queryParams.host;
-    amplify.store('sandstormHost', context.queryParams.host);
+    var host = context.queryParams.host;
+    if (host.slice(-1) != '/') host = host + '/';
+    AppMarket.sandstormHost = host;
+    amplify.store('sandstormHost', host);
     var allHosts = amplify.store('sandstormHostHistory') || [];
-    allHosts = _.unique(allHosts.concat(context.queryParams.host));
+    allHosts = _.unique(allHosts.concat(host));
     amplify.store('sandstormHostHistory', allHosts);
   }
 }
