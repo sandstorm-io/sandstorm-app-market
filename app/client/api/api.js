@@ -8,32 +8,16 @@ Api = {
   packageOverrideUrl: Meteor.settings && Meteor.settings.public && Meteor.settings.public.PACKAGE_OVERRIDE_URL,
   
   getIndex: function(cb) {
-    $.ajax({
-      method: 'GET',
-      url: this.indexOverrideUrl || [this.url, 'apps', 'index.json'].join('/'),
-      cache: false,
-      dataType: 'json',
-      success: function(data) {
-        return cb(null, data);
-      },
-      error: function(err) {
-        return cb(err, null);
-      }
+    var url = this.indexOverrideUrl || [this.url, 'apps', 'index.json'].join('/');
+    HTTP.get(url, function (err, result) {
+      cb(err, result && result.data);
     });
   },
   
   getApp: function(appId, cb) {
-    $.ajax({
-      method: 'GET',
-      url: this.appOverrideUrl || [this.url, 'apps', appId + '.json'].join('/'),
-      cache: false,
-      dataType: 'json',
-      success: function(data) {
-        return cb(null, data);
-      },
-      error: function(err) {
-        return cb(err, null);
-      }
+    var url = this.appOverrideUrl || [this.url, 'apps', appId + '.json'].join('/');
+    HTTP.get(url, function (err, result) {
+      cb(err, result && result.data);
     });
   },
   
