@@ -9,22 +9,20 @@ Template.SingleApp.onCreated(function() {
 
   // Load full app data
   Api.getApp(tmp.appId, function(err, app) {
+    // TODO: This error overlay doesn't work.
     if (err) return AntiModals.overlay('errorModal', {data: {err: 'There was an error loading app data from the server'}});
 
     // Make sure there's a partial app object already present to extend
     tmp.autorun(function(c) {
       if (AppMarket.appInit.get()) {
-        // TODO: REMOVE THIS - it only exists to ensure the random API data we get back in testing
-        // corresponds to the current route when it's added to the DB. 
-        // *****************
-        app.appId = tmp.appId;
-        console.log(app);
-        // *****************
-        if (Apps.find({appId: app.appId}).count()) {
-          Apps.update(app.appId, {$set: app});
+        // Merge the extended data into the original object.
+        if (Apps.find(tmp.appId).count()) {
+          Apps.update(tmp.appId, {$set: app});
         } else {
-          app._id = app.appId;
-          Apps.insert(app);
+          console.error("Basic index data missing for app:", tmp.appId);
+          // Don't display broken partial data...
+          // TODO: This error overlay doesn't work.
+          return AntiModals.overlay('errorModal', {data: {err: 'There was an error loading app data from the server'}})
         }
         tmp.ready.set(true);
         
