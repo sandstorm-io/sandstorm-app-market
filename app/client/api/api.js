@@ -10,7 +10,7 @@ Api = {
   getIndex: function(cb) {
     $.ajax({
       method: 'GET',
-      url: this.indexOverrideUrl || [this.url, 'apps', 'index'].join('/'),
+      url: this.indexOverrideUrl || [this.url, 'apps', 'index.json'].join('/'),
       cache: false,
       dataType: 'json',
       success: function(data) {
@@ -25,7 +25,7 @@ Api = {
   getApp: function(appId, cb) {
     $.ajax({
       method: 'GET',
-      url: this.appOverrideUrl || [this.url, 'apps', appId].join('/'),
+      url: this.appOverrideUrl || [this.url, 'apps', appId + '.json'].join('/'),
       cache: false,
       dataType: 'json',
       success: function(data) {
