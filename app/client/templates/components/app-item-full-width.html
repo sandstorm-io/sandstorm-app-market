@@ -97,7 +97,11 @@
           <div class="rem-space-float description-holder">
 
             <div class="app-description">
-              {{#markdown}}{{shortDescription}}{{/markdown}}
+              {{#if ensureDetailsFetched _id}}
+                {{#markdown}}{{description}}{{/markdown}}
+              {{else}}
+                {{shortDescription}}
+              {{/if}}
               <div class="fade-box"></div>
             </div>
 

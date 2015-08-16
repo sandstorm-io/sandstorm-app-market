@@ -35,7 +35,11 @@
             </div>
 
             <div class="app-description">
-              {{#markdown}}{{shortDescription}}{{/markdown}}
+              {{#if ensureDetailsFetched _id}}
+                {{#markdown}}{{description}}{{/markdown}}
+              {{else}}
+                {{shortDescription}}
+              {{/if}}
               <div class="fade-box {{#unless textOverflow}}hidden{{/unless}}"></div>
             </div>
 
