@@ -1,5 +1,5 @@
 BrowserPolicy.content.allowImageOrigin("*");
-BrowserPolicy.content.allowStyleOrigin('http://fonts.googleapis.com');
-BrowserPolicy.content.allowFontOrigin('http://fonts.gstatic.com');
+BrowserPolicy.content.allowStyleOrigin('https://fonts.googleapis.com');
+BrowserPolicy.content.allowFontOrigin('https://fonts.gstatic.com');
 BrowserPolicy.content.allowInlineStyles();
 BrowserPolicy.content.allowFontDataUrl();
