@@ -20,45 +20,12 @@ Template.appTable.helpers({
     else if (data.sortDesc) options.sort[data.sortDesc] = -1;
     else options.sort = {installCount: -1};
     if (data.bigLeader) options.skip += 1;
-    if (data.skipLines) {
-      var skipApps = (AppMarket.lineCapacity.get() * data.skipLines);
-      if (data.afterBigLeader) skipApps -= 2;
-      options.skip += skipApps;
-      if (options.limit) options.limit -= skipApps;
-      options.skip = Math.max(options.skip, 1);
-    }
-    if (data.singleLine) {
-      options.limit = AppMarket.lineCapacity.get();
-      if (data.bigLeader) options.limit -= 3;
-      options.limit = Math.max(options.limit, 0);
-    }
 
     return (options.limit === 0) ? [] : Genres.findIn(data.genre, {}, options);
 
   }
 
 });
-
-Template.appTable.onRendered(function() {
-
-  recalcLineCapacity(this);
-  $(window).on('resize.appTable', _.debounce(recalcLineCapacity.bind(window, this), 250));
-
-});
-
-function recalcLineCapacity() {
-
-  var rem = parseFloat(getComputedStyle(document.documentElement).fontSize),
-      tableWidth = $('.app-table').width(),
-      appItemWidth = 21.3; // THIS IS DEPENDENT ON THE SCSS VARIABLES $app-container-width
-
-  if (!rem || !tableWidth) return;
-  var lineCapacity = Math.max(Math.floor(tableWidth / (rem * appItemWidth)), 2);
-  if (Meteor.Device.isPhone()) lineCapacity = Math.max(lineCapacity, 2);
-  AppMarket.lineCapacity.set(lineCapacity);
-  AppMarket.defaultAppLimit.set((lineCapacity * 4) - 2);
-
-}
 
 Template.appTable.onDestroyed(function() {
   $(window).off('resize.appTable');

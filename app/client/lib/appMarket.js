@@ -2,8 +2,6 @@ var fetchStatus = {};
 
 _.extend(AppMarket, {
 
-  lineCapacity: new ReactiveVar(5),
-  
   appInit: new ReactiveVar(false),
 
   // Fetch extended info about a specific app and insert it into the app table.
@@ -55,8 +53,6 @@ _.extend(AppMarket, {
             ((value instanceof Spacebars.kw) && _.isEmpty(value.hash)));
 
   },
-
-  defaultAppLimit: new ReactiveVar(18),
 
   parentTemplate: function(tmp, name) {
 

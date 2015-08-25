@@ -35,7 +35,7 @@ AppMarket.extraGenres = [
       sort: {installCount: -1}
     },
     priority: 0,
-    showSummary: true
+    showSummary: false  // TODO(someday): Re-enable "popular" when we have actual data?
   },
 
   {

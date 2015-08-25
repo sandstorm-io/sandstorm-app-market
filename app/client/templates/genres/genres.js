@@ -2,20 +2,6 @@ Template.Genre.onCreated(function() {
 
   var tmp = this;
 
-  tmp.subLimit = new ReactiveVar(AppMarket.defaultAppLimit.get());
-
-  tmp.addApps = function() {
-    tmp.subLimit.set(tmp.subLimit.get() + (2 * AppMarket.lineCapacity.get()));
-  };
-
-  // However, we need to prevent rendering until subs are ready the first time
-  // we render a new genre, but NOT when the sub is stopped due to a change in
-  // limit, so we need a separate autorun to track that...
-  tmp.autorun(function() {
-    FlowRouter.watchPathChange();
-    tmp.subLimit.set(AppMarket.defaultAppLimit.get());
-  });
-
   $(window).on('scroll.genre', _.debounce(function() {
     var $loadMore = tmp.$('.load-more');
     if ($loadMore.length && $loadMore.visible(true)) tmp.addApps();
@@ -43,20 +29,6 @@ Template.Genre.helpers({
 Template.AppsByAuthor.onCreated(function() {
 
   var tmp = this;
-
-  tmp.subLimit = new ReactiveVar(AppMarket.defaultAppLimit.get());
-
-  tmp.addApps = function() {
-    tmp.subLimit.set(tmp.subLimit.get() + (2 * AppMarket.lineCapacity.get()));
-  };
-
-  // However, we need to prevent rendering until subs are ready the first time
-  // we render a new genre, but NOT when the sub is stopped due to a change in
-  // limit, so we need a separate autorun to track that...
-  tmp.autorun(function() {
-    FlowRouter.watchPathChange();
-    tmp.subLimit.set(AppMarket.defaultAppLimit.get());
-  });
 
   $(window).on('scroll.genre', _.debounce(function() {
     var $loadMore = tmp.$('.load-more');

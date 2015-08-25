@@ -9,7 +9,7 @@
     </div>
 
   </div>
-
+{{!--
   <div class="genre-popular-section">
 
     <div class="contents">
@@ -19,7 +19,7 @@
     </div>
 
   </div>
-
+--}}
   <div class="genre-other-section">
 
     <div class="contents">
@@ -43,7 +43,7 @@
     </div>
 
   </div>
-
+{{!-- TODO(someday): Consider re-enabling popular row?
   <div class="genre-popular-section">
 
     <div class="contents">
@@ -53,7 +53,7 @@
     </div>
 
   </div>
-
+--}}
   <div class="genre-other-section">
 
     <div class="contents">
@@ -109,7 +109,7 @@
 
   <div class="genre-other">
 
-    {{> appTable skipLines=1 limit=subLimit afterBigLeader=true genre=genre reactive=true}}
+    {{> appTable bigLeader=true genre=genre reactive=true}}
 
   </div>
 

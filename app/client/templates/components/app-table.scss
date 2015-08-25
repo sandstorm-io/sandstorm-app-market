@@ -17,3 +17,31 @@
   }
 
 }
+
+.app-table {
+  white-space: nowrap;
+  overflow: hidden;
+  position: relative;
+  width: calc(100% + #{$app-container-margin-lr});
+
+  .genre-other-section & {
+    white-space: normal;
+  }
+
+/* TODO(someday): Experiment with this right-side fade-out a bit more...
+  &::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 16px;
+    background: linear-gradient(to right, rgba($main-page-bg, 0), rgba($main-page-bg, 1));
+
+    .genre-popular-section & {
+      background: linear-gradient(to right, rgba($genre-popular-bg, 0), rgba($genre-popular-bg, 1));
+    }
+  }
+*/
+}
