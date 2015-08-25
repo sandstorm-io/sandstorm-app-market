@@ -32,8 +32,14 @@
     .image-surround {
 
       position: relative;
-      height: $app-image-height;
+      height: 0;
 
+      // Hack: We want the image height to be exactly equal to the width, without having to
+      // compute the width manually. It turns out that if you use a percentage in a padding value,
+      // it is always a percent of the width -- even for *vertical* padding. So we force this
+      // element to be square by giving it zero height but padding-bottom 100% (=width). Then we
+      // absolutely position the image inside it, so it covers the padding.
+      padding-bottom: 100%;
 
       .image {
 
@@ -43,6 +49,10 @@
         background-position: center;
         display: block;
         height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        position: absolute;
 
       }
 
@@ -51,6 +61,7 @@
     .app-name {
 
       font-size: $app-name-font-size;
+      font-weight: normal;
       color: $app-name-text;
       line-height: $app-name-line-height;
       white-space: nowrap;
@@ -381,6 +392,7 @@
         height: 100%;
         width: $app-image-large-width;
         max-width: 50%;
+        padding-bottom: 0;  // Undo hack from above.
 
       }
 
