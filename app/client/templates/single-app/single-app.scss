@@ -174,22 +174,27 @@ $app-container-padding-rl: 4.6rem;
           }
         }
 
+        table {
+          border-collapse: collapse;
+        }
+
         .key {
 
-          float: left;
-          clear: left;
           width: 7.5rem;
           font-size: 1.5rem;
           color: #6d627c;
+          padding: 0;
 
         }
 
         .value {
 
           overflow: hidden;
+          white-space: nowrap;
           text-overflow: ellipsis;
           font-size: 1.5rem;
           color: #6d627c;
+          padding: 0;
 
           a {
             color: #7d627c;
@@ -231,6 +236,7 @@ $app-container-padding-rl: 4.6rem;
       float: right;
       width: auto;
       max-width: 50%;
+      overflow: hidden;
     }
 
   }
@@ -292,6 +298,7 @@ $app-container-padding-rl: 4.6rem;
   height: 3.5rem;
   font-size: 1.7rem;
   color: #783189;
+  clear: both;
 
   .app-rating, span, i {
 
