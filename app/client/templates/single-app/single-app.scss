@@ -125,8 +125,19 @@ $app-container-padding-rl: 4.6rem;
           font-size: 3.1rem;
         }
 
+        .header.app-title {
+          display: block;
+        }
+
         .app-author-full-width {
-          clear: left;
+          font-size: 1.7rem;
+          a {
+            color: #783189;
+          }
+        }
+
+        .upstream-author {
+          float: right;
           font-size: 1.7rem;
           a {
             color: #783189;
@@ -215,6 +226,13 @@ $app-container-padding-rl: 4.6rem;
 
     }
 
+    .half-col.right {
+      display: block;
+      float: right;
+      width: auto;
+      max-width: 50%;
+    }
+
   }
 
   @media (max-width: $small-tablet) {
@@ -240,6 +258,11 @@ $app-container-padding-rl: 4.6rem;
             display: block;
             width: 100%;
             margin-bottom: 1rem;
+          }
+
+          .half-col.right {
+            float: none;
+            max-width: none;
           }
       }
 

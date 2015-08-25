@@ -29,12 +29,15 @@
             <div class="app-name-full-width">{{#if name}}{{name}}{{else}}Untitled{{/if}}</div>
 
             <div class="app-author-full-width">
-              {{#if upstreamAuthor}}
-                {{upstreamAuthor}}
-              {{else}}
-                {{author.name}}
-              {{/if}}
+              {{#if upstreamAuthor}}Ported by:{{/if}}
+              {{author.name}}
             </div>
+
+            {{#if upstreamAuthor}}
+              <div class="upstream-author">
+                Upstream author: <a>{{upstreamAuthor}}</a>
+              </div>
+            {{/if}}
 
           </div>
 
@@ -85,9 +88,6 @@
 
             <div class="divider"></div>
 
-            {{#if upstreamAuthor}}
-              <div class="key">Ported by:</div><div class="value"><a href="{{getZippedPath 'appMarketAuthor' 'authorName' author.name}}">{{author.name}}</a>&nbsp;</div>
-            {{/if}}
             <div class="key">License:</div><div class="value">{{verboseNone license}}&nbsp;</div>
             <div class="key">Code:</div><div class="value">{{verboseNone codeLink}}&nbsp;</div>
             <div class="key">Version:</div><div class="value">{{verboseNone latestVersionNumber}}&nbsp;</div>

@@ -26,18 +26,17 @@
 
               <div class="top-section clearfix">
 
-                <div class="left-float">
+                <div class="header app-title">{{name}}</div>
 
-                  <div class="header">{{name}}</div>
+                <div class="app-author-full-width">
+                  {{#if upstreamAuthor}}Ported by:{{/if}}
+                  <a href="{{getZippedPath 'appMarketAuthor' 'authorName' author.name}}">{{author.name}}</a>
 
-                  <div class="app-author-full-width">
-                    {{#if upstreamAuthor}}
-                      {{upstreamAuthor}}
-                    {{else}}
-                      <a href="{{getZippedPath 'appMarketAuthor' 'authorName' author.name}}">{{author.name}}</a>
-                    {{/if}}
-                  </div>
-
+                  {{#if upstreamAuthor}}
+                    <div class="upstream-author">
+                      Upstream author: <a>{{upstreamAuthor}}</a>
+                    </div>
+                  {{/if}}
                 </div>
 
               </div>
@@ -51,11 +50,8 @@
 
                 </div>
 
-                <div class="half-col">
+                <div class="half-col right">
 
-                  {{#if upstreamAuthor}}
-                    <div class="key">Ported by:</div><div class="value"><a href="{{getZippedPath 'appMarketAuthor' 'authorName' author.name}}">{{author.name}}</a>&nbsp;</div>
-                  {{/if}}
                   <div class="key">License:</div><div class="value">{{verboseNone license}}&nbsp;</div>
                   <div class="key">Code:</div><div class="value">{{{codeFormat codeLink}}}&nbsp;</div>
                   <div class="key">Version:</div><div class="value" data-tooltip={{renderedChangelog}} data-tooltip-direction="s">{{version}}&nbsp;</div>
