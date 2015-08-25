@@ -84,8 +84,11 @@
 
     .sandstorm-button {
       font-weight: normal;
-      height: 2.5rem;
-      line-height: 2.5rem;
+      height: 2.7rem;
+      line-height: 2.7rem;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: center;
 
       i {
         position: relative;
@@ -102,21 +105,29 @@
     }
 
     .sandstorm-input {
+      width: 100%;
+      box-sizing: border-box;
+
       .input {
         padding: 0;
         background-color: #ffffff;
+        width: 85%;
+        box-sizing: border-box;
+        height: 2.7rem;
 
         input {
-          width: 13rem;
           padding-left: 1rem;
           padding-right: 1rem;
         }
       }
 
       .button {
+        width: 15%;
+        box-sizing: border-box;
         background-color: #783189;
         padding-left: 1rem;
         padding-right: 1.5rem;
+        height: 2.7rem;
         i {
           color: $uninstall-app-modal-bg;
           font-size: 0.85em;

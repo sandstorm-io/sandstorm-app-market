@@ -8,11 +8,7 @@
 
     <div class="blurb">
       <p>
-        {{#if hosts}}
-          Select from the list below or add a new one:
-        {{else}}
-          Add your first server below:
-        {{/if}}
+        Select from the list below or add a new one:
       </p>
     </div>
 
@@ -24,13 +20,19 @@
           <i class="fa fa-times" data-action="remove-host"></i>
         </a>
       </div>
+      {{else}}
+        {{#with "https://demo.sandstorm.io/"}}
+        <div class="host-container">
+          <a href={{installUrl}} class="sandstorm-button primary" data-action="install">
+            Sandstorm Demo Server
+          </a>
+        </div>
+        {{/with}}
       {{/each}}
 
-      {{#if hosts}}
       <div class="or">
         or
       </div>
-      {{/if}}
 
       <div class="sandstorm-input">
         <div class="input">
