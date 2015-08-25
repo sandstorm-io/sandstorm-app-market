@@ -5,7 +5,7 @@ var helpers = {
 
     var user = Meteor.users.findOne(_id);
 
-    return user && user.username;
+    return user && user.profile.name;
 
   },
 

@@ -21,7 +21,7 @@
 
     <a class="menu-link {{inRouteCategory 'login'}}" href="{{getPath 'login'}}">
       <i class="icon-my"></i>
-      <div class="menu-text">{{#if currentUser}}{{currentUser.username}}{{else}}Log In{{/if}}</div>
+      <div class="menu-text">{{#if currentUser}}{{currentUser.profile.name}}{{else}}Log In{{/if}}</div>
     </a>
 
   </nav>
