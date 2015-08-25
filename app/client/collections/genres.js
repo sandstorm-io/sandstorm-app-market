@@ -239,8 +239,9 @@ Genres = {
 
   getPopulated: function(selector) {
 
-    return _.filter(Categories.find().fetch(), function(cat) {
-      return !!Apps.find(_.extend({}, selector, {categories: cat.name})).count();
+    // All genres that we know about are populated, but sort by population.
+    return _.sortBy(Categories.find().fetch(), function(cat) {
+      return -Apps.find(_.extend({}, selector, {categories: cat.name})).count();
     });
 
   }
