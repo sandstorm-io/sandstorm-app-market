@@ -74,7 +74,7 @@ status "merging bundles"
 cat > build/bundle/sandstorm-main.js << __EOF__
 process.env.METEOR_SETTINGS = JSON.stringify({
   public: {
-    API_URL: "https://alpha-j7uny7u376jnimcsx34c.sandstorm.io"
+    API_URL: "https://app-index.sandstorm.io"
   }
 });
 __EOF__
