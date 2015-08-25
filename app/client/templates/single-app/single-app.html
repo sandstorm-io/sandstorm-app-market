@@ -46,15 +46,23 @@
                 <div class="half-col">
 
                   <div class="date">{{dateFormat createdAt 'MMMM DD, YYYY'}}</div>
-                  <div class="genre">{{{genreString}}}</div>
+                  <div class="genre">
+                    {{#each indexedList categories}}{{#if index}}, {{/if}}
+                      <a href="{{genreUrl value}}">{{value}}</a>{{/each}}
+                  </div>
 
                 </div>
 
                 <div class="half-col right">
                   <table>
-                    <tr><td class="key">License:</td><td class="value">{{verboseNone license}}&nbsp;</td></tr>
-                    <tr><td class="key">Code:</td><td class="value">{{{codeFormat codeLink}}}&nbsp;</td></tr>
-                    <tr><td class="key">Version:</td><td class="value" data-tooltip={{renderedChangelog}} data-tooltip-direction="s">{{version}}&nbsp;</td></tr>
+                    <tr><td class="key">License:</td><td class="value">{{verboseNone license}}</td></tr>
+                    {{#if codeLink}}
+                      <tr><td class="key">Code:</td><td class="value">
+                        <a href="{{codeLink}}">On {{urlHost codeLink}}</a>
+                      </td></tr>
+                    {{/if}}
+
+                    <tr><td class="key">Version:</td><td class="value" data-tooltip={{renderedChangelog}} data-tooltip-direction="s">{{version}}</td></tr>
                   </table>
 
                 </div>

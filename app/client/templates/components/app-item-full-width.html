@@ -84,7 +84,10 @@
           <div class="left-float block-phone details-block">
 
             <div class="date">{{dateFormat createdAt 'MMMM DD, YYYY'}}</div>
-            <div class="genre">{{{genreString}}}</div>
+            <div class="genre">
+              {{#each indexedList categories}}{{#if index}}, {{/if}}
+                <a href="{{genreUrl value}}">{{value}}</a>{{/each}}
+            </div>
 
             <div class="divider"></div>
 
@@ -118,6 +121,7 @@
     {{#with app}}
     {{#with approvalState}}
       <div class="state-bar {{messageClass}}">
+        {{!-- TODO(security): No XSS here but we should avoid tripple-{ anyway! --}}
         {{{fullMessage}}}
       </div>
     {{/with}}

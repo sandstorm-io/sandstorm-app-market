@@ -53,23 +53,21 @@ var helpers = {
 
   },
 
-  codeFormat: function(url) {
-
-    if (!url) return 'No link';
-    else if (url.search('github.com') > -1) return '<a href="' + url + '">On Github</a>';
-    else return '<a href="' + url + '">Link</a>';
-
+  urlHost: function(url) {
+    var parser = document.createElement("a");
+    parser.href = url;
+    return parser.hostname || parser.host
   },
 
-  genreString: function(app) {
+  genreUrl: function(genre) {
+    return FlowRouter.path('appMarketGenre', {genre: genre || this});
+  },
 
-    app = app || this;
-    return app.categories.reduce(function(genreString, cat, ind) {
-      if (ind) genreString += ', ' + '<a href="' + FlowRouter.path('appMarketGenre', {genre: cat}) + '">' + cat + '</a>';
-      else if (ind < 3) genreString += '<a href="' + FlowRouter.path('appMarketGenre', {genre: cat}) + '">' + cat + '</a>';
-      return genreString;
-    }, '');
-
+  indexedList: function(list) {
+    var i = 0;
+    return list.map(function (v) {
+      return {index: i++, value: v};
+    });
   },
 
   approval: Apps.approval,
