@@ -59,12 +59,24 @@
 
     }
 
+    .app-short-description {
+
+      font-size: $app-short-description-font-size;
+      color: $app-short-description-text;
+      line-height: $app-short-description-line-height;
+      white-space: nowrap;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+
+    }
+
     .app-author {
 
       font-size: $app-author-font-size;
       color: $app-author-text;
       text-transform: uppercase;
       line-height: $app-author-line-height;
+      white-space: nowrap;
       overflow-x: hidden;
       text-overflow: ellipsis;
 
@@ -380,6 +392,12 @@
         .app-name {
 
           font-size: $app-name-large-font-size;
+
+        }
+
+        .app-short-description {
+
+          font-size: $app-short-description-large-font-size;
 
         }
 
