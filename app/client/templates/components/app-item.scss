@@ -118,8 +118,12 @@
 
       .app-install {
 
-        display: inline-block;
-        float: left;
+        position: absolute;
+        z-index: 100;
+        bottom: $app-container-padding-bottom;
+        left: $app-container-padding-lr;
+        right: $app-container-padding-lr;
+        display: block;
         font-size: $app-install-font-size;
         padding-top: $app-install-padding-tb;
         padding-bottom: $app-install-padding-tb;
@@ -400,6 +404,7 @@
 
         height: 100%;
         overflow-y: hidden;
+        position: relative;
 
         .app-name {
 
@@ -425,7 +430,6 @@
           font-size: $app-description-large-font-size;
           color: $app-description-text;
           clear: both;
-          position: relative;
           overflow-y: hidden;
 
           >*:first-child {
@@ -435,7 +439,9 @@
           .fade-box {
             position: absolute;
             height: 5rem;
-            top: 9rem;
+            bottom: 2.5rem;
+            left: 0;
+            right: 0;
             width: 100%;
             background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
             
@@ -446,14 +452,20 @@
 
         }
 
-      }
+        .install-price {
+          .app-install {
+            left: 0;
+            right: 0;
+            bottom: 0;
+          }
+        }
 
+      }
     }
 
     @media (max-width: $small-tablet) {
 
       .app-item-inner {
-
         height: 2 * $app-container-height;
 
         .image-surround {
@@ -465,7 +477,24 @@
         }
 
         .text-section {
-          margin-top: 1rem;
+          padding-top: 1rem;
+          position: static;
+          height: 50%;
+          box-sizing: border-box;
+
+          .app-description {
+            .fade-box {
+              bottom: 4rem;
+            }
+          }
+
+          .install-price {
+            .app-install {
+              bottom: $app-container-padding-bottom;
+              left: $app-container-padding-lr;
+              right: $app-container-padding-lr;
+            }
+          }
         }
 
       }
