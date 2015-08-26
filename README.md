@@ -4,7 +4,7 @@
 
 Feel free to poke around but note that we weren't actually planning to show this off until next week. :)
 
-For now, try our 60-second demo: [https://demo.sandstorm.io](https://demo.sandstorm.io)
+For now, try our 60-second demo: [https://demo.sandstorm.io](https://demo.sandstorm.io) (If HN traffic hasn't killed it. ;) )
 
 Read about security: [https://docs.sandstorm.io/en/latest/developing/security-practices/](https://docs.sandstorm.io/en/latest/developing/security-practices/)
 
