@@ -70,7 +70,10 @@
 
   {{#if countApps genre}}
 
-    <div class="genre-name"><a href="{{getZippedPath 'appMarketGenre' 'genre' genre}}">{{genre}} <i class="icon-chevron-right"></i></a></div>
+    <div class="genre-name">
+      <a href="{{getZippedPath 'appMarketGenre' 'genre' genre}}">{{genre}} &gt;</a>
+      <a class="see-all" href="{{getZippedPath 'appMarketGenre' 'genre' genre}}">See all &gt;</a>
+    </div>
 
     {{> appTable genre=genre reactive=true bigLeader=bigLeader}}
 

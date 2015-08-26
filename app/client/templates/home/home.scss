@@ -102,6 +102,16 @@ body {
     color: $genre-title-text;
   }
 
+  a.see-all {
+    display: block;
+    float: right;
+    background-color: $large-button-primary-bg;
+    color: $large-button-primary-text;
+    margin-right: 10rem;
+    padding: 0.6rem 1.5rem;
+    margin-top: -0.6rem;
+  }
+
   &.large {
     font-size: $genre-page-title-height;
   }
