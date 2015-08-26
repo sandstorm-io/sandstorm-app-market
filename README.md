@@ -1,3 +1,11 @@
+# HI HACKER NEWS!
+
+## THIS CODE IS NOT READY YET!
+
+Feel free to poke around but note that we weren't actually planning to show this off until next week. :)
+
+(This note written August 26, 2015.)
+
 # Sandstorm App Market
 
 App Market front-end for the [Sandstorm.io](https://sandstorm.io/) platform for personal servers.
