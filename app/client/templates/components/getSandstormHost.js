@@ -1,11 +1,11 @@
 var callback;
 
-AppMarket.getSandstormHost = function(packageId, cb) {
+AppMarket.getSandstormHost = function(app, cb) {
 
   if (AppMarket.sandstormHost) cb(AppMarket.sandstormHost);
   else {
     callback = cb;
-    AntiModals.overlay('getSandstormHostModal', {data: {packageId: packageId}});
+    AntiModals.overlay('getSandstormHostModal', {data: app});
   }
 
 };
@@ -34,6 +34,10 @@ Template.getSandstormHostModal.helpers({
       Api.packageUrl(packageId)
     ].join('');
     
+  },
+
+  appTitle: function() {
+    return this.name;
   }
 
 });

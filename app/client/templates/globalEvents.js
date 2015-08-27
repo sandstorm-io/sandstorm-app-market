@@ -4,7 +4,7 @@ Template.MasterLayout.events({
 
     if (!$(evt.currentTarget).attr('href')) {
       evt.preventDefault();
-      AppMarket.getSandstormHost(this.packageId, function() {
+      AppMarket.getSandstormHost(this, function() {
         Tracker.afterFlush(function() {
           tmp.$('[data-action="install-app"]').click();
         });

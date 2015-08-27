@@ -16,7 +16,7 @@ Apps = new Mongo.Collection(null, {transform: function(app) {
 
   app.install = function() {
     var _this = this;
-    AppMarket.getSandstormHost(this.packageId, function(host) {
+    AppMarket.getSandstormHost(this, function(host) {
       Meteor.call('user/installApp', _this._id, host, function(err) {
         if (err) console.log(err);
         else {

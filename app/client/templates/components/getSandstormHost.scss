@@ -81,6 +81,7 @@
   .hosts {
     display: inline-block;
     text-align: left;
+    width: 25rem;
 
     .sandstorm-button {
       font-weight: normal;
@@ -118,6 +119,8 @@
         input {
           padding-left: 1rem;
           padding-right: 1rem;
+          width: 100%;
+          box-sizing: border-box;
         }
       }
 
