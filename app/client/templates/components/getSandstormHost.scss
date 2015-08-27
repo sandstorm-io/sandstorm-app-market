@@ -81,7 +81,7 @@
   .hosts {
     display: inline-block;
     text-align: left;
-    width: 25rem;
+    min-width: 25rem;
 
     .sandstorm-button {
       font-weight: normal;
