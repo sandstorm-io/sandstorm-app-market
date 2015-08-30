@@ -153,9 +153,23 @@ var helpers = {
   fullInstallLink: function() {
 
     AppMarket.hostDep.depend();
-    return (this.packageId && AppMarket.sandstormHost) ?
+
+    var host = AppMarket.sandstormHost;
+    if (!host) {
+      if (AppMarket.hasSandstormHost()) {
+        // The user arrived with no explicit host, but we have recorded this user using a specific
+        // host before. So, leave the href blank as this will cause the host chooser to appear if
+        // they click.
+        return "";
+      } else {
+        // This user has no hosts that we know of. Suggest a demo on Oasis.
+        host = "https://oasis.sandstorm.io/";
+      }
+    }
+
+    return this.packageId ?
            [
-             AppMarket.sandstormHost,
+             host,
              'install/',
              this.packageId,
              '?url=',

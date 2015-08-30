@@ -31,8 +31,10 @@ Template.appItem.helpers({
     return appInstalled ? {
               cssClass: 'installed',
               buttonText: 'RE-INSTALL'
-            } : {
+            } : AppMarket.hasSandstormHost() ? {
               buttonText: 'INSTALL'
+            } : {
+              buttonText: 'DEMO'
             };
 
   },

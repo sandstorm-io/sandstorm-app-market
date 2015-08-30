@@ -1,5 +1,12 @@
 var callback;
 
+AppMarket.hasSandstormHost = function() {
+  var user = Meteor.user();
+  var hostCount = (amplify.store('sandstormHostHistory') || []).length +
+                  ((user && user.sandstormHosts) || []).length;
+  return hostCount > 0;
+};
+
 AppMarket.getSandstormHost = function(app, cb) {
 
   if (AppMarket.sandstormHost) cb(AppMarket.sandstormHost);
