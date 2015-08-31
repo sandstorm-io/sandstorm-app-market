@@ -92,6 +92,10 @@ Template.SingleApp.helpers({
 
   },
 
+  hasSandstormHost: function () {
+    return AppMarket.hasSandstormHost();
+  },
+
   getDescription: function() {
 
     return Template.instance().readMore.get() ? this.description : s.prune(this.description, 1200);

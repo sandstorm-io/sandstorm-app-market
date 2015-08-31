@@ -89,7 +89,12 @@
                 <div class="action-buttons">
 
                   <a href="{{fullInstallLink}}" class="{{#if installed}}installed{{else}}install{{/if}} button" data-action="install-app">
-                    INSTALL{{#if installed}}+{{/if}} <i class="icon-arrow-install"></i>
+                    {{#if hasSandstormHost}}
+                      INSTALL{{#if installed}}+{{/if}}
+                    {{else}}
+                      DEMO
+                    {{/if}}
+                    <i class="icon-arrow-install"></i>
                   </a>
 
                 </div>
