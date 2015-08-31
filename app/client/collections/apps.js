@@ -100,6 +100,10 @@ var appsBaseSchema = {
     type: Date,
     optional: true
   },
+  moderatorPreference: {
+    type: Number,
+    optional: true
+  },
   categories: {
     type: [String],
     index: true,

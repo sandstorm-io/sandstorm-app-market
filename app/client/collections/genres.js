@@ -49,6 +49,16 @@ AppMarket.extraGenres = [
   },
 
   {
+    name: 'Featured',
+    selector: {},
+    options: {
+      sort: {moderatorPreference: 1}
+    },
+    priority: 0,
+    showSummary: true
+  },
+
+  {
     name: 'New & Updated',
     selector: {},
     options: {

@@ -18,11 +18,22 @@
 
     <div class="contents">
 
+      {{!-- TEMPORARY: Just show "featured apps" on front page until we have enough apps to make
+            genres make sense. --}}
+
+      <div class="genre-name large">Featured Apps</div>
+
+      <div class="genre-other-section">
+        {{> genreTableOther genre="Featured"}}
+      </div>
+
+{{!--
       {{#each genres}}
 
         {{> genreTable genre=this.name singleLine=true}}
 
       {{/each}}
+--}}
 
     </div>
 
