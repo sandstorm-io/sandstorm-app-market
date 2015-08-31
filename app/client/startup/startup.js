@@ -58,6 +58,11 @@ Meteor.startup(function() {
     AppMarket.populatedGenres.set(AppMarket.extraGenres.concat(Genres.getPopulated()));
   });
 
+  Tracker.autorun(function () {
+    FlowRouter.getRouteName();
+    if (window.ga) { window.ga('send', 'pageview', location.pathname); }
+  });
+
 });
 
 // TEMPORARY HACK: Until  we have actual popularity data, we define a curated "featured app"
