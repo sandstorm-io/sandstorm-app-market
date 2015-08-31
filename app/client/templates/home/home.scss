@@ -81,6 +81,17 @@ body {
 
 }
 
+.text-banner {
+  background-color: white;
+  font-size: 300%;
+  margin-left: $menu-width;
+  text-align: center;
+  padding: 1rem;
+  @media screen and (max-width: $medium-tablet) {
+    margin-left: 0;
+  }
+}
+
 .main-section {
 
   .contents {
