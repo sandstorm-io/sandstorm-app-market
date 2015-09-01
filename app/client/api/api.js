@@ -1,6 +1,7 @@
 Api = {
   
-  url: Meteor.settings && Meteor.settings.public && Meteor.settings.public.API_URL,
+  url: (Meteor.settings && Meteor.settings.public && Meteor.settings.public.API_URL) ||
+       "https://app-index.sandstorm.io",
   
   indexOverrideUrl: Meteor.settings && Meteor.settings.public && Meteor.settings.public.INDEX_OVERRIDE_URL,
   appOverrideUrl: Meteor.settings && Meteor.settings.public && Meteor.settings.public.APP_OVERRIDE_URL,
