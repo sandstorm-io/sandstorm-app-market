@@ -1,22 +1,6 @@
-# HI HACKER NEWS!
-
-## THIS CODE IS NOT READY YET!
-
-Feel free to poke around but note that we weren't actually planning to show this off until next week. :)
-
-For now, try our 60-second demo: [https://demo.sandstorm.io](https://demo.sandstorm.io) (If HN traffic hasn't killed it. ;) )
-
-Read about security: [https://docs.sandstorm.io/en/latest/developing/security-practices/](https://docs.sandstorm.io/en/latest/developing/security-practices/)
-
-And install Sandstorm on your own machine: [https://sandstorm.io/install/](https://sandstorm.io/install/)
-
-Or preorder managed hosting: [https://sandstorm.io/preorder.html](https://sandstorm.io/preorder.html)
-
-(This note written August 26, 2015.)
-
 # Sandstorm App Market
 
-App Market front-end for the [Sandstorm.io](https://sandstorm.io/) platform for personal servers.
+This is the code that runs at: https://apps.sandstorm.io
 
 ## Getting started guide for new developers
 
