@@ -5,7 +5,7 @@ Template.appRating.helpers({
   },
 
   percentage: function() {
-    
+
     var denom = this.ratingsCount;
 
     return denom ? {
@@ -13,7 +13,8 @@ Template.appRating.helpers({
       didntLike: this.ratings.didntLike * 100 / denom,
       jobDone: this.ratings.jobDone * 100 / denom,
       amazing: this.ratings.amazing * 100 / denom,
-      positive: (this.ratings.jobDone + this.ratings.amazing) * 100 / denom
+      positive: (this.ratings.jobDone + this.ratings.amazing) * 100 / denom,
+      negative: (this.ratings.broken + this.ratings.didntLike) * 100 / denom
     } : {};
   }
 
