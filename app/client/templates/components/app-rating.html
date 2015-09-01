@@ -32,7 +32,9 @@
         <i class="icon-extra-thumbs-up purple" data-action="rate-app"></i>
         <i class="icon-extra-thumbs-down purple" data-action="rate-app"></i>
       {{else}}
-        <i class="icon-extra-thumbs-up"></i>
+        {{#if percentage.positive}}
+          <i class="icon-extra-thumbs-up"></i>
+        {{/if}}
         <div class="ratings">
           <div class="text">
             <div class="labels">
@@ -52,7 +54,9 @@
             </div>
           </div>
         </div>
-        <i class="icon-extra-thumbs-down"></i>
+        {{#if percentage.negative}}
+          <i class="icon-extra-thumbs-down"></i>
+        {{/if}}
       {{/unless}}
     {{/if}}
   </div>
