@@ -11,13 +11,13 @@ body {
 
   position: relative;
   height: $welcome-message-height;
-  background-color: #bacae2;
+  background-color: #cad4ef;
   background-position: $menu-width 0;
   background-size: auto 100%;
   background-repeat: no-repeat;
   background-image: url('images/welcome-banner.png');
   overflow: hidden;
-  padding-left: $menu-width + $app-section-padding-left;
+  padding-left: $menu-width;
 
   @media screen and (max-width: $medium-tablet) {
 
@@ -38,12 +38,17 @@ body {
     height: $welcome-message-height;
     display: table-cell;
     vertical-align: middle;
+    width: $infinity;
+    text-align:center;
 
     .text {
 
-      color: $welcome-message-text;
-      font-size: $welcome-message-font-size;
+      color: $banner-font-color;
+      font-size: $banner-font-size;
 
+      a {
+            color: $banner-font-color;
+        }
     }
 
   }
@@ -83,7 +88,9 @@ body {
 
 .text-banner {
   background-color: white;
-  font-size: 300%;
+  font-size: 250%;
+  color: #783189;
+  border-top: 1px solid #879ac1;
   margin-left: $menu-width;
   text-align: center;
   padding: 1rem;
