@@ -96,22 +96,6 @@ Template.SingleApp.helpers({
     return AppMarket.hasSandstormHost();
   },
 
-  description: function () {
-    var description = this.description;
-    if (this.packageId === "67c53be32b064a9c70c8207dbd15178a") {
-      // Hack fix bad description.
-      description =
-        "**EtherCalc is a web spreadsheet.**\n" +
-        "\n" +
-        "Your data is saved on the web, and people can edit the same document at the same " +
-        "time. Everybody's changes are instantly reflected on all screens.\n" +
-        "\n" +
-        "Work together on inventories, survey forms, list management, brainstorming " +
-        "sessions and more!";
-    }
-    return description;
-  },
-
   getDescription: function() {
 
     return Template.instance().readMore.get() ? this.description : s.prune(this.description, 1200);
@@ -120,8 +104,7 @@ Template.SingleApp.helpers({
 
   extendedDescription: function() {
 
-    return this.description && this.description.length > 1200 &&
-        this.packageId !== "67c53be32b064a9c70c8207dbd15178a";
+    return this.description && this.description.length > 1200;
 
   },
 
