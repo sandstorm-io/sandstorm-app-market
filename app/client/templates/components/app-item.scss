@@ -64,19 +64,22 @@
       font-weight: normal;
       color: $app-name-text;
       line-height: $app-name-line-height;
+      margin-top: 0.3rem;
       white-space: nowrap;
       text-overflow: ellipsis;
-      overflow-x: hidden;
+      overflow: hidden;
 
     }
 
     .app-short-description {
 
       font-size: $app-short-description-font-size;
+      font-weight: 400;
       color: $app-short-description-text;
       line-height: $app-short-description-line-height;
+      margin-bottom: 0.5rem;
       white-space: nowrap;
-      overflow-x: hidden;
+      overflow: hidden;
       text-overflow: ellipsis;
 
     }
@@ -88,7 +91,7 @@
       text-transform: uppercase;
       line-height: $app-author-line-height;
       white-space: nowrap;
-      overflow-x: hidden;
+      overflow: hidden;
       text-overflow: ellipsis;
 
     }
@@ -125,6 +128,7 @@
         right: $app-container-padding-lr;
         display: block;
         font-size: $app-install-font-size;
+        font-weight: normal;
         padding-top: $app-install-padding-tb;
         padding-bottom: $app-install-padding-tb;
         padding-left: $app-install-padding-lr;
@@ -426,8 +430,9 @@
 
         .app-description {
 
-          padding-top: 1.5rem;
+          padding-top: 1rem;
           font-size: $app-description-large-font-size;
+          font-weight: 400;
           color: $app-description-text;
           clear: both;
           overflow-y: hidden;
@@ -435,7 +440,7 @@
           >*:first-child {
             margin-top: 0;
           }
-          
+
           .fade-box {
             position: absolute;
             height: 5rem;
@@ -444,7 +449,7 @@
             right: 0;
             width: 100%;
             background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
-            
+
             &.hidden {
               display: none;
             }
