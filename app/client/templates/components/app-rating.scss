@@ -32,11 +32,11 @@
     .message {
       display: inline-block;
       color: #783189;
-      font-size: 1.3rem;
+      font-size: 1.35rem;
+      font-weight: 400;
 
       &.table {
         display: block;
-        text-align: center;
         > i {
           display: inline-block;
           width: 12%
@@ -153,7 +153,7 @@
     display: block;
 
     .message {
-      color: #888888;
+      color: #783189;
     }
   }
 
