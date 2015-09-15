@@ -33,8 +33,8 @@ $topbar-bg: #612c7d; // FALLBACK
 $topbar-bg: linear-gradient(165deg, $topbar-bg-1 0%,$topbar-bg-2 60%,$topbar-bg-3 60.1%,$topbar-bg-4 100%);
 $topbar-logo-text: #ffffff;
 $topbar-item-text: #ffffff;
-$topbar-item-bg: #78429d;
-$topbar-item-active-bg: #8c47b1;
+$topbar-item-bg: #7E3D92;
+$topbar-item-active-bg: #924DA7;
 
 $genre-title-text: #783189;
 $genre-title-chevron: #aa79c6;
@@ -125,10 +125,12 @@ $topbar-height: 8.5rem;
 $topbar-logo-icon-size: 6.044rem;
 $topbar-logo-margin-left: 2.5rem;
 $topbar-padding-bottom: 1.667rem;
-$topbar-item-font-size: 1.167rem;
-$topbar-item-padding-lr: 1.833rem;
-$topbar-item-padding-tb: 0.833rem;
-$topbar-item-margin-right: 0.417rem;
+$topbar-item-font-size: 1.6rem;
+$topbar-item-padding-lr: 1.2rem;
+$topbar-item-padding-tb: 0.533rem;
+$topbar-item-margin-right: 0.2rem;
+$topbar-search-height: 2.3rem;
+$topbar-searchbox-bg: #A170AF;
 
 $menu-width: 26.667rem;
 $menu-item-padding-left: 2.5rem;

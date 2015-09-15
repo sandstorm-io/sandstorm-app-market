@@ -100,14 +100,13 @@
       display: inline-block;
       vertical-align: middle;
       background-color: $topbar-item-bg;
-      margin-left: $topbar-item-margin-right;
+      margin-right: $topbar-item-margin-right;
       padding-left: $topbar-item-padding-lr;
       padding-right: $topbar-item-padding-lr;
       padding-top: $topbar-item-padding-tb;
       padding-bottom: $topbar-item-padding-tb;
       font-size: $topbar-item-font-size;
       cursor: pointer;
-      text-transform: uppercase;
       color: $topbar-item-text;
 
       &.active, &:active, &:hover {
@@ -121,6 +120,7 @@
       &.extra-genres {
 
         position: relative;
+        margin-right: 2.5rem;
 
         .extra-genres-list {
 
@@ -177,15 +177,16 @@
       display: inline-block;
       vertical-align: middle;
       color: $topbar-item-text;
-      background: none;
+      background: $topbar-searchbox-bg;
       font-family: $main-font;
       font-size: $topbar-item-font-size;
-      box-shadow: inset 0 0 0 1px $topbar-item-bg;
       border: none;
       padding-left: $topbar-item-padding-lr;
       padding-right: $topbar-item-padding-lr;
       padding-top: $topbar-item-padding-tb;
       padding-bottom: $topbar-item-padding-tb;
+      line-height: $topbar-search-height;
+
       &:focus {
         outline: none;
         box-shadow: inset 0 0 0 1px $topbar-item-active-bg;
@@ -210,7 +211,7 @@
       padding-top: $topbar-item-padding-tb;
       padding-bottom: $topbar-item-padding-tb;
       border: none;
-      line-height: 1.67rem;
+      line-height: $topbar-search-height;
 
       &:active, &:hover {
         background-color: $topbar-item-active-bg;
