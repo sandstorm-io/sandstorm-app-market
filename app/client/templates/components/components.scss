@@ -12,7 +12,7 @@
   display: inline-block;
   vertical-align: middle;
   font-size: $update-selector-button-font-size;
-  padding-top: 0;
+  padding-top: 0.3rem;
   padding-bottom: 0;
   padding-left: $update-selector-button-padding-lr;
   padding-right: $update-selector-button-padding-lr;
@@ -22,9 +22,9 @@
   border-radius: $button-border-radius;
   cursor: pointer;
   font-weight: 300;
-  height: 3.1rem;
+  height: 4rem;
   line-height: 3.1rem;
-  font-size: 1.35rem;
+  font-size: 1.9rem;
 
   i {
     color: $update-selector-button-icon;
@@ -65,7 +65,7 @@
     border-style: solid;
 
     i {
-      color: #c9add0;
+      color: #b68bc1;
       display: inline-block;
     }
   }
