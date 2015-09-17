@@ -52,10 +52,10 @@
 
         text-align: center;
         vertical-align: top;
-        width: 35%;
-        margin-left: 32.5%;
-        margin-right: 32.5%;
-        
+        width: 30rem;
+        margin-left: 25%;
+        margin-right: 25%;
+
         @media (max-width: $small-tablet) {
           margin-left: 0;
           margin-right: 0;
@@ -73,7 +73,7 @@
             }
 
             &:first-child {
-              margin-bottom: 0.75rem;
+              margin-bottom: 1rem;
             }
           }
         }
