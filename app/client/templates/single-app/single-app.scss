@@ -33,7 +33,8 @@ $app-container-padding-rl: 4.6rem;
     .image-section {
 
       float: left;
-      margin-right: 5.66rem;
+      margin-right: 3rem;
+      margin-top: 2.5rem;
       height: 26.5rem;
 
       @media (min-width: $large-phone) and (max-width: $small-tablet) {
@@ -106,9 +107,11 @@ $app-container-padding-rl: 4.6rem;
 
       // height: 26.5rem;
       overflow-y: hidden;
+      margin-top: 1.8rem;
 
       .top-section {
 
+        padding-bottom: 0.5rem;
         border-bottom: 1px solid #cfb5d6;
         color: #222222;
 
@@ -166,7 +169,7 @@ $app-container-padding-rl: 4.6rem;
         }
 
         .genre {
-          margin-bottom: 1rem;
+          margin: 0.5rem 0;
           font-size: 1.7rem;
           color: #783189;
           a {
@@ -199,7 +202,7 @@ $app-container-padding-rl: 4.6rem;
           a {
             color: #7d627c;
           }
-          
+
           &[data-tooltip] {
             display: inline-block;
           }
@@ -233,6 +236,7 @@ $app-container-padding-rl: 4.6rem;
 
     .half-col.right {
       display: block;
+      margin: 1rem;
       float: right;
       width: auto;
       max-width: 50%;
@@ -492,18 +496,18 @@ $app-container-padding-rl: 4.6rem;
     &.min-height {
       min-height: 28rem;
     }
-    
+
     &.max-height {
       max-height: 28rem;
     }
-    
+
     .fade-box {
       position: absolute;
       height: 5rem;
       bottom: 3.4rem;
       width: 100%;
       background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
-      
+
       &.hidden {
         display: none;
       }
@@ -639,7 +643,7 @@ $app-container-padding-rl: 4.6rem;
 
     display: inline-block;
     vertical-align: middle;
-    background-color: #e0e0e0;
+    background-color: #eeeeee;
     width: 90%;
 
     .screenshot-container {
