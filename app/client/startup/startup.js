@@ -69,6 +69,7 @@ Meteor.startup(function() {
 // ordering with the hope of directing demo users to try certain apps first. Don't read too much
 // into this ordering -- it's fairly random beyond the first few.
 moderatorPreferenceOrder = [
+  "vfnwptfn02ty21w715snyyczw0nqxkv3jvawcah10c6z7hj1hnu0", // Rocket.Chat
   "m86q05rdvj14yvn78ghaxynqz7u2svw6rnttptxx49g1785cdv1h", // Wekan
   "a0n6hwm32zjsrzes8gnjg734dh6jwt7x83xdgytspe761pe2asw0", // EtherCalc
   "nfqhx83vvzm80edpgkpax8mhqp176qj2vwg67rgq5e3kjc5r4cyh", // draw.io
@@ -78,6 +79,7 @@ moderatorPreferenceOrder = [
   "nn7axgy3y8kvd0m1mtk3cwca34t916p5d7m4j1j2e874nuz3t8y0", // FileDrop
   "6va4cjamc21j0znf5h5rrgnv0rpyvh1vaxurkrgknefvj0x63ash", // GitWeb
   "vxe8awcxvtj6yu0vgjpm1tsaeu7x8v8tfp71tyvnm6ykkephu9q0", // Paperwork
+  "r75g5cp60zsc3u80zt278kek9v84k786c0tf7mm30hwhvu2njrg0", // Go
   "4dgxs5m0gnjmjpg88mswqsy9fj08t3z6c8kwv4y9tkgxvp9eas9h", // Laverna
   "sptx6z162fp1w8rwe92vc8tzm76v0mk0wwc9yafze2vpghjs48j0", // Brainstorm
   "qkgkaxfqhgsff8zgx2f4nf1a8xvmpte6wa19egmfkk06mzt7e8dh", // Let's Chat
@@ -98,6 +100,7 @@ moderatorPreferenceOrder = [
   "7m2fcfn7qdyexs3jmn6vrdngcryeuc8y4fa6jpyj4fgwh5tq27ph", // Acronymy
   "yx8a62h5ytxdcnhvxuq9t5r2fngr1yfvs5sw776e7vv2zrx68u4h", // Duoludo
   "aax9j672p6z8n7nyupzvj2nmumeqd4upa0f7mgu8gprwmy53x04h", // WordPress
+  "w544a46cjwtje73rfearjvszwa3nhjtxjanu5s83qkdutx6k0nz0", // Scrumblr
   "nqmcqs9spcdpmqyuxemf0tsgwn8awfvswc58wgk375g4u25xv6yh", // Hacker CMS
   "zj20q6pwy456cmq0k57n1mtqqtky664dfqnhsmf3t36khch5geph", // Tiny Tiny RSS
 ];
