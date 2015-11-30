@@ -64,8 +64,10 @@ status "build app market"
 rm -rf build
 BUILD_DIR=$PWD/build
 
+METEOR_DEV_BUNDLE=$(./find-meteor-dev-bundle.sh)
+
 (cd app && meteor build --directory $BUILD_DIR)
-(cd build/bundle/programs/server && npm install)
+(cd build/bundle/programs/server && "$METEOR_DEV_BUNDLE/bin/npm" install)
 
 # ====================================================================
 status "merging bundles"
