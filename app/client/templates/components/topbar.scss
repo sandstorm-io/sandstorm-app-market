@@ -10,20 +10,23 @@
 
     position: absolute;
     left: $topbar-logo-margin-left;
-    bottom: $topbar-padding-bottom;
     color: $topbar-logo-text;
 
+    span {
+      font-size: $topbar-logo-text-font-size;
+      display: inline;
+    }
+
     i {
-
+      display: inline;
       font-size: $topbar-logo-icon-size;
-
     }
 
   }
 
   .genre-holder {
 
-    margin-left: $menu-width + $app-section-padding-left;
+    margin-left: $app-section-padding-left;
     margin-right: 32rem;
     position: relative;
     height: $topbar-height;

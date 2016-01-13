@@ -122,8 +122,9 @@ $banner-font-color: #594590;
 $button-border-radius: 0.5rem;
 
 $topbar-height: 8.5rem;
-$topbar-logo-icon-size: 6.044rem;
+$topbar-logo-icon-size: 5.5rem;
 $topbar-logo-margin-left: 2.5rem;
+$topbar-logo-text-font-size: 2.5rem;
 $topbar-padding-bottom: 1.667rem;
 $topbar-item-font-size: 1.6rem;
 $topbar-item-padding-lr: 1.2rem;
@@ -140,7 +141,7 @@ $menu-item-padding-tb: 2.333rem;
 $menu-box-shadow: 0.25rem 0.25rem $app-box-drp-shdw;
 
 $app-section-width: 104.167rem;
-$app-section-padding-left: 8rem;
+$app-section-padding-left: $topbar-logo-margin-left;
 $app-section-padding-right: 11.3rem;
 $app-genre-margin-top: 5.417rem;
 $app-genre-margin-bottom: 1.333rem;
