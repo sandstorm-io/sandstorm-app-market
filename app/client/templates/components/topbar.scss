@@ -12,10 +12,9 @@
     left: $topbar-logo-margin-left;
     color: $topbar-logo-text;
 
-    span {
+    > span {
       font-size: $topbar-logo-text-font-size;
       font-weight: normal;
-      display: inline;
     }
 
     i {
