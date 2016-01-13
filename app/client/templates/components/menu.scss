@@ -145,8 +145,9 @@ body.admin {
   }
 
   .menu-spacer {
+    color: blue;
 
-    margin-left: 12.5rem;
+    margin-left: $topbar-logo-margin-left;
 
     @media screen and (max-width: $medium-tablet) {
 
@@ -172,7 +173,7 @@ body.admin {
 
 .menu-spacer {
 
-  margin-left: $menu-width + $app-section-padding-left;
+  margin-left: $app-section-padding-left;
   position: relative;
 
   @media screen and (max-width: $medium-tablet) {

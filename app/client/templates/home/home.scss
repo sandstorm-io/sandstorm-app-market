@@ -12,12 +12,10 @@ body {
   position: relative;
   height: $welcome-message-height;
   background-color: #cad4ef;
-  background-position: $menu-width 0;
   background-size: auto 100%;
   background-repeat: no-repeat;
   background-image: url('images/welcome-banner.png');
   overflow: hidden;
-  padding-left: $menu-width;
 
   @media screen and (max-width: $medium-tablet) {
 
@@ -91,7 +89,6 @@ body {
   font-size: 250%;
   color: #783189;
   border-top: 1px solid #879ac1;
-  margin-left: $menu-width;
   text-align: center;
   padding: 1rem;
   @media screen and (max-width: $medium-tablet) {

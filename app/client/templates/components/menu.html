@@ -1,30 +1,6 @@
 <template name="Menu">
 
   <nav class="menu-container">
-
-    <a class="menu-link {{inRouteCategory 'appMarket'}}" href="{{getPath 'appMarket'}}">
-      <i class="icon-market"></i>
-      <div class="menu-text">App Market</div>
-    </a>
-
-    {{#if false}}
-    <a class="menu-link {{inRouteCategory 'installedApps'}}" href="{{getPath 'installedApps'}}">
-      <i class="icon-apps"></i>
-      <div class="menu-text">Install History</div>
-    </a>
-    {{/if}}
-
-    <a class="menu-link {{inRouteCategory 'upload'}} hide-for-phone"
-       href="https://docs.sandstorm.io/en/latest/developing/publishing-apps/" target="_blank">
-      <i class="icon-upload"></i>
-      <div class="menu-text">Upload an App</div>
-    </a>
-
-    <a class="menu-link {{inRouteCategory 'login'}}" href="{{getPath 'login'}}">
-      <i class="icon-my"></i>
-      <div class="menu-text">{{#if currentUser}}{{currentUser.profile.name}}{{else}}Log In{{/if}}</div>
-    </a>
-
   </nav>
 
 </template>
