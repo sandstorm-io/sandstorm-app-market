@@ -1,5 +1,7 @@
 Template.Search.helpers({
-
+  searchQuery: function() {
+    return FlowRouter.getQueryParam('term');
+  },
   appList: function() {
 
     var term = FlowRouter.getQueryParam('term');
