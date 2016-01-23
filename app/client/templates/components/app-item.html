@@ -16,9 +16,9 @@
 
           <div class="text-section">
 
-            <div class="app-name">{{{name}}}</div>
+            <div class="app-name">{{> _renderHighlighted text=name}}</div>
 
-            <div class="app-short-description">{{{shortDescription}}}</div>
+            <div class="app-short-description">{{> _renderHighlighted text=shortDescription}}</div>
 
             <div class="app-rating">{{> appRating app=this simple=true}}</div>
 
@@ -53,9 +53,9 @@
 
           </div>
 
-          <div class="app-name">{{{name}}}</div>
+          <div class="app-name">{{> _renderHighlighted text=name}}</div>
 
-          <div class="app-short-description">{{{shortDescription}}}</div>
+          <div class="app-short-description">{{> _renderHighlighted text=shortDescription}}</div>
 
           <div class="app-rating">
             {{> appRating app=this simple=true}}
@@ -167,4 +167,8 @@
 
   </div>
 
+</template>
+
+<template name="_renderHighlighted">
+  {{text.before}}{{#if text.highlighted}}<span class="highlight">{{text.highlighted}}</span>{{/if}}{{text.after}}
 </template>

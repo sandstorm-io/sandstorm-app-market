@@ -17,10 +17,21 @@ Template.appItem.onRendered(function() {
 
 function highlightText(text, searchQuery) {
   if (!searchQuery) {
-    return _.escape(text);
+    return {
+      before: text,
+    }
   }
-  return _.escape(text).replace(
-    new RegExp("(" + searchQuery + ")", "i"), '<span class="highlight">$1</span>');
+  var index = text.indexOf(searchQuery);
+  if (index === -1) {
+    return {
+      before: text,
+    }
+  }
+  return {
+    before: text.slice(0, index),
+    highlighted: text.slice(index, index + searchQuery.length),
+    after: text.slice(index + searchQuery.length),
+  }
 }
 
 Template.appItem.helpers({
