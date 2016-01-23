@@ -51,23 +51,18 @@
       .genres {right: 0;}
     }
     
-    @media (min-width: $small-screen) and (max-width: $medium-screen) {
+    @media (min-width: $small-screen) and (max-width: $large-screen) {
       margin-right: 32.5rem;
       .genres {right: 0;}
     }
     
-    @media (min-width: $medium-screen +1px) {
-      margin-right: 33rem;
-      .genres {right: 0;}
-    }
-    
     @media (min-width: $large-screen) {
-      margin-right: 31.5rem;
+      margin-right: 32.5rem;
       .genres {right: 0;}
     }
     
     @media (min-width: $xxlarge-screen) {
-      margin-right: 37rem;
+      margin-right: 38rem;
     }
     
   }
