@@ -26,45 +26,50 @@
 
   .genre-holder {
 
-    margin-left: $app-section-padding-left;
-    margin-right: 32rem;
+    margin-left: 28rem;
+    margin-right: 23rem;
     position: relative;
     height: $topbar-height;
 
     @media (max-width: $small-phone) {
-      margin-left: $app-section-padding-left;
       margin-right: 5rem;
       .genres {right: 0;}
     }
 
     @media (min-width: $small-phone) and (max-width: $medium-phone) {
-      margin-left: $app-section-padding-left;
-      margin-right: 17rem;
+      margin-left: 17rem;
       .genres {right: 0;}
     }
 
-    @media (min-width: $medium-phone) and (max-width: $small-tablet) {
-      margin-left: $app-section-padding-left;
-      margin-right: 22rem;
-      .genres {right: 0;}
-    }
-
-    @media (min-width: $small-tablet + 1px) and (max-width: $medium-tablet) {
-
+    @media (min-width: $medium-phone) and (max-width: $medium-tablet) {
       margin-left: 28rem;
-      margin-right: 22rem;
       .genres {right: 0;}
-
     }
 
-    @media (min-width: $medium-tablet + 1px) and (max-width: $small-screen) {
-
-      margin-left: 28rem;
-      margin-right: 32rem;
+    @media (min-width: $medium-tablet) and (max-width: $small-screen) {
+      margin-left: 40rem;
       .genres {right: 0;}
-
     }
-
+    
+    @media (min-width: $small-screen) and (max-width: $medium-screen) {
+      margin-right: 32.5rem;
+      .genres {right: 0;}
+    }
+    
+    @media (min-width: $medium-screen +1px) {
+      margin-right: 33rem;
+      .genres {right: 0;}
+    }
+    
+    @media (min-width: $large-screen) {
+      margin-right: 31.5rem;
+      .genres {right: 0;}
+    }
+    
+    @media (min-width: $xxlarge-screen) {
+      margin-right: 37rem;
+    }
+    
   }
 
   .genres {
@@ -123,7 +128,16 @@
       &.extra-genres {
 
         position: relative;
-        margin-right: 2.5rem;
+        margin-right: 5rem;
+        
+        
+        @media (min-width: $small-phone) and (max-width: $medium-phone) {
+          margin-right: 0rem;
+        }
+        
+        @media (min-width: $medium-phone +1px) and (max-width: $large-phone) {
+          margin-right: 12rem;
+        }
 
         .extra-genres-list {
 
