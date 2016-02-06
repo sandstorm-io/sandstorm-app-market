@@ -361,6 +361,11 @@ $app-container-padding-rl: 4.6rem;
     &.install {
       color: #ffffff;
       background-color: #783189;
+      
+      &:hover {
+        background-color: #9247a9;
+      }
+      
       i {
         color: #c18ace;
       }
