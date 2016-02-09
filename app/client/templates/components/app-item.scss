@@ -143,6 +143,10 @@
         color: $app-install-text;
         background-color: $app-install-bg;
         cursor: pointer;
+        
+        &:hover {
+          background-color: $app-install-bg-hover;
+        }
 
         i {
 
