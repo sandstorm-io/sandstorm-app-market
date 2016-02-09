@@ -76,35 +76,35 @@ function checkAuthorExists() {
 FlowRouter.route('/login', {
   name: 'login',
   action: function(params, queryParams) {
-    FlowLayout.render('MasterLayout', {mainSection: 'Login'});
+    BlazeLayout.render('MasterLayout', {mainSection: 'Login'});
   }
 });
 
 FlowRouter.route('/not-found/:object', {
   name: 'notFound',
   action: function(params, queryParams) {
-    FlowLayout.render('MasterLayout', {mainSection: 'NotFound'});
+    BlazeLayout.render('MasterLayout', {mainSection: 'NotFound'});
   }
 });
 
 FlowRouter.route('/app/:appId', {
   name: 'singleApp',
   action: function(params, queryParams) {
-    FlowLayout.render('MasterLayout', {mainSection: 'SingleApp'});
+    BlazeLayout.render('MasterLayout', {mainSection: 'SingleApp'});
   }
 });
 
 FlowRouter.route('/', {
   name: 'appMarket',
   action: function(params, queryParams) {
-    FlowLayout.render('MasterLayout', {mainSection: 'Home'});
+    BlazeLayout.render('MasterLayout', {mainSection: 'Home'});
   }
 });
 
 FlowRouter.route('/author/:authorName', {
   name: 'appMarketAuthor',
   action: function(params, queryParams) {
-    FlowLayout.render('MasterLayout', {mainSection: 'AppsByAuthor'});
+    BlazeLayout.render('MasterLayout', {mainSection: 'AppsByAuthor'});
   }
 });
 
@@ -114,15 +114,15 @@ FlowRouter.route('/genre/:genre', {
     if (params.genre !== s.capitalize(params.genre))
       FlowRouter.setParams({genre: s.capitalize(params.genre)});
 
-    if (params.genre === 'Popular') FlowLayout.render('MasterLayout', {mainSection: 'Popular'});
-    else FlowLayout.render('MasterLayout', {mainSection: 'Genre', genre: FlowRouter.getParam('genre')});
+    if (params.genre === 'Popular') BlazeLayout.render('MasterLayout', {mainSection: 'Popular'});
+    else BlazeLayout.render('MasterLayout', {mainSection: 'Genre', genre: FlowRouter.getParam('genre')});
   }
 });
 
 FlowRouter.route('/search', {
   name: 'appSearch',
   action: function(params, queryParams) {
-    FlowLayout.render('MasterLayout', {mainSection: 'Search'});
+    BlazeLayout.render('MasterLayout', {mainSection: 'Search'});
   }
 });
 
@@ -131,7 +131,7 @@ FlowRouter.route('/installed', {
   action: function(params, queryParams) {
     var user = Meteor.users.findOne(Meteor.userId());
     FlowRouter.current().firstVisit = (typeof(user && user.autoupdateApps) === 'undefined');
-    FlowLayout.render('MasterLayout', {mainSection: 'InstalledApps'});
+    BlazeLayout.render('MasterLayout', {mainSection: 'InstalledApps'});
   }
 });
 
@@ -139,14 +139,14 @@ FlowRouter.route('/apps-by-me', {
   name: 'appsByMe',
   foo: 'bar',
   action: function(params, queryParams) {
-    FlowLayout.render('MasterLayout', {mainSection: 'AppsByMe'});
+    BlazeLayout.render('MasterLayout', {mainSection: 'AppsByMe'});
   }
 });
 
 FlowRouter.route('/upload', {
   name: 'upload',
   action: function(params, queryParams) {
-    FlowLayout.render('MasterLayout', {mainSection: 'Upload'});
+    BlazeLayout.render('MasterLayout', {mainSection: 'Upload'});
   }
 });
 
