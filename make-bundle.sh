@@ -72,15 +72,8 @@ METEOR_DEV_BUNDLE=$(./find-meteor-dev-bundle.sh)
 # ====================================================================
 status "merging bundles"
 
-# HACK: inject app store settings into sandstorm-main.js
-cat > build/bundle/sandstorm-main.js << __EOF__
-process.env.METEOR_SETTINGS = JSON.stringify({
-  public: {
-    API_URL: "https://app-index.sandstorm.io"
-  }
-});
-__EOF__
-cat sandstorm-0/sandstorm-main.js >> build/bundle/sandstorm-main.js
+# Overwrite sandstorm-main.js with one that doesn't do all the HTTPS stuff we don't need.
+cp meteor-bundle-main.js build/bundle/sandstorm-main.js
 
 for file in build/bundle/*; do
   rm -rf sandstorm-0/$(basename $file)
