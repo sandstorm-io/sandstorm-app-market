@@ -7,7 +7,6 @@ if (experimental) {
     FlowRouter.triggers.enter([function (context, redirect) {
       // The trigger runs before the path is updated, so we need to Meteor.defer().
       Meteor.defer(function () {
-        console.log("hi", window.location);
         if (window.location.search === "") {
           window.history.replaceState(window.history.state, document.title, "?experimental=true");
         }
