@@ -495,7 +495,7 @@ $app-container-padding-rl: 4.6rem;
 
     &.padded {
       padding-top: 2rem;
-      padding-bottom: 2rem;
+      padding-bottom: 4rem;
     }
 
     &.min-height {
@@ -503,7 +503,7 @@ $app-container-padding-rl: 4.6rem;
     }
 
     &.max-height {
-      max-height: 28rem;
+      max-height: 50rem;
     }
 
     .fade-box {
