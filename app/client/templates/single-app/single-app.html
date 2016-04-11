@@ -45,7 +45,7 @@
 
                 <div class="half-col">
 
-                  <div class="date">{{dateFormat createdAt 'MMMM DD, YYYY'}}</div>
+                  <div class="date">Last update: {{dateFormat createdAt 'MMMM DD, YYYY'}}</div>
                   <div class="genre">
                     {{#each indexedList categories}}{{#if index}}, {{/if}}
                       <a href="{{genreUrl value}}">{{value}}</a>{{/each}}
@@ -213,7 +213,7 @@
 
   <div class="carousel">
 
-    <div class="prev-button {{#unless extraScreenshots}}disabled{{/unless}}" data-action="carousel-prev"><i class="icon-extra-l-angle"></i></div>
+    <div class="prev-button {{#unless extraScreenshots}}hidden{{/unless}}" data-action="carousel-prev"><i class="icon-extra-l-angle"></i></div>
     <div class="owl-carousel">
       {{#each images}}
       <div class="screenshot-container">
@@ -221,7 +221,7 @@
       </div>
       {{/each}}
     </div>
-    <div class="next-button {{#unless extraScreenshots}}disabled{{/unless}}" data-action="carousel-next"><i class="icon-extra-r-angle"></i></div>
+    <div class="next-button {{#unless extraScreenshots}}hidden{{/unless}}" data-action="carousel-next"><i class="icon-extra-r-angle"></i></div>
 
   </div>
 
