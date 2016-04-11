@@ -361,11 +361,11 @@ $app-container-padding-rl: 4.6rem;
     &.install {
       color: #ffffff;
       background-color: #783189;
-      
+
       &:hover {
         background-color: #9247a9;
       }
-      
+
       i {
         color: #c18ace;
       }
@@ -839,11 +839,10 @@ $app-container-padding-rl: 4.6rem;
   font-weight: 300;
   cursor: pointer;
 
-  &.disabled {
-
-    cursor: initial;
-    color: #c9add0;
-
+  &.hidden {
+    /* Choosing visibility: hidden; rather than display: none; to avoid */
+    /* having to re-think layout for the carousel itself. */
+    visibility: hidden;
   }
 
   i {
