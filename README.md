@@ -11,14 +11,21 @@ You will need to supply a `settings.json` file as follows:
 ```json
 {
   "public": {
-    "API": "[Sandstorm Apps API endpoint]",
+    "API_URL": "[Sandstorm Apps API endpoint]",
     "INDEX_OVERRIDE_URL": "[OPTIONAL - override the app index endpoint]",
     "APP_OVERRIDE_URL": "[OPTIONAL - override the app detail endpoint]",
     "IMAGE_OVERRIDE_URL": "[OPTIONAL - override the app images endpoint]",
     "PACKAGE_OVERRIDE_URL": "[OPTIONAL - override the app spks endpoint]",
-    "FLAG_URl": "[URL to which to POST app flag details]"
+    "FLAG_URL": "[URL to which to POST app flag details]"
   }
 }
+```
+
+One valid settings.json lives in settings-example.json. You can run this command
+to use it:
+
+```bash
+cp settings-example.json app/settings.json
 ```
 
 ## Running the app
