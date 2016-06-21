@@ -3,7 +3,7 @@
 .show-above-phone {
 
   @media (max-width: $small-tablet) {
-    display: none;
+    display: none !important;
   }
   @media (min-width: ($small-tablet + 1px)) {
     display: inherit;
