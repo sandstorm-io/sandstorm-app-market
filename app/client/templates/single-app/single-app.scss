@@ -37,10 +37,6 @@ $app-container-padding-rl: 4.6rem;
       margin-top: 2.5rem;
       height: 26.5rem;
 
-      @media (min-width: $large-phone) and (max-width: $small-tablet) {
-        height: 60vw;
-      }
-
       .image-surround-full-width {
 
         position: relative;
