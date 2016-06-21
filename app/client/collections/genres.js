@@ -23,7 +23,7 @@ AppMarket.extraGenres = [
   {
     name: 'All',
     selector: {},
-    options: {},
+    options: {sort: {moderatorPreference: 1}}, // AKA "Featured"
     priority: 1,
     showSummary: false
   },
@@ -46,16 +46,6 @@ AppMarket.extraGenres = [
     },
     priority: 1,
     showSummary: false
-  },
-
-  {
-    name: 'Featured',
-    selector: {},
-    options: {
-      sort: {moderatorPreference: 1}
-    },
-    priority: 0,
-    showSummary: true
   },
 
   {

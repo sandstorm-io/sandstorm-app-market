@@ -11,6 +11,8 @@
 
       <div class="genres">
 
+        <a href="/" data-action="close-more-menu"><div class="genre-box {{#if active}}active{{/if}}">All</div></a>
+
         {{#each genres}}
 
           <a href="{{getZippedPath 'appMarketGenre' 'genre' name}}" data-action="close-more-menu"><div class="genre-box {{#if active}}active{{/if}}">{{name}}</div></a>
