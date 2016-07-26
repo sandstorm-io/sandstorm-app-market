@@ -24,7 +24,9 @@ Template.appRating.events({
 
   'click [data-action="rate-app"]': function(evt, tmp) {
 
-    evt.stopImmediatePropagation();
+    // Sometimes the appRating template is rendered within a HTML A HREF link, such as within the
+    // category page. This allows us to handle the click instead of navigating the browser.
+    evt.preventDefault();
     var app = Template.parentData(1);
 
     if (!Meteor.userId()) {
