@@ -2,6 +2,15 @@ var fetchStatus = {};
 
 _.extend(AppMarket, {
 
+  setPageTitlePrefix: function(prefixString) {
+    if (prefixString) {
+      prefixString = prefixString + " - ";
+    } else {
+      prefixString = "";
+    }
+    document.title = prefixString + "Sandstorm App Market";
+  },
+
   appInit: new ReactiveVar(false),
 
   // Fetch extended info about a specific app and insert it into the app table.

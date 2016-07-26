@@ -15,6 +15,17 @@ Template.Genre.onDestroyed(function() {
 
 });
 
+Template.Genre.onCreated(function() {
+  // Must auto-run this so that if you switch between genres, the page title changes.
+  this.autorun(function() {
+    AppMarket.setPageTitlePrefix(FlowRouter.getParam('genre'));
+  });
+});
+
+Template.Genre.onDestroyed(function() {
+  AppMarket.setPageTitlePrefix("");
+});
+
 Template.Genre.helpers({
 
   genre: function() {

@@ -1,8 +1,11 @@
 var REVIEW_ROWS = 4,
     REVIEW_COLS = 3;
 
-Template.SingleApp.onCreated(function() {
+Template.SingleApp.onDestroyed(function() {
+  AppMarket.setPageTitlePrefix('');
+});
 
+Template.SingleApp.onCreated(function() {
   var tmp = this;
   tmp.appId = FlowRouter.getParam('appId');
   tmp.ready = new ReactiveVar(false);
@@ -12,6 +15,7 @@ Template.SingleApp.onCreated(function() {
       if (AppMarket.ensureDetailsFetched(tmp.appId)) {
         tmp.ready.set(true);
         var app = Apps.findOne(tmp.appId);
+        AppMarket.setPageTitlePrefix(app.name);
         if (!app.screenshots.length) tmp.readMore.set(true);
       }
     } catch (err) {
@@ -51,7 +55,7 @@ Template.SingleApp.onCreated(function() {
   // Load existing review of this app (if it exists)
   tmp.subscribe('reviews', tmp.appId, function() {
     var myReview = Reviews.findOne({
-      userId: Meteor.userId(), 
+      userId: Meteor.userId(),
       appId: tmp.appId
     });
     if (myReview) tmp.myReview.set(_.pick(myReview, ['text', 'rating']));
@@ -163,14 +167,14 @@ Template.SingleApp.helpers({
   },
 
   renderedChangelog: function() {
-    
+
     return this.changelog && htmlTruncate(marked(this.changelog), 200);
-    
+
   }
 
 });
 
-Template.SingleApp.events({ 
+Template.SingleApp.events({
 
   'click [data-action="read-more"]': function(evt, tmp) {
 
@@ -438,7 +442,7 @@ Template.flagBox.events({
         data: flag,
         success: function() {
           amplify.store('sandstormAppFlags', localFlags);
-          return tmp.get('flagApp').set(false);          
+          return tmp.get('flagApp').set(false);
         },
         error: function() {
           return AntiModals.overlay('errorModal', {data: {err: 'Could not post flag. Please check your internet connection.'}});
