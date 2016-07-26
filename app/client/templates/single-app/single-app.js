@@ -55,7 +55,7 @@ Template.SingleApp.onCreated(function() {
   // Load existing review of this app (if it exists)
   tmp.subscribe('reviews', tmp.appId, function() {
     var myReview = Reviews.findOne({
-      userId: Meteor.userId(), 
+      userId: Meteor.userId(),
       appId: tmp.appId
     });
     if (myReview) tmp.myReview.set(_.pick(myReview, ['text', 'rating']));
@@ -167,14 +167,14 @@ Template.SingleApp.helpers({
   },
 
   renderedChangelog: function() {
-    
+
     return this.changelog && htmlTruncate(marked(this.changelog), 200);
-    
+
   }
 
 });
 
-Template.SingleApp.events({ 
+Template.SingleApp.events({
 
   'click [data-action="read-more"]': function(evt, tmp) {
 
@@ -442,7 +442,7 @@ Template.flagBox.events({
         data: flag,
         success: function() {
           amplify.store('sandstormAppFlags', localFlags);
-          return tmp.get('flagApp').set(false);          
+          return tmp.get('flagApp').set(false);
         },
         error: function() {
           return AntiModals.overlay('errorModal', {data: {err: 'Could not post flag. Please check your internet connection.'}});
