@@ -1,5 +1,4 @@
-var REVIEW_ROWS = 40000,
-    REVIEW_COLS = 2;
+var REVIEW_COLS = 2;
 
 Template.SingleApp.onDestroyed(function() {
   AppMarket.setPageTitlePrefix('');
@@ -368,35 +367,18 @@ Template.reviewFrame.onRendered(function() {
 });
 
 Template.reviewFrame.helpers({
-  reviewsForSingleAppPage: function() {
-    if (! this.reviews) {
-      return [];
-    }
-
-    return this.reviews.slice(20);
-  },
-
   reviewGroups: function() {
 
     if (!this.reviews) return [];
 
-    var size =  this.reviews.length > (REVIEW_ROWS * REVIEW_COLS) ?
-                REVIEW_ROWS :
-                Math.ceil(this.reviews.length / REVIEW_COLS);
+    var size = Math.ceil(this.reviews.length / REVIEW_COLS);
 
     var res = _.groupBy(this.reviews, function(reviews, i) {
         return Math.floor(i / size);
     });
     return _.values(res);
 
-  },
-
-  extraReviews: function() {
-
-    return this.reviews.length > REVIEW_ROWS * REVIEW_COLS;
-
   }
-
 });
 
 Template.reviewFrame.events({
