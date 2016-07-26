@@ -2,7 +2,7 @@ var fetchStatus = {};
 
 _.extend(AppMarket, {
 
-  setPageTitlePrefix: (prefixString) => {
+  setPageTitlePrefix: function(prefixString) {
     if (prefixString) {
       prefixString = prefixString + " - ";
     } else {
