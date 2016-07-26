@@ -1,5 +1,5 @@
-var REVIEW_ROWS = 4,
-    REVIEW_COLS = 3;
+var REVIEW_ROWS = 40000,
+    REVIEW_COLS = 2;
 
 Template.SingleApp.onDestroyed(function() {
   AppMarket.setPageTitlePrefix('');
@@ -368,6 +368,13 @@ Template.reviewFrame.onRendered(function() {
 });
 
 Template.reviewFrame.helpers({
+  reviewsForSingleAppPage: function() {
+    if (! this.reviews) {
+      return [];
+    }
+
+    return this.reviews.slice(20);
+  },
 
   reviewGroups: function() {
 

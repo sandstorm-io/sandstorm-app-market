@@ -767,28 +767,27 @@ $app-container-padding-rl: 4.6rem;
   }
 
   .review-frame {
-
     margin-top: 2.4rem;
-
   }
 
   .reviews {
-
-    display: inline-block;
-    vertical-align: middle;
-    width: 94%;
-    position: relative;
-    box-sizing: border-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
 
     .review-box {
-
-      padding: 1.9rem;
+      padding-right: 1.9rem;
+      padding-top: 1.9rem;
+      padding-bottom: 1.9rem;
+      width: 50%;
       box-sizing: border-box;
-      height: 15rem;
-      overflow: hidden;
 
       @media (max-width: $small-tablet) {
         padding: 1.9rem 0;
+        width: 100%;
       }
 
       .username {
@@ -812,7 +811,6 @@ $app-container-padding-rl: 4.6rem;
 
       .review {
         font-size: 1.5rem;
-        color: #6d627c;
       }
 
     }
