@@ -1,8 +1,11 @@
 var REVIEW_ROWS = 4,
     REVIEW_COLS = 3;
 
-Template.SingleApp.onCreated(function() {
+Template.SingleApp.onDestroyed(function() {
+  AppMarket.setPageTitlePrefix('');
+});
 
+Template.SingleApp.onCreated(function() {
   var tmp = this;
   tmp.appId = FlowRouter.getParam('appId');
   tmp.ready = new ReactiveVar(false);
@@ -12,6 +15,7 @@ Template.SingleApp.onCreated(function() {
       if (AppMarket.ensureDetailsFetched(tmp.appId)) {
         tmp.ready.set(true);
         var app = Apps.findOne(tmp.appId);
+        AppMarket.setPageTitlePrefix(app.name);
         if (!app.screenshots.length) tmp.readMore.set(true);
       }
     } catch (err) {

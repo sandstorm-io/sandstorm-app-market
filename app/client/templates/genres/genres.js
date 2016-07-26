@@ -15,11 +15,20 @@ Template.Genre.onDestroyed(function() {
 
 });
 
+Template.Genre.onCreated(() => {
+  AppMarket.setPageTitlePrefix(FlowRouter.getParam('genre'));
+});
+
+Template.Genre.onDestroyed(() => {
+  AppMarket.setPageTitlePrefix("");
+});
+
 Template.Genre.helpers({
 
   genre: function() {
 
     FlowRouter.watchPathChange();
+    AppMarket.setPageTitlePrefix(FlowRouter.getParam('genre'));
     return FlowRouter.getParam('authorName') ? 'Apps By Author' : FlowRouter.getParam('genre');
 
   }
