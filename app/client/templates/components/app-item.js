@@ -97,24 +97,6 @@ Template.appItem.helpers({
   },
 });
 
-Template.appItem.events({
-
-  'click [data-action="uninstall-app-modal"]': function(evt) {
-
-    evt.stopPropagation();
-    AntiModals.overlay('uninstallApp', {data: this});
-
-  },
-
-  'click [data-link="single-app"]': function(evt) {
-
-    // We need to check if they've actually clicked on a link before redirecting
-    if (!evt.target.href && !evt.target.parentElement.href) FlowRouter.go('singleApp', {appId: this.app._id});
-
-  }
-
-});
-
 Template.appItemFullWidth.helpers({
 
   free: function(price) {

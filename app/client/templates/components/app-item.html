@@ -1,7 +1,6 @@
 <template name="appItem">
 
-  <div class="app-item-container {{size}} {{appInstalled.cssClass}}" data-link="single-app">
-
+  <div class="app-item-container {{size}} {{appInstalled.cssClass}}"><a href="/app/{{app._id}}">
     <div class="app-item-inner">
 
       {{#if equal size "large"}}
@@ -75,7 +74,7 @@
 
     </div>
 
-  </div>
+  </a></div>
 
 </template>
 
