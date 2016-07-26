@@ -15,6 +15,10 @@ Template.SingleApp.onCreated(function() {
         if (!app.screenshots.length) tmp.readMore.set(true);
       }
     } catch (err) {
+      if (err.toString().startsWith("Error: failed [404]")) {
+        BlazeLayout.render('MasterLayout', {mainSection: 'NotFound'});
+        return;
+      }
       console.error(err);
       // TODO: This doesn't work as there is no `errorModal` template.
       AntiModals.overlay('errorModal', {data: {err: 'There was an error loading app data from the server'}});
