@@ -9,15 +9,26 @@ Template.appRating.helpers({
     var denom = this.ratingsCount;
 
     return denom ? {
-      broken: this.ratings.broken * 100 / denom,
-      didntLike: this.ratings.didntLike * 100 / denom,
-      jobDone: this.ratings.jobDone * 100 / denom,
-      amazing: this.ratings.amazing * 100 / denom,
       positive: (this.ratings.jobDone + this.ratings.amazing) * 100 / denom,
-      negative: (this.ratings.broken + this.ratings.didntLike) * 100 / denom
     } : {};
   }
 
+});
+
+Template.miniRating.helpers({
+  aggregateReview: function() {
+    return AggregateReviews.findOne({appId: this.app.appId}) || {ratings: {}};
+  },
+
+  percentage: function() {
+    var denom = this.ratingsCount;
+    return denom ? {
+      broken: this.ratings.broken * 100 / denom,
+      didntLike: this.ratings.didntLike * 100 / denom,
+      jobDone: this.ratings.jobDone * 100 / denom,
+      amazing: this.ratings.amazing * 100 / denom
+    } : {};
+  }
 });
 
 Template.appRating.events({

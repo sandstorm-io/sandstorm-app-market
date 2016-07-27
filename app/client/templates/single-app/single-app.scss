@@ -61,14 +61,6 @@ $app-container-padding-rl: 4.6rem;
 
     .header-row {
       text-align: justify;
-      &:after {
-        content: '';
-        display: inline-block;
-        width: 100%;
-        height: 0;
-        font-size:0;
-        line-height:0;
-      }
     }
 
     .header {
@@ -693,25 +685,45 @@ $app-container-padding-rl: 4.6rem;
 
   padding-bottom: 4.6rem;
 
+  .ratings-count {
+    color: #a8a8a8;
+  }
+
   .review-bar {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    justify-content: space-between;
 
     .rating {
       display: inline-block;
       vertical-align: bottom;
-    }
-
-    .ratings-count {
-      margin-left: 1rem;
+      width: 200px;
     }
 
     .write-review {
-      display: inline-block;
-      vertical-align: bottom;
       line-height: 4rem;
 
-      .my-rating-box {
-        display: inline-block;
-        position: relative;
+      span {
+        padding-right: $update-selector-button-padding-lr;
+      }
+
+      .sandstorm-button {
+        border-color: #939393;
+        color: inherit;
+      }
+
+      .sandstorm-button:hover, .sandstorm-button.selected {
+        background-color: #f4f4f4;
+      }
+
+      .positive-button i {
+        color: $review-positive-color;
+      }
+
+      .negative-button i {
+        color: $review-negative-color;
       }
     }
 
@@ -721,19 +733,69 @@ $app-container-padding-rl: 4.6rem;
     }
   }
 
-  .review-entry {
-    width: 100%;
-    outline: none;
-    resize: none;
-    background-color: white;
-    border: 1px solid #e4dfe5;
-    color: #6d627c;
-    font-family: $main-font;
-    font-weight: 300;
-    font-size: 1.8rem;
-    margin-bottom: 0.8rem;
-    padding: 1.2rem;
-    box-sizing: border-box;
+  .review-breakdown-and-textarea {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .review-breakdown {
+      font-size: 1.1rem;
+      width: 15rem;
+      margin-right: 2em;
+
+      .review-breakdown-table {
+        tr {
+          line-height: 1.8rem;
+        }
+        td.label {
+          width: 6rem;
+          color: #6d627c;
+        }
+        td.number {
+          width: 2rem;
+          text-align: right;
+          padding-right: 0.5rem;
+          color: #a8a8a8;
+        }
+        td.bar {
+          width: 7rem;
+        }
+      }
+    }
+
+    .review-entry-and-buttons {
+      flex-grow: 1;
+
+      .review-entry {
+        outline: none;
+        resize: none;
+        background-color: white;
+        border: 1px solid #e4dfe5;
+        color: #6d627c;
+        font-family: $main-font;
+        font-weight: 300;
+        font-size: 1.8rem;
+        margin-bottom: 0.8rem;
+        padding: 1.2rem;
+        box-sizing: border-box;
+        width: 100%;
+      }
+
+      .hidden {
+        // Use this, rather than display: none; to avoid flashes of re-layout.
+        visibility: hidden;
+      }
+
+      .button-block {
+        text-align: right;
+
+        .sandstorm-button:hover {
+          background-color: #f4f4f4;
+        }
+      }
+    }
   }
 
   .divider.margin-top {
@@ -799,6 +861,19 @@ $app-container-padding-rl: 4.6rem;
         display: inline-block;
         vertical-align: middle;
         margin-right: 1.5rem;
+        margin-left: 1rem;
+
+        .label {
+          color: #6d627c;
+        }
+
+        i.positive {
+          color: $review-positive-color;
+        }
+
+        i.negative {
+          color: $review-negative-color;
+        }
       }
 
       .date {

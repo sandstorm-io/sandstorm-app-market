@@ -70,7 +70,7 @@
                 <div class="ratings-bar">
 
                   <div class="left-float">
-                    {{> appRating app=this backgroundCol='light'}}
+                    {{> appRating app=this backgroundCol='negative'}}
                   </div>
 
                   <div class="right-float social">
@@ -149,64 +149,77 @@
 
           <div class="app-item-inner reviews-section">
 
-            <div class="header" id="reviews-header">Reviews</div>
-
-            <div class="clearfix"></div>
+            <div class="header" id="reviews-header">Reviews
+              <span class="ratings-count"> ({{ratingsCount}})</span>
+            </div>
 
             <div class="review-bar header-row">
               <div class="rating">
                 {{> appRating app=this}}
-                <span class="ratings-count"> ( {{ratingsCount}} )</span>
               </div>
-
               <div class="write-review option">
-                {{#if writeReview}}
-                  {{> myRatingBox rating=myReview.rating}}
-                {{/if}}
                 <span data-action="write-review">
                   Write a review
-                  <i class="fa {{#if writeReview}}fa-caret-up{{else}}fa-caret-down{{/if}}"></i>
                 </span>
+                  {{> myRatingBox rating=myReview.rating}}
               </div>
-
             </div>
-
-            {{#if writeReview}}
-
-              <div class="clearfix"></div>
-              <textarea class="review-entry" data-field="review-text">{{myReview.text}}</textarea>
-              <div class="right-float on-top">
+            <div class="review-breakdown-and-textarea">
+              <div class="review-breakdown">
+                <table class="review-breakdown-table">
+                  <tr>
+                    <td class="label">Amazing</td>
+                    <td class="number">{{amazingCount}}</td>
+                    <td class="bar">
+                      {{> miniRating app=this percentage=amazingPercent colorClass="positive"}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="label">Good</td>
+                    <td class="number">{{goodCount}}</td>
+                    <td class="bar">
+                      {{> miniRating app=this percentage=goodPercent colorClass="positive"}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="label">Not so good</td>
+                    <td class="number">{{notSoGoodCount}}</td>
+                    <td class="bar">
+                      {{> miniRating app=this percentage=notSoGoodPercent colorClass="negative"}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="label">Needs fix</td>
+                    <td class="number">{{needsFixCount}}</td>
+                    <td class="bar">
+                      {{> miniRating app=this percentage=needsFixPercent colorClass="negative"}}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div class="review-entry-and-buttons">
+                <div>
+                  <textarea class="review-entry {{#unless writeReview}}hidden{{/unless}}" data-field="review-text">{{myReview.text}}</textarea>
+                </div>
                 <div class="button-block">
-                  <div class="sandstorm-button {{#if reviewValid}}primary{{else}}neutral submit{{/if}}" data-action="{{#if reviewValid}}submit-review{{else}}review-tooltip{{/if}}">
-                    SUBMIT REVIEW
+                  <div class="sandstorm-button {{#if reviewValid}}primary{{else}}neutral submit{{/if}} {{#unless writeReview}}hidden{{/unless}}" data-action="{{#if reviewValid}}submit-review{{else}}review-tooltip{{/if}}">
+                    Submit review
                   </div>
-                  <div class="sandstorm-button neutral" data-action="discard-review">
+                  <div class="sandstorm-button neutral {{#unless writeReview}}hidden{{/unless}}" data-action="discard-review">
                     <i class="icon-garbage"></i>
-                    <span class="text">DISCARD</span>
+                    <span class="text">Discard</span>
                   </div>
                 </div>
               </div>
-
-              <div class="clearfix"></div>
-
-            {{/if}}
-
+            </div>
             <div class="divider clearfix margin-top"></div>
-
-            {{> reviewFrame reviews=reviews}}
-
+                {{> reviewFrame reviews=reviews}}
           </div>
-
         </div>
-
         {{/with}}
-
       </div>
-
     {{/if}}
-
-    </div>
-
+  </div>
 </template>
 
 <template name="carousel">
@@ -288,54 +301,35 @@
 <template name="reviewBox">
   <div class="review-box">
     <div class="username">{{username}}</div>
+    <div class="date">{{dateFormat createdAt 'MMMM D YYYY'}}</div>
     {{#if isNumber rating}}
     <div class="rating">
       <div class="app-rating">
         {{#if greaterThan rating appRatings.didntLike}}
-          <i class="fa fa-thumbs-up"></i>
+        <i class="icon-extra-thumbs-up positive"></i>
+        <span class="label">{{#if equal rating 3}}Awesome{{else}}Good{{/if}}</span>
         {{else}}
-          <i class="fa fa-thumbs-down"></i>
+        <i class="icon-extra-thumbs-down negative"></i>
+        <span class="label">{{#if equal rating 1}}Not so good{{else}}Needs fix{{/if}}</span>
         {{/if}}
       </div>
     </div>
     {{/if}}
-    <div class="date">{{dateFormat createdAt 'MMMM D YYYY'}}</div>
     <div class="review">{{text}}</div>
   </div>
 </template>
 
 <template name="myRatingBox">
-
-  <div class="my-rating-box">
-    {{#if equal buttonState -1}}
-      <div class="sandstorm-button {{#if equal rating 0}}selected{{else}}unselected{{/if}}" data-rating=0 data-action="bug-modal">
-        It's broken
-      </div>
-      <div class="sandstorm-button {{#if equal rating 1}}selected{{else}}unselected{{/if}}" data-rating=1>
-        I didn't like it
-      </div>
-      <div class="sandstorm-button unselected" data-button-state=1 data-rating=2>
-        <i class="fa fa-thumbs-up"></i>
-      </div>
-    {{else}}{{#if equal buttonState 1}}
-      <div class="sandstorm-button unselected" data-button-state=-1 data-rating=1>
-        <i class="fa fa-thumbs-down"></i>
-      </div>
-      <div class="sandstorm-button {{#if equal rating 2}}selected{{else}}unselected{{/if}}" data-rating=2>
-        It gets the job done
-      </div>
-      <div class="sandstorm-button {{#if equal rating 3}}selected{{else}}unselected{{/if}}" data-rating=3>
-        It's amazing!
-      </div>
-    {{else}}
-      <div class="sandstorm-button unselected" data-button-state=-1 data-rating=1>
-        <i class="fa fa-thumbs-down"></i>
-      </div>
-      <div class="sandstorm-button unselected" data-button-state=1 data-rating=2>
-        <i class="fa fa-thumbs-up"></i>
-      </div>
-    {{/if}}{{/if}}
+  <div class="sandstorm-button positive-button {{#if equal rating 3}}selected{{else}}unselected{{/if}}" data-rating=3>
+    <i class="icon-extra-thumbs-up"></i> Awesome
   </div>
-
-
+  <div class="sandstorm-button positive-button {{#if equal rating 2}}selected{{else}}unselected{{/if}}" data-rating=2>
+    <i class="icon-extra-thumbs-up"></i> Good
+  </div>
+  <div class="sandstorm-button negative-button {{#if equal rating 1}}selected{{else}}unselected{{/if}}" data-rating=1>
+    <i class="icon-extra-thumbs-down"></i> Not so good
+  </div>
+  <div class="sandstorm-button negative-button {{#if equal rating 0}}selected{{else}}unselected{{/if}}" data-rating=0 data-action="bug-modal">
+    <i class="icon-extra-thumbs-down"></i> Needs fix
+  </div>
 </template>
