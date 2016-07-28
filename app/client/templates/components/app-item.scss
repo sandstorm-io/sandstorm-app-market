@@ -1,7 +1,6 @@
 @import "../../stylesheets/variables";
 
 .app-item-container {
-
   display: inline-block;
   vertical-align: top;
   text-align: left;
@@ -24,6 +23,10 @@
     background-color: $app-box-bg;
     box-sizing: border-box;
     position: relative;
+
+    &:hover {
+      background-color: #f7f3fa;
+    }
 
     .text-section {
 
@@ -143,7 +146,7 @@
         color: $app-install-text;
         background-color: $app-install-bg;
         cursor: pointer;
-        
+
         &:hover {
           background-color: $app-install-bg-hover;
         }
