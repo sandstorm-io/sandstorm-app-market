@@ -320,16 +320,16 @@
 </template>
 
 <template name="myRatingBox">
-  <div class="sandstorm-button positive-button {{#if equal rating 3}}selected{{else}}unselected{{/if}}" data-rating=3>
+  <div class="sandstorm-button positive-button {{#if equal rating 3}}selected{{else}}unselected{{/if}}" data-rating="3">
     <i class="icon-extra-thumbs-up"></i> Awesome
   </div>
-  <div class="sandstorm-button positive-button {{#if equal rating 2}}selected{{else}}unselected{{/if}}" data-rating=2>
+  <div class="sandstorm-button positive-button {{#if equal rating 2}}selected{{else}}unselected{{/if}}" data-rating="2">
     <i class="icon-extra-thumbs-up"></i> Good
   </div>
-  <div class="sandstorm-button negative-button {{#if equal rating 1}}selected{{else}}unselected{{/if}}" data-rating=1>
+  <div class="sandstorm-button negative-button {{#if equal rating 1}}selected{{else}}unselected{{/if}}" data-rating="1">
     <i class="icon-extra-thumbs-down"></i> Not so good
   </div>
-  <div class="sandstorm-button negative-button {{#if equal rating 0}}selected{{else}}unselected{{/if}}" data-rating=0 data-action="bug-modal">
+  <div class="sandstorm-button negative-button {{#if equal rating 0}}selected{{else}}unselected{{/if}}" data-rating="0" data-action="bug-modal">
     <i class="icon-extra-thumbs-down"></i> Needs fix
   </div>
 </template>
