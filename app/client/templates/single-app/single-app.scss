@@ -701,6 +701,9 @@ $app-container-padding-rl: 4.6rem;
       flex-direction: row;
       align-items: center;
       width: 200px;
+      .app-rating-container .ratings .text .labels .amazing {
+        font-size: 1.5rem;
+      }
     }
 
     .write-review {
@@ -748,7 +751,7 @@ $app-container-padding-rl: 4.6rem;
     margin-top: 0.8rem;
 
     .review-breakdown {
-      font-size: 1.1rem;
+      font-size: 1.5rem;
       width: 15rem;
       margin-right: 2em;
 
@@ -757,7 +760,7 @@ $app-container-padding-rl: 4.6rem;
           line-height: 1.8rem;
         }
         td.label {
-          width: 6rem;
+          width: 8em;
           color: #6d627c;
         }
         td.number {
@@ -767,7 +770,7 @@ $app-container-padding-rl: 4.6rem;
           color: #a8a8a8;
         }
         td.bar {
-          width: 7rem;
+          width: 5rem;
         }
       }
     }
