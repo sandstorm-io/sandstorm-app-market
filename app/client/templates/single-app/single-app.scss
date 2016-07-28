@@ -697,9 +697,13 @@ $app-container-padding-rl: 4.6rem;
     justify-content: space-between;
 
     .rating {
-      display: inline-block;
-      vertical-align: bottom;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
       width: 200px;
+      .app-rating-container .ratings .text .labels .amazing {
+        font-size: 1.5rem;
+      }
     }
 
     .write-review {
@@ -710,12 +714,17 @@ $app-container-padding-rl: 4.6rem;
       }
 
       .sandstorm-button {
-        border-color: #939393;
+        // For the text in the buttons, use the default page text color, not the button default.
         color: inherit;
+        border-color: #b7b7b7;
       }
 
       .sandstorm-button:hover, .sandstorm-button.selected {
         background-color: #f4f4f4;
+      }
+
+      .sandstorm-button.selected {
+        border-color: #939393;
       }
 
       .positive-button i {
@@ -723,7 +732,7 @@ $app-container-padding-rl: 4.6rem;
       }
 
       .negative-button i {
-        color: $review-negative-color;
+        color: $review-negative-button-color;
       }
     }
 
@@ -739,9 +748,10 @@ $app-container-padding-rl: 4.6rem;
     -webkit-flex-direction: row;
     flex-direction: row;
     justify-content: space-between;
+    margin-top: 0.8rem;
 
     .review-breakdown {
-      font-size: 1.1rem;
+      font-size: 1.5rem;
       width: 15rem;
       margin-right: 2em;
 
@@ -750,7 +760,7 @@ $app-container-padding-rl: 4.6rem;
           line-height: 1.8rem;
         }
         td.label {
-          width: 6rem;
+          width: 8em;
           color: #6d627c;
         }
         td.number {
@@ -760,7 +770,7 @@ $app-container-padding-rl: 4.6rem;
           color: #a8a8a8;
         }
         td.bar {
-          width: 7rem;
+          width: 5rem;
         }
       }
     }
@@ -790,9 +800,10 @@ $app-container-padding-rl: 4.6rem;
 
       .button-block {
         text-align: right;
+        margin-bottom: 0.8rem;
 
-        .sandstorm-button:hover {
-          background-color: #f4f4f4;
+        .sandstorm-button.primary:hover {
+          background-color: #9247a9;
         }
       }
     }
@@ -803,15 +814,12 @@ $app-container-padding-rl: 4.6rem;
   }
 
   .rating {
-
     .app-rating, span, i {
-
       font-size: 1.7rem;
       display: inline;
       line-height: 3.5rem;
       height: 3.5rem;
       color: $star-col-dark;
-
     }
 
     .app-rating.monochrome {
@@ -872,7 +880,7 @@ $app-container-padding-rl: 4.6rem;
         }
 
         i.negative {
-          color: $review-negative-color;
+          color: $review-negative-button-color;
         }
       }
 
