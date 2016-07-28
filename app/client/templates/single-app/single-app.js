@@ -67,15 +67,20 @@ Template.SingleApp.onRendered(function() {
 
   var tmp = this;
 
-  if (FlowRouter.getQueryParam('rateApp')) {
+  if (FlowRouter.getQueryParam('rateApp') && FlowRouter.getQueryParam('ratingNumber')) {
+
+    var myReview = tmp.get('myReview').get();
+    myReview.rating = parseInt(FlowRouter.getQueryParam('ratingNumber'), 10);
+    tmp.get('myReview').set(myReview);
+    tmp.get('validateReview').call();
     tmp.get('writeReview').set(true);
     // I cannot get this to work without a timeout, despite apparently waiting
     // for everyhting else to be ready
     $(document).ready(function() {
       Tracker.afterFlush(function() {
         Meteor.setTimeout(function() {
-          var reviewEntry = $('.review-entry');
-          reviewEntry.length && $(window).scrollTo(reviewEntry[0]);
+          var reviewsSection = $('.reviews-section');
+          reviewsSection.length && $(window).scrollTo(reviewsSection[0]);
           $('[data-field="review-text"]').focus();
         }, 50);
       });
@@ -217,17 +222,6 @@ Template.SingleApp.events({
   'click [data-action="read-more"]': function(evt, tmp) {
 
     tmp.readMore.set(!tmp.readMore.get());
-
-  },
-
-  'click [data-action="write-review"]': function(evt, tmp) {
-    // HACK: DO NOT PUSH
-    if (!Meteor.userId()) tmp.writeReview.set(!tmp.writeReview.get());
-    else {
-      var currentPath = FlowRouter.current();
-      AppMarket.loginRedirect = FlowRouter.path(currentPath.route.name, currentPath.params, _.extend({}, currentPath.queryParams, {rateApp: true}));
-      FlowRouter.go('login');
-    }
 
   },
 
@@ -499,12 +493,32 @@ Template.myRatingBox.helpers({
 Template.myRatingBox.events({
 
   'click [data-rating]': function(evt, tmp) {
-
+    var ratingNumber = parseInt($(evt.currentTarget).data('rating'), 10);
     var myReview = tmp.get('myReview').get();
-    myReview.rating = parseInt($(evt.currentTarget).data('rating'), 10);
-    tmp.get('myReview').set(myReview);
-    tmp.get('validateReview').call();
+    var ratingNumberChanged = true;
+    if (myReview.rating && (myReview.rating === ratingNumber)) {
+      ratingNumberChanged = false;
+    }
 
+    // If the user is logged in, we can save this into memory.
+    if (Meteor.userId()) {
+      // In the case that the user is logged in, and they had the text box visible, permit them to
+      // click on the rating number to dismiss the text box.
+      if (! ratingNumberChanged) {
+        tmp.get('writeReview').set(! tmp.get('writeReview').get());
+        return;
+      }
+      // In general, we want to store the new rating as well as set writeReview to true.
+      myReview.rating = ratingNumber;
+      tmp.get('myReview').set(myReview);
+      tmp.get('validateReview').call();
+      tmp.get('writeReview').set(true);
+    } else {
+      // Otherwise, redirect to login.
+      var currentPath = FlowRouter.current();
+      AppMarket.loginRedirect = FlowRouter.path(currentPath.route.name, currentPath.params, _.extend({}, currentPath.queryParams, {rateApp: true, ratingNumber: ratingNumber}));
+      FlowRouter.go('login');
+    }
   },
 
   'click [data-button-state]': function(evt, tmp) {
