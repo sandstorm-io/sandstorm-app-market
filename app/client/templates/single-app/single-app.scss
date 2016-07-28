@@ -697,8 +697,9 @@ $app-container-padding-rl: 4.6rem;
     justify-content: space-between;
 
     .rating {
-      display: inline-block;
-      vertical-align: bottom;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
       width: 200px;
     }
 
@@ -744,6 +745,7 @@ $app-container-padding-rl: 4.6rem;
     -webkit-flex-direction: row;
     flex-direction: row;
     justify-content: space-between;
+    margin-top: 0.8rem;
 
     .review-breakdown {
       font-size: 1.1rem;
@@ -772,7 +774,6 @@ $app-container-padding-rl: 4.6rem;
 
     .review-entry-and-buttons {
       flex-grow: 1;
-
 
       .review-entry {
         outline: none;
@@ -810,15 +811,12 @@ $app-container-padding-rl: 4.6rem;
   }
 
   .rating {
-
     .app-rating, span, i {
-
       font-size: 1.7rem;
       display: inline;
       line-height: 3.5rem;
       height: 3.5rem;
       color: $star-col-dark;
-
     }
 
     .app-rating.monochrome {
