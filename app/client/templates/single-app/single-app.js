@@ -289,6 +289,7 @@ Template.SingleApp.events({
 
   'click [data-action="edit-review"]': function(evt, tmp) {
     tmp.writeReview.set(true);
+    tmp.get('validateReview').call();
   },
 
   'click [data-action="flag-app"]': function(evt, tmp) {
