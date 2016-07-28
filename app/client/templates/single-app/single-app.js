@@ -142,7 +142,6 @@ Template.SingleApp.helpers({
   },
 
   writeReview: function() {
-
     return Template.instance().writeReview.get();
 
   },
@@ -169,7 +168,47 @@ Template.SingleApp.helpers({
 
     return this.changelog && htmlTruncate(marked(this.changelog), 200);
 
-  }
+  },
+
+  amazingCount: function() {
+    var reviewData = AggregateReviews.findOne({appId: this.appId}) || {ratings: {}};
+    return reviewData.ratings.amazing;
+  },
+
+  amazingPercent: function() {
+    var reviewData = AggregateReviews.findOne({appId: this.appId}) || {ratings: {}};
+    return (100 * reviewData.ratings.amazing / reviewData.ratingsCount);
+  },
+
+  goodCount: function() {
+    var reviewData = AggregateReviews.findOne({appId: this.appId}) || {ratings: {}};
+    return reviewData.ratings.jobDone;
+  },
+
+  goodPercent: function() {
+    var reviewData = AggregateReviews.findOne({appId: this.appId}) || {ratings: {}};
+    return (100 * reviewData.ratings.jobDone / reviewData.ratingsCount);
+  },
+
+  notSoGoodCount: function() {
+    var reviewData = AggregateReviews.findOne({appId: this.appId}) || {ratings: {}};
+    return reviewData.ratings.didntLike;
+  },
+
+  notSoGoodPercent: function() {
+    var reviewData = AggregateReviews.findOne({appId: this.appId}) || {ratings: {}};
+    return (100 * reviewData.ratings.didntLike / reviewData.ratingsCount);
+  },
+
+  needsFixCount: function() {
+    var reviewData = AggregateReviews.findOne({appId: this.appId}) || {ratings: {}};
+    return reviewData.ratings.broken;
+  },
+
+  needsFixPercent: function() {
+    var reviewData = AggregateReviews.findOne({appId: this.appId}) || {ratings: {}};
+    return (100 * reviewData.ratings.broken / reviewData.ratingsCount);
+  },
 
 });
 
@@ -182,8 +221,8 @@ Template.SingleApp.events({
   },
 
   'click [data-action="write-review"]': function(evt, tmp) {
-
-    if (Meteor.userId()) tmp.writeReview.set(!tmp.writeReview.get());
+    // HACK: DO NOT PUSH
+    if (!Meteor.userId()) tmp.writeReview.set(!tmp.writeReview.get());
     else {
       var currentPath = FlowRouter.current();
       AppMarket.loginRedirect = FlowRouter.path(currentPath.route.name, currentPath.params, _.extend({}, currentPath.queryParams, {rateApp: true}));
