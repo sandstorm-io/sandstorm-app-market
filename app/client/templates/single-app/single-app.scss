@@ -849,7 +849,7 @@ $app-container-padding-rl: 4.6rem;
     flex-wrap: wrap;
 
     .review-box {
-      padding-right: 1.9rem;
+      padding-right: 4rem;
       padding-top: 1.9rem;
       padding-bottom: 1.9rem;
       width: 50%;
@@ -861,8 +861,10 @@ $app-container-padding-rl: 4.6rem;
       }
 
       .username {
-        font-size: 1.8rem;
+        font-size: 1.7rem;
         color: #222222;
+        font-weight: normal;
+        display: inline-block;
       }
 
       .rating {
@@ -885,15 +887,14 @@ $app-container-padding-rl: 4.6rem;
       }
 
       .date {
-        font-size: 1.5rem;
+        font-size: 1.7rem;
         display: inline-block;
-        vertical-align: middle;
         color: #6d627c;
-        line-height: 3.5rem;
+        margin-left: 1rem;
       }
 
       .review {
-        font-size: 1.5rem;
+        font-size: 1.7rem;
       }
 
     }
