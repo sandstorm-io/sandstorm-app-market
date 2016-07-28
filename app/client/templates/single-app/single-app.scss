@@ -723,7 +723,7 @@ $app-container-padding-rl: 4.6rem;
       }
 
       .negative-button i {
-        color: $review-negative-color;
+        color: $review-negative-button-color;
       }
     }
 
@@ -767,6 +767,7 @@ $app-container-padding-rl: 4.6rem;
 
     .review-entry-and-buttons {
       flex-grow: 1;
+
 
       .review-entry {
         outline: none;
@@ -873,7 +874,7 @@ $app-container-padding-rl: 4.6rem;
         }
 
         i.negative {
-          color: $review-negative-color;
+          color: $review-negative-button-color;
         }
       }
 
