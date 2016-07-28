@@ -161,7 +161,7 @@
                 <span data-action="write-review">
                   Write a review
                 </span>
-                  {{> myRatingBox rating=myReview.rating}}
+                  {{> myRatingBox rating=myReview.rating writeReview=writeReview}}
               </div>
             </div>
             <div class="review-breakdown-and-textarea">
@@ -208,6 +208,9 @@
                   <div class="sandstorm-button neutral {{#unless writeReview}}hidden{{/unless}}" data-action="discard-review">
                     <i class="icon-garbage"></i>
                     <span class="text">Discard</span>
+                  </div>
+                  <div class="sandstorm-button neutral {{#unless writeReview}}hidden{{/unless}}" data-action="cancel-review">
+                    <span class="text">Cancel</span>
                   </div>
                 </div>
               </div>
@@ -320,16 +323,16 @@
 </template>
 
 <template name="myRatingBox">
-  <div class="sandstorm-button positive-button {{#if equal rating 3}}selected{{else}}unselected{{/if}}" data-rating="3">
+  <div class="sandstorm-button positive-button {{#if writeReview}}{{#if equal rating 3}}selected{{else}}unselected{{/if}}{{else}}unselected{{/if}}" data-rating="3">
     <i class="icon-extra-thumbs-up"></i> Awesome
   </div>
-  <div class="sandstorm-button positive-button {{#if equal rating 2}}selected{{else}}unselected{{/if}}" data-rating="2">
+  <div class="sandstorm-button positive-button {{#if writeReview}}{{#if equal rating 2}}selected{{else}}unselected{{/if}}{{else}}unselected{{/if}}" data-rating="2">
     <i class="icon-extra-thumbs-up"></i> Good
   </div>
-  <div class="sandstorm-button negative-button {{#if equal rating 1}}selected{{else}}unselected{{/if}}" data-rating="1">
+  <div class="sandstorm-button negative-button {{#if writeReview}}{{#if equal rating 1}}selected{{else}}unselected{{/if}}{{else}}unselected{{/if}}" data-rating="1">
     <i class="icon-extra-thumbs-down"></i> Not so good
   </div>
-  <div class="sandstorm-button negative-button {{#if equal rating 0}}selected{{else}}unselected{{/if}}" data-rating="0" data-action="bug-modal">
+  <div class="sandstorm-button negative-button {{#if writeReview}}{{#if equal rating 0}}selected{{else}}unselected{{/if}}{{else}}unselected{{/if}}" data-rating="0" data-action="bug-modal">
     <i class="icon-extra-thumbs-down"></i> Needs fix
   </div>
 </template>

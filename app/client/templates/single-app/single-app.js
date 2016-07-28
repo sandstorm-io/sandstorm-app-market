@@ -243,6 +243,11 @@ Template.SingleApp.events({
 
   },
 
+  'click [data-action="cancel-review"]': function(evt, tmp) {
+    // Delete no local data, but set `writeReview` to false.
+    tmp.writeReview.set(false);
+  },
+
   'click [data-action="submit-review"]': function(evt, tmp) {
 
     if (tmp.reviewValid.get()) {
@@ -485,30 +490,18 @@ Template.myRatingBox.onCreated(function() {
 });
 
 Template.myRatingBox.helpers({
-
   buttonState: function() { return Template.instance().buttonState.get(); }
-
 });
 
 Template.myRatingBox.events({
 
   'click [data-rating]': function(evt, tmp) {
     var ratingNumber = parseInt($(evt.currentTarget).data('rating'), 10);
-    var myReview = tmp.get('myReview').get();
-    var ratingNumberChanged = true;
-    if (myReview.rating && (myReview.rating === ratingNumber)) {
-      ratingNumberChanged = false;
-    }
 
     // If the user is logged in, we can save this into memory.
     if (Meteor.userId()) {
-      // In the case that the user is logged in, and they had the text box visible, permit them to
-      // click on the rating number to dismiss the text box.
-      if (! ratingNumberChanged) {
-        tmp.get('writeReview').set(! tmp.get('writeReview').get());
-        return;
-      }
       // In general, we want to store the new rating as well as set writeReview to true.
+      var myReview = tmp.get('myReview').get();
       myReview.rating = ratingNumber;
       tmp.get('myReview').set(myReview);
       tmp.get('validateReview').call();
