@@ -710,12 +710,17 @@ $app-container-padding-rl: 4.6rem;
       }
 
       .sandstorm-button {
-        border-color: #939393;
+        // For the text in the buttons, use the default page text color, not the button default.
         color: inherit;
+        border-color: #b7b7b7;
       }
 
       .sandstorm-button:hover, .sandstorm-button.selected {
         background-color: #f4f4f4;
+      }
+
+      .sandstorm-button.selected {
+        border-color: #939393;
       }
 
       .positive-button i {
