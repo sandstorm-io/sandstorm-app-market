@@ -791,8 +791,8 @@ $app-container-padding-rl: 4.6rem;
       .button-block {
         text-align: right;
 
-        .sandstorm-button:hover {
-          background-color: #f4f4f4;
+        .sandstorm-button.primary:hover {
+          background-color: #9247a9;
         }
       }
     }
