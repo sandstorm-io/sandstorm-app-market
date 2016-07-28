@@ -31,6 +31,7 @@ Template.SingleApp.onCreated(function() {
   tmp.flagApp = new ReactiveVar(!!FlowRouter.current().queryParams.flag);
   tmp.writeReview = new ReactiveVar(false);
   tmp.myReview = new ReactiveVar({});
+  tmp.reviewExistsServerSide = new ReactiveVar(false);
   tmp.reviewValidator = new SimpleSchema({
     rating: {
       type: Number,
@@ -57,7 +58,10 @@ Template.SingleApp.onCreated(function() {
       userId: Meteor.userId(),
       appId: tmp.appId
     });
-    if (myReview) tmp.myReview.set(_.pick(myReview, ['text', 'rating']));
+    if (myReview) {
+      tmp.myReview.set(_.pick(myReview, ['text', 'rating']));
+      tmp.reviewExistsServerSide.set(true);
+    }
   });
 
 });
@@ -157,6 +161,15 @@ Template.SingleApp.helpers({
 
   },
 
+  shouldShowEditReviewLink: function() {
+    return (Template.instance().reviewExistsServerSide.get() &&
+            !Template.instance().writeReview.get());
+  },
+
+  reviewExistsServerSide: function() {
+    return Template.instance().reviewExistsServerSide.get();
+  },
+
   reviewValid: function() {
 
     return Template.instance().reviewValid.get();
@@ -225,6 +238,12 @@ Template.SingleApp.events({
 
   },
 
+  'click [data-action="read-more"]': function(evt, tmp) {
+
+    tmp.readMore.set(!tmp.readMore.get());
+
+  },
+
   'input [data-field="review-text"]': function(evt, tmp) {
 
     var review = tmp.myReview.get();
@@ -241,6 +260,11 @@ Template.SingleApp.events({
       tmp.writeReview.set(false);
     }));
 
+  },
+
+  'click [data-action="cancel-review"]': function(evt, tmp) {
+    // Delete no local data, but set `writeReview` to false.
+    tmp.writeReview.set(false);
   },
 
   'click [data-action="submit-review"]': function(evt, tmp) {
@@ -261,6 +285,10 @@ Template.SingleApp.events({
       Tooltips.hideDelay(3000, 500);
     }
 
+  },
+
+  'click [data-action="edit-review"]': function(evt, tmp) {
+    tmp.writeReview.set(true);
   },
 
   'click [data-action="flag-app"]': function(evt, tmp) {
@@ -485,30 +513,18 @@ Template.myRatingBox.onCreated(function() {
 });
 
 Template.myRatingBox.helpers({
-
   buttonState: function() { return Template.instance().buttonState.get(); }
-
 });
 
 Template.myRatingBox.events({
 
   'click [data-rating]': function(evt, tmp) {
     var ratingNumber = parseInt($(evt.currentTarget).data('rating'), 10);
-    var myReview = tmp.get('myReview').get();
-    var ratingNumberChanged = true;
-    if (myReview.rating && (myReview.rating === ratingNumber)) {
-      ratingNumberChanged = false;
-    }
 
     // If the user is logged in, we can save this into memory.
     if (Meteor.userId()) {
-      // In the case that the user is logged in, and they had the text box visible, permit them to
-      // click on the rating number to dismiss the text box.
-      if (! ratingNumberChanged) {
-        tmp.get('writeReview').set(! tmp.get('writeReview').get());
-        return;
-      }
       // In general, we want to store the new rating as well as set writeReview to true.
+      var myReview = tmp.get('myReview').get();
       myReview.rating = ratingNumber;
       tmp.get('myReview').set(myReview);
       tmp.get('validateReview').call();
