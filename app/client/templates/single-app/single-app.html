@@ -157,12 +157,23 @@
               <div class="rating">
                 {{> appRating app=this}}
               </div>
+              {{#if shouldShowEditReviewLink}}
+              <div class="option" data-action="edit-review">
+                <span>
+                  Edit your review
+                  <i class="fa fa-caret-down"></i>
+                </span>
+              </div>
+              {{else}}
               <div class="write-review option">
-                <span data-action="write-review">
+                {{#unless reviewExistsServerSide}}
+                <span>
                   Write a review
                 </span>
+                {{/unless}}
                   {{> myRatingBox rating=myReview.rating writeReview=writeReview}}
               </div>
+              {{/if}}
             </div>
             <div class="review-breakdown-and-textarea">
               <div class="review-breakdown">
