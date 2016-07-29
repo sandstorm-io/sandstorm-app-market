@@ -14,7 +14,8 @@ Template.Search.helpers({
     return Apps.find({}).count() == 0;
   },
   appList: function() {
-    // For now, we do no caching.
+    // For now, we do no caching. Doing caching in a reactive-smart way is seemingly difficult, so
+    // wait until someone really requests it.
     var index, documentsToIndex, searchResults;
     var term = FlowRouter.getQueryParam('term');
     var results = [];
@@ -22,6 +23,11 @@ Template.Search.helpers({
       return;
     }
     index = createEmptyLunrIndex();
+    // Ensure each app is currently fully fetched. This allows us to search descriptions.
+    _.each(Apps.find({}).fetch(), function(app) {
+      AppMarket.ensureDetailsFetched(app._id);
+    });
+    // Index them.
     documentsToIndex = _.map(Apps.find({}).fetch(), function(thing) {
       return {_id: thing._id,
               text: ((thing.name || "") + " " +
@@ -29,6 +35,7 @@ Template.Search.helpers({
                      (thing.description || ""))}
     });
     _.each(documentsToIndex, function(doc) { index.add(doc); });
+    // Search them.
     searchResults = index.search(term);
     var resultAppIds = _.map(searchResults, function(result) { return result.ref; });
     return Apps.find({_id: {$in: resultAppIds}},
