@@ -62,6 +62,7 @@ jquery@1.11.4
 kadira:blaze-layout@2.3.0
 kadira:flow-router@2.10.1
 launch-screen@1.0.4
+lbee:lunr@0.6.0
 less@2.5.1
 livedata@1.0.15
 localstorage@1.0.5

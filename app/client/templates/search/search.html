@@ -4,7 +4,13 @@
 
     <div class="contents">
 
-      <div class="genre-name large">SEARCH RESULTS</div>
+      <div class="genre-name large">
+        {{#if stillWaitingOnApps}}
+        Searching...
+        {{else}}
+        Search results
+        {{/if}}
+      </div>
 
     </div>
 
@@ -29,11 +35,12 @@
       </div>
 
       {{else}}
+      {{#unless stillWaitingOnApps}}
 
       <div class="title-message">Sorry, I can't find any matching apps.</div>
 
       <div class="subtitle-message">Would you like to browse the <a href="{{getZippedPath 'appMarketGenre' 'genre' 'Popular'}}">most popular</a> apps we have in the store?</div>
-
+      {{/unless}}
       {{/if}}
 
     </div>
