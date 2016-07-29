@@ -21,7 +21,7 @@ function highlightText(text, searchQuery) {
       before: text,
     }
   }
-  var index = text.indexOf(searchQuery);
+  var index = text.toLowerCase().indexOf(searchQuery.toLowerCase());
   if (index === -1) {
     return {
       before: text,
