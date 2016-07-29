@@ -158,14 +158,14 @@
                 {{> appRating app=this}}
               </div>
               {{#if shouldShowEditReviewLink}}
-              <div class="option" data-action="edit-review">
+              <div class="option option-text" data-action="edit-review">
                 <span>
                   Edit your review
                   <i class="fa fa-caret-down"></i>
                 </span>
               </div>
               {{else}}
-              <div class="write-review option">
+              <div class="write-review option-text">
                 {{#unless reviewExistsServerSide}}
                 <span>
                   Write a review
