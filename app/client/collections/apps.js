@@ -200,7 +200,7 @@ var appsBaseSchema = {
     min: 0,
     defaultValue: 0
   },
-  
+
   // added on insertion
   ratingsCount: {
     type: Number,
@@ -233,33 +233,3 @@ var appsBaseSchema = {
 Schemas.AppsBase = new SimpleSchema(appsBaseSchema);
 
 Apps.attachSchema(Schemas.AppsBase);
-
-if (Meteor.isServer) {
-  Apps.allow({
-    insert: function (userId, doc) {
-      return false;
-    },
-
-    update: function (userId, doc, fieldNames, modifier) {
-      return false;
-    },
-
-    remove: function (userId, doc) {
-      return false;
-    }
-  });
-
-  Apps.deny({
-    insert: function (userId, doc) {
-      return true;
-    },
-
-    update: function (userId, doc, fieldNames, modifier) {
-      return true;
-    },
-
-    remove: function (userId, doc) {
-      return true;
-    }
-  });
-}
