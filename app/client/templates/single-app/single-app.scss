@@ -868,10 +868,8 @@ $app-container-padding-rl: 4.6rem;
       }
 
       .rating {
-        display: inline-block;
-        vertical-align: middle;
+        display: block;
         margin-right: 1.5rem;
-        margin-left: 1rem;
 
         .label {
           color: #6d627c;
