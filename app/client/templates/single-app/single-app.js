@@ -178,7 +178,8 @@ Template.SingleApp.helpers({
 
   reviews: function() {
 
-    return Reviews.find({appId: Template.instance().appId}).fetch();
+    return Reviews.find({appId: Template.instance().appId},
+                        {sort: {createdAt: -1}}).fetch();
 
   },
 
