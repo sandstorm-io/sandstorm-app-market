@@ -177,6 +177,7 @@
             </div>
             <div class="review-breakdown-and-textarea">
               <div class="review-breakdown">
+                {{#if ratingsCount}}
                 <table class="review-breakdown-table">
                   <tr>
                     <td class="label">Amazing</td>
@@ -207,10 +208,11 @@
                     </td>
                   </tr>
                 </table>
+                {{/if}}
               </div>
               <div class="review-entry-and-buttons">
                 <div>
-                  <textarea class="review-entry {{#unless writeReview}}hidden{{/unless}}" data-field="review-text">{{myReview.text}}</textarea>
+                  <textarea class="review-entry {{#unless writeReview}}hidden{{/unless}}" style="{{#unless writeReview or ratingsCount}}display: none;{{/unless}}" data-field="review-text">{{myReview.text}}</textarea>
                 </div>
                 <div class="button-block">
                   <div class="sandstorm-button {{#if reviewValid}}primary{{else}}neutral submit{{/if}} {{#unless writeReview}}hidden{{/unless}}" data-action="{{#if reviewValid}}submit-review{{else}}review-tooltip{{/if}}">
