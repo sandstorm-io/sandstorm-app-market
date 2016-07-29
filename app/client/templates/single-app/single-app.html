@@ -24,18 +24,25 @@
 
             <div class="text-section">
 
-              <div class="top-section clearfix">
+              <div class="top-section">
 
                 <div class="header app-title">{{name}}</div>
 
-                <div class="app-author-full-width">
-                  {{#if upstreamAuthor}}Packaged by:{{/if}}
-                  <a href="{{getZippedPath 'appMarketAuthor' 'authorName' author.name}}">{{author.name}}</a>
-
-                  {{#if upstreamAuthor}}
-                    <div class="upstream-author">
-                      Upstream author: {{upstreamAuthor}}
-                    </div>
+                <div class="app-contact-info">
+                  {{#if webLink}}
+                  <a href="{{webLink}}"><div class="button">
+                      <i class="fa fa-globe"></i> Website
+                  </div></a>
+                  {{/if}}
+                  {{#if codeLink}}
+                  <a href="{{codeLink}}"><div class="button">
+                      <i class="fa fa-code"></i> Source
+                  </div></a>
+                  {{/if}}
+                  {{#if bugReportLink}}
+                  <a href="{{bugReportLink}}"><div class="button">
+                      <i class="fa fa-bug"></i> Report issue
+                  </div></a>
                   {{/if}}
                 </div>
 
@@ -56,15 +63,11 @@
                 <div class="half-col right">
                   <table>
                     <tr><td class="key">License:</td><td class="value">{{verboseNone license}}</td></tr>
-                    {{#if codeLink}}
-                      <tr><td class="key">Code:</td><td class="value">
-                        <a href="{{codeLink}}">On {{urlHost codeLink}}</a>
-                      </td></tr>
-                    {{/if}}
-
                     <tr><td class="key">Version:</td><td class="value" data-tooltip={{renderedChangelog}} data-tooltip-direction="s">{{version}}</td></tr>
+                    {{#if upstreamAuthor}}
+                    <tr><td class="key">Upstream author:</td><td class="value">{{upstreamAuthor}}</td></tr>
+                    {{/if}}
                   </table>
-
                 </div>
 
                 <div class="ratings-bar">
@@ -74,8 +77,9 @@
                   </div>
 
                   <div class="right-float social">
-                    {{#if codeLink}}<a href="{{codeLink}}" target="_blank"><i class="fa fa-code"></i></a>{{/if}}
-                    {{#if webLink}}<a href="{{webLink}}" target="_blank"><i class="fa fa-globe"></i></a>{{/if}}
+                    {{#if upstreamAuthor}}Packaged by:{{/if}}
+                    <a href="{{getZippedPath 'appMarketAuthor' 'authorName' author.name}}">{{author.name}}</a>
+
                     {{#if invoke 'twitterLink'}}<a href="{{invoke 'twitterLink'}}" target="_blank"><i class="icon-tw"></i></a>{{/if}}
                     {{#if invoke 'githubLink'}}<a href="{{invoke 'githubLink'}}" target="_blank"><i class="icon-gh"></i></a>{{/if}}
                     {{#if invoke 'googlePlusLink'}}<a href="{{invoke 'googlePlusLink'}}" target="_blank"><i class="icon-go"></i></a>{{/if}}

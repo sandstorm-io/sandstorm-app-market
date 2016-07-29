@@ -150,6 +150,13 @@ Template.SingleApp.helpers({
 
   },
 
+  bugReportLink: function() {
+    var app = Apps.findOne({_id: Template.instance().appId});
+    if (app.codeLink && app.codeLink.startsWith("https://github.com/")) {
+      return app.codeLink + "/issues";
+    }
+  },
+
   writeReview: function() {
     return Template.instance().writeReview.get();
 
