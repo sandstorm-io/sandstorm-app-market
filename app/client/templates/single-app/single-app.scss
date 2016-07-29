@@ -101,17 +101,14 @@ $app-container-padding-rl: 4.6rem;
       margin-top: 1.8rem;
 
       .top-section {
-
-        padding-bottom: 0.5rem;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
         border-bottom: 1px solid #cfb5d6;
         color: #222222;
-
-        .edit-button, .public-private {
-          float: right;
-          clear: right;
-          font-size: 0;
-          margin-bottom: 0.9rem;
-        }
 
         .app-name-full-width {
           float: left;
@@ -123,8 +120,30 @@ $app-container-padding-rl: 4.6rem;
           display: block;
         }
 
-        .app-author-full-width {
+        .app-contact-info {
+          display: block;
           font-size: 1.7rem;
+
+          .button {
+            display: inline-block;
+            /* margin here pads the entire .top-section. */
+            margin-bottom: 0.5rem;
+
+            height: 2.7rem;
+            line-height: 2.7rem;
+            font-size: 1.5rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            background-color: inherit;
+            border-color: #e7daeb;
+            border-radius: 0.5rem;
+            border-style: solid;
+            border-width: 1px;
+            color: #783189;
+            i.fa {
+              padding-right: 2px;
+            }
+          }
           a {
             color: #783189;
           }
@@ -171,7 +190,7 @@ $app-container-padding-rl: 4.6rem;
 
         .key {
 
-          width: 7.5rem;
+          width: 12.5rem;
           font-size: 1.5rem;
           color: #6d627c;
           padding: 0;
@@ -289,7 +308,6 @@ $app-container-padding-rl: 4.6rem;
   line-height: 3.5rem;
   height: 3.5rem;
   font-size: 1.7rem;
-  color: #783189;
   clear: both;
 
   .app-rating, span, i {
