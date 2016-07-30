@@ -25,9 +25,11 @@ Template.Home.events({
 /* Home: Helpers */
 /*****************************************************************************/
 Template.Home.helpers({
+  stillWaitingOnApps: function() {
+    return Apps.find({}).count() == 0;
+  },
 
   genres: function() {
-
     return Genres.getAll({
       where: {showSummary: true},
       iteratee: function (cat) {
@@ -37,14 +39,11 @@ Template.Home.helpers({
         return count === 0 ? -Infinity : -count;
       }
     });
-
   },
 
   message: function() {
-
     var welcomeMessage = Messages.findOne('welcome');
     return welcomeMessage && welcomeMessage.message;
-
   }
 
 });
