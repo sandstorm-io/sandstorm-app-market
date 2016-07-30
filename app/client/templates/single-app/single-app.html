@@ -327,7 +327,7 @@
       <div class="app-rating">
         {{#if greaterThan rating appRatings.didntLike}}
         <i class="icon-extra-thumbs-up positive"></i>
-        <span class="label">{{#if equal rating 3}}Awesome{{else}}Good{{/if}}</span>
+        <span class="label">{{#if equal rating 3}}Amazing{{else}}Good{{/if}}</span>
         {{else}}
         <i class="icon-extra-thumbs-down negative"></i>
         <span class="label">{{#if equal rating 1}}Not so good{{else}}Needs fix{{/if}}</span>
@@ -341,7 +341,7 @@
 
 <template name="myRatingBox">
   <div class="sandstorm-button positive-button {{#if writeReview}}{{#if equal rating 3}}selected{{else}}unselected{{/if}}{{else}}unselected{{/if}}" data-rating="3">
-    <i class="icon-extra-thumbs-up"></i> Awesome
+    <i class="icon-extra-thumbs-up"></i> Amazing
   </div>
   <div class="sandstorm-button positive-button {{#if writeReview}}{{#if equal rating 2}}selected{{else}}unselected{{/if}}{{else}}unselected{{/if}}" data-rating="2">
     <i class="icon-extra-thumbs-up"></i> Good
