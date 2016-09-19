@@ -73,6 +73,7 @@
         content: "";
         background-size: contain;
         background-position: center;
+        background-repeat: no-repeat;
         display: block;
         padding-top: 100%;
 
