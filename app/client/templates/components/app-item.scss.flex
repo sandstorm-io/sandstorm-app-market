@@ -71,7 +71,7 @@
       .image {
 
         content: "";
-        background-size: cover;
+        background-size: contain;
         background-position: center;
         display: block;
         padding-top: 100%;
