@@ -161,25 +161,7 @@
               <div class="rating">
                 {{> appRating app=this}}
               </div>
-              {{#if shouldShowEditReviewLink}}
-              <div class="option option-text" data-action="edit-review">
-                <span>
-                  Edit your review
-                  <i class="fa fa-caret-down"></i>
-                </span>
-              </div>
-              {{else}}
-              <div class="write-review option-text">
-                {{#unless reviewExistsServerSide}}
-                <span>
-                  Write a review
-                </span>
-                {{/unless}}
-                  {{> myRatingBox rating=myReview.rating writeReview=writeReview}}
-              </div>
-              {{/if}}
-            </div>
-            <div class="review-breakdown-and-textarea">
+              <div class="review-breakdown-and-textarea">
               <div class="review-breakdown">
                 {{#if ratingsCount}}
                 <table class="review-breakdown-table">
@@ -214,21 +196,39 @@
                 </table>
                 {{/if}}
               </div>
-              <div class="review-entry-and-buttons">
-                <div>
-                  <textarea maxlength="500" class="review-entry {{#unless writeReview}}hidden{{/unless}}" style="{{#unless writeReview or ratingsCount}}display: none;{{/unless}}" data-field="review-text">{{myReview.text}}</textarea>
+            </div>
+              {{#if shouldShowEditReviewLink}}
+              <div class="option option-text">
+                <span data-action="edit-review">
+                  Edit your review
+                  <i class="fa fa-caret-down"></i>
+                </span>
+              </div>
+              {{else}}
+              <div class="write-review option-text">
+                {{#unless reviewExistsServerSide}}
+                <span>
+                  Write a review
+                </span>
+                {{/unless}}
+                  {{> myRatingBox rating=myReview.rating writeReview=writeReview}}
+              </div>
+              {{/if}}
+            </div>
+            <div class="review-entry-and-buttons">
+              <div>
+                <textarea maxlength="500" class="review-entry {{#unless writeReview}}hidden{{/unless}}" style="{{#unless writeReview or ratingsCount}}display: none;{{/unless}}" data-field="review-text">{{myReview.text}}</textarea>
+              </div>
+              <div class="button-block">
+                <div class="sandstorm-button {{#if reviewValid}}primary{{else}}neutral submit{{/if}} {{#unless writeReview}}hidden{{/unless}}" data-action="{{#if reviewValid}}submit-review{{else}}review-tooltip{{/if}}">
+                  Submit review
                 </div>
-                <div class="button-block">
-                  <div class="sandstorm-button {{#if reviewValid}}primary{{else}}neutral submit{{/if}} {{#unless writeReview}}hidden{{/unless}}" data-action="{{#if reviewValid}}submit-review{{else}}review-tooltip{{/if}}">
-                    Submit review
-                  </div>
-                  <div class="sandstorm-button neutral {{#unless writeReview}}hidden{{/unless}}" data-action="discard-review">
-                    <i class="icon-garbage"></i>
-                    <span class="text">Discard</span>
-                  </div>
-                  <div class="sandstorm-button neutral {{#unless writeReview}}hidden{{/unless}}" data-action="cancel-review">
-                    <span class="text">Cancel</span>
-                  </div>
+                <div class="sandstorm-button neutral {{#unless writeReview}}hidden{{/unless}}" data-action="discard-review">
+                  <i class="icon-garbage"></i>
+                  <span class="text">Discard</span>
+                </div>
+                <div class="sandstorm-button neutral {{#unless writeReview}}hidden{{/unless}}" data-action="cancel-review">
+                  <span class="text">Cancel</span>
                 </div>
               </div>
             </div>

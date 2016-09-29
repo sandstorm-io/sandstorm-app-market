@@ -42,14 +42,12 @@ $app-container-padding-rl: 4.6rem;
         position: relative;
         height: 85%;
         width: 23rem;
-        min-width: 15rem;
 
         .image {
 
           content: "";
           background-size: contain;
           background-repeat: no-repeat;
-          background-position: center;
           display: block;
           height: 100%;
 
@@ -60,24 +58,35 @@ $app-container-padding-rl: 4.6rem;
     }
 
     .header-row {
-      text-align: justify;
+      text-align: justify; 
+      width: 100%;
+      @media (max-width: $small-tablet) {
+        text-align: inherit;
+      }
+      .app-rating-container {
+        padding: 0.5rem 4.5rem 0.5rem 0;
+      }
     }
 
     .header {
-      display: inline-block;
+      display: block;
       vertical-align: bottom;
       font-weight: normal;
       clear: none;
       font-size: 3.1rem;
+      padding-bottom: 1rem;
     }
 
     .option-text {
-
       display: inline-block;
-      vertical-align: bottom;
       font-size: 1.7rem;
-
-      &.option {
+      width: 100%;
+      text-align: right;
+      position: relative;
+      right: 0;
+    
+      span {
+        display: block;
         cursor: pointer;
       }
 
@@ -99,6 +108,11 @@ $app-container-padding-rl: 4.6rem;
       // height: 26.5rem;
       overflow-y: hidden;
       margin-top: 1.8rem;
+      margin-bottom: 4rem;
+      
+      @media (max-width: 450px) {
+        overflow-y: inherit;
+      }
 
       .top-section {
         display: -webkit-flex;
@@ -109,6 +123,10 @@ $app-container-padding-rl: 4.6rem;
         align-items: flex-end;
         border-bottom: 1px solid #cfb5d6;
         color: #222222;
+        
+        @media (max-width: $medium-tablet) {
+          display: block;
+        }
 
         .app-name-full-width {
           float: left;
@@ -127,19 +145,23 @@ $app-container-padding-rl: 4.6rem;
           .button {
             display: inline-block;
             /* margin here pads the entire .top-section. */
-            margin-bottom: 0.5rem;
-
+            margin-bottom: 1rem;
+            margin-left: 0.5rem;
             height: 2.7rem;
             line-height: 2.7rem;
             font-size: 1.5rem;
-            padding-left: 1rem;
-            padding-right: 1rem;
+            padding: 0.4rem 1rem;
             background-color: inherit;
-            border-color: #e7daeb;
+            border-color: #cec2d2;
             border-radius: 0.5rem;
             border-style: solid;
             border-width: 1px;
             color: #783189;
+            @media (max-width: 460px) {
+              padding: 0.4rem 0.5rem;
+              font-size: 1.5rem;
+              margin-left: 0;
+            }
             i.fa {
               padding-right: 2px;
             }
@@ -234,11 +256,12 @@ $app-container-padding-rl: 4.6rem;
     }
 
     .half-col {
-
       display: inline-block;
       vertical-align: top;
       width: 50%;
-
+      @media (max-width: 480px) {
+        width: 100%;
+      }
     }
 
     .half-col.right {
@@ -248,57 +271,86 @@ $app-container-padding-rl: 4.6rem;
       width: auto;
       max-width: 50%;
       overflow: hidden;
+      @media (max-width: 480px) {
+        float: inherit;
+        margin: 1rem 0 1rem 0;
+        max-width: none;
+      }
     }
-
   }
 
-  @media (max-width: $small-tablet) {
-
-    .app-item-inner {
-
+  .app-item-inner {
+    @media (max-width: $small-tablet) and (min-width: 481px) {
       padding-left: 2.3rem;
       padding-right: 2.3rem;
-
-      .image-section {
-        margin-right: 0;
-        width: 100%;
-
-        .image-surround-full-width {
+    }
+    @media (max-width: 480px) {
+      padding: 1rem 2rem;
+    }
+    
+    .image-section {
+      @media (max-width: $small-tablet) and (min-width: 481px) {
+        margin-right: 2rem;
+        height: 15rem;
+      }
+      @media (max-width: 480px) and (min-width: 421px) {
+        width: 7rem;
+        height: 10rem;
+      }
+      @media (max-width: 420px) {
+        width: 5rem;
+        height: 7rem;
+      }
+      
+      .image-surround-full-width {
+        @media (max-width: $small-tablet) and (min-width: 481px) {
+          width: 12rem;
+        }
+        @media (max-width: 480px) and (min-width: 421px) {
+          width: 8rem;
+        }
+        @media (max-width: 420px) {
+          width: 6rem;
+        }
+      }
+    }
+    
+    .text-section {
+      @media (max-width: $small-tablet) and (min-width: 481px) {
+        .half-col {
+          display: block;
           width: 100%;
-        }
-      }
-
-      .text-section {
-          overflow-y: initial;
-
-          .half-col {
-            display: block;
+          margin-bottom: 1rem;
+          @media (max-width: $small-tablet) {
             width: 100%;
-            margin-bottom: 1rem;
-          }
-
-          .half-col.right {
-            float: none;
-            max-width: none;
-          }
-      }
-
-      [data-action="flag-app"], [data-action="write-review"] {
-        display: none;
-      }
-
-      .description {
-        .text.padded {
-          >*:first-child {
-            margin-top: 0;
           }
         }
-      }
 
+        .half-col.right {
+          float: none;
+          max-width: none;
+        }
+      }
+    }
+    
+    .app-title {
+     @media (max-width: 350px) {
+       padding-bottom: 4rem;
+      } 
+    }
+    
+    [data-action="flag-app"], [data-action="write-review"] {
+      display: none;
     }
 
+    .description {
+      .text.padded {
+        >*:first-child {
+          margin-top: 0;
+        }
+      }
+    }
   }
-
 }
 
 .ratings-bar {
@@ -309,6 +361,12 @@ $app-container-padding-rl: 4.6rem;
   height: 3.5rem;
   font-size: 1.7rem;
   clear: both;
+  
+  @media (max-width: 600px) {
+    width: 100%;
+    display: block;
+    border-top: none;
+  }
 
   .app-rating, span, i {
 
@@ -712,16 +770,20 @@ $app-container-padding-rl: 4.6rem;
   }
 
   .review-bar {
+    padding-top: 1.5rem;
     display: -webkit-flex;
     display: flex;
     -webkit-flex-direction: row;
     flex-direction: row;
-    justify-content: space-between;
+    @media (max-width: 660px) {
+      display: inline-block;
+      flex-wrap: wrap;
+    }
 
     .rating {
       display: flex;
       flex-direction: row;
-      align-items: center;
+      min-width: 22rem;
       .app-rating-container .ratings .text .labels .amazing {
         font-size: 1.5rem;
       }
@@ -729,6 +791,36 @@ $app-container-padding-rl: 4.6rem;
 
     .write-review {
       line-height: 4rem;
+      @media (max-width: 950px) {
+        justify-content: space-between;
+      }
+      @media (max-width: $large-phone) {
+        width: 100%;
+        justify-content: space-between;
+        padding-bottom: 1.5rem;
+      }
+      @media (max-width: 660px) {
+        justify-content: space-between;
+      }
+      @media (max-width: 660px) and (min-width: 530px) {
+        flex-wrap: nowrap;
+        display: block;
+      }
+      
+      .sandstorm-button {
+        float: right;
+        @media (max-width: 980px) {
+          padding: 0 1.2rem;
+        }
+        @media (max-width: 950px) {
+          width: 47.5%;
+          text-align: center;
+          padding: 0;
+        }
+        @media (max-width: 660px) and (min-width: 530px) {
+          width: 23.5%;
+        }
+      }
 
       span {
         padding-right: $update-selector-button-padding-lr;
@@ -796,37 +888,56 @@ $app-container-padding-rl: 4.6rem;
         }
       }
     }
+  }
+  
+  .review-entry-and-buttons {
+    flex-grow: 1;
+    margin-top: 1rem;
+    @media (max-width: $small-tablet) {
+      display: block;
+    }
 
-    .review-entry-and-buttons {
-      flex-grow: 1;
+    .review-entry {
+      outline: none;
+      resize: vertical;
+      background-color: white;
+      border: 1px solid #b9acbb;
+      font-family: $main-font;
+      font-weight: 300;
+      font-size: 1.8rem;
+      margin-bottom: 0.8rem;
+      padding: 1.2rem;
+      box-sizing: border-box;
+      width: 100%;
+    }
 
-      .review-entry {
-        outline: none;
-        resize: none;
-        background-color: white;
-        border: 1px solid #e4dfe5;
-        color: #6d627c;
-        font-family: $main-font;
-        font-weight: 300;
-        font-size: 1.8rem;
-        margin-bottom: 0.8rem;
-        padding: 1.2rem;
-        box-sizing: border-box;
-        width: 100%;
-      }
+    .hidden {
+      // Use this, rather than display: none; to avoid flashes of re-layout.
+      visibility: hidden;
+    }
 
-      .hidden {
-        // Use this, rather than display: none; to avoid flashes of re-layout.
-        visibility: hidden;
-      }
-
-      .button-block {
-        text-align: right;
-        margin-bottom: 0.8rem;
-
-        .sandstorm-button.primary:hover {
-          background-color: #9247a9;
+    .button-block {
+      text-align: right;
+      margin-bottom: 0.8rem;
+      
+      @media (max-width: 400px) {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        
+        .sandstorm-button {
+          flex: 1;
+          padding: 0;
+          text-align: center;
+          overflow: hidden;
+          i {
+            margin-right: 0;
+          }
         }
+      }
+      
+      .sandstorm-button.primary:hover {
+        background-color: #9247a9;
       }
     }
   }

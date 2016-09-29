@@ -36,6 +36,9 @@
       color: #783189;
       font-size: 1.35rem;
       font-weight: 400;
+      @media (max-width: 350px) {
+        font-size: 1.2rem;
+      }
 
       &.table {
         display: block;
@@ -93,10 +96,14 @@
         $bar-height: 1.25rem;
 
         display: block;
-        width: 15rem;
+        width: 15.5rem;
         position: relative;
         z-index: 0;
         height: $bar-height;
+        
+        @media (max-width: $medium-phone) {
+          width: 13rem;
+        }
 
         .background {
           background-color: $review-negative-color;
