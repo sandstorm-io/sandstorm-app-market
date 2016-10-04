@@ -72,7 +72,7 @@
 .icon-approved_dark:before { content: "\f102"; }
 .icon-approved_light:before { content: "\f103"; }
 .icon-apps:before { content: "\f104"; }
-.icon-arrow-install:before { content: "\f105";   position: relative; top: -0.3em; }
+.icon-arrow-install:before { content: "\f105";   position: relative; top: -0.3em; height: 3rem; width: 2.5rem;}
 .icon-chevron-right:before { content: "\003e"; font-family: $main-font; }
 .icon-edit:before { content: "\f106"; }
 .icon-fb:before { content: "\f107"; }
@@ -180,6 +180,11 @@ html {
 .left-float {
   float: left;
   clear: none;
+  
+  @media (max-width: 600px) {
+    border-top: 1px solid #cfb5d6;
+    width: 100%;
+  }
 
   &.block-phone {
     @media (max-width: $medium-tablet) {
@@ -189,8 +194,13 @@ html {
 }
 
 .right-float {
-  float: right;
+  text-align: right;
   clear: none;
+  float: right;
+  @media (max-width: 600px) {
+    text-align: left;
+    width: 100%;
+  }
 
   & +.right-float {
     margin-right: 2rem;

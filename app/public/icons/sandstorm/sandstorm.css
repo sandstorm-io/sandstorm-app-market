@@ -72,7 +72,7 @@
 .icon-approved_dark:before { content: "\f102"; }
 .icon-approved_light:before { content: "\f103"; }
 .icon-apps:before { content: "\f104"; }
-.icon-arrow-install:before { content: "\f105"; }
+.icon-arrow-install:before { content: "\f105"; line-height: normal; }
 .icon-edit:before { content: "\f106"; }
 .icon-fb:before { content: "\f107"; }
 .icon-flagged_dark:before { content: "\f108"; }
