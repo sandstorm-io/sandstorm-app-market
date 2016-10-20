@@ -81,6 +81,18 @@ sudo su - marketupdater
 bash -x update-myself.sh
 ```
 
+This script:
+
+- Downloads the latest code
+
+- Uses a known-working sandstorm-0.tar.xz to slipstream the market into
+
+- Builds a market bundle
+
+- Tests that it works by launching it on localhost:6082
+
+- Switches the deployment to use it.
+
 ### Release process: Details
 
 Our release process for the app market involves taking a Sandstorm bundle, ripping out the Sandstorm front-end, and inserting the App Market code in its place. It turns out the Sandstorm bundle-runner is an excellent way to run arbitrary Meteor apps for the same reasons that it is an excellent way to run Sandstorm itself:

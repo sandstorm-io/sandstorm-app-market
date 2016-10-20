@@ -33,7 +33,7 @@ if [ "$1" = "localtest" ] ; then
   echo "Starting service..."
   "${SANDSTORM_BASE_DIR}/sandstorm" start
   FULL_PATH_TO_MARKET_BUNDLE="$PWD/market.tar.xz"
-  "${SANDSTORM_BASE_DIR}/sandstorm" status
+  "${SANDSTORM_BASE_DIR}/sandstorm" status || true
   "${SANDSTORM_BASE_DIR}/sandstorm" stop
   cd "${SANDSTORM_BASE_DIR}"
   echo "Using Sandstorm to switch to the market..."
