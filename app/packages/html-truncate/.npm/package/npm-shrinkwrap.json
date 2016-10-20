@@ -1,7 +1,9 @@
 {
   "dependencies": {
     "html-truncate": {
-      "version": "1.2.1"
+      "version": "1.2.1",
+      "resolved": "https://registry.npmjs.org/html-truncate/-/html-truncate-1.2.1.tgz",
+      "from": "html-truncate@1.2.1"
     }
   }
 }
