@@ -42,7 +42,7 @@ if [ "$1" = "localtest" ] ; then
   "${SANDSTORM_BASE_DIR}/sandstorm" update "${FULL_PATH_TO_MARKET_BUNDLE}"
   # Running 'update' crashes Sandstorm.
   "${SANDSTORM_BASE_DIR}/sandstorm" start
-  "${SANDSTORM_BASE_DIR}/sandstorm" status
+  "${SANDSTORM_BASE_DIR}/sandstorm" status || true
   echo 'OK! Visit: http://local.sandstorm.io:6082/'
   echo 'If you like it, run:'
   echo "  ${SANDSTORM_BASE_DIR}/sandstorm stop"
