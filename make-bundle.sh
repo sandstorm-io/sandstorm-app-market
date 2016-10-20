@@ -50,12 +50,18 @@ status() {
 # ====================================================================
 status "unpacking sandstorm bundle"
 
+rm -rf sandstorm-191
 rm -rf sandstorm-0
 tar Jxf $1
 
-if [ ! -e sandstorm-0 ]; then
-  echo "bad bundle; expected custom Sandstorm build" >&2
+if [ ! -e sandstorm-191 ] && [ ! -e sandstorm-0 ]; then
+  echo "bad bundle; expected custom Sandstorm build or build 191" >&2
   exit 1
+fi
+if [ -e sandstorm-191 ] ; then
+  SANDSTORM_BASE_DIR="sandstorm-191"
+else
+  SANDSTORM_BASE_DIR="sandstorm-0"
 fi
 
 # ====================================================================
@@ -76,8 +82,8 @@ status "merging bundles"
 cp meteor-bundle-main.js build/bundle/sandstorm-main.js
 
 for file in build/bundle/*; do
-  rm -rf sandstorm-0/$(basename $file)
-  mv $file sandstorm-0/$(basename $file)
+  rm -rf ${SANDSTORM_BASE_DIR}/$(basename $file)
+  mv $file ${SANDSTORM_BASE_DIR}/$(basename $file)
 done
 
 rm -rf build
@@ -86,6 +92,5 @@ rm -rf build
 status "compressing"
 
 rm -f $2
-tar Jcf $2 sandstorm-0
-rm -rf sandstorm-0
-
+tar Jcf $2 "${SANDSTORM_BASE_DIR}"
+rm -rf "$SANDSTORM_BASE_DIR}"

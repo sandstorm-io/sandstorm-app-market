@@ -108,13 +108,13 @@ richsilv:owl-carousel@0.1.0
 routepolicy@1.0.11
 service-configuration@1.0.10
 session@1.1.6
+shell-server@0.2.1
 spacebars@1.0.12
 spacebars-compiler@1.0.12
 splendido:accounts-emails-field@1.2.0
 splendido:accounts-meld@1.3.1
 standard-minifier-css@1.0.8
 standard-minifier-js@1.0.8
-standard-minifiers@1.0.6
 templating@1.1.10
 templating-tools@1.0.4
 tracker@1.1.0
