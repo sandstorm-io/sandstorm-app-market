@@ -30,6 +30,8 @@ if [ "$1" = "localtest" ] ; then
   CURL_USER_AGENT=testing OVERRIDE_SANDSTORM_DEFAULT_DIR="${SANDSTORM_BASE_DIR}" REPORT=no bash "${TEMPDIR}/install.sh" -d -p 6082 -u
   echo "Disabling auto-updates..."
   sed -i 's,UPDATE_CHANNEL=dev,UPDATE_CHANNEL=none,' "${SANDSTORM_BASE_DIR}/sandstorm.conf"
+  echo "Choosing 6084 as SMTP_LISTEN_PORT..."
+  sed -i 's,SMTP_LISTEN_PORT=30025,SMTP_LISTEN_PORT=6084,' "${SANDSTORM_BASE_DIR}/sandstorm.conf"
   echo "Starting service..."
   "${SANDSTORM_BASE_DIR}/sandstorm" start
   FULL_PATH_TO_MARKET_BUNDLE="$PWD/market.tar.xz"
