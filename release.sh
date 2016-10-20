@@ -2,9 +2,9 @@
 
 set -euo pipefail
 
-if [ ! -e "sandstorm-191.tar.xz" ] ; then
-  echo "Sandstorm-191 not found. Downloading..."
-  curl "https://dl.sandstorm.io/sandstorm-191.tar.xz" > sandstorm-191.tar.xz
+if [ ! -e "sandstorm-190.tar.xz" ] ; then
+  echo "Sandstorm-190 not found. Downloading..."
+  curl "https://dl.sandstorm.io/sandstorm-190.tar.xz" > sandstorm-190.tar.xz
 fi
 
 LAST_COMMIT_TIME="$(git log -1 --format=%ct .)"
@@ -13,7 +13,7 @@ if [ "$LAST_COMMIT_TIME" -lt "$MARKET_TAR_X_MTIME" ] ; then
   echo "Skipping rebuild of market.tar.xz. To force a rebuild, run:"
   echo "  rm market.tar.xz"
 else
-  ./make-bundle.sh sandstorm-191.tar.xz market.tar.xz
+  ./make-bundle.sh sandstorm-190.tar.xz market.tar.xz
 fi
 
 if [ "$1" = "localtest" ] ; then

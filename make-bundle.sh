@@ -50,16 +50,16 @@ status() {
 # ====================================================================
 status "unpacking sandstorm bundle"
 
-rm -rf sandstorm-191
+rm -rf sandstorm-190
 rm -rf sandstorm-0
 tar Jxf $1
 
-if [ ! -e sandstorm-191 ] && [ ! -e sandstorm-0 ]; then
-  echo "bad bundle; expected custom Sandstorm build or build 191" >&2
+if [ ! -e sandstorm-190 ] && [ ! -e sandstorm-0 ]; then
+  echo "bad bundle; expected custom Sandstorm build or build 190" >&2
   exit 1
 fi
-if [ -e sandstorm-191 ] ; then
-  SANDSTORM_BASE_DIR="sandstorm-191"
+if [ -e sandstorm-190 ] ; then
+  SANDSTORM_BASE_DIR="sandstorm-190"
 else
   SANDSTORM_BASE_DIR="sandstorm-0"
 fi
