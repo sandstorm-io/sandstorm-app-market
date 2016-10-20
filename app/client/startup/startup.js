@@ -32,7 +32,7 @@ Meteor.startup(function() {
       }
       app.moderatorPreference = pref;
 
-      if (!app.author.name && app.appId ===
+      if (app && app.author && !app.author.name && app.appId ===
           "7qvcjh7gk0rzdx1s3c8gufd288sesf6vvdt297756xcv4q8xxvhh") {
         // Jack forgot to set his name in Keybase.
         app.author.name = "Jack Singleton";
