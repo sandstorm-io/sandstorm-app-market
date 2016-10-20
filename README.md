@@ -73,7 +73,15 @@ You can obtain the required credentials as follows:
 * Change the homepage to match your site's homepage (or *http://localhost:3000* if running in development). Change the authorized redirect URL to *[HOMEPAGE]/_oauth/github*.
 * The Client ID and Secret will appear near the top of the page after you submit.
 
-### Release process
+### Release process: Easy way
+
+```
+gce-ss ssh market
+sudo su - marketupdater
+bash -x update-myself.sh
+```
+
+### Release process: Details
 
 Our release process for the app market involves taking a Sandstorm bundle, ripping out the Sandstorm front-end, and inserting the App Market code in its place. It turns out the Sandstorm bundle-runner is an excellent way to run arbitrary Meteor apps for the same reasons that it is an excellent way to run Sandstorm itself:
 
