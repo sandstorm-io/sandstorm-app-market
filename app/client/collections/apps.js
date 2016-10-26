@@ -142,7 +142,8 @@ var appsBaseSchema = {
     type: Number,
   },
   'author.name': {
-    type: String
+    type: String,
+    optional: true
   },
   'author.githubUsername': {
     type: String,
