@@ -70,3 +70,13 @@ Template.AppsByAuthor.helpers({
   }
 
 });
+
+Template.genreTableOther.helpers({
+  tableFinishedRenderingReactiveVar: function() {
+   return Template.instance().data.tableFinishedRenderingReactiveVar;
+  }
+});
+
+Template.genreTableOtherFinishedRendering.onRendered(function() {
+  this.data.tableFinishedRenderingReactiveVar.set(true);
+});

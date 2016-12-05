@@ -140,3 +140,25 @@ body {
   }
 
 }
+
+.app-market-footer {
+  display: inline-block;
+  background-color: white;
+  margin-right: 1em;
+  max-width: 75%;
+  padding-top: $app-container-padding-top;
+  padding-bottom: $app-container-padding-bottom;
+  padding-left: $app-container-padding-lr;
+  padding-right: $app-container-padding-lr;
+  font-size: $app-name-font-size;
+
+  h2 {
+    font-size: $app-name-font-size;
+    margin-top: 0;
+    margin-bottom: 0.6rem;
+  }
+  p {
+    margin-top: 0.6rem;
+    margin-bottom: 0;
+  }
+}
