@@ -35,7 +35,8 @@
       </div>
 
       <div class="genre-other-section">
-        {{> genreTableOther genre="All"}}
+        {{> genreTableOther genre="All"
+        tableFinishedRenderingReactiveVar=tableFinishedRenderingReactiveVar}}
       </div>
 
 {{!--
@@ -45,6 +46,15 @@
 
       {{/each}}
 --}}
+
+      {{#if tableFinishedRendering}}
+      <div class="app-market-footer">
+        <div>
+          <h2>Need an open source app that's not yet on the App Market?</h2>
+          <p>Learn more about <a class="trigger-ga-event" href="https://docs.sandstorm.io/en/latest/developing/">packaging apps</a> or <a class="trigger-ga-event" href="https://sandstorm.io/news/2016-12-01-sandstorm-solutions">contact us</a> about app packaging services.</p>
+        </div>
+      </div>
+      {{/if}}
 
     </div>
 

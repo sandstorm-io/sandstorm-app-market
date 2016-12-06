@@ -2,6 +2,7 @@ Template.Home.onCreated(function() {
 
   var tmp = this;
   window.template = tmp;
+  this.tableFinishedRenderingReactiveVar = new ReactiveVar(false);
 
 });
 
@@ -17,14 +18,45 @@ Template.Home.events({
 
     tmp.$('.welcome-message').addClass('collapsed');
 
-  }
+  },
 
+  'click a.trigger-ga-event': function(evt, tmp) {
+    var url = evt && evt.target && evt.target.href;
+
+    // In the case that the ctrl key is held down, then we don't really need to navigate. This is a
+    // hack. To avoid navigating, we return true.
+    var returnValue = !! evt.ctrlKey;
+
+    var followTheLinkProbably = function() {
+      if (returnValue) {
+        return returnValue;
+      }
+      document.location = url;
+    };
+    var gaClickUrl = url + "#from-app-market";
+    var doGaPing = window.ga && window.ga.create;
+    if (doGaPing) {
+      ga("send", "event", "outbound", "click", gaClickUrl, {"hitCallback": followTheLinkProbably});
+    }
+    else {
+      return followTheLinkProbably();
+    }
+    return returnValue;
+  }
 });
 
 /*****************************************************************************/
 /* Home: Helpers */
 /*****************************************************************************/
 Template.Home.helpers({
+  tableFinishedRenderingReactiveVar: function() {
+    return Template.instance().tableFinishedRenderingReactiveVar;
+  },
+
+  tableFinishedRendering: function() {
+    return Template.instance().tableFinishedRenderingReactiveVar.get();
+  },
+
   stillWaitingOnApps: function() {
     return Apps.find({}).count() == 0;
   },
