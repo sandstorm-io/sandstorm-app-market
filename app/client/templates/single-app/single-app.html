@@ -39,6 +39,11 @@
                       <i class="fa fa-code"></i> Source
                   </div></a>
                   {{/if}}
+                  {{#if packageLink}}
+                  <a href="{{packageLink}}" download="{{name}}.spk"><div class="button">
+                      <i class="fa fa-download"></i> Download spk
+                  </div></a>
+                  {{/if}}
                   {{#if bugReportLink}}
                   <a href="{{bugReportLink}}"><div class="button">
                       <i class="fa fa-bug"></i> Report issue
