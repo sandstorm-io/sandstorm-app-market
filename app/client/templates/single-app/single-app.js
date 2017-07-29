@@ -150,6 +150,13 @@ Template.SingleApp.helpers({
 
   },
 
+  packageLink: function() {
+
+    var app = Apps.findOne({_id: Template.instance().appId});
+    return app && "https://app-index.sandstorm.io/packages/" + app.packageId;
+
+  },
+
   bugReportLink: function() {
     var app = Apps.findOne({_id: Template.instance().appId});
     if (app.codeLink && app.codeLink.startsWith("https://github.com/")) {
