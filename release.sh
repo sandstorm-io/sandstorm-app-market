@@ -17,14 +17,14 @@ else
   ./make-bundle.sh sandstorm-0.tar.xz market.tar.xz
 fi
 
-if [ "$1" = "localtest" ] ; then
+if [ "${1:-}" = "localtest" ] ; then
   echo "We are going to run this locally on port 6082."
   echo 'Downloading Sandstorm install script...'
   TEMPDIR="$(mktemp -d /tmp/sandstorm-app-market.$(date --rfc-3339=seconds | sed 's/ /T/').XXXXXXXXXXX)"
   curl https://install.sandstorm.io/ > "$TEMPDIR/install.sh"
 fi
 
-if [ "$1" = "localtest" ] ; then
+if [ "${1:-}" = "localtest" ] ; then
   echo "Using Sandstorm install script to install the market..."
   SANDSTORM_BASE_DIR="${TEMPDIR}/base-dir"
   CURL_USER_AGENT=testing OVERRIDE_SANDSTORM_DEFAULT_DIR="${SANDSTORM_BASE_DIR}" REPORT=no bash "${TEMPDIR}/install.sh" -d -p 6082 -u
