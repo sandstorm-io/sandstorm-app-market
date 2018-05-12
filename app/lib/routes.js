@@ -14,7 +14,6 @@ FlowRouter.triggers.enter([onlyAdmin.bind(this, 'login')], {
 FlowRouter.triggers.enter([redirectOnSmallDevice.bind(this, null)], {
   only: ['review', 'admin']
 });
-FlowRouter.triggers.enter([trackPageview]);
 
 FlowRouter.triggers.exit([hideTooltips, history]);
 
@@ -43,13 +42,6 @@ function onlyAdmin(route) {
 // if the device is not a desktop
 function redirectOnSmallDevice(route) {
   if (!Meteor.Device.isDesktop()) FlowRouter.go(route || 'appMarket');
-}
-
-// Helper to trigger a tracking event if the global tracker exists.
-function trackPageview() {
-  if (window.sandstormTracker) {
-    window.sandstormTracker.trackView();
-  }
 }
 
 // We have to do this in each route at present, as Flow Router doesn't
