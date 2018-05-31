@@ -100,7 +100,7 @@ Our release process for the app market involves taking a Sandstorm bundle, rippi
 - It takes care of Mongo, including setting up authentication intelligently, configuring oplog tailing (hard!), and recovering from crashes.
 - It auto-restarts Node and Mongo when they crash.
 - It makes updates trivial ("sandstorm update <tarball>").
-- We have a lot of experience wrangling the Sansdtorm bundle runner, compared to alternatives like Meteor-Up.
+- We have a lot of experience wrangling the Sandstorm bundle runner, compared to alternatives like Meteor-Up.
 
 To build a release, you must:
 
