@@ -159,7 +159,7 @@ Template.SingleApp.helpers({
 
   bugReportLink: function() {
     var app = Apps.findOne({_id: Template.instance().appId});
-    if (app.codeLink && app.codeLink.startsWith("https://github.com/")) {
+    if (app.codeLink && (app.codeLink.startsWith("https://github.com/") || app.codeLink.startsWith("https://gitlab.com/") || app.codeLink.startsWith("https://bitbucket.org/"))) {
       return app.codeLink + "/issues";
     }
   },
