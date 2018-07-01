@@ -1,6 +1,6 @@
 BrowserPolicy.content.allowImageOrigin("*");
-BrowserPolicy.content.allowStyleOrigin('https://fonts.googleapis.com');
-BrowserPolicy.content.allowFontOrigin('https://fonts.gstatic.com');
+BrowserPolicy.content.allowStyleOrigin('https://sandstorm.io');
+BrowserPolicy.content.allowFontOrigin('https://sandstorm.io');
 BrowserPolicy.content.allowInlineStyles();
 BrowserPolicy.content.allowFontDataUrl();
 BrowserPolicy.content.allowScriptOrigin('https://sandstorm.io');
