@@ -1,4 +1,5 @@
 Meteor.startup(function() {
+  Meteor.disconnect();
 
   var renderer = new marked.Renderer();
 

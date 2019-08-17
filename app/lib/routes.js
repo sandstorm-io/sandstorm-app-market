@@ -1,7 +1,7 @@
 // GLOBAL SUBSCRIPTIONS
 
 FlowRouter.subscriptions = function() {
-  this.register('messages', Meteor.subscribe('messages'));
+//  this.register('messages', Meteor.subscribe('messages'));
 };
 
 // ROUTES
