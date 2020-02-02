@@ -162,8 +162,8 @@ var helpers = {
         // they click.
         return "";
       } else {
-        // This user has no hosts that we know of. Suggest a demo on Oasis.
-        host = "https://oasis.sandstorm.io/";
+        // This user has no hosts that we know of. Suggest a demo on Alpha.
+        host = "https://alpha.sandstorm.io/";
       }
     }
 
