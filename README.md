@@ -108,7 +108,7 @@ To build a release, you must:
 2. Copy `sandstorm-0-fast.tar.xz` to the App Market source directory.
 3. Run `./make-bundle.sh sandstorm-0-fast.tar.xz market.tar.xz` to build `market.tar.xz`, the App Market release bundle.
 
-Once you have `market.tar.xz`, you can install it over an existing Sansdtorm install, or even use it as input to Sandstorm's `install.sh`. For example:
+Once you have `market.tar.xz`, you can install it over an existing Sandstorm install, or even use it as input to Sandstorm's `install.sh`. For example:
 
 * `sandstorm update market.tar.xz`: "Update" an existing Sandstorm (or App Market) install to the new App Market bundle.
 * `sandstorm/install.sh market.tar.xz`: Use the Sandstorm installer to install the App Market. Note that most of the installer prompts don't make sense. You should do a custom install with no Sandcats and no HTTPS.
