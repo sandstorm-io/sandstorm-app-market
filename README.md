@@ -41,8 +41,8 @@ Meteor comes with an integrated CLI which will build and serve the app locally, 
 To clone and run the app locally (once you've configured storage as per above):
 
 ```
-git clone git@github.com:tableflip/sandstorm-app-market-public.git
-cd sandstorm-app-market-public/app
+git clone git@github.com:sandstorm-io/sandstorm-app-market.git
+cd sandstorm-app-market/app
 meteor run --settings settings.json
 ```
 
