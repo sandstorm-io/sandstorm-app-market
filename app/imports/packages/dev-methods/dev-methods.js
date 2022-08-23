@@ -1,7 +1,9 @@
+import faker from 'faker-js/faker'
+
 Meteor.startup(function() {
 
   Meteor.methods({
-    
+
     'devMethods/removeAllApps': function() {
 
       if (!Roles.userIsInRole(this.userId, 'admin')) throw new Meteor.Error('Can only be executed by admin user');
@@ -52,8 +54,8 @@ Meteor.startup(function() {
         });
       });
 
-    }  
-    
+    }
+
   });
 
 });

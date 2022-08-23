@@ -39,7 +39,6 @@ ddp-rate-limiter@1.1.0
 ddp-server@2.5.0
 deps@1.0.12
 diff-sequence@1.1.1
-digilord:faker@1.0.7
 dynamic-import@0.7.2
 ecmascript@0.16.2
 ecmascript-runtime@0.8.0
