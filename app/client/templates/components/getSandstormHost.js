@@ -1,3 +1,15 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { FlowRouter } from 'meteor/kadira:flow-router';
+import { AntiModals } from 'meteor/anti:modals';
+
+import { Api } from '/client/api/api';
+import { AppMarket } from '/imports/lib/appMarket';
+// the module below dowsn't export any symbol, it just needs to
+// extend AppMarket
+import '/client/lib/appMarket';
+
 var callback;
 
 AppMarket.hasSandstormHost = function() {
@@ -28,11 +40,11 @@ Template.getSandstormHostModal.helpers({
                   amplify.store('sandstormHostHistory');
 
   },
-  
+
   installUrl: function() {
 
     var packageId = Template.parentData(1).packageId;
-    
+
     return [
       this,
       'install/',
@@ -40,7 +52,7 @@ Template.getSandstormHostModal.helpers({
       '?url=',
       Api.packageUrl(packageId)
     ].join('');
-    
+
   },
 
   appTitle: function() {

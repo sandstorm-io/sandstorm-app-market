@@ -1,3 +1,15 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { Tracker } from 'meteor/tracker';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { FlowRouter } from 'meteor/kadira:flow-router';
+
+import { AppMarket } from '/imports/lib/appMarket';
+// the module below dowsn't export any symbol, it just needs to
+// extend AppMarket
+import '/client/lib/appMarket';
+import { Genres } from '/client/collections/genres';
+
 function resizeTopbar(template) {
 
   template.$('.genres').css('visibility', 'hidden');

@@ -1,3 +1,12 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { Tracker } from 'meteor/tracker';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { FlowRouter } from 'meteor/kadira:flow-router';
+
+import { AggregateReviews } from '/imports/collections/aggregateReviews';
+import { AppMarket } from '/client/lib/appMarket';
+
 Template.appRating.helpers({
 
   aggregateReview: function() {

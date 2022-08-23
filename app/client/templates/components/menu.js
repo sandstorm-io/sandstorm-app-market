@@ -1,3 +1,12 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { ServiceConfiguration } from 'meteor/service-configuration';
+import { FlowRouter } from 'meteor/kadira:flow-router';
+import { AntiModals }from 'meteor/anti:modals';
+
+import { AppMarket } from '/client/lib/appMarket';
+
 Template.Menu.helpers({
 
   installHistoryCount: function() {

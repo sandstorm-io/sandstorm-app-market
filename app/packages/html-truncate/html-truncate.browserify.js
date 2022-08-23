@@ -1,1 +1,0 @@
-htmlTruncate = require('html-truncate');

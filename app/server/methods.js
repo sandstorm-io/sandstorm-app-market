@@ -1,7 +1,7 @@
 /*****************************************************************************/
 /* Server Only Methods */
 /*****************************************************************************/
-var Future = Npm.require('fibers/future');
+export var Future = Npm.require('fibers/future');
 
 Meteor.methods({
 
@@ -9,7 +9,7 @@ Meteor.methods({
 
     this.unblock();
     if (!this.userId) return false;
-    
+
     check(appId, String);
     check(review, {
       text: Match.Optional(String),

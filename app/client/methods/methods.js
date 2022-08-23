@@ -1,3 +1,7 @@
+import { Meteor } from 'meteor/meteor';
+
+import { Apps } from '/client/collections/apps';
+import { Reviews } from '/imports/collections/reviews';
 /*****************************************************************************/
 /* STUB Methods - these don't actually do anything permanent! */
 /*****************************************************************************/
@@ -16,7 +20,7 @@ Meteor.methods({
 
     if (!Apps.findOne(review.appId)) throw new Meteor.Error('no matching app', 'Cannot submit a review for an app which is not in the database');
     review.userId = Meteor.userId();
-    
+
     if (Reviews.findOne(_.pick(review, ['appId', 'userId'])))
       Reviews.update(_.pick(review, ['appId', 'userId']), {$set: review});
     else Reviews.insert(review);

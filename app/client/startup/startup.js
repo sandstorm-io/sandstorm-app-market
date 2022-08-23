@@ -1,3 +1,14 @@
+import { Meteor } from 'meteor/meteor';
+import { Tracker } from 'meteor/tracker';
+import { FlowRouter } from 'meteor/kadira:flow-router'
+import { AntiModals } from 'meteor/anti:modals';
+
+import { Api } from '/client/api/api';
+import { AppMarket } from '/client/lib/appMarket';
+import { Categories } from '/client/collections/categories';
+
+import '/imports/routes';
+
 Meteor.startup(function() {
   Meteor.disconnect();
 

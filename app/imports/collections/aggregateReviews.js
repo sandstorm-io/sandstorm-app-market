@@ -1,7 +1,10 @@
-Messages = new Mongo.Collection('messages');
+import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
+
+export const AggregateReviews = new Mongo.Collection('aggregate_reviews');
 
 if (Meteor.isServer) {
-  Messages.allow({
+  AggregateReviews.allow({
     insert: function (userId, doc) {
       return false;
     },
@@ -15,7 +18,7 @@ if (Meteor.isServer) {
     }
   });
 
-  Messages.deny({
+  AggregateReviews.deny({
     insert: function (userId, doc) {
       return true;
     },

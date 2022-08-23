@@ -1,3 +1,10 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { FlowRouter } from 'meteor/kadira:flow-router';
+
+import { AppMarket } from '/client/lib/appMarket';
+
 Template.appItem.onCreated(function() {
   this.textOverflow = new ReactiveVar(false);
 });

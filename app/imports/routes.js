@@ -1,3 +1,8 @@
+import { Meteor } from 'meteor/meteor';
+import { FlowRouter } from 'meteor/kadira:flow-router';
+
+import { Apps } from '/client/collections/apps.js';
+
 // GLOBAL SUBSCRIPTIONS
 
 FlowRouter.subscriptions = function() {

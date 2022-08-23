@@ -1,3 +1,11 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { FlowRouter } from 'meteor/kadira:flow-router';
+
+import { AppMarket } from "/client/lib/appMarket";
+
+
 Template.NotFound.onCreated(function() {
   $(window).on('popstate.notFound', function(evt, data) {
     evt.stopImmediatePropagation();
