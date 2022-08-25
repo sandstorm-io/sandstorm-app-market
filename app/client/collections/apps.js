@@ -1,8 +1,9 @@
-import { Meteor } from 'meteor/mongo';
+import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema'
 
 import { AppMarket } from '/imports/lib/appMarket';
+import '/client/lib/appMarket';
 import { Schemas } from '/imports/collections/schema/schema';
 
 export var Apps = new Mongo.Collection(null, {transform: function(app) {
@@ -155,7 +156,8 @@ const appsBaseSchema = {
     type: Number,
   },
   author: {
-    type: Object
+    type: Object,
+    optional: true
   },
   'author.name': {
     type: String,
