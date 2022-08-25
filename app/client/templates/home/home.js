@@ -3,7 +3,8 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 
-import { AppMarket } from "/client/lib/appMarket";
+import { AppMarket } from "/imports/lib/appMarket";
+import "/client/lib/appMarket";
 import { Apps } from '/client/collections/apps';
 import { Genres } from '/client/collections/genres';
 import { Messages } from '/imports/collections/messages';

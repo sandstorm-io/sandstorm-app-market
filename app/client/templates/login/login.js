@@ -4,7 +4,8 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Accounts } from 'meteor/accounts-base';
 
-import { AppMarket } from "/client/lib/appMarket";
+import { AppMarket } from "/imports/lib/appMarket";
+import "/client/lib/appMarket";
 
 Template.Login.onCreated(function() {
 

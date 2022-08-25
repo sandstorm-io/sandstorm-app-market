@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 
+import { AppMarket } from '/imports/lib/appMarket';
+import '/client/lib/appMarket';
 import { Apps } from '/client/collections/apps.js';
 
 // GLOBAL SUBSCRIPTIONS

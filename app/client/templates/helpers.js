@@ -3,7 +3,8 @@ import { Roles } from 'meteor/alanning:roles';
 import { Spacebars } from 'meteor/spacebars';
 
 import { Api } from '/client/api/api';
-import { AppMarket } from '/client/lib/appMarket';
+import { AppMarket } from '/imports/lib/appMarket';
+import '/client/lib/appMarket';
 import { Apps } from '/client/collections/apps';
 import { Genres } from '/client/collections/genres';
 import { AggregateReviews } from '/imports/collections/aggregateReviews';

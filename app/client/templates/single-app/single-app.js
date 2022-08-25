@@ -7,7 +7,8 @@ import { AntiModals } from 'meteor/anti:modals';
 import SimpleSchema from 'simpl-schema';
 import { Tooltips } from 'meteor/lookback:tooltips';
 
-import { AppMarket } from "/client/lib/appMarket";
+import { AppMarket } from "/imports/lib/appMarket";
+import "/client/lib/appMarket";
 import { Apps } from '/client/collections/apps';
 import { Reviews } from '/imports/collections/reviews';
 import { AggregateReviews } from '/imports/collections/aggregateReviews';

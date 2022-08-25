@@ -5,7 +5,8 @@ import { ServiceConfiguration } from 'meteor/service-configuration';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { AntiModals }from 'meteor/anti:modals';
 
-import { AppMarket } from '/client/lib/appMarket';
+import { AppMarket } from '/imports/lib/appMarket';
+import '/client/lib/appMarket';
 
 Template.Menu.helpers({
 

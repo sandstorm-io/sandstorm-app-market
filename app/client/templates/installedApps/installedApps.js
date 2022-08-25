@@ -4,7 +4,8 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { AntiModals } from 'meteor/anti:modals';
 
-import { AppMarket } from "/client/lib/appMarket";
+import { AppMarket } from "/imports/lib/appMarket";
+import "/client/lib/appMarket";
 import { Genres } from '/client/collections/genres';
 
 function firstVisit() {
