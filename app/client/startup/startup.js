@@ -4,8 +4,12 @@ import { FlowRouter } from 'meteor/kadira:flow-router'
 import { AntiModals } from 'meteor/anti:modals';
 
 import { Api } from '/client/api/api';
-import { AppMarket } from '/client/lib/appMarket';
+import { AppMarket } from '/imports/lib/appMarket';
+import '/client/lib/appMarket';
+import { Apps } from '/client/collections/apps';
 import { Categories } from '/client/collections/categories';
+import { Genres } from '/client/collections/genres';
+import { Schemas } from '/imports/collections/schema/schema';
 
 import '/imports/routes';
 
@@ -27,7 +31,9 @@ Meteor.startup(function() {
     sanitize: true
   });
 
-  Api.getIndex(function(err, data) {
+  Api.getIndex(function(data) {
+    // this is a kludge
+    var err = null;
     if (err) return AntiModals.overlay('errorModal', {data: {err: 'There was an error loading app data from the server'}});
 
     var categories = [],
@@ -54,7 +60,8 @@ Meteor.startup(function() {
         // Fixup Brainstorm shortDescription.
         app.shortDescription = "Note-taking";
       }
-
+      app.ratings = {};
+      const cleanedApp = Schemas.AppsBase.clean(app);
       Apps.insert(app);
       categories = _.uniq(categories.concat(app.categories));
     });
