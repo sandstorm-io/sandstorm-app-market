@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { FlowRouter } from 'meteor/kadira:flow-router';
-import HTTP from 'http';
-
+import { fetchJson } from '/client/lib/fetchJson';
 
 // Handle "?experimental=true".
 var experimental = window.location.search.indexOf('experimental=true') >= 0;
@@ -32,16 +31,12 @@ export const Api = {
 
   getIndex: function(cb) {
     var url = this.indexOverrideUrl || [this.url, indexDir, 'index.json'].join('/');
-    HTTP.get(url, function (err, result) {
-      cb(err, result && result.data);
-    });
+    fetchJson(url, cb);
   },
 
   getApp: function(appId, cb) {
     var url = this.appOverrideUrl || [this.url, indexDir, appId + '.json'].join('/');
-    HTTP.get(url, function (err, result) {
-      cb(err, result && result.data);
-    });
+    fetchJson(url, cb);
   },
 
   imageUrl: function(imageId) {
