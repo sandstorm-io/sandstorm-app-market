@@ -69,6 +69,7 @@ BUILD_DIR=$PWD/build
 METEOR_DEV_BUNDLE=$(./find-meteor-dev-bundle.sh)
 
 export CXX="g++ -I$METEOR_DEV_BUNDLE/include/node"
+(cd app && meteor npm install --save simpl-schema underscore meteor-node-stubs @babel/runtime)
 (cd app && meteor build --directory $BUILD_DIR)
 (cd build/bundle/programs/server && "$METEOR_DEV_BUNDLE/bin/npm" install)
 
