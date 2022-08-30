@@ -1,4 +1,10 @@
-Reviews = new Mongo.Collection('reviews');
+import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
+import SimpleSchema from 'simpl-schema'
+
+import { Schemas } from '/imports/collections/schema/schema';
+
+export const Reviews = new Mongo.Collection('reviews');
 
 Reviews.rating = {
   broken: 0,
@@ -75,7 +81,7 @@ if (Meteor.isServer) {
 
 function calculateAggregates(userId, doc) {
   var appId = doc.appId;
-  
+
   var aggregates = {
     appId: appId,
     ratingsCount: 0,
@@ -86,14 +92,14 @@ function calculateAggregates(userId, doc) {
       amazing: 0
     }
   };
-  
+
   Reviews.find({appId: appId}).forEach(function(review) {
     if ('rating' in review) {
       aggregates.ratingsCount += 1;
       aggregates.ratings[Reviews.invertedRating[review.rating]] += 1;
     }
   });
-  
+
   AggregateReviews.upsert({appId: appId}, aggregates);
 }
 

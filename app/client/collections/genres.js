@@ -18,6 +18,13 @@
 //   and a selector/options pair to apply to a query on the Apps collection.
 //   selector and options can be an object or a function returning an object.
 
+import { Meteor } from 'meteor/meteor';
+import { FlowRouter } from 'meteor/kadira:flow-router';
+
+import { AppMarket } from '/imports/lib/appMarket';
+import { Apps } from '/client/collections/apps';
+import { Categories } from '/client/collections/categories';
+
 AppMarket.extraGenres = [
 
   {
@@ -157,7 +164,7 @@ AppMarket.extraGenres = [
 
 ];
 
-Genres = {
+export const Genres = {
 
   findIn: function(name, selector, options, context) {
 

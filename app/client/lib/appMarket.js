@@ -1,3 +1,15 @@
+import { Meteor } from 'meteor/meteor';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { Tracker } from 'meteor/tracker';
+import { Blaze } from 'meteor/blaze';
+import { Spacebars } from 'meteor/spacebars';
+import { AntiModals } from 'meteor/anti:modals';
+import _ from 'underscore';
+
+import { AppMarket } from '/imports/lib/appMarket';
+import { Apps } from '/client/collections/apps';
+import { Api } from '/client/api/api';
+
 var fetchStatus = {};
 
 _.extend(AppMarket, {

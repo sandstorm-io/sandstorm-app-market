@@ -1,4 +1,4 @@
-Package.describe({
+/*Package.describe({
   name: 'html-truncate',
   version: '0.0.1',
   summary: 'HTML Truncate, packaged for Meteor',
@@ -15,3 +15,6 @@ Package.onUse(function(api) {
   api.addFiles(['html-truncate.browserify.js'], 'client');
   api.export('htmlTruncate', 'client');
 });
+*/
+import "./html-truncate-browserify.js";
+export htmlTruncate

@@ -1,4 +1,16 @@
-var helpers = {
+import { Meteor } from 'meteor/meteor';
+import { Roles } from 'meteor/alanning:roles';
+import { Spacebars } from 'meteor/spacebars';
+
+import { Api } from '/client/api/api';
+import { AppMarket } from '/imports/lib/appMarket';
+import '/client/lib/appMarket';
+import { Apps } from '/client/collections/apps';
+import { Genres } from '/client/collections/genres';
+import { AggregateReviews } from '/imports/collections/aggregateReviews';
+import { Reviews } from '/imports/collections/reviews';
+
+export const helpers = {
 
   // USER HELPERS
   getUsername: function(_id) {
@@ -40,10 +52,10 @@ var helpers = {
   },
 
   ratingsCount: function() {
-    
+
     var aggregateReview = AggregateReviews.findOne({appId: this.appId});
     return aggregateReview ? aggregateReview.ratingsCount : 0;
-    
+
   },
 
   latestVersionNumber: function(app) {
@@ -81,12 +93,12 @@ var helpers = {
   },
 
   // ROUTER/SUB HELPERS
-  
-  
+
+
   subLimit: function() {
-    
+
     return Template.instance().get('subLimit').get();
-    
+
   },
 
   routerSubsReady: function(name) {

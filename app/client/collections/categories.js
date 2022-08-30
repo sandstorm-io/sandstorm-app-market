@@ -1,4 +1,10 @@
-Categories = new Mongo.Collection(null);
+import { Meteor } from 'meteor/mongo';
+import { Mongo } from 'meteor/mongo';
+import SimpleSchema from 'simpl-schema'
+
+import { Schemas } from '/imports/collections/schema/schema';
+
+export const Categories = new Mongo.Collection(null);
 
 Schemas.Categories = new SimpleSchema({
   name: {

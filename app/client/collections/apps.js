@@ -1,4 +1,12 @@
-Apps = new Mongo.Collection(null, {transform: function(app) {
+import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
+import SimpleSchema from 'simpl-schema'
+
+import { AppMarket } from '/imports/lib/appMarket';
+import '/client/lib/appMarket';
+import { Schemas } from '/imports/collections/schema/schema';
+
+export var Apps = new Mongo.Collection(null, {transform: function(app) {
 
   app.latestVersion = function() {
     return _.sortBy(this.versions, function(entry) {
@@ -71,7 +79,7 @@ Apps = new Mongo.Collection(null, {transform: function(app) {
 // appsBaseSchema contains the keys that are required for a valid app object,
 // but NOT anything which will be autoValued or receive a default value only
 // when the app is added to the DB.
-var VersionSchema = new SimpleSchema({
+const VersionSchema = new SimpleSchema({
   number: {
     type: String,
     max: 20
@@ -88,7 +96,7 @@ var VersionSchema = new SimpleSchema({
   }
 });
 
-var appsBaseSchema = {
+const appsBaseSchema = {
   appId: {
     type: String
   },
@@ -105,10 +113,13 @@ var appsBaseSchema = {
     optional: true
   },
   categories: {
-    type: [String],
+    type: Array,
     index: true,
     defaultValue: [],
     minCount: 1
+  },
+  'categories.$': {
+    type: String
   },
   description: {
     type: String,
@@ -129,8 +140,11 @@ var appsBaseSchema = {
     type: String
   },
   screenshots: {
-    type: [Object],
+    type: Array,
     optional: true
+  },
+  'screenshots.$': {
+    type: Object
   },
   'screenshots.$.imageId': {
     type: String,
@@ -140,6 +154,10 @@ var appsBaseSchema = {
   },
   'screenshots.$.height': {
     type: Number,
+  },
+  author: {
+    type: Object,
+    optional: true
   },
   'author.name': {
     type: String,
@@ -207,6 +225,9 @@ var appsBaseSchema = {
     type: Number,
     min: 0,
     defaultValue: 0
+  },
+  ratings: {
+    type: Object
   },
   'ratings.broken': {
     type: Number,

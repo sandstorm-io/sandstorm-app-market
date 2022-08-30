@@ -1,3 +1,18 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { FlowRouter } from 'meteor/kadira:flow-router';
+import { BlazeLayout } from 'meteor/kadira:blaze-layout';
+import { AntiModals } from 'meteor/anti:modals';
+import SimpleSchema from 'simpl-schema';
+import { Tooltips } from 'meteor/lookback:tooltips';
+
+import { AppMarket } from "/imports/lib/appMarket";
+import "/client/lib/appMarket";
+import { Apps } from '/client/collections/apps';
+import { Reviews } from '/imports/collections/reviews';
+import { AggregateReviews } from '/imports/collections/aggregateReviews';
+
 var REVIEW_COLS = 2;
 
 Template.SingleApp.onDestroyed(function() {

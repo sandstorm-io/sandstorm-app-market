@@ -1,3 +1,9 @@
+import { Meteor } from 'meteor/meteor';
+
+import { Messages } from '/imports/collections/messages';
+import { Reviews } from '/imports/collections/reviews';
+import { AggregateReviews } from '/imports/collections/aggregateReviews';
+
 Meteor.publish('messages', function() {
   return Messages.find();
 });

@@ -2,6 +2,12 @@
 // a user's profile data on the server side rather than needing to be pulled
 // out of the OAuth DB (indicated by a -1)
 // needs to be called with a template instance as context
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { FlowRouter } from 'meteor/kadira:flow-router';
+import { OAuth } from 'meteor/accounts-oauth';
+
 var indicateSocialLinkInUserObject = function() {
   var socialLinks = this.get('app').get('socialLinks');
   socialLinks[this.data.service] = -1;
@@ -37,7 +43,7 @@ Template.connectButton.events({
     // Service is not a login option, so we need to do the OAuth dance
     if (_this.connect)
       _this.connect.requestCredential({reauthenticate: true}, function(key) {
-        secret =OAuth._retrieveCredentialSecret(key);
+        secret = OAuth._retrieveCredentialSecret(key);
 
         Meteor.call('apps/registerSocialData', key, secret, function(err, id) {
           var socialLinks = tmp.get('app').get('socialLinks');

@@ -1,3 +1,12 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { FlowRouter } from 'meteor/kadira:flow-router';
+
+import { AppMarket } from "/imports/lib/appMarket";
+import "/client/lib/appMarket";
+import { Apps } from '/client/collections/apps';
+
 var createEmptyLunrIndex = function() {
   var index = lunr(function() {
     this.field('text');
